@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="group_partner_validation" model="res.groups">
+      <field name="name">Partner Control</field>
+    </record>
+
+  </data>
+</openerp>
