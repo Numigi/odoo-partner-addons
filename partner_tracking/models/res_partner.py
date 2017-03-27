@@ -78,12 +78,21 @@ class ResPartner(models.Model):
         Change state to 'pending' if values have been updated by a user that
         is not part of the validation group
         """
+        if self.env.context.get('params'):
+            user_preferences_action = self.env.ref('base.action_res_users_my')
+            if (
+                self.env.context.get('params').get('action') ==
+                user_preferences_action.id
+            ):  # write() is called from the user changing his preferences
+                return super(ResPartner, self).write(vals)
         user = self.env['res.users'].browse(self.env.uid)
         if not user.has_group('partner_tracking.group_partner_validation'):
             for rec in self:
                 if rec.state == 'controlled':
-                    for field in vals:
-                        if rec[field] != vals[field]:
-                            vals['state'] = 'pending'
-                            break
+                    tracked_vals = [field for field in vals if (
+                        field in tracked_fields
+                    )]
+                    if any(rec[field] != vals[field] for field in
+                           tracked_vals):
+                        vals['state'] = 'pending'
         return super(ResPartner, self).write(vals)
