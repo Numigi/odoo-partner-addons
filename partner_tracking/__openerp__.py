@@ -11,7 +11,7 @@
     'license': 'LGPL-3',
     'category': 'Extra Rights',
     'depends': [
-        'base',
+        'account',
     ],
     'data': [
         'security/res_partner_security.xml',
