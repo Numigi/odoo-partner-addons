@@ -4,14 +4,17 @@
 
 from openerp import api, fields, models
 
-tracked_fields = [
+tracked_fields = {
     'name', 'date', 'title', 'parent_id', 'parent_name', 'ref', 'lang',
     'tz', 'user_id', 'vat', 'website', 'comment', 'credit_limit', 'ean13',
     'active', 'customer', 'supplier', 'employee', 'function', 'type',
     'street', 'street2', 'zip', 'city', 'state_id', 'country_id', 'email',
-    'phone', 'fax', 'mobile', 'birthdate', 'is_company',
-    'use_parent_address', 'has_image', 'company_id', 'color'
-]
+    'phone', 'fax', 'mobile', 'birthdate', 'is_company', 'use_parent_address',
+    'has_image', 'company_id', 'color', 'vat_subjected', 'debit_limit',
+    'property_account_receivable', 'property_account_position',
+    'property_payment_term', 'property_supplier_payment_term',
+    'last_reconciliation_date'
+}
 
 
 class ResPartner(models.Model):
@@ -27,6 +30,7 @@ class ResPartner(models.Model):
         readonly=True,
     )
 
+    # fields defined in 'base' module
     name = fields.Char(track_visibility='onchange')
     date = fields.Date(track_visibility='onchange')
     title = fields.Many2one(track_visibility='onchange')
@@ -63,6 +67,17 @@ class ResPartner(models.Model):
     has_image = fields.Boolean(track_visibility='onchange')
     company_id = fields.Many2one(track_visibility='onchange')
     color = fields.Integer(track_visibility='onchange')
+
+    # fields defined in 'account' module
+    vat_subjected = fields.Boolean(track_visibility='onchange')
+    debit_limit = fields.Float(track_visibility='onchange')
+    property_account_receivable = fields.Many2one(track_visibility='onchange')
+    property_account_position = fields.Many2one(track_visibility='onchange')
+    property_payment_term = fields.Many2one(track_visibility='onchange')
+    property_supplier_payment_term = fields.Many2one(
+        track_visibility='onchange'
+    )
+    last_reconciliation_date = fields.Datetime(track_visibility='onchange')
 
     @api.multi
     def action_set_controlled(self):
