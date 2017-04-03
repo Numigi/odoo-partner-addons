@@ -5,16 +5,16 @@
 from openerp import _, api, fields, models
 from openerp.exceptions import Warning
 
-tracked_fields = {
-    'name', 'date', 'title', 'parent_id', 'parent_name', 'ref', 'lang',
+TRACKED_FIELDS = {
+    'name', 'date', 'title', 'parent_id', 'ref', 'lang',
     'tz', 'user_id', 'vat', 'website', 'comment', 'credit_limit', 'ean13',
     'active', 'customer', 'supplier', 'employee', 'function', 'type',
     'street', 'street2', 'zip', 'city', 'state_id', 'country_id', 'email',
     'phone', 'fax', 'mobile', 'birthdate', 'is_company', 'use_parent_address',
     'has_image', 'company_id', 'color', 'vat_subjected', 'debit_limit',
+    'property_account_payable',
     'property_account_receivable', 'property_account_position',
     'property_payment_term', 'property_supplier_payment_term',
-    'last_reconciliation_date'
 }
 
 
@@ -27,8 +27,8 @@ class ResPartner(models.Model):
             ('pending', 'To Validate'),
             ('controlled', 'Controlled'),
         ],
-        default='controlled',
         readonly=True,
+        track_visibility='onchange',
     )
 
     # fields defined in 'base' module
@@ -36,7 +36,6 @@ class ResPartner(models.Model):
     date = fields.Date(track_visibility='onchange')
     title = fields.Many2one(track_visibility='onchange')
     parent_id = fields.Many2one(track_visibility='onchange')
-    parent_name = fields.Char(track_visibility='onchange')
     ref = fields.Char(track_visibility='onchange')
     lang = fields.Selection(track_visibility='onchange')
     tz = fields.Selection(track_visibility='onchange')
@@ -65,28 +64,32 @@ class ResPartner(models.Model):
     birthdate = fields.Char(track_visibility='onchange')
     is_company = fields.Boolean(track_visibility='onchange')
     use_parent_address = fields.Boolean(track_visibility='onchange')
-    has_image = fields.Boolean(track_visibility='onchange')
     company_id = fields.Many2one(track_visibility='onchange')
-    color = fields.Integer(track_visibility='onchange')
 
     # fields defined in 'account' module
     vat_subjected = fields.Boolean(track_visibility='onchange')
     debit_limit = fields.Float(track_visibility='onchange')
+    property_account_payable = fields.Many2one(track_visibility='onchange')
     property_account_receivable = fields.Many2one(track_visibility='onchange')
     property_account_position = fields.Many2one(track_visibility='onchange')
     property_payment_term = fields.Many2one(track_visibility='onchange')
     property_supplier_payment_term = fields.Many2one(
         track_visibility='onchange'
     )
-    last_reconciliation_date = fields.Datetime(track_visibility='onchange')
 
-    @api.multi
-    def action_set_controlled(self):
-        """
-        Change the state to 'controlled'.
-        """
-        for rec in self:
-            rec.state = 'controlled'
+    @api.model
+    def get_tracked_fields(self):
+        return set(TRACKED_FIELDS)
+
+    @api.model
+    def create(self, vals):
+        partner = super(ResPartner, self).create(vals)
+        user = self.env.user
+        if user.has_group('partner_tracking.group_partner_validation'):
+            partner.sudo().state = 'controlled'
+        else:
+            partner.sudo().state = 'pending'
+        return partner
 
     @api.multi
     def write(self, vals):
@@ -94,22 +97,19 @@ class ResPartner(models.Model):
         Change state to 'pending' if values have been updated by a user that
         is not part of the validation group
         """
-        user = self.env['res.users'].browse(self.env.uid)
+        user = self.env.user
         if 'state' in vals and not user.has_group(
             'partner_tracking.group_partner_validation'
         ):
             raise Warning(_(
                 "Permission to change the state of the partner denied."
             ))
-        if self.env.context.get('params'):
-            user_preferences_action = self.env.ref('base.action_res_users_my')
-            if (
-                self.env.context.get('params').get('action') ==
-                user_preferences_action.id
-            ):  # write() is called from the user changing his preferences
-                return super(ResPartner, self).write(vals)
+
+        standard_partners = self.filtered(lambda p: not p.user_ids)
+
         if not user.has_group('partner_tracking.group_partner_validation'):
-            for rec in self:
+            tracked_fields = self.get_tracked_fields()
+            for rec in standard_partners:
                 if rec.state == 'controlled':
                     tracked_vals = [field for field in vals if (
                         field in tracked_fields
@@ -117,4 +117,5 @@ class ResPartner(models.Model):
                     if any(rec[field] != vals[field] for field in
                            tracked_vals):
                         vals['state'] = 'pending'
+
         return super(ResPartner, self).write(vals)

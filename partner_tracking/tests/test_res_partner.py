@@ -28,12 +28,12 @@ class TestResPartner(SavepointCase):
         })
 
         cls.partner = cls.env['res.partner'].create({
-             'name': 'Partner Test',
+            'name': 'Partner Test',
         })
 
         cls.normal_user_partner = cls.normal_user.partner_id
 
-    def test_write_updating_preferences(self):
+    def test_01_write_updating_preferences(self):
         """
         Test the case of the user changing his preferences.
         """
@@ -45,7 +45,7 @@ class TestResPartner(SavepointCase):
         )
         self.assertEqual(self.normal_user_partner.state, 'controlled')
 
-    def test_write_normal_user(self):
+    def test_02_write_normal_user(self):
         """
         Test the case of a user that is not part of the validation group
         updating a partner and trying to change the state of a partner.
@@ -56,9 +56,9 @@ class TestResPartner(SavepointCase):
         })
         self.assertEqual(self.partner.state, 'pending')
         with self.assertRaises(Warning):
-            self.partner.sudo(self.normal_user).action_set_controlled()
+            self.partner.sudo(self.normal_user).state = 'controlled'
 
-    def test_write_controller_user(self):
+    def test_03_write_controller_user(self):
         """
         Test the case of user that is part of the validation group updating a
         partner and validating a partner.
@@ -70,5 +70,16 @@ class TestResPartner(SavepointCase):
         self.assertEqual(self.partner.state, 'controlled')
         self.partner.state = 'pending'
         self.assertEqual(self.partner.state, 'pending')
-        self.partner.sudo(self.controller_user).action_set_controlled()
+        self.partner.sudo(self.controller_user).state = 'controlled'
         self.assertEqual(self.partner.state, 'controlled')
+
+    def test_04_create_normal_user(self):
+        """
+        Test the case of a user that is not part of the validation group
+        and creates a partner.
+        """
+        partner = self.env['res.partner'].sudo(self.normal_user).create({
+            'name': 'Partner Name Change Test',
+            'state': 'controlled',
+        })
+        self.assertEqual(partner.state, 'pending')

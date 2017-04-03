@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-30 12:16-0400\n"
-"PO-Revision-Date: 2017-03-30 12:17-0400\n"
-"Last-Translator: Julie Moussu <julie.moussu@savoirfairelinux.com>\n"
+"POT-Creation-Date: 2017-04-03 13:16-0400\n"
+"PO-Revision-Date: 2017-04-03 13:17-0400\n"
+"Last-Translator: David Dufresne <david.dufresne@savoirfairelinux.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgid "Partners to Validate"
 msgstr "Partenaires à valider"
 
 #. module: partner_tracking
-#: code:addons/partner_tracking/models/res_partner.py:102
+#: code:addons/partner_tracking/models/res_partner.py:104
 #, python-format
 msgid "Permission to change the state of the partner denied."
 msgstr "Permission de changer l'état du partenaire refusée."
@@ -51,11 +51,10 @@ msgid "Status"
 msgstr "Statut"
 
 #. module: partner_tracking
+#: view:res.partner:partner_tracking.view_res_partner_filter
 #: selection:res.partner,state:0
 msgid "To Validate"
 msgstr "À valider"
 
-#. module: partner_tracking
-#: view:res.partner:partner_tracking.res_partner_control_form_view
-msgid "Validate"
-msgstr "Valider"
+#~ msgid "Validate"
+#~ msgstr "Valider"
