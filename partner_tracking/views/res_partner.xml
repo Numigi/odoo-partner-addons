@@ -34,8 +34,8 @@
         <tree string="Partners to Validate">
           <field name="name"/>
           <field name="create_date"/>
-          <field name="write_date"/>
-          <field name="write_uid"/>
+          <field name="tracking_write_date"/>
+          <field name="tracking_write_uid"/>
           <field name="state"/>
         </tree>
       </field>

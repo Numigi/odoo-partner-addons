@@ -2,7 +2,7 @@
 # © 2017 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import _, api, fields, models
+from openerp import _, api, fields, models, SUPERUSER_ID
 from openerp.exceptions import Warning
 
 TRACKED_FIELDS = {
@@ -29,6 +29,17 @@ class ResPartner(models.Model):
         ],
         readonly=True,
         track_visibility='onchange',
+    )
+
+    tracking_write_date = fields.Datetime(
+        string='Last Updated on',
+        readonly=True
+    )
+
+    tracking_write_uid = fields.Many2one(
+        string='Last Updated by',
+        comodel_name='res.users',
+        readonly=True
     )
 
     # fields defined in 'base' module
@@ -89,6 +100,8 @@ class ResPartner(models.Model):
             partner.sudo().state = 'controlled'
         else:
             partner.sudo().state = 'pending'
+        partner.tracking_write_date = fields.Datetime.now()
+        partner.tracking_write_uid = self.env.user.id
         return partner
 
     @api.multi
@@ -104,6 +117,9 @@ class ResPartner(models.Model):
             raise Warning(_(
                 "Permission to change the state of the partner denied."
             ))
+        if user.id != SUPERUSER_ID or 'state' in vals:
+            vals['tracking_write_date'] = fields.Datetime.now()
+            vals['tracking_write_uid'] = user.id
 
         standard_partners = self.filtered(lambda p: not p.user_ids)
 
