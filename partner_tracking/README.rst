@@ -13,3 +13,4 @@ Contributors
 * Joao Alfredo Gama Batista (joao.gama@savoirfairelinux.com)
 * Jérôme Boisvert-Chouinard (jerome.boisvertchouinard@savoirfairelinux.com)
 * Bruno Joliveau (bruno.joliveau@savoirfairelinux.com)
+* Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)

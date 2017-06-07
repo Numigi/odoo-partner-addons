@@ -31,6 +31,7 @@ class TestResPartner(SavepointCase):
 
         cls.partner = cls.env['res.partner'].create({
             'name': 'Partner Test',
+            'customer': False,
         })
 
         cls.partner_tracking_write_date = cls.partner.tracking_write_date
@@ -61,7 +62,6 @@ class TestResPartner(SavepointCase):
         self.assertEqual(self.partner.state, 'pending')
         with self.assertRaises(Warning):
             self.partner.sudo(self.normal_user).state = 'controlled'
-
 
     def test_03_write_controller_user(self):
         """
@@ -104,8 +104,8 @@ class TestResPartner(SavepointCase):
             'name': 'Partner Name Change Test',
         })
         self.assertTrue(
-            self.partner_tracking_write_date < timestamp
-            <= self.partner.tracking_write_date <= fields.Datetime.now()
+            self.partner_tracking_write_date < timestamp <=
+            self.partner.tracking_write_date <= fields.Datetime.now()
         )
         self.assertEqual(self.partner.tracking_write_uid, self.normal_user)
 

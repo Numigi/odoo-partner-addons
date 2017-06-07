@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from openerp import _, api, fields, models, SUPERUSER_ID
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError, Warning
 
 TRACKED_FIELDS = {
     'name', 'date', 'title', 'parent_id', 'ref', 'lang',
