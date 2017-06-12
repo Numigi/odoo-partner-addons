@@ -12,7 +12,6 @@
     'category': 'Extra Rights',
     'depends': [
         'account',
-        'mail',
     ],
     'data': [
         'security/res_groups.xml',

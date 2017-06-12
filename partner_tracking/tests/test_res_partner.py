@@ -2,10 +2,10 @@
 # © 2017 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp.tests import SavepointCase
-from openerp import fields, SUPERUSER_ID
+from odoo.tests import SavepointCase
+from odoo import fields, SUPERUSER_ID
 import time
-from openerp.exceptions import Warning
+from odoo.exceptions import Warning
 
 
 class TestResPartner(SavepointCase):
@@ -13,6 +13,11 @@ class TestResPartner(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestResPartner, cls).setUpClass()
+
+        cls.group_sale_salesman = cls.env.ref(
+            'sales_team.group_sale_salesman_all_leads')
+        cls.group_partner_validation = cls.env.ref(
+            'partner_tracking.group_partner_validation')
 
         cls.normal_user = cls.env['res.users'].create({
             'name': 'Normal User',
@@ -24,14 +29,14 @@ class TestResPartner(SavepointCase):
             'name': 'Controller User',
             'login': 'controlleruserlogin',
             'email': 'controlleruser@test.com',
-            'groups_id': [(4, cls.env.ref(
-                'partner_tracking.group_partner_validation'
-            ).id)],
+            'groups_id': [(6, 0, [
+                cls.group_sale_salesman.id,
+                cls.group_partner_validation.id,
+            ])],
         })
 
         cls.partner = cls.env['res.partner'].create({
             'name': 'Partner Test',
-            'customer': False,
         })
 
         cls.partner_tracking_write_date = cls.partner.tracking_write_date
