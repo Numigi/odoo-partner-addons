@@ -11,7 +11,7 @@ class ResPartnerMergeLine(models.Model):
     _description = __doc__
 
     duplicate_id = fields.Many2one(
-        'res.partner.duplicate', ondelete='cascade')
+        'res.partner.duplicate', ondelete='cascade', required=True)
     duplicate_field_id = fields.Many2one(
         'res.partner.duplicate.field', 'Field')
     partner_preserved_id = fields.Many2one(
@@ -21,9 +21,11 @@ class ResPartnerMergeLine(models.Model):
     partner_2_value = fields.Char('Partner 2 Value')
     partner_2_selected = fields.Boolean('Preserved')
 
-    def create_merge_lines(self, partner_1, partner_2):
+    def create_merge_lines(self, duplicate):
         lines = self
         duplicate_fields = self.env['res.partner.duplicate.field'].search([])
+        partner_1 = duplicate.partner_1_id
+        partner_2 = duplicate.partner_2_id
 
         for duplicate_field in duplicate_fields:
             field = partner_1._fields[duplicate_field.technical_name]
@@ -35,6 +37,7 @@ class ResPartnerMergeLine(models.Model):
                 partner_2)
 
             lines |= self.create({
+                'duplicate_id': duplicate.id,
                 'duplicate_field_id': duplicate_field.id,
                 'partner_1_value': partner_1_value,
                 'partner_2_value': partner_2_value,

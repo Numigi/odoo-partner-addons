@@ -146,8 +146,9 @@ class ResPartner(models.Model):
             'parent_id' in vals or 'name' in vals or
             'lastname' in vals or 'firstname' in vals
         ):
-            duplicates = self._create_duplicates()
-            self._post_message_duplicates(duplicates)
+            for record in self:
+                duplicates = record._create_duplicates()
+                record._post_message_duplicates(duplicates)
 
         return res
 

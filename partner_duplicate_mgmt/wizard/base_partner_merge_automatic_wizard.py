@@ -10,13 +10,20 @@ class MergePartnerAutomatic(models.TransientModel):
     _inherit = 'base.partner.merge.automatic.wizard'
 
     def _get_fk_on(self, table):
+        """
+        Ignore the table 'res_partner_duplicate' to avoid merging partner
+        duplicates.
+        """
         res = super(MergePartnerAutomatic, self)._get_fk_on(table)
-        relations = [r for r in res if 'duplicate' not in r[0]]
+        relations = [r for r in res if 'res_partner_duplicate' not in r[0]]
         return relations
 
     @api.model
     def _update_reference_fields(self, src_partners, dst_partner):
-        # Override the original function
+        """
+        Override completely the original function to avoid merging messages
+        and merge only attachments.
+        """
         self.env.cr.execute("""
             UPDATE ir_attachment
             SET res_id = %(dst_partner)s

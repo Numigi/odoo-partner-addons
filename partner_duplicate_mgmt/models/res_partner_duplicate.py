@@ -77,7 +77,6 @@ class ResPartnerDuplicate(models.Model):
         self.update_preserved_partner()
 
         # Call the method _merge of the crm partner merge widget
-        # _merge erases all the messages of the partner left
         partners = self.partner_1_id | self.partner_2_id
         base_wizard = self.env['base.partner.merge.automatic.wizard']
         base_wizard.with_context(do_not_unlink_partner=True)._merge(
@@ -138,10 +137,6 @@ class ResPartnerDuplicate(models.Model):
     def set_to_draft(self):
         self.write({'state': 'to_validate'})
 
-    def _get_merge_lines(self):
-        return self.env['res.partner.merge.line'].create_merge_lines(
-            self.partner_1_id, self.partner_2_id)
-
     @api.multi
     def open_partner_merge_wizard(self):
         if len(self) > 1:
@@ -151,11 +146,12 @@ class ResPartnerDuplicate(models.Model):
             raise UserError(_(
                 "You can not merge a line which is not to validate."))
 
-        self.write({
-            'merge_line_ids': [(6, 0, self._get_merge_lines().ids)],
-        })
+        merge_lines = (
+            self.env['res.partner.merge.line'].create_merge_lines(self))
+        self.write({'merge_line_ids': [(6, 0, merge_lines.ids)]})
 
-        view = self.env.ref('partner_duplicate_mgmt.res_partner_merge_wizard_form')
+        view = self.env.ref(
+            'partner_duplicate_mgmt.res_partner_merge_wizard_form')
         return {
             'type': 'ir.actions.act_window',
             'res_model': self._name,
