@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="partner_name_min_similarity" model="ir.config_parameter">
+            <field name="key">partner_duplicate_mgmt.partner_name_min_similarity</field>
+            <field name="value">0.7</field>
+        </record>
+
+    </data>
+</odoo>
