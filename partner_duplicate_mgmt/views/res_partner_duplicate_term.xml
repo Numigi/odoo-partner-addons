@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_duplicate_term_tree" model="ir.ui.view">
+        <field name="name">res.partner.duplicate.term.tree</field>
+        <field name="model">res.partner.duplicate.term</field>
+        <field name="arch" type="xml">
+            <tree string="Partner Duplicate Terms" editable="bottom">
+                <field name="type"/>
+                <field name="expression"/>
+            </tree>
+      </field>
+    </record>
+
+    <record id="res_partner_duplicate_term_action" model="ir.actions.act_window">
+        <field name="name">Partner Duplicate Terms</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.duplicate.term</field>
+        <field name="view_mode">tree</field>
+        <field name="view_type">form</field>
+    </record>
+
+    <menuitem
+        action="res_partner_duplicate_term_action"
+        id="menu_res_partner_duplicate_term_action"
+        parent="partner_duplicate_mgmt.menu_contacts_partner_duplicate_mgmt_config"
+        sequence="1"
+    />
+
+</odoo>

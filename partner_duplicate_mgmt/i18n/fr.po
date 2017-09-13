@@ -1,0 +1,370 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_partner_duplicate_mgmt
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-05 16:35+0000\n"
+"PO-Revision-Date: 2017-09-05 16:35+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_merge_wizard_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_contacts_partner_duplicate_mgmt_config
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_create_uid
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_create_uid
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_create_uid
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_create_date
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_create_date
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_create_date
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_display_name
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_display_name
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_display_name
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_1_ids
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users_duplicate_1_ids
+msgid "Duplicate 1 ids"
+msgstr ""
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_2_ids
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users_duplicate_2_ids
+msgid "Duplicate 2 ids"
+msgstr ""
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_contacts_partner_duplicate_mgmt
+msgid "Duplicate Management"
+msgstr "Gestion des doublons"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_ids
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users_duplicate_ids
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.view_partner_form
+msgid "Duplicate Partners"
+msgstr "Partenaires en double"
+
+#. module: partner_duplicate_mgmt
+#: model:res.groups,name:partner_duplicate_mgmt.group_duplicate_partners_control
+msgid "Duplicate Partners Control"
+msgstr "Contrôle de partenaires en double"
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner.py:0
+#, python-format
+msgid "Duplicate Partners : %s"
+msgstr "Partenaires en double : %s"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_count
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users_duplicate_count
+msgid "Duplicate count"
+msgstr ""
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_duplicate_id
+msgid "Duplicates Line"
+msgstr "Ligne de doublons"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_expression
+msgid "Expression"
+msgstr "Expression"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_duplicate_field_id
+msgid "Field"
+msgstr "Champ"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_type
+msgid "Field Type"
+msgstr "Type de Champ"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_id
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_id
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_id
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_id
+msgid "ID"
+msgstr "Identifiant"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_indexed_name
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users_indexed_name
+msgid "Indexed Name"
+msgstr "Nom indexé"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.actions.server,name:partner_duplicate_mgmt.res_partner_duplicate_resolve_action
+msgid "Indicate As Resolved"
+msgstr "Indiquer comme résolu"
+
+#. module: partner_duplicate_mgmt
+#: model:res.partner.duplicate.field,name:partner_duplicate_mgmt.duplicate_field_customer
+msgid "Is a Customer"
+msgstr "Est un client"
+
+#. module: partner_duplicate_mgmt
+#: model:res.partner.duplicate.field,name:partner_duplicate_mgmt.duplicate_field_supplier
+msgid "Is a Vendor"
+msgstr "Est un fournisseur"
+
+#. module: partner_duplicate_mgmt
+#: model:res.partner.duplicate.field,name:partner_duplicate_mgmt.duplicate_field_function
+msgid "Job Position"
+msgstr "Poste occupé"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate___last_update
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field___last_update
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term___last_update
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_write_uid
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_write_uid
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_write_uid
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_write_date
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_write_date
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_write_date
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_form
+msgid "Merge"
+msgstr "Fusionner"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_merge_wizard_form
+#: model:ir.actions.server,name:partner_duplicate_mgmt.res_partner_duplicate_merge_action
+msgid "Merge Partners"
+msgstr "Fusionner les partenaires"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_merge_line_ids
+msgid "Merge Lines"
+msgstr "Lignes de fusion"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_search
+#: selection:res.partner.duplicate,state:0
+msgid "Merged"
+msgstr "Fusionné"
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
+#, python-format
+msgid "Merged into %s"
+msgstr "Fusionné vers %s"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_name
+#: model:res.partner.duplicate.field,name:partner_duplicate_mgmt.duplicate_field_name
+msgid "Name"
+msgstr "Nom"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model,name:partner_duplicate_mgmt.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_1_id
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_1_id
+msgid "Partner 1"
+msgstr "Partenaire 1"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_partner_1_value
+msgid "Partner 1 Value"
+msgstr "Valeur partenaire 1"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_2_id
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_2_id
+msgid "Partner 2"
+msgstr "Partenaire 2"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_partner_2_value
+msgid "Partner 2 Value"
+msgstr "Valeur partenaire 2"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model,name:partner_duplicate_mgmt.model_res_partner_duplicate
+msgid "Partner Duplicate"
+msgstr "Ligne de doublons"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model,name:partner_duplicate_mgmt.model_res_partner_duplicate_field
+msgid "Partner Duplicate Field"
+msgstr "Champ de ligne de doublons"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.actions.act_window,name:partner_duplicate_mgmt.res_partner_duplicate_field_action
+#: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_res_partner_duplicate_field_action
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_field_tree
+msgid "Partner Duplicate Fields"
+msgstr "Champs de ligne de doublons"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model,name:partner_duplicate_mgmt.model_res_partner_duplicate_term
+msgid "Partner Duplicate Term"
+msgstr "Terme exclu des doublons"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.actions.act_window,name:partner_duplicate_mgmt.res_partner_duplicate_term_action
+#: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_res_partner_duplicate_term_action
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_term_tree
+msgid "Partner Duplicate Terms"
+msgstr "Termes exclus des doublons"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.actions.act_window,name:partner_duplicate_mgmt.res_partner_duplicate_action
+#: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_res_partner_duplicate_action
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_tree
+msgid "Partner Duplicates"
+msgstr "Partenaires en double"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_field_id
+msgid "Partner Field"
+msgstr "Champ d'un partenaire"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_preserved_id
+msgid "Partner Preserved"
+msgstr "Partenaire conservé"
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/res_partner_dupplicate.py:0
+#, python-format
+msgid "Please select a value to preserve for the field %s."
+msgstr "Veuillez sélectionner une valeur à conserver pour le champ %s."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:71
+#, python-format
+msgid "Please, select only one duplicate."
+msgstr "Veuillez sélectionner une seule ligne de doulons."
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_partner_1_selected
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_partner_2_selected
+msgid "Preserved"
+msgstr "Conservé"
+
+#. module: partner_duplicate_mgmt
+#: selection:res.partner.duplicate.term,type:0
+msgid "Regular Expression"
+msgstr "Expression régulière"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_form
+msgid "Set As Not Duplicate"
+msgstr "Marquer à non en double"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_search
+#: selection:res.partner.duplicate,state:0
+msgid "Resolved (Not Duplicate)"
+msgstr "Résolu (Non en double)"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_form
+msgid "Set To Draft"
+msgstr "Marquer à valider"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_state
+msgid "State"
+msgstr "Statut"
+
+#. module: partner_duplicate_mgmt
+#: selection:res.partner.duplicate.term,type:0
+msgid "String"
+msgstr "Chaine de caractères"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_technical_name
+msgid "Technical name"
+msgstr "Nom technique"
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner.py:81
+#, python-format
+msgid "This partner (%(new_partner)s) may be considered as a duplicate of the following partner(s): %(partner_names)s."
+msgstr "Ce partenaire (%(new_partner)s) peut être considéré comme un doublon de(s) partenaire(s) suivant(s): %(partner_names)s."
+
+#. module: partner_duplicate_mgmt
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_search
+#: selection:res.partner.duplicate,state:0
+msgid "To Validate"
+msgstr "À valider"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_type
+msgid "Type"
+msgstr "Type"
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate_field.py:19
+#: model:ir.model.fields,help:partner_duplicate_mgmt.field_res_partner_duplicate_field_field_id
+#, python-format
+msgid "You can only select fields which are not many2many, one2many, related and computed."
+msgstr "Vous ne pouvez sélectionner que les champs qui ne sont pas de type 'many2many', 'one2many', 'relate' et calculé."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
+#, python-format
+msgid "You can not merge a line which is not to validate."
+msgstr "Vous ne pouvez pas fusionner une ligne qui n'est pas à valider."
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model,name:partner_duplicate_mgmt.model_res_partner_merge_line
+msgid "res.partner.merge.line"
+msgstr "res.partner.merge.line"
