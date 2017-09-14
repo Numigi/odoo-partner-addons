@@ -185,6 +185,11 @@ msgid "Merge Lines"
 msgstr "Lignes de fusion"
 
 #. module: partner_duplicate_mgmt
+#: model:ir.actions.server,name:partner_duplicate_mgmt.res_partner_merge_action
+msgid "Merge Selected Partners"
+msgstr "Fusionner les partenaires sélectionnés"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_search
 #: selection:res.partner.duplicate,state:0
 msgid "Merged"
@@ -286,6 +291,12 @@ msgstr "Veuillez sélectionner une valeur à conserver pour le champ %s."
 #, python-format
 msgid "Please, select only one duplicate."
 msgstr "Veuillez sélectionner une seule ligne de doulons."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner.py:0
+#, python-format
+msgid "Please, select two partners to merge."
+msgstr "Veuillez sélectionner deux partenaires à fusionner."
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_partner_1_selected
