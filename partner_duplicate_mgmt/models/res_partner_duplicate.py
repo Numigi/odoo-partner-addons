@@ -146,10 +146,6 @@ class ResPartnerDuplicate(models.Model):
             raise UserError(_(
                 "You can not merge a line which is not to validate."))
 
-        merge_lines = (
-            self.env['res.partner.merge.line'].create_merge_lines(self))
-        self.write({'merge_line_ids': [(6, 0, merge_lines.ids)]})
-
         view = self.env.ref(
             'partner_duplicate_mgmt.res_partner_merge_wizard_form')
         return {
@@ -161,3 +157,12 @@ class ResPartnerDuplicate(models.Model):
             'target': 'new',
             'res_id': self.id,
         }
+
+    @api.model
+    def create(self, vals):
+        res = super(ResPartnerDuplicate, self).create(vals)
+
+        merge_lines = (
+            self.env['res.partner.merge.line'].create_merge_lines(res))
+        res.write({'merge_line_ids': [(6, 0, merge_lines.ids)]})
+        return res

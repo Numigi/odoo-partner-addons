@@ -154,7 +154,9 @@ action = records.open_partner_merge_wizard()
         id="menu_contacts_partner_duplicate_mgmt"
         name="Duplicate Management"
         parent="contacts.menu_contacts"
-        sequence="6"/>
+        sequence="6"
+        groups="partner_duplicate_mgmt.group_duplicate_partners_control"
+    />
 
     <menuitem
         action="res_partner_duplicate_action"

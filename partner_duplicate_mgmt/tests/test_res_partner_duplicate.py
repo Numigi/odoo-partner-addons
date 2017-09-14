@@ -287,3 +287,13 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         self.assertIn(attachment_1, attachments)
         self.assertIn(attachment_2, attachments)
+
+    def test_20_merge_partners_doesnt_affect_null_values(self):
+        self.partner_2.write({'phone': '+12223334444'})
+        self.assertFalse(self.partner_1.phone)
+
+        self.duplicate.write({'partner_preserved_id': self.partner_1.id})
+        self.merge_lines.write({'partner_1_selected': True})
+        self.duplicate.merge_partners()
+
+        self.assertFalse(self.partner_1.phone)

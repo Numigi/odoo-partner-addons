@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
+from openerp.exceptions import UserError
 
 
 class TestResPartner(common.SavepointCase):
@@ -43,5 +44,20 @@ class TestResPartner(common.SavepointCase):
         self.assertIn(self.partner_1, self.partner_2.duplicate_ids)
         self.assertIn(self.partner_3, self.partner_2.duplicate_ids)
 
-        self.assertIn('11 Big Partner inc.', self.partner_2.message_ids[0].body)
+        self.assertIn(
+            '11 Big Partner inc.', self.partner_2.message_ids[0].body)
         self.assertIn('33 Big Partner', self.partner_2.message_ids[0].body)
+
+    def test_04_should_not_select_more_than_2_partners_to_merge(self):
+        partners = self.partner_1 | self.partner_2 | self.partner_3
+        with self.assertRaises(UserError):
+            partners.action_merge()
+
+    def test_05_should_not_create_new_duplicate_line(self):
+        partners = self.partner_1 | self.partner_3
+        partners.action_merge()
+        duplicates = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', 'in', partners.ids),
+            ('partner_2_id', 'in', partners.ids),
+        ])
+        self.assertEqual(len(duplicates), 1)

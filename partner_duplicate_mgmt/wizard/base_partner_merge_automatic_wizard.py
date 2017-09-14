@@ -33,3 +33,11 @@ class MergePartnerAutomatic(models.TransientModel):
             'dst_partner': dst_partner.id,
             'src_partner': src_partners.id,
         })
+
+    @api.model
+    def _update_values(self, src_partners, dst_partner):
+        """
+        Avoid calling the original method which replaces partner preserved
+        null values with the partner archived values.
+        """
+        return True

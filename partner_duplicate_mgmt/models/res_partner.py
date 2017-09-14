@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 import re
 
 
@@ -124,7 +125,6 @@ class ResPartner(models.Model):
             if duplicates:
                 partner_names = ', '.join(duplicates.mapped('name'))
                 message = _('Duplicate Partners : %s') % (partner_names)
-                # import ipdb; ipdb.set_trace()
                 record.message_post(body=message)
 
     @api.model
@@ -213,3 +213,31 @@ class ResPartner(models.Model):
                 ON res_partner USING gin(indexed_name gin_trgm_ops)
                 """)
         return res
+
+    @api.multi
+    def action_merge(self):
+        if len(self) != 2:
+            raise UserError(_("Please, select two partners to merge."))
+
+        duplicate = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', 'in', self.ids),
+            ('partner_2_id', 'in', self.ids),
+        ], limit=1)
+
+        if not duplicate:
+            duplicate = self.env['res.partner.duplicate'].create(
+                {'partner_1_id': self[0].id, 'partner_2_id': self[1].id})
+
+        if duplicate.state != 'to_validate':
+            view = self.env.ref(
+                'partner_duplicate_mgmt.res_partner_duplicate_form')
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'res.partner.duplicate',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'views': [(view.id, 'form')],
+                'res_id': duplicate.id,
+            }
+
+        return duplicate.open_partner_merge_wizard()
