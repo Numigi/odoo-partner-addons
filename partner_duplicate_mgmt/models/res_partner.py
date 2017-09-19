@@ -2,9 +2,12 @@
 # © 2017 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import logging
+import re
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-import re
+
+_logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
@@ -200,7 +203,16 @@ class ResPartner(models.Model):
             WHERE name='pg_trgm' AND installed=true
             """)
         if not cr.fetchone():
-            cr.execute('CREATE EXTENSION pg_trgm')
+            try:
+                cr.execute('CREATE EXTENSION pg_trgm')
+            except:
+                message = (
+                    "Could not create the pg_trgm postgresql EXTENSION. "
+                    "You must log to your database as superuser and type "
+                    "the following command:\nCREATE EXTENSION pg_trgm."
+                )
+                _logger.warning(message)
+                raise Exception(message)
 
         cr.execute("""
             SELECT indexname
