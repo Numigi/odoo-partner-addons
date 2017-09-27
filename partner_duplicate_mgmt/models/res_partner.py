@@ -80,7 +80,7 @@ class ResPartner(models.Model):
             )
         """, {
             'id': self.id or self._origin.id or 0,
-            'name': str(indexed_name),
+            'name': indexed_name,
             'parent': self.parent_id.id or None,
         })
         res = cr.dictfetchall()
