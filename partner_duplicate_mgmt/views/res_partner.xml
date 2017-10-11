@@ -18,10 +18,6 @@
         </field>
     </record>
 
-    <record id="crm.action_partner_merge" model="ir.actions.act_window">
-        <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>
-    </record>
-
     <record id="res_partner_merge_action" model="ir.actions.server">
         <field name="name">Merge Selected Partners</field>
         <field name="model_id" ref="model_res_partner"/>
