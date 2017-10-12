@@ -20,6 +20,7 @@
     'data': [
         'data/ir_config_parameter.xml',
         'data/ir_cron.xml',
+        'data/res_partner.xml',
         'demo/res_partner_duplicate_field.xml',
         'demo/res_partner_duplicate_term.xml',
         'security/res_groups.xml',

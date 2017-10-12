@@ -253,3 +253,10 @@ class ResPartner(models.Model):
             }
 
         return duplicate.open_partner_merge_wizard()
+
+    @api.model
+    def hide_merge_selected_contacts_action(self):
+        action = self.env['ir.actions.act_window'].search([
+            ('name', '=', 'Merge Selected Contacts')])
+        if action:
+            action.unlink()

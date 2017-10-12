@@ -61,3 +61,8 @@ class TestResPartner(common.SavepointCase):
             ('partner_2_id', 'in', partners.ids),
         ])
         self.assertEqual(len(duplicates), 1)
+
+    def test_06_merge_selected_contacts_action_is_unlinked(self):
+        action = self.env['ir.actions.act_window'].search([
+            ('name', '=', 'Merge Selected Contacts')])
+        self.assertFalse(action)
