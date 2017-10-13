@@ -1,6 +1,6 @@
 Partner Duplicate Mgmt
 ======================
-This module improves the user experience for managing dupplicate partners.
+This module improves the user experience for managing duplicate partners.
 
 
 Finding duplicate partners
@@ -10,13 +10,13 @@ When a partner is created or his name changes, the system will automatically sea
 A smart button 'Duplicates' in the partner form view will appear if any potential duplicate is found.
 If you click on the button, the list of duplicates will appear.
 
-The list contains 3 columns
+This list contains 3 columns
 
 +---+---------------------------+------------------------------+-------------+
 +   | Partner 1                 | Partner 2                    | State       |
 +===+===========================+==============================+=============+
 +[ ]| Michelle Fletcher         | Agrolait, Michel Fletcher    | To Validate |
-+---+--------------+--------------------+----------------------+-------------+
++---+---------------------------+------------------------------+-------------+
 
 Then, you may select your duplicate row and click on Action -> Merge Partners.
 
@@ -43,7 +43,14 @@ Then, you must click on the button Merge Partners. The behavior will be the foll
 
 * The system will merge the origin partner into the preserved partner.
 * The values of the preserved partner will be updated.
+* User's actions are registred in the chatter
 * The source partner will be set to inactive (instead of deleted).
+
+
+A new list view shows alls duplicates. The user can:
+
+* merge (like previous step),
+* exclude the duplicate by choice 
 
 
 Adjusting the list of fields
@@ -59,6 +66,12 @@ The level of similarity required so that 2 partners are considered duplicates is
 This may be changed in system parameters.
 
 
+Element comparison
+----------------
+In the actual version, we setted by choice the comparison only on the name of res.partner
+No matter what is the value in boolean 'is a company'
+
+
 Adding terms to exclude from the name comparison
 ------------------------------------------------
 When comparing 2 partners, some terms must be excluded from the names.
@@ -72,6 +85,8 @@ Contributors
 ------------
 * Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)
 * David Dufresne (david.dufresne@savoirfairelinux.com)
+* Bruno Joliveau (bruno.joliveau@savoirfairelinux.com)
+
 
 Dependencies
 ------------
@@ -83,8 +98,17 @@ In order to install the extension, you may log in to your database as superuser 
 
 > CREATE EXTENSION pg_trgm
 
+
 More information
 ----------------
 * Module developed and tested with Odoo version 10.0
 * For questions, please contact our support services
 (support@savoirfairelinux.com)
+
+
+Roadmap
+-------
+This module is financed and answered to customer needs.
+
+It should be improve:
+* add parameters in the user's interface to set the field wanted in comparison
