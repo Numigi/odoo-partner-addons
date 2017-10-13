@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="rel_type_same" model="res.partner.relation.type">
+      <field name="name">Is the same person as</field>
+      <field name="name_inverse">Is the same person as</field>
+      <field name="contact_type_left">p</field>
+      <field name="is_symmetric">1</field>
+    </record>
+
+  </data>
+</odoo>

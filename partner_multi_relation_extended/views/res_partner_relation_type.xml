@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="form_res_partner_relation_type_extended" model="ir.ui.view">
+    <field name="name">res.partner.relation.type.extended.form</field>
+    <field name="model">res.partner.relation.type</field>
+    <field name="inherit_id" ref="partner_multi_relation.form_res_partner_relation_type"/>
+    <field name="arch" type="xml">
+
+      <field name="allow_self" position="before">
+        <field name="is_work_relation"/>
+      </field>
+
+    </field>
+  </record>
+
+</odoo>
