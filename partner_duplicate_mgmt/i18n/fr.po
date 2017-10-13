@@ -290,7 +290,7 @@ msgstr "Veuillez sélectionner une valeur à conserver pour le champ %s."
 #: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:71
 #, python-format
 msgid "Please, select only one duplicate."
-msgstr "Veuillez sélectionner une seule ligne de doulons."
+msgstr "Veuillez sélectionner une seule ligne de doublons."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner.py:0
@@ -312,7 +312,7 @@ msgstr "Expression régulière"
 #. module: partner_duplicate_mgmt
 #: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_form
 msgid "Set As Not Duplicate"
-msgstr "Marquer à non en double"
+msgstr "N'est pas un doublon"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_search
@@ -338,7 +338,7 @@ msgstr "Statut"
 #. module: partner_duplicate_mgmt
 #: selection:res.partner.duplicate.term,type:0
 msgid "String"
-msgstr "Chaine de caractères"
+msgstr "Chaîne de caractères"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_technical_name
