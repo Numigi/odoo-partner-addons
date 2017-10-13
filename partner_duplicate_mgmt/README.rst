@@ -111,4 +111,5 @@ Roadmap
 This module is financed and answered to customer needs.
 
 It should be improve:
+
 * add parameters in the user's interface to set the field wanted in comparison
