@@ -34,9 +34,12 @@ class ResPartnerRelationAll(models.AbstractModel):
         """
         Add new fields to auto_init
         """
-        self._additional_view_fields.append('strength')
-        self._additional_view_fields.append('note')
-        self._additional_view_fields.append('is_automatic')
+        if 'strength' not in self._additional_view_fields:
+            self._additional_view_fields.append('strength')
+        if 'note' not in self._additional_view_fields:
+            self._additional_view_fields.append('note')
+        if 'is_automatic' not in self._additional_view_fields:
+            self._additional_view_fields.append('is_automatic')
         return super(ResPartnerRelationAll, self)._auto_init()
 
     @api.multi
