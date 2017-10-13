@@ -4,7 +4,7 @@
 
 {
     'name': 'Partner Tracking',
-    'version': '8.0.1.0.0',
+    'version': '10.0.1.0.0',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Savoir-faire Linux',
     'website': 'http://www.savoirfairelinux.com',
@@ -14,7 +14,7 @@
         'account',
     ],
     'data': [
-        'security/res_partner_security.xml',
+        'security/res_groups.xml',
         'views/res_partner.xml',
     ],
     'application': False,

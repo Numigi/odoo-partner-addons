@@ -2,8 +2,8 @@
 # © 2017 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import _, api, fields, models, SUPERUSER_ID
-from openerp.exceptions import Warning
+from odoo import _, api, fields, models, SUPERUSER_ID
+from odoo.exceptions import Warning
 
 TRACKED_FIELDS = {
     'name', 'date', 'title', 'parent_id', 'ref', 'lang',
