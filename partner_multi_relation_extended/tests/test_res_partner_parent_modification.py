@@ -59,7 +59,7 @@ class TestResPartnerParentModification(common.SavepointCase):
             (cls.individuals[0], cls.companies[2], cls.customer_type),
         ]]
 
-    def test_validate(self):
+    def test_01_validate(self):
         """
         Test standard parent modification
         """
@@ -115,7 +115,7 @@ class TestResPartnerParentModification(common.SavepointCase):
             contact.active,
             'The former contact should be archived.')
 
-    def test_several_parent_modifications(self):
+    def test_02_several_parent_modifications(self):
         """
         Test that same person relations are kept when changing the parent
         multiple times
@@ -166,7 +166,7 @@ class TestResPartnerParentModification(common.SavepointCase):
             'the same as the first one.'
         )
 
-    def test_validate_no_work_relation_type(self):
+    def test_03_validate_no_work_relation_type(self):
         """
         Test that wizard can't operate the modification when there isn't
         any work relation type
@@ -181,7 +181,7 @@ class TestResPartnerParentModification(common.SavepointCase):
         with self.assertRaises(ValidationError):
             wizard.validate()
 
-    def test_access_rights_automatic_relation(self):
+    def test_04_access_rights_automatic_relation(self):
         """
         Test that only the administrator can update a partner relation
         which is automatic
