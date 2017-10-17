@@ -38,6 +38,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         cls.partner_1 = cls.env['res.partner'].create({
             'name': '123 Partner inc.',
+            'is_company': True,
             'company_type': 'company',
             'email': 'partner_123@localhost',
             'state_id': cls.state_on.id,
@@ -46,6 +47,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         cls.partner_2 = cls.env['res.partner'].create({
             'name': 'Partners inc.',
+            'is_company': True,
             'company_type': 'company',
             'email': 'partners@localhost',
             'state_id': cls.state_qc.id,

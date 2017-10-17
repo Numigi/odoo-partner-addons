@@ -55,6 +55,9 @@ class ResPartner(models.Model):
         return indexed_name.strip().lower()
 
     def _get_duplicates(self, indexed_name=None):
+        if self._context.get('disable_duplicate_check'):
+            return []
+
         if not indexed_name:
             indexed_name = self.indexed_name
 
