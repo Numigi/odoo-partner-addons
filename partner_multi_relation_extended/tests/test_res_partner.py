@@ -18,7 +18,11 @@ class TestResPartner(common.SavepointCase):
             'is_company': True,
         })
 
+        cls.work_relation_type = cls.env.ref(
+            'partner_multi_relation_extended.rel_type_work')
+
     def test_onchange_parent_id(self):
+        self.work_relation_type.is_work_relation = False
         partner = self.partner_model.create({
             'name': 'Test no work relation',
             'parent_id': self.company.id,
@@ -26,11 +30,6 @@ class TestResPartner(common.SavepointCase):
         self.assertFalse(partner.parent_id)
 
     def test_create(self):
-        self.type_model.create({
-            'name': 'works for',
-            'name_inverse': 'has employee',
-            'is_work_relation': True,
-        })
         partner = self.partner_model.create({
             'name': 'Test create',
             'parent_id': self.company.id,

@@ -31,11 +31,8 @@ class TestResPartnerParentModification(common.SavepointCase):
             'is_company': True,
         }) for i in range(3)]
 
-        cls.work_relation_type = cls.type_model.create({
-            'name': 'works for',
-            'name_inverse': 'has employee',
-            'is_work_relation': True,
-        })
+        cls.work_relation_type = cls.env.ref(
+            'partner_multi_relation_extended.rel_type_work')
 
         cls.customer_type = cls.type_model.create({
             'name': 'is customer of',

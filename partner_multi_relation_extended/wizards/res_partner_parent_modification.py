@@ -55,7 +55,10 @@ class ResPartnerParentModification(models.TransientModel):
         # Change parent for the new contact.
         email = self.contact_id.email
         self.contact_id.email = ''
-        new_contact = self.contact_id.copy(default={'parent_id': False})
+        ctx = self.env.context.copy()
+        ctx.update({'disable_duplicate_check': True})
+        new_contact = self.contact_id.with_context(ctx).copy(
+            default={'parent_id': False})
         new_contact.name = new_contact.name[:-7]
         new_contact.email = email
         new_contact.parent_id = self.new_company_id

@@ -66,3 +66,12 @@ class TestResPartner(common.SavepointCase):
         action = self.env['ir.actions.act_window'].search([
             ('name', '=', 'Merge Selected Contacts')])
         self.assertFalse(action)
+
+    def test_07_disable_duplicate_check(self):
+        partner = self.env['res.partner'].create({
+            'name': 'Test disable check',
+        })
+        ctx = self.env.context.copy()
+        ctx.update({'disable_duplicate_check': True})
+        partner.with_context(ctx).copy()
+        self.assertFalse(partner.duplicate_count)
