@@ -9,7 +9,6 @@
 
       <sheet position="before">
         <header>
-          <field name="id" invisible="1"/>
           <button type="action"
                   name="%(action_res_partner_parent_modification)d"
                   string="Change Parent Entity"
@@ -19,7 +18,7 @@
         </header>
       </sheet>
 
-      <field name="parent_id" position="before">
+      <field name="name" position="before">
         <field name="id" invisible="1"/>
       </field>
 
