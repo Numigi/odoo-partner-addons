@@ -35,4 +35,17 @@
     </field>
   </record>
 
+  <record id="tree_res_partner_relation_type_extended" model="ir.ui.view">
+    <field name="name">res.partner.relation.type.extended.tree</field>
+    <field name="model">res.partner.relation.type</field>
+    <field name="inherit_id" ref="partner_multi_relation.tree_res_partner_relation_type"/>
+    <field name="arch" type="xml">
+
+      <field name="is_symmetric" position="after">
+        <field name="is_work_relation"/>
+      </field>
+
+    </field>
+  </record>
+
 </odoo>
