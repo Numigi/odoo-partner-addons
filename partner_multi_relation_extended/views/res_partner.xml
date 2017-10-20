@@ -13,7 +13,7 @@
                   name="%(action_res_partner_parent_modification)d"
                   string="Change Parent Entity"
                   class="oe_highlight"
-                  attrs="{'invisible': [('id', '=', False)]}"
+                  attrs="{'invisible': ['|', ('id', '=', False), ('is_company', '=', True)]}"
           />
         </header>
       </sheet>
