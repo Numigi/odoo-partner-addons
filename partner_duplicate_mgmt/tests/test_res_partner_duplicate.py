@@ -299,3 +299,12 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.duplicate.merge_partners()
 
         self.assertFalse(self.partner_1.phone)
+
+    def test_21_action_resolve(self):
+        dup = self.duplicate
+        self.assertEqual(dup.state, 'to_validate')
+        dup.action_resolve()
+        self.assertEqual(dup.state, 'resolved')
+
+        self.assertIn('resolved', dup.partner_1_id.message_ids[0].body)
+        self.assertIn('resolved', dup.partner_2_id.message_ids[0].body)
