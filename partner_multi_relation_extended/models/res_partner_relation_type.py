@@ -14,6 +14,10 @@ class ResPartnerRelationType(models.Model):
         'Work Relation',
     )
 
+    is_same_relation = fields.Boolean(
+        'Same Relation',
+    )
+
     @api.onchange('is_work_relation')
     def _onchange_is_work_relation(self):
         """
@@ -45,3 +49,17 @@ class ResPartnerRelationType(models.Model):
                 self.contact_type_right = 'c'
                 self.allow_self = False
                 self.is_symetric = False
+
+    @api.multi
+    def unlink(self):
+        """
+        The relation type identified as 'same' cannot be deleted.
+        """
+        for relation_type in self:
+            if relation_type.is_same_relation:
+                raise ValidationError(_(
+                    "You cannot delete the relation type which identifies two "
+                    "partners as the same one. It is necessary in the parent "
+                    "entity modification process."
+                ))
+        super(ResPartnerRelationType, self).unlink()

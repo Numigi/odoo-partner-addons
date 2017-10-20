@@ -8,7 +8,28 @@
     <field name="arch" type="xml">
 
       <field name="allow_self" position="before">
-        <field name="is_work_relation"/>
+        <field name="is_same_relation" invisible="1"/>
+        <field name="is_work_relation" attrs="{'readonly': [('is_same_relation', '=', True)]}"/>
+      </field>
+
+      <field name="contact_type_left" position="attributes">
+        <attribute name="attrs">{'readonly': [('is_same_relation', '=', True)]}</attribute>
+      </field>
+
+      <field name="partner_category_left" position="attributes">
+        <attribute name="attrs">{'readonly': [('is_same_relation', '=', True)]}</attribute>
+      </field>
+
+      <field name="allow_self" position="attributes">
+        <attribute name="attrs">{'readonly': [('is_same_relation', '=', True)]}</attribute>
+      </field>
+
+      <field name="is_symmetric" position="attributes">
+        <attribute name="attrs">{'readonly': [('is_same_relation', '=', True)]}</attribute>
+      </field>
+
+      <field name="handle_invalid_onchange" position="attributes">
+        <attribute name="attrs">{'readonly': [('is_same_relation', '=', True)]}</attribute>
       </field>
 
     </field>

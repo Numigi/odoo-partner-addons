@@ -19,6 +19,9 @@ class TestResPartnerRelationType(common.SavepointCase):
         cls.partner_model = cls.env['res.partner']
         cls.relation_model = cls.env['res.partner.relation']
 
+        cls.relation_type_same = cls.env.ref(
+            'partner_multi_relation_extended.rel_type_same')
+
         cls.work_relation_type = cls.env.ref(
             'partner_multi_relation_extended.rel_type_work')
 
@@ -65,3 +68,15 @@ class TestResPartnerRelationType(common.SavepointCase):
         })
         with self.assertRaises(IntegrityError):
             work_relation.onchange_type_selection_id()
+
+    def test_04_unlink(self):
+        """
+        Test that the relation type identified as 'same' cannot be deleted
+        """
+        with self.assertRaises(ValidationError):
+            self.relation_type_same.unlink()
+        not_same = self.type_model.create({
+            'name': 'Test delete not same',
+            'name_inverse': 'Test delete not same',
+        })
+        not_same.unlink()

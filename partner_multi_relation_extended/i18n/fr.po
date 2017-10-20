@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-20 11:50-0400\n"
-"PO-Revision-Date: 2017-10-20 11:50-0400\n"
+"POT-Creation-Date: 2017-10-20 16:19-0400\n"
+"PO-Revision-Date: 2017-10-20 16:21-0400\n"
 "Last-Translator: Agathe Mollé <agathe.molle@savoirfairelinux.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -168,6 +168,11 @@ msgid "Relations"
 msgstr "Relations"
 
 #. module: partner_multi_relation_extended
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_type_is_same_relation
+msgid "Same Relation"
+msgstr "Relation 'identique'"
+
+#. module: partner_multi_relation_extended
 #: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_strength_sequence
 msgid "Sequence"
 msgstr "Séquence"
@@ -179,7 +184,7 @@ msgid "Strength"
 msgstr "Force"
 
 #. module: partner_multi_relation_extended
-#: code:addons/partner_multi_relation_extended/models/res_partner_relation_type.py:38
+#: code:addons/partner_multi_relation_extended/models/res_partner_relation_type.py:44
 #, python-format
 msgid ""
 "There is already a Partner Relation Type categorized as \"Work Relation\"."
@@ -253,6 +258,17 @@ msgid ""
 msgstr ""
 "Vous ne pouvez pas supprimer une relation de partenaire créée "
 "automatiquement par le système. Seul l'administrateur système le peut."
+
+#. module: partner_multi_relation_extended
+#: code:addons/partner_multi_relation_extended/models/res_partner_relation_type.py:60
+#, python-format
+msgid ""
+"You cannot delete the relation type which identifies two partners as the "
+"same one. It is necessary in the parent entity modification process."
+msgstr ""
+"Vous ne pouvez pas supprimer le type de relation qui identifie deux "
+"partenaires comme étant la même personne. Celui-ci est nécessaire dans le "
+"processus de changement d'entité parente."
 
 #. module: partner_multi_relation_extended
 #: code:addons/partner_multi_relation_extended/models/res_partner.py:22
