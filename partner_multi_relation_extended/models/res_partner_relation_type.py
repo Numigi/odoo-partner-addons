@@ -22,6 +22,8 @@ class ResPartnerRelationType(models.Model):
         if self.is_work_relation:
             self.contact_type_left = 'p'
             self.contact_type_right = 'c'
+            self.allow_self = False
+            self.is_symetric = False
 
     @api.constrains('is_work_relation')
     def _check_is_work_relation(self):
@@ -41,3 +43,5 @@ class ResPartnerRelationType(models.Model):
             else:
                 self.contact_type_left = 'p'
                 self.contact_type_right = 'c'
+                self.allow_self = False
+                self.is_symetric = False
