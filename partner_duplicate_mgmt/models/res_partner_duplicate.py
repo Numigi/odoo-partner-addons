@@ -133,6 +133,12 @@ class ResPartnerDuplicate(models.Model):
             lambda x: x.state == 'to_validate').write({
                 'state': 'resolved'})
 
+        for record in self:
+            message = _('The duplicate line (%s, %s) is resolved.') % (
+                record.partner_1_id.name, record.partner_2_id.name)
+            record.partner_1_id.message_post(body=message)
+            record.partner_2_id.message_post(body=message)
+
     @api.multi
     def set_to_draft(self):
         self.write({'state': 'to_validate'})
