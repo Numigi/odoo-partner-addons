@@ -73,3 +73,19 @@ class ResPartnerRelationAll(models.AbstractModel):
                 "administrator can."
             ))
         return super(ResPartnerRelationAll, self).unlink()
+
+    @api.onchange('type_selection_id')
+    def onchange_type_selection_id(self):
+        res = super(ResPartnerRelationAll, self).onchange_type_selection_id()
+        if self.type_selection_id.type_id.is_work_relation:
+            res['warning'] = {
+                'title': _('Warning'),
+                'message': _(
+                    'Work type relations cannot be created/updated manually. '
+                    'If you need to add a new relation flagged as "Work '
+                    'Relation", please use the "Change Parent Entity" button '
+                    'on the partner form.'
+                )
+            }
+            self.type_selection_id = False
+        return res
