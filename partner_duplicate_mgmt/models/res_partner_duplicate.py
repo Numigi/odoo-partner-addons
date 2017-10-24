@@ -21,6 +21,7 @@ class ResPartnerDuplicate(models.Model):
         track_visibility='onchange')
     merge_line_ids = fields.One2many(
         'res.partner.merge.line', 'duplicate_id', string='Merge Lines')
+
     state = fields.Selection(
         string='State',
         selection=[
@@ -151,6 +152,10 @@ class ResPartnerDuplicate(models.Model):
         if self.state != 'to_validate':
             raise UserError(_(
                 "You can not merge a line which is not to validate."))
+
+       # merge_lines = (
+         #   self.env['res.partner.merge.line'].create_merge_lines(self))
+       # self.write({'merge_line_ids': [(6, 0, merge_lines.ids)]})
 
         view = self.env.ref(
             'partner_duplicate_mgmt.res_partner_merge_wizard_form')

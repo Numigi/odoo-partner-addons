@@ -22,6 +22,10 @@ class TestResPartner(common.SavepointCase):
             'name': '33 Big Partner',
         })
 
+        cls.group = cls.env.ref(
+            'partner_duplicate_mgmt.group_duplicate_partners_control')
+        cls.env.user.write({'groups_id': [(4, cls.group.id)]})
+
     def test_01_partner_indexed_name(self):
         self.assertEqual(self.partner_1.indexed_name, 'big partner')
 
