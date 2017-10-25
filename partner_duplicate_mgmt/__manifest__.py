@@ -30,6 +30,9 @@
         'views/res_partner_duplicate_field.xml',
         'views/res_partner_duplicate_term.xml',
     ],
+    'external_dependencies': {
+        'python': ['unidecode'],
+    },
     'post_init_hook': 'update_partners_indexed_name',
     'installable': True,
     'application': True,
