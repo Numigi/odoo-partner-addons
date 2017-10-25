@@ -9,6 +9,7 @@ class ResPartnerDuplicateField(models.Model):
 
     _name = 'res.partner.duplicate.field'
     _description = 'Partner Duplicate Field'
+    _order = 'sequence'
 
     field_id = fields.Many2one(
         'ir.model.fields', string='Partner Field', required=True, domain=[
