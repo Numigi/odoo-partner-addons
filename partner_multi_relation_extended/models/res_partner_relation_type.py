@@ -51,20 +51,6 @@ class ResPartnerRelationType(models.Model):
                 self.is_symmetric = False
 
     @api.multi
-    def write(self, vals):
-        for type in self:
-            if 'is_work_relation' not in vals and type.is_work_relation:
-                if 'contact_type_left' in vals:
-                    del vals['contact_type_left']
-                if 'contact_type_right' in vals:
-                    del vals['contact_type_right']
-                if 'allow_self' in vals:
-                    del vals['allow_self']
-                if 'is_symmetric' in vals:
-                    del vals['is_symmetric']
-        return super(ResPartnerRelationType, self).write(vals)
-
-    @api.multi
     def unlink(self):
         """
         The relation type identified as 'same' cannot be deleted.
