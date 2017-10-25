@@ -109,17 +109,17 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
     def test_07_char_field_merge_line_created_correctly(self):
         merge_lines = self.merge_lines
-        merge_line = merge_lines.search([
-            ('duplicate_field_id', '=', self.duplicate_email.id)])
+        merge_line = merge_lines.filtered(
+            lambda l: l.duplicate_field_id == self.duplicate_email)
 
         self.assertTrue(merge_line)
         self.assertEqual(merge_line.partner_1_value, 'partners@localhost')
         self.assertEqual(merge_line.partner_2_value, 'partner_123@localhost')
 
     def test_08_many2one_field_merge_line_created_correctly(self):
-        merge_lines = self.merge_lines
-        merge_line = merge_lines.search([
-            ('duplicate_field_id', '=', self.duplicate_state.id)])
+        merge_line = self.merge_lines.filtered(
+            lambda l: l.duplicate_field_id == self.duplicate_state)
+
         self.assertTrue(merge_line)
         self.assertEqual(merge_line.partner_1_value, 'Quebec')
         self.assertEqual(merge_line.partner_2_value, 'Ontario')

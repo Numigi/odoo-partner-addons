@@ -12,6 +12,10 @@ class TestResPartner(common.SavepointCase):
     def setUpClass(cls):
         super(TestResPartner, cls).setUpClass()
 
+        cls.group = cls.env.ref(
+            'partner_duplicate_mgmt.group_duplicate_partners_control')
+        cls.env.user.write({'groups_id': [(4, cls.group.id)]})
+
         cls.partner_1 = cls.env['res.partner'].create({
             'name': '11 Big Partner inc.',
         })

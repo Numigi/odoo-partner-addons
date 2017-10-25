@@ -382,6 +382,12 @@ msgid "You can not merge a line which is not to validate."
 msgstr "Vous ne pouvez pas fusionner une ligne qui n'est pas à valider."
 
 #. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner.py:0
+#, python-format
+msgid "You don't have access to merge partners."
+msgstr "Vous n'avez pas accès à la fusion de partenaires."
+
+#. module: partner_duplicate_mgmt
 #: model:ir.model,name:partner_duplicate_mgmt.model_res_partner_merge_line
 msgid "res.partner.merge.line"
 msgstr "res.partner.merge.line"
