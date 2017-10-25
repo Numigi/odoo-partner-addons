@@ -11,10 +11,6 @@ class TestResPartnerDuplicate(common.SavepointCase):
     def setUpClass(cls):
         super(TestResPartnerDuplicate, cls).setUpClass()
 
-        # cls.group = cls.env.ref(
-            # 'partner_duplicate_mgmt.group_duplicate_partners_control')
-        # cls.env.user.write({'groups_id': [(4, cls.group.id)]})
-
         cls.field_email = cls.env.ref('base.field_res_partner_email')
         cls.field_state = cls.env.ref('base.field_res_partner_state_id')
 
@@ -69,10 +65,10 @@ class TestResPartnerDuplicate(common.SavepointCase):
         cls.duplicate.open_partner_merge_wizard()
         cls.merge_lines = cls.duplicate.merge_line_ids
 
-    def _test_01_make_sure_that_first_duplicate_exists(self):
+    def test_01_make_sure_that_first_duplicate_exists(self):
         self.assertTrue(self.duplicate)
 
-    def _test_02_cron_executed_twice_wont_create_2_duplicates(self):
+    def test_02_cron_executed_twice_wont_create_2_duplicates(self):
         self.cron.method_direct_trigger()
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', self.partners),
@@ -80,21 +76,21 @@ class TestResPartnerDuplicate(common.SavepointCase):
         ])
         self.assertEqual(len(duplicates), 1)
 
-    def _test_03_duplicates_where_partner1_equals_partner2_are_ignored(self):
+    def test_03_duplicates_where_partner1_equals_partner2_are_ignored(self):
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', '=', self.partner_1.id),
             ('partner_2_id', '=', self.partner_1.id),
         ])
         self.assertEqual(len(duplicates), 0)
 
-    def _test_04_reversed_and_normal_duplicate_of_duplicate_are_ignored(self):
+    def test_04_reversed_and_normal_duplicate_of_duplicate_are_ignored(self):
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', self.partners),
             ('partner_2_id', 'in', self.partners),
         ])
         self.assertEqual(len(duplicates), 1)
 
-    def _test_05_cron_creates_new_partner_duplicate(self):
+    def test_05_cron_creates_new_partner_duplicate(self):
         self.partner_3 = self.env['res.partner'].create({
             'name': 'Partner',
         })
@@ -107,11 +103,11 @@ class TestResPartnerDuplicate(common.SavepointCase):
         ])
         self.assertEqual(len(duplicates), 2)
 
-    def _test_06_create_new_duplicate_adds_message_to_chatter(self):
+    def test_06_create_new_duplicate_adds_message_to_chatter(self):
         self.assertEqual(len(self.partner_2.message_ids), 2)
         self.assertIn(self.partner_1.name, self.partner_2.message_ids[0].body)
 
-    def _test_07_char_field_merge_line_created_correctly(self):
+    def test_07_char_field_merge_line_created_correctly(self):
         merge_lines = self.merge_lines
         merge_line = merge_lines.filtered(
             lambda l: l.duplicate_field_id == self.duplicate_email)
@@ -120,7 +116,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(merge_line.partner_1_value, 'partners@localhost')
         self.assertEqual(merge_line.partner_2_value, 'partner_123@localhost')
 
-    def _test_08_many2one_field_merge_line_created_correctly(self):
+    def test_08_many2one_field_merge_line_created_correctly(self):
         merge_line = self.merge_lines.filtered(
             lambda l: l.duplicate_field_id == self.duplicate_state)
 

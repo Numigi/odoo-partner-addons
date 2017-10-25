@@ -144,7 +144,6 @@ class ResPartner(models.Model):
 
     @api.multi
     def write(self, vals):
-        # import ipdb; ipdb.set_trace()
         res = super(ResPartner, self).write(vals)
         if 'name' in vals or 'firstname' in vals or 'lastname' in vals:
             self._update_indexed_name()
@@ -234,9 +233,9 @@ class ResPartner(models.Model):
     def action_merge(self):
         group = self.env.ref(
             'partner_duplicate_mgmt.group_duplicate_partners_control')
-        # if group not in self.env.user.groups_id:
-            # raise UserError(_(
-                # "You don't have enough rights to merge partners."))
+        if group not in self.env.user.groups_id:
+            raise UserError(_(
+                "You don't have access to merge partners."))
 
         if len(self) != 2:
             raise UserError(_("Please, select two partners to merge."))
