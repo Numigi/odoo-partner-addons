@@ -7,6 +7,8 @@ import re
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+import unidecode
+
 _logger = logging.getLogger(__name__)
 
 
@@ -52,6 +54,7 @@ class ResPartner(models.Model):
             indexed_name = re.sub(
                 expression, ' ', indexed_name, flags=re.IGNORECASE)
 
+        indexed_name = unidecode.unidecode(indexed_name)
         return indexed_name.strip().lower()
 
     def _get_duplicates(self, indexed_name=None):
