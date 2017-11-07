@@ -63,8 +63,8 @@ msgstr ""
 
 #. module: partner_duplicate_mgmt
 #: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_contacts_partner_duplicate_mgmt
-msgid "Duplicate Management"
-msgstr "Gestion des doublons"
+msgid "Duplicates"
+msgstr "Doublons"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_ids
