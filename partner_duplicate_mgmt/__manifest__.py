@@ -14,7 +14,6 @@
     'depends': [
         'contacts',
         'crm',
-        'partner_firstname',
         'mail',
     ],
     'data': [
