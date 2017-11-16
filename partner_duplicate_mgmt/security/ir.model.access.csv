@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_res_partner_duplicate_term,access_res_partner_duplicate_term,model_res_partner_duplicate_term,,1,0,0,0
-access_res_partner_duplicate,access_res_partner_duplicate,model_res_partner_duplicate,,1,0,0,0
+access_res_partner_duplicate,access_res_partner_duplicate,model_res_partner_duplicate,,1,1,1,0
 access_res_partner_duplicate_field,access_res_partner_duplicate_field,model_res_partner_duplicate_field,,1,0,0,0
 access_res_partner_merge_line,access_res_partner_merge_line,model_res_partner_merge_line,,1,0,0,0
