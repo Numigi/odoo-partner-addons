@@ -107,23 +107,25 @@ class ResPartner(models.Model):
 
     @api.onchange('name', 'parent_id')
     def onchange_name(self):
-        if not self.id:
-            indexed_name = self._get_indexed_name()
-            duplicate_dict = self._get_duplicates(indexed_name)
+        indexed_name = self._get_indexed_name()
+        if self.id or not indexed_name:
+            return
 
-            if duplicate_dict:
-                duplicate_names = [d['name'] for d in duplicate_dict]
-                partner_names = ", ".join(duplicate_names)
-                return {
-                    'warning': {
-                        'title': 'Warning',
-                        'message': _(
-                            "This partner (%(new_partner)s) may be considered "
-                            "as a duplicate of the following partner(s): "
-                            "%(partner_names)s.") % {
-                                'new_partner': self.name,
-                                'partner_names': partner_names,
-                        }}}
+        duplicate_dict = self._get_duplicates(indexed_name)
+
+        if duplicate_dict:
+            duplicate_names = [d['name'] for d in duplicate_dict]
+            partner_names = ", ".join(duplicate_names)
+            return {
+                'warning': {
+                    'title': 'Warning',
+                    'message': _(
+                        "This partner (%(new_partner)s) may be considered "
+                        "as a duplicate of the following partner(s): "
+                        "%(partner_names)s.") % {
+                            'new_partner': self.name,
+                            'partner_names': partner_names,
+                    }}}
 
     def _update_indexed_name(self):
         for partner in self:
