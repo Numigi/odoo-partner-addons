@@ -57,6 +57,19 @@ class ResPartner(models.Model):
         indexed_name = unidecode.unidecode(indexed_name)
         return indexed_name.strip().lower()
 
+    def _get_min_similarity(self, indexed_name):
+        if len(indexed_name) <= 9:
+            return self.env['ir.config_parameter'].get_param(
+                'partner_duplicate_mgmt.partner_name_similarity_1')
+
+        if 10 <= len(indexed_name) <= 17:
+            return self.env['ir.config_parameter'].get_param(
+                'partner_duplicate_mgmt.partner_name_similarity_2')
+
+        if len(indexed_name) >= 18:
+            return self.env['ir.config_parameter'].get_param(
+                'partner_duplicate_mgmt.partner_name_similarity_3')
+
     def _get_duplicates(self, indexed_name=None):
         if self._context.get('disable_duplicate_check'):
             return []
@@ -64,10 +77,9 @@ class ResPartner(models.Model):
         if not indexed_name:
             indexed_name = self.indexed_name
 
-        cr = self.env.cr
-        min_similarity = self.env['ir.config_parameter'].get_param(
-            'partner_duplicate_mgmt.partner_name_min_similarity')
+        min_similarity = self._get_min_similarity(indexed_name)
 
+        cr = self.env.cr
         cr.execute('SELECT set_limit(%s)', (min_similarity,))
         cr.execute("""
             SELECT p.id, p.name
@@ -95,23 +107,25 @@ class ResPartner(models.Model):
 
     @api.onchange('name', 'parent_id')
     def onchange_name(self):
-        if not self.id:
-            indexed_name = self._get_indexed_name()
-            duplicate_dict = self._get_duplicates(indexed_name)
+        indexed_name = self._get_indexed_name()
+        if self.id or not indexed_name:
+            return
 
-            if duplicate_dict:
-                duplicate_names = [d['name'] for d in duplicate_dict]
-                partner_names = ", ".join(duplicate_names)
-                return {
-                    'warning': {
-                        'title': 'Warning',
-                        'message': _(
-                            "This partner (%(new_partner)s) may be considered "
-                            "as a duplicate of the following partner(s): "
-                            "%(partner_names)s.") % {
-                                'new_partner': self.name,
-                                'partner_names': partner_names,
-                        }}}
+        duplicate_dict = self._get_duplicates(indexed_name)
+
+        if duplicate_dict:
+            duplicate_names = [d['name'] for d in duplicate_dict]
+            partner_names = ", ".join(duplicate_names)
+            return {
+                'warning': {
+                    'title': 'Warning',
+                    'message': _(
+                        "This partner (%(new_partner)s) may be considered "
+                        "as a duplicate of the following partner(s): "
+                        "%(partner_names)s.") % {
+                            'new_partner': self.name,
+                            'partner_names': partner_names,
+                    }}}
 
     def _update_indexed_name(self):
         for partner in self:

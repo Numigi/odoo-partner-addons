@@ -95,28 +95,43 @@ class ResPartnerDuplicate(models.Model):
         self.write({'state': 'merged'})
 
     def _find_partner_duplicates(self):
+        criteria = []
+        similarity_1 = self.env['ir.config_parameter'].get_param(
+            'partner_duplicate_mgmt.partner_name_similarity_1')
+        criteria.append((similarity_1, 0, 9))
+
+        similarity_2 = self.env['ir.config_parameter'].get_param(
+            'partner_duplicate_mgmt.partner_name_similarity_2')
+        criteria.append((similarity_2, 10, 17))
+
+        similarity_3 = self.env['ir.config_parameter'].get_param(
+            'partner_duplicate_mgmt.partner_name_similarity_3')
+        criteria.append((similarity_3, 18, 100))
+
         cr = self.env.cr
-
-        min_similarity = self.env['ir.config_parameter'].get_param(
-            'partner_duplicate_mgmt.partner_name_min_similarity')
-
-        cr.execute('SELECT set_limit(%s)', (min_similarity,))
-        cr.execute("""
-            SELECT p1.id, p2.id
-            FROM res_partner p1
-            JOIN res_partner p2 ON p1.indexed_name % p2.indexed_name
-            WHERE p1.id != p2.id
-            AND ((p1.parent_id IS NOT DISTINCT FROM p2.parent_id)
-              OR (p1.parent_id IS NULL AND p1.id != p2.parent_id)
-              OR (p2.parent_id IS NULL AND p2.id != p1.parent_id)
-            )
-            AND NOT EXISTS (
-                SELECT NULL
-                FROM res_partner_duplicate d
-                WHERE (d.partner_1_id = p1.id AND d.partner_2_id = p2.id)
-                OR    (d.partner_1_id = p2.id AND d.partner_2_id = p1.id)
-            )
-            """)
+        for criterion in criteria:
+            cr.execute('SELECT set_limit(%s)', (criterion[0],))
+            cr.execute("""
+                SELECT p1.id, p2.id
+                FROM res_partner p1
+                JOIN res_partner p2 ON p1.indexed_name %% p2.indexed_name
+                WHERE p1.id != p2.id
+                AND ((p1.parent_id IS NOT DISTINCT FROM p2.parent_id)
+                  OR (p1.parent_id IS NULL AND p1.id != p2.parent_id)
+                  OR (p2.parent_id IS NULL AND p2.id != p1.parent_id)
+                )
+                AND length(p1.indexed_name)
+                    BETWEEN %(min_length)s AND %(max_length)s
+                AND NOT EXISTS (
+                    SELECT NULL
+                    FROM res_partner_duplicate d
+                    WHERE (d.partner_1_id = p1.id AND d.partner_2_id = p2.id)
+                    OR    (d.partner_1_id = p2.id AND d.partner_2_id = p1.id)
+                )
+            """, {
+                'min_length': criterion[1],
+                'max_length': criterion[2],
+            })
 
         return cr.fetchall()
 

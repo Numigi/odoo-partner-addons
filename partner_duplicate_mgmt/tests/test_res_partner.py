@@ -91,3 +91,45 @@ class TestResPartner(common.SavepointCase):
         ctx.update({'disable_duplicate_check': True})
         partner.with_context(ctx).copy()
         self.assertFalse(partner.duplicate_count)
+
+    def test_09_merge_partners_similarity_1(self):
+        # Similarity of these 2 partners : 0.53
+        partner_4 = self.env['res.partner'].create({
+            'name': 'Julienjez',
+        })
+        partner_5 = self.env['res.partner'].create({
+            'name': 'Julyenjez',
+        })
+
+        similarity = self.env['res.partner']._get_min_similarity('Julienjez')
+        self.assertEqual(similarity, '0.5')
+        self.assertIn(partner_4, partner_5.duplicate_ids)
+
+    def test_10_merge_partners_similarity_2(self):
+        # Similarity of these 2 partners : 0.67
+        partner_4 = self.env['res.partner'].create({
+            'name': 'Julienjezequel',
+        })
+        partner_5 = self.env['res.partner'].create({
+            'name': 'Julyenjezequel',
+        })
+
+        similarity = (
+            self.env['res.partner']._get_min_similarity('Julienjezequel'))
+        self.assertEqual(similarity, '0.6')
+        self.assertIn(partner_4, partner_5.duplicate_ids)
+
+    def test_11_merge_partners_similarity_3(self):
+        # Similarity of these 2 partners : 0.63
+        partner_4 = self.env['res.partner'].create({
+            'name': 'Julien Jezequel Breard',
+        })
+        partner_5 = self.env['res.partner'].create({
+            'name': 'Julyen Jezequel Brearr',
+        })
+
+        similarity = (
+            self.env['res.partner']._get_min_similarity(
+                'Julien Jezequel Breard'))
+        self.assertEqual(similarity, '0.7')
+        self.assertNotIn(partner_4, partner_5.duplicate_ids)
