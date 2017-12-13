@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="merger_reason_mistake" model="merger.reason">
+            <field name="name">Created in duplicate by mistake</field>
+        </record>
+
+        <record id="merger_reason_legal_merger" model="merger.reason">
+            <field name="name">Legal merger of entities</field>
+        </record>
+
+    </data>
+</odoo>

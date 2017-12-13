@@ -22,6 +22,9 @@ class ResPartnerDuplicate(models.Model):
     merge_line_ids = fields.One2many(
         'res.partner.merge.line', 'duplicate_id', string='Merge Lines')
 
+    merger_reason_id = fields.Many2one(
+        'merger.reason', string='Merger Reason')
+
     state = fields.Selection(
         string='State',
         selection=[
@@ -80,16 +83,24 @@ class ResPartnerDuplicate(models.Model):
         # Call the method _merge of the crm partner merge widget
         partners = self.partner_1_id | self.partner_2_id
         base_wizard = self.env['base.partner.merge.automatic.wizard']
-        base_wizard.with_context(do_not_unlink_partner=True)._merge(
-            partners.ids, self.partner_preserved_id)
+        base_wizard._merge(partners.ids, self.partner_preserved_id)
 
         # Archive the partner which is not preserved
         partner_to_archive = partners - self.partner_preserved_id
         partner_to_archive.write({'active': False})
 
-        # Add a message to the chatter
-        message = _('Merged into %s') % (self.partner_preserved_id.name)
-        partner_to_archive.message_post(body=message)
+        # Add messages to the chatter
+        message_src = _('Merged into %s') % (self.partner_preserved_id.name)
+        partner_to_archive.message_post(body=message_src)
+
+        message_reason = ""
+        if self.merger_reason_id:
+            message_reason = _(
+                " Merger reason is : %s.") % (self.merger_reason_id.name,)
+
+        message_dst = _('Merged with %s.') % (partner_to_archive.name,)
+        self.partner_preserved_id.message_post(
+            body=(message_dst + message_reason))
 
         # Change duplicate state
         self.write({'state': 'merged'})

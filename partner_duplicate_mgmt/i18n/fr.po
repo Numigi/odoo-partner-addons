@@ -34,6 +34,11 @@ msgid "Created by"
 msgstr "Créé par"
 
 #. module: partner_duplicate_mgmt
+#: model:merger.reason,name:partner_duplicate_mgmt.merger_reason_mistake
+msgid "Created in duplicate by mistake"
+msgstr "Créé en double par erreur"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_create_date
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_create_date
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_create_date
@@ -169,6 +174,11 @@ msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
 
 #. module: partner_duplicate_mgmt
+#: model:merger.reason,name:partner_duplicate_mgmt.merger_reason_legal_merger
+msgid "Legal merger of entities"
+msgstr "Fusion légale d’entités"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_form
 msgid "Merge"
 msgstr "Fusionner"
@@ -202,7 +212,32 @@ msgid "Merged into %s"
 msgstr "Fusionné vers %s"
 
 #. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
+#, python-format
+msgid "Merged with %s."
+msgstr "Fusionné avec %s."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
+#, python-format
+msgid " Merger reason is : %s."
+msgstr " La raison de fusion est : %s."
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_merger_reason_id
+msgid "Merger Reason"
+msgstr "Raison de fusion"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.actions.act_window,name:partner_duplicate_mgmt.merger_reason_action
+#: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_merger_reason_action
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.merger_reason_tree
+msgid "Merger Reasons"
+msgstr "Raisons de fusion"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_name
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_merger_reason_name
 #: model:res.partner.duplicate.field,name:partner_duplicate_mgmt.duplicate_field_name
 msgid "Name"
 msgstr "Nom"

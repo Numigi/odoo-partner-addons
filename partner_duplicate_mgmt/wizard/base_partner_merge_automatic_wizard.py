@@ -2,7 +2,12 @@
 # © 2016 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, models
+from odoo import _, api, models, SUPERUSER_ID
+from odoo.exceptions import UserError
+
+import logging
+
+_logger = logging.getLogger('base.partner.merge')
 
 
 class MergePartnerAutomatic(models.TransientModel):
@@ -34,10 +39,49 @@ class MergePartnerAutomatic(models.TransientModel):
             'src_partner': src_partners.id,
         })
 
-    @api.model
-    def _update_values(self, src_partners, dst_partner):
+    def _merge(self, partner_ids, dst_partner):
         """
-        Avoid calling the original method which replaces partner preserved
-        null values with the partner archived values.
+        Override completely the original function to remove useless code.
         """
-        return True
+        Partner = self.env['res.partner']
+        partner_ids = Partner.browse(partner_ids).exists()
+
+        # check only admin can merge partners with different emails
+        if (
+            SUPERUSER_ID != self.env.uid and
+            len(set(partner.email for partner in partner_ids)) > 1
+        ):
+            raise UserError(_(
+                "All contacts must have the same email. Only the "
+                "Administrator can merge contacts with different emails."))
+
+        # remove dst_partner from partners to merge
+        if dst_partner and dst_partner in partner_ids:
+            src_partners = partner_ids - dst_partner
+        else:
+            ordered_partners = self._get_ordered_partner(partner_ids.ids)
+            dst_partner = ordered_partners[-1]
+            src_partners = ordered_partners[:-1]
+        _logger.info("dst_partner: %s", dst_partner.id)
+
+        # FIXME: is it still required to make and exception for
+        # account.move.line since accounting v9.0 ?
+        if (
+            SUPERUSER_ID != self.env.uid and
+            'account.move.line' in self.env and
+            self.env['account.move.line'].sudo().search([
+                ('partner_id', 'in', [partner.id for partner in src_partners])
+            ])
+        ):
+            raise UserError(_(
+                "Only the destination contact may be linked to existing "
+                "Journal Items. Please ask the Administrator if you need "
+                "to merge several contacts linked to existing Journal Items."))
+
+        # call sub methods to do the merge
+        self._update_foreign_keys(src_partners, dst_partner)
+        self._update_reference_fields(src_partners, dst_partner)
+
+        _logger.info(
+            '(uid = %s) merged the partners %r with %s',
+            self._uid, src_partners.ids, dst_partner.id)

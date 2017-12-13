@@ -205,13 +205,6 @@ class ResPartner(models.Model):
 
         return res
 
-    @api.multi
-    def unlink(self):
-        if self.env.context.get('do_not_unlink_partner'):
-            return True
-
-        return super(ResPartner, self).unlink()
-
     @api.model_cr_context
     def _auto_init(self):
         res = super(ResPartner, self)._auto_init()
