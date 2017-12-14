@@ -19,6 +19,9 @@ class MergePartnerAutomatic(models.TransientModel):
         Ignore the table 'res_partner_duplicate' to avoid merging partner
         duplicates.
         """
+        if ('merge_2_companies' in self.env.context):
+            return []
+
         res = super(MergePartnerAutomatic, self)._get_fk_on(table)
         relations = [r for r in res if 'res_partner_duplicate' not in r[0]]
         return relations
@@ -29,6 +32,9 @@ class MergePartnerAutomatic(models.TransientModel):
         Override completely the original function to avoid merging messages
         and merge only attachments.
         """
+        if src_partners.is_company and dst_partner.is_company:
+            return
+
         self.env.cr.execute("""
             UPDATE ir_attachment
             SET res_id = %(dst_partner)s
@@ -37,6 +43,13 @@ class MergePartnerAutomatic(models.TransientModel):
         """, {
             'dst_partner': dst_partner.id,
             'src_partner': src_partners.id,
+        })
+
+    def _update_children(self, src_partners, dst_partner):
+        src_partners.child_ids.write({'parent_id': dst_partner.id})
+        src_partners.write({
+            'is_company': False,
+            'parent_id': dst_partner.id,
         })
 
     def _merge(self, partner_ids, dst_partner):
@@ -78,9 +91,15 @@ class MergePartnerAutomatic(models.TransientModel):
                 "Journal Items. Please ask the Administrator if you need "
                 "to merge several contacts linked to existing Journal Items."))
 
-        # call sub methods to do the merge
-        self._update_foreign_keys(src_partners, dst_partner)
         self._update_reference_fields(src_partners, dst_partner)
+
+        # call sub methods to do the merge
+        if src_partners.is_company and dst_partner.is_company:
+            self.with_context({'merge_2_companies': True})\
+                ._update_foreign_keys(src_partners, dst_partner)
+            self._update_children(src_partners, dst_partner)
+        else:
+            self._update_foreign_keys(src_partners, dst_partner)
 
         _logger.info(
             '(uid = %s) merged the partners %r with %s',

@@ -29,30 +29,48 @@ class TestResPartnerDuplicate(common.SavepointCase):
             'sequence': 6,
         })
 
+        cls.company_1 = cls.env['res.partner'].create({
+            'name': '123 Company inc.',
+            'is_company': True,
+            'state_id': cls.state_on.id,
+        })
+        cls.company_2 = cls.env['res.partner'].create({
+            'name': '456 Coompany inc.',
+            'is_company': True,
+        })
+
+        cls.contact_1 = cls.env['res.partner'].create({
+            'name': '123 Partner inc.',
+            'email': 'contact_123@localhost',
+            'parent_id': cls.company_1.id,
+        })
+        cls.contact_2 = cls.env['res.partner'].create({
+            'name': '456 Paartner inc.',
+            'email': 'partners@localhost',
+            'state_id': cls.state_qc.id,
+        })
+
         cls.bank_1 = cls.env['res.partner.bank'].create({
             'acc_number': 1111,
+            'partner_id': cls.contact_1.id,
         })
         cls.bank_2 = cls.env['res.partner.bank'].create({
             'acc_number': 2222,
+            'partner_id': cls.contact_2.id,
         })
 
-        cls.partner_1 = cls.env['res.partner'].create({
-            'name': '123 Partner inc.',
-            'is_company': True,
-            'email': 'partner_123@localhost',
-            'state_id': cls.state_on.id,
-            'bank_ids': [(4, cls.bank_1.id)],
+        cls.attachment_1 = cls.env['ir.attachment'].create({
+            'name': 'Attachment 1',
+            'res_model': 'res.partner',
+            'res_id': cls.contact_1.id,
+        })
+        cls.attachment_2 = cls.env['ir.attachment'].create({
+            'name': 'Attachment 1',
+            'res_model': 'res.partner',
+            'res_id': cls.contact_2.id,
         })
 
-        cls.partner_2 = cls.env['res.partner'].create({
-            'name': 'Partners inc.',
-            'is_company': True,
-            'email': 'partners@localhost',
-            'state_id': cls.state_qc.id,
-            'bank_ids': [(4, cls.bank_2.id)],
-        })
-
-        cls.partners = [cls.partner_1.id, cls.partner_2.id]
+        cls.partners = [cls.contact_1.id, cls.contact_2.id]
 
         cls.duplicate = cls.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', cls.partners),
@@ -76,8 +94,8 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
     def test_03_duplicates_where_partner1_equals_partner2_are_ignored(self):
         duplicates = self.env['res.partner.duplicate'].search([
-            ('partner_1_id', '=', self.partner_1.id),
-            ('partner_2_id', '=', self.partner_1.id),
+            ('partner_1_id', '=', self.contact_1.id),
+            ('partner_2_id', '=', self.contact_1.id),
         ])
         self.assertEqual(len(duplicates), 0)
 
@@ -89,8 +107,8 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(len(duplicates), 1)
 
     def test_05_create_new_duplicate_adds_message_to_chatter(self):
-        self.assertEqual(len(self.partner_2.message_ids), 2)
-        self.assertIn(self.partner_1.name, self.partner_2.message_ids[0].body)
+        self.assertEqual(len(self.contact_2.message_ids), 2)
+        self.assertIn(self.contact_1.name, self.contact_2.message_ids[0].body)
 
     def test_06_char_field_merge_line_created_correctly(self):
         merge_lines = self.merge_lines
@@ -99,7 +117,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         self.assertTrue(merge_line)
         self.assertEqual(merge_line.partner_1_value, 'partners@localhost')
-        self.assertEqual(merge_line.partner_2_value, 'partner_123@localhost')
+        self.assertEqual(merge_line.partner_2_value, 'contact_123@localhost')
 
     def test_07_many2one_field_merge_line_created_correctly(self):
         merge_line = self.merge_lines.filtered(
@@ -110,7 +128,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(merge_line.partner_2_value, 'Ontario')
 
     def test_08_merge_partners_update_char_field_partner_2_preserved(self):
-        self.duplicate.write({'partner_preserved_id': self.partner_1.id})
+        self.duplicate.write({'partner_preserved_id': self.contact_1.id})
 
         self.merge_lines.write({'partner_1_selected': True})
         self.merge_lines.filtered(
@@ -120,104 +138,159 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.duplicate.merge_partners()
 
         self.assertEqual(self.duplicate.state, 'merged')
-        self.assertEqual(self.partner_1.email, 'partners@localhost')
+        self.assertEqual(self.contact_1.email, 'partners@localhost')
 
     def test_09_merge_partners_update_char_field(self):
-        self.duplicate.write({'partner_preserved_id': self.partner_2.id})
+        self.duplicate.write({'partner_preserved_id': self.contact_2.id})
         self.merge_lines.write({'partner_2_selected': True})
         self.merge_lines.filtered(
             lambda so: so.duplicate_field_id != self.duplicate_email
         ).write({'partner_1_selected': True})
         self.duplicate.merge_partners()
 
-        self.assertEqual(self.partner_2.email, 'partner_123@localhost')
+        self.assertEqual(self.contact_2.email, 'contact_123@localhost')
 
     def test_10_merge_partners_update_many2one_field(self):
-        self.duplicate.write({'partner_preserved_id': self.partner_2.id})
+        self.duplicate.write({'partner_preserved_id': self.contact_2.id})
         self.merge_lines.write({'partner_2_selected': True})
         self.merge_lines.filtered(
             lambda so: so.duplicate_field_id != self.duplicate_state
         ).write({'partner_1_selected': True})
         self.duplicate.merge_partners()
 
-        self.assertEqual(self.partner_2.state_id, self.state_on)
+        self.assertEqual(self.contact_2.state_id, self.state_on)
 
     def test_11_partner_not_conserved_should_be_archived(self):
-        self.duplicate.write({'partner_preserved_id': self.partner_2.id})
+        self.duplicate.write({'partner_preserved_id': self.contact_2.id})
         self.merge_lines.write({'partner_2_selected': True})
         self.duplicate.merge_partners()
 
-        self.assertTrue(self.partner_1)
-        self.assertTrue(self.partner_2)
+        self.assertTrue(self.contact_1)
+        self.assertTrue(self.contact_2)
 
-        self.assertFalse(self.partner_1.active)
-        self.assertTrue(self.partner_2.active)
+        self.assertFalse(self.contact_1.active)
+        self.assertTrue(self.contact_2.active)
 
-        self.assertEqual(len(self.partner_1.message_ids), 2)
-        self.assertIn(self.partner_2.name, self.partner_1.message_ids[0].body)
+        self.assertEqual(len(self.contact_1.message_ids), 2)
+        self.assertIn(self.contact_2.name, self.contact_1.message_ids[0].body)
 
-    def test_12_partner_merge_doesnt_affect_message_ids(self):
-        self.assertEqual(len(self.partner_1.message_ids), 1)
-        self.assertEqual(len(self.partner_2.message_ids), 2)
+    def test_12_contact_merge_doesnt_affect_message_ids(self):
+        self.assertEqual(len(self.contact_1.message_ids), 1)
+        self.assertEqual(len(self.contact_2.message_ids), 2)
 
-        self.duplicate.write({'partner_preserved_id': self.partner_2.id})
+        self.duplicate.write({'partner_preserved_id': self.contact_2.id})
         self.merge_lines.write({'partner_2_selected': True})
         self.duplicate.merge_partners()
 
-        self.assertEqual(len(self.partner_1.message_ids), 2)
-        self.assertEqual(len(self.partner_2.message_ids), 3)
+        self.assertEqual(len(self.contact_1.message_ids), 2)
+        self.assertEqual(len(self.contact_2.message_ids), 3)
         self.assertNotIn(
-            self.partner_1.message_ids[0], self.partner_2.message_ids)
+            self.contact_1.message_ids[0], self.contact_2.message_ids)
         self.assertNotIn(
-            self.partner_1.message_ids[1], self.partner_2.message_ids)
+            self.contact_1.message_ids[1], self.contact_2.message_ids)
 
-    def test_13_merge_partners_update_many2many_field(self):
-        self.duplicate.write({'partner_preserved_id': self.partner_2.id})
+    def test_13_contacts_merger_should_merge_one2many_field(self):
+        self.duplicate.write({'partner_preserved_id': self.contact_2.id})
         self.merge_lines.write({'partner_2_selected': True})
         self.duplicate.merge_partners()
 
-        # All the references which pointed to partner 1
-        # point now to partner 2
+        self.assertIn(self.bank_1, self.contact_2.bank_ids)
+        self.assertIn(self.bank_2, self.contact_2.bank_ids)
 
-        self.assertIn(self.bank_1, self.partner_2.bank_ids)
-        self.assertIn(self.bank_2, self.partner_2.bank_ids)
+    def test_14_companies_merger_shouldnt_merge_one2many_field(self):
+        self.bank_1.write({'partner_id': self.company_1.id})
+        self.bank_2.write({'partner_id': self.company_2.id})
 
-    def test_14_merge_partners_merge_attachments(self):
-        attachment_1 = self.env['ir.attachment'].create({
-            'name': 'Attachment 1',
-            'res_model': 'res.partner',
-            'res_id': self.partner_1.id,
-        })
-        attachment_2 = self.env['ir.attachment'].create({
-            'name': 'Attachment 1',
-            'res_model': 'res.partner',
-            'res_id': self.partner_2.id,
-        })
-
-        self.duplicate.write({'partner_preserved_id': self.partner_2.id})
-        self.merge_lines.write({'partner_2_selected': True})
-        self.duplicate.merge_partners()
-
-        attachments = self.env['ir.attachment'].search([
-            ('res_model', '=', 'res.partner'),
-            ('res_id', '=', self.partner_2.id)
+        partners = [self.company_1.id, self.company_2.id]
+        duplicate = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', 'in', partners),
+            ('partner_2_id', 'in', partners),
         ])
+        self.assertTrue(duplicate)
+        duplicate.open_partner_merge_wizard()
+        merge_lines = duplicate.merge_line_ids
 
-        self.assertIn(attachment_1, attachments)
-        self.assertIn(attachment_2, attachments)
+        duplicate.write({'partner_preserved_id': self.company_2.id})
+        merge_lines.write({'partner_2_selected': True})
+        duplicate.merge_partners()
 
-    def test_15_merge_partners_doesnt_affect_null_values(self):
-        self.partner_2.write({'phone': '4155552671'})
-        self.assertFalse(self.partner_1.phone)
+        self.assertEqual(self.bank_1.partner_id, self.company_1)
+        self.assertEqual(self.bank_2.partner_id, self.company_2)
 
-        self.duplicate.write({'partner_preserved_id': self.partner_1.id})
+    def test_15_contacts_merger_should_merge_attachments(self):
+        self.duplicate.write({'partner_preserved_id': self.contact_2.id})
+        self.merge_lines.write({'partner_2_selected': True})
+        self.duplicate.merge_partners()
+
+        self.assertEqual(self.attachment_1.res_id, self.contact_2.id)
+        self.assertEqual(self.attachment_2.res_id, self.contact_2.id)
+
+    def test_16_companies_merger_shouldnt_merge_attachments(self):
+        self.attachment_1.write({'res_id': self.company_1.id})
+        self.attachment_2.write({'res_id': self.company_2.id})
+
+        partners = [self.company_1.id, self.company_2.id]
+        duplicate = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', 'in', partners),
+            ('partner_2_id', 'in', partners),
+        ])
+        self.assertTrue(duplicate)
+        duplicate.open_partner_merge_wizard()
+        merge_lines = duplicate.merge_line_ids
+
+        duplicate.write({'partner_preserved_id': self.company_2.id})
+        merge_lines.write({'partner_2_selected': True})
+        duplicate.merge_partners()
+
+        self.assertEqual(self.attachment_1.res_id, self.company_1.id)
+        self.assertEqual(self.attachment_2.res_id, self.company_2.id)
+
+    def test_17_merge_partners_doesnt_affect_null_values(self):
+        self.contact_2.write({'phone': '4155552671'})
+        self.assertFalse(self.contact_1.phone)
+
+        self.duplicate.write({'partner_preserved_id': self.contact_1.id})
         self.merge_lines.write({'partner_1_selected': True})
         self.duplicate.merge_partners()
 
-        self.assertFalse(self.partner_1.phone)
+        self.assertFalse(self.contact_1.phone)
 
-    def test_16_action_resolve(self):
+    def test_18_action_resolve(self):
         dup = self.duplicate
         self.assertEqual(dup.state, 'to_validate')
         dup.action_resolve()
         self.assertEqual(dup.state, 'resolved')
+
+    def test_19_companies_merger_makes_src_partner_child_of_dst_partner(self):
+        # THIS TEST FAILS !!
+        partners = [self.company_1.id, self.company_2.id]
+        duplicate = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', 'in', partners),
+            ('partner_2_id', 'in', partners),
+        ])
+        self.assertTrue(duplicate)
+        duplicate.open_partner_merge_wizard()
+        merge_lines = duplicate.merge_line_ids
+
+        duplicate.write({'partner_preserved_id': self.company_2.id})
+        merge_lines.write({'partner_2_selected': True})
+        duplicate.merge_partners()
+
+        self.assertIn(self.company_1, self.company_2.child_ids)
+
+    def test_20_companies_merger_moves_children_to_dst_partner(self):
+        partners = [self.company_1.id, self.company_2.id]
+        duplicate = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', 'in', partners),
+            ('partner_2_id', 'in', partners),
+        ])
+        self.assertTrue(duplicate)
+        duplicate.open_partner_merge_wizard()
+        merge_lines = duplicate.merge_line_ids
+
+        duplicate.write({'partner_preserved_id': self.company_2.id})
+        merge_lines.write({'partner_2_selected': True})
+        duplicate.merge_partners()
+
+        self.assertIn(self.contact_1, self.company_2.child_ids)
+        self.assertFalse(self.company_1.child_ids)
