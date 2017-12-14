@@ -127,6 +127,7 @@ class ResPartnerDuplicate(models.Model):
                 FROM res_partner p1
                 JOIN res_partner p2 ON p1.indexed_name %% p2.indexed_name
                 WHERE p1.id != p2.id
+                AND p1.company_type = p2.company_type
                 AND ((p1.parent_id IS NOT DISTINCT FROM p2.parent_id)
                   OR (p1.parent_id IS NULL AND p1.id != p2.parent_id)
                   OR (p2.parent_id IS NULL AND p2.id != p1.parent_id)

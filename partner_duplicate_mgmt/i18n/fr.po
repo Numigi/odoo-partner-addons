@@ -413,6 +413,12 @@ msgstr "Vous ne pouvez sélectionner que les champs qui ne sont pas de type 'man
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
 #, python-format
+msgid "You can not merge a company with a contact."
+msgstr "Vous ne pouvez pas fusionner un contact de type compagnie avec un contact."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
+#, python-format
 msgid "You can not merge a line which is not to validate."
 msgstr "Vous ne pouvez pas fusionner une ligne qui n'est pas à valider."
 
