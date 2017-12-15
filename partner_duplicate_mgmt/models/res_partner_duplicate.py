@@ -25,6 +25,8 @@ class ResPartnerDuplicate(models.Model):
     merger_reason_id = fields.Many2one(
         'merger.reason', string='Merger Reason')
 
+    warning_message = fields.Char()
+
     state = fields.Selection(
         string='State',
         selection=[
@@ -37,12 +39,33 @@ class ResPartnerDuplicate(models.Model):
 
     @api.onchange('partner_preserved_id')
     def onchange_partner_preserved_id(self):
-        if self.partner_preserved_id:
-            partner_1_preserved = (
-                self.partner_preserved_id == self.partner_1_id)
-            for line in self.merge_line_ids:
-                line.partner_1_selected = partner_1_preserved
-                line.partner_2_selected = not partner_1_preserved
+        if not self.partner_preserved_id:
+            return
+
+        partner_1_preserved = (
+            self.partner_preserved_id == self.partner_1_id)
+        for line in self.merge_line_ids:
+            line.partner_1_selected = partner_1_preserved
+            line.partner_2_selected = not partner_1_preserved
+
+        partners = self.partner_1_id | self.partner_2_id
+        partner_to_archive = partners - self.partner_preserved_id
+        if (
+            not self.partner_preserved_id.is_company and
+            not partner_to_archive.is_company and
+            self.env['account.move'].sudo().search([
+                ('partner_id', '=', partner_to_archive.id)
+            ])
+        ):
+            self.warning_message = (_(
+                "Please note that the contact %(src)s is linked to journal "
+                "entries. By merging it with %(dst)s, all the accounting "
+                "history of %(src)s will be moved under %(dst)s.") % {
+                'src': partner_to_archive.name,
+                'dst': self.partner_preserved_id.name,
+            })
+        else:
+            self.warning_message = ""
 
     def update_preserved_partner(self):
         vals = {}

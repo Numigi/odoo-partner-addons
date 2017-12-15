@@ -62,6 +62,7 @@
                     <field name="partner_1_id" readonly="1"/>
                     <field name="partner_2_id" readonly="1"/>
                 </group>
+                <field name="warning_message" readonly="1"/>
                 <field name="merge_line_ids">
                     <tree editable="top" create="false" delete="false">
                         <field name="duplicate_field_id" readonly="1"/>

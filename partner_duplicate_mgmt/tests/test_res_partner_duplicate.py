@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
+from odoo.exceptions import UserError
 
 
 class TestResPartnerDuplicate(common.SavepointCase):
@@ -263,6 +264,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
     def test_19_companies_merger_makes_src_partner_child_of_dst_partner(self):
         # THIS TEST FAILS !!
+        # Cannot make company1 child of company2
         partners = [self.company_1.id, self.company_2.id]
         duplicate = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', partners),
@@ -294,3 +296,50 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         self.assertIn(self.contact_1, self.company_2.child_ids)
         self.assertFalse(self.company_1.child_ids)
+
+    def create_invoice(self):
+        self.currency = self.env['res.currency'].search(
+            [('name', '=', 'EUR')]
+        )
+        self.account = self.env['account.account'].create({
+            'code': '123456',
+            'name': 'My account',
+            'user_type_id': self.env.ref(
+                'account.data_account_type_expenses').id,
+        })
+        self.account_invoice_line = self.env['account.invoice.line'].create({
+            'name': 'My line 1',
+            'account_id': self.account.id,
+            'price_unit': '20',
+        })
+        self.account_invoice = self.env['account.invoice'].create({
+            'partner_id': self.contact_2.id,
+            'currency_id': self.currency.id,
+            'invoice_line_ids': [(4, self.account_invoice_line.id)],
+        })
+
+        return self.account_invoice
+
+    def test_21_cannot_merge_contact_with_account_moves(self):
+        invoice = self.create_invoice()
+        invoice.action_invoice_open()
+
+        self.duplicate.write({'partner_preserved_id': self.contact_1.id})
+        self.merge_lines.write({'partner_1_selected': True})
+
+        with self.assertRaises(UserError):
+            self.duplicate.merge_partners()
+
+    def test_22_special_group_can_merge_contact_with_account_moves(self):
+        group = self.env.ref(
+            'partner_duplicate_mgmt.group_contacts_merge_account_moves')
+        self.env.user.write({'groups_id': [(4, group.id)]})
+
+        invoice = self.create_invoice()
+        invoice.action_invoice_open()
+
+        self.duplicate.write({'partner_preserved_id': self.contact_1.id})
+        self.merge_lines.write({'partner_1_selected': True})
+
+        self.duplicate.merge_partners()
+        self.assertEqual(invoice.move_id.partner_id, self.contact_1)

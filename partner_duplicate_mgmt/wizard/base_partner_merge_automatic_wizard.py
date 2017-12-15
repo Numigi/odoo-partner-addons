@@ -77,19 +77,23 @@ class MergePartnerAutomatic(models.TransientModel):
             src_partners = ordered_partners[:-1]
         _logger.info("dst_partner: %s", dst_partner.id)
 
-        # FIXME: is it still required to make and exception for
-        # account.move.line since accounting v9.0 ?
+        # for contacts, check only users with enough rights can merge
+        # contact with account moves
+        group = self.env.ref(
+            'partner_duplicate_mgmt.group_contacts_merge_account_moves')
         if (
-            SUPERUSER_ID != self.env.uid and
-            'account.move.line' in self.env and
-            self.env['account.move.line'].sudo().search([
-                ('partner_id', 'in', [partner.id for partner in src_partners])
+            not src_partners.is_company and not dst_partner.is_company and
+            group not in self.env.user.groups_id and
+            self.env['account.move'].sudo().search([
+                ('partner_id', '=', src_partners.id)
             ])
         ):
             raise UserError(_(
-                "Only the destination contact may be linked to existing "
-                "Journal Items. Please ask the Administrator if you need "
-                "to merge several contacts linked to existing Journal Items."))
+                "You can not merge the contact %(contact)s because it is "
+                "linked to journal entries. Please contact your "
+                "administrator.") % {
+                    'contact': src_partners.name
+            })
 
         self._update_reference_fields(src_partners, dst_partner)
 

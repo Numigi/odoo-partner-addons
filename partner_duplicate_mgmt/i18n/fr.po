@@ -26,6 +26,11 @@ msgid "Configuration"
 msgstr "Configuration"
 
 #. module: partner_duplicate_mgmt
+#: model:res.groups,name:partner_duplicate_mgmt.group_contacts_merge_account_moves
+msgid "Contacts Merge With Account Moves"
+msgstr "Fusion de contacts avec écritures comptables"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_create_uid
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_create_uid
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_create_uid
@@ -316,6 +321,14 @@ msgid "Partner Preserved"
 msgstr "Partenaire conservé"
 
 #. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
+#, python-format
+msgid "Please note that the contact %(src)s is linked to journal entries. "
+"By merging it with %(dst)s, all the accounting history of %(src)s will be moved under %(dst)s."
+msgstr "Attention, le contact %(src)s est relié à des écritures comptables. "
+"En le fusionnant avec %(dst)s, tout l’historique comptable de %(src)s sera déplacé sous %(dst)s."
+
+#. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_dupplicate.py:0
 #, python-format
 msgid "Please select a value to preserve for the field %s."
@@ -421,6 +434,14 @@ msgstr "Vous ne pouvez pas fusionner un contact de type compagnie avec un contac
 #, python-format
 msgid "You can not merge a line which is not to validate."
 msgstr "Vous ne pouvez pas fusionner une ligne qui n'est pas à valider."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/base_partner_merge_automatic_wizard.py:0
+#, python-format
+msgid "You can not merge the contact %(contact)s because it is "
+"linked to journal entries. Please contact your administrator."
+msgstr "Vous ne pouvez pas fusionner le contact %(contact)s car celui-ci "
+"est relié à des écritures comptables. Veuillez contacter votre administrateur."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner.py:0
