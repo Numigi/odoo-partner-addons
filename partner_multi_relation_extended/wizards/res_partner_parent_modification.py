@@ -93,10 +93,16 @@ class ResPartnerParentModification(models.TransientModel):
                 'date_start': fields.Date.today(),
             })
 
-        # Close all previous relations for the former contact
-        for relation_all in self.contact_id.relation_all_ids:
-            if not relation_all.is_automatic and not relation_all.date_end:
-                relation_all.date_end = fields.Date.today()
+        # Transfer all previous relations from the former contact
+        previous_relations = self.env['res.partner.relation.all'].search([
+            ('this_partner_id', '=', self.contact_id.id),
+            ('is_automatic', '=', False),
+            ('type_selection_id.type_id.is_work_relation', '=', False),
+            '|', ('active', '=', False), ('active', '=', True)
+        ])
+        for relation in previous_relations:
+            relation.this_partner_id = new_contact.id
+            relation.onchange_partner_id()
 
         # Archive the former contact
         self.contact_id.active = False
