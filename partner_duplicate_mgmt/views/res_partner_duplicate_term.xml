@@ -8,6 +8,7 @@
             <tree string="Partner Duplicate Terms" editable="bottom">
                 <field name="type"/>
                 <field name="expression"/>
+                <field name="active"/>
             </tree>
       </field>
     </record>

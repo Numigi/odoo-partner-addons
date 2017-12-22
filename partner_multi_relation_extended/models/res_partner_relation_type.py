@@ -18,6 +18,10 @@ class ResPartnerRelationType(models.Model):
         'Same Relation',
     )
 
+    active = fields.Boolean(
+        'Active', default=True,
+    )
+
     @api.onchange('is_work_relation')
     def _onchange_is_work_relation(self):
         """

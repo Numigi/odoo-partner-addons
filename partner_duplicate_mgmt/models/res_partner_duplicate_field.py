@@ -28,3 +28,5 @@ class ResPartnerDuplicateField(models.Model):
     type = fields.Selection('Type', related='field_id.ttype', readonly=True)
 
     sequence = fields.Integer('Sequence')
+
+    active = fields.Boolean('Active', default=True)
