@@ -263,8 +263,6 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(dup.state, 'resolved')
 
     def test_19_companies_merger_makes_src_partner_child_of_dst_partner(self):
-        # THIS TEST FAILS !!
-        # Cannot make company1 child of company2
         partners = [self.company_1.id, self.company_2.id]
         duplicate = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', partners),
@@ -278,7 +276,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         merge_lines.write({'partner_2_selected': True})
         duplicate.merge_partners()
 
-        self.assertIn(self.company_1, self.company_2.child_ids)
+        self.assertEqual(self.company_1.parent_id, self.company_2)
 
     def test_20_companies_merger_moves_children_to_dst_partner(self):
         partners = [self.company_1.id, self.company_2.id]
@@ -301,21 +299,29 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.currency = self.env['res.currency'].search(
             [('name', '=', 'EUR')]
         )
-        self.account = self.env['account.account'].create({
-            'code': '123456',
-            'name': 'My account',
+        self.account_1 = self.env['account.account'].create({
+            'code': '1234',
+            'name': 'Payable Account',
+            'user_type_id': self.env.ref(
+                'account.data_account_type_payable').id,
+        })
+        self.account_2 = self.env['account.account'].create({
+            'code': '1708',
+            'name': 'Expenses Account',
             'user_type_id': self.env.ref(
                 'account.data_account_type_expenses').id,
         })
         self.account_invoice_line = self.env['account.invoice.line'].create({
             'name': 'My line 1',
-            'account_id': self.account.id,
+            'account_id': self.account_2.id,
             'price_unit': '20',
         })
         self.account_invoice = self.env['account.invoice'].create({
             'partner_id': self.contact_2.id,
+            'account_id': self.account_1.id,
             'currency_id': self.currency.id,
             'invoice_line_ids': [(4, self.account_invoice_line.id)],
+            'type': 'in_invoice',
         })
 
         return self.account_invoice
