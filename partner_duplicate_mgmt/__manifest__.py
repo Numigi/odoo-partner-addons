@@ -15,6 +15,7 @@
         'contacts',
         'crm',
         'mail',
+        'account',
     ],
     'data': [
         'data/ir_config_parameter.xml',

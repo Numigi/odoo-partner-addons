@@ -299,9 +299,13 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.currency = self.env['res.currency'].search(
             [('name', '=', 'EUR')]
         )
+        self.product = self.env['product.product'].create({
+            'name': 'Product',
+        })
         self.account_1 = self.env['account.account'].create({
             'code': '1234',
             'name': 'Payable Account',
+            'reconcile': True,
             'user_type_id': self.env.ref(
                 'account.data_account_type_payable').id,
         })
@@ -311,14 +315,24 @@ class TestResPartnerDuplicate(common.SavepointCase):
             'user_type_id': self.env.ref(
                 'account.data_account_type_expenses').id,
         })
+        self.contact_2.write({
+            'property_account_payable_id': self.account_2.id,
+        })
+        self.journal = self.env['account.journal'].create({
+            'name': 'Journal',
+            'type': 'bank',
+            'code': 'JR1717',
+        })
         self.account_invoice_line = self.env['account.invoice.line'].create({
             'name': 'My line 1',
+            'product': self.product.id,
             'account_id': self.account_2.id,
             'price_unit': '20',
         })
         self.account_invoice = self.env['account.invoice'].create({
             'partner_id': self.contact_2.id,
             'account_id': self.account_1.id,
+            'journal_id': self.journal.id,
             'currency_id': self.currency.id,
             'invoice_line_ids': [(4, self.account_invoice_line.id)],
             'type': 'in_invoice',
