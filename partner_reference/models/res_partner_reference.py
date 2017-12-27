@@ -10,8 +10,7 @@ class ResPartnerReference(models.Model):
     _name = 'res.partner.reference'
     _description = 'Partner Reference'
 
-    value = fields.Char('Value')
     reference_type_id = fields.Many2one(
         'res.partner.reference.type', 'Reference Type')
-    partner_id = fields.Many2one(
-        'res.partner', 'partner_id', copy=False)
+    value = fields.Char('Value')
+    partner_id = fields.Many2one('res.partner', copy=False)

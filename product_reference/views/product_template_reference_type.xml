@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_reference_type_tree" model="ir.ui.view">
+        <field name="name">product.template.reference.type.tree</field>
+        <field name="model">product.template.reference.type</field>
+        <field name="arch" type="xml">
+            <tree string="Product Reference Types" editable="bottom">
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+   <record id="action_product_reference_type" model="ir.actions.act_window">
+        <field name="name">Product Reference Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template.reference.type</field>
+        <field name="view_type">form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem 
+        id="menu_product_reference_type"
+        name="Product Reference Types"
+        action="product_reference.action_product_reference_type"
+        parent="stock.menu_product_in_config_stock"
+        sequence="7"/>
+
+</odoo>

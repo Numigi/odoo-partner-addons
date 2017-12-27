@@ -5,7 +5,7 @@
         <field name="name">res.partner.reference.type.tree</field>
         <field name="model">res.partner.reference.type</field>
         <field name="arch" type="xml">
-            <tree string="Reference Types" editable="bottom">
+            <tree string="Partner Reference Types" editable="bottom">
                 <field name="name"/>
                 <field name="active"/>
             </tree>
@@ -13,7 +13,7 @@
     </record>
 
    <record id="action_partner_reference_type" model="ir.actions.act_window">
-        <field name="name">Reference Types</field>
+        <field name="name">Partner Reference Types</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner.reference.type</field>
         <field name="view_type">form</field>
@@ -23,7 +23,7 @@
 
     <menuitem 
         id="menu_partner_reference_type"
-        name="Reference Types"
+        name="Partner Reference Types"
         action="partner_reference.action_partner_reference_type"
         parent="sales_team.menu_config_address_book"
         sequence="2"/>

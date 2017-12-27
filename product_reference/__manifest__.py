@@ -3,20 +3,20 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Partner Reference',
+    'name': 'Product Reference',
     'version': '10.0.1.0.1',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Savoir-faire Linux',
     'website': 'http://www.savoirfairelinux.com',
     'license': 'LGPL-3',
-    'category': 'Partner Management',
-    'summary': 'Add new field references to res.partner',
+    'category': 'Product',
+    'summary': 'Add new field references to product.template',
     'depends': [
-        'sales_team',
+        'stock',
     ],
     'data': [
-        'views/res_partner.xml',
-        'views/res_partner_reference_type.xml',
+        'views/product_template.xml',
+        'views/product_template_reference_type.xml',
     ],
     'installable': True,
     'application': True,
