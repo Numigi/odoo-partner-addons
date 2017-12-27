@@ -26,12 +26,22 @@ msgid "Configuration"
 msgstr "Configuration"
 
 #. module: partner_duplicate_mgmt
+#: model:res.groups,name:partner_duplicate_mgmt.group_contacts_merge_account_moves
+msgid "Contacts Merge With Account Moves"
+msgstr "Fusion de contacts avec écritures comptables"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_create_uid
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_create_uid
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_create_uid
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_create_uid
 msgid "Created by"
 msgstr "Créé par"
+
+#. module: partner_duplicate_mgmt
+#: model:merger.reason,name:partner_duplicate_mgmt.merger_reason_mistake
+msgid "Created in duplicate by mistake"
+msgstr "Créé en double par erreur"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_create_date
@@ -169,6 +179,11 @@ msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
 
 #. module: partner_duplicate_mgmt
+#: model:merger.reason,name:partner_duplicate_mgmt.merger_reason_legal_merger
+msgid "Legal merger of entities"
+msgstr "Fusion légale d’entités"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_form
 msgid "Merge"
 msgstr "Fusionner"
@@ -202,7 +217,32 @@ msgid "Merged into %s"
 msgstr "Fusionné vers %s"
 
 #. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
+#, python-format
+msgid "Merged with %s."
+msgstr "Fusionné avec %s."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
+#, python-format
+msgid " Merger reason is : %s."
+msgstr " La raison de fusion est : %s."
+
+#. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_merger_reason_id
+msgid "Merger Reason"
+msgstr "Raison de fusion"
+
+#. module: partner_duplicate_mgmt
+#: model:ir.actions.act_window,name:partner_duplicate_mgmt.merger_reason_action
+#: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_merger_reason_action
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.merger_reason_tree
+msgid "Merger Reasons"
+msgstr "Raisons de fusion"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_name
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_merger_reason_name
 #: model:res.partner.duplicate.field,name:partner_duplicate_mgmt.duplicate_field_name
 msgid "Name"
 msgstr "Nom"
@@ -279,6 +319,14 @@ msgstr "Champ d'un partenaire"
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_preserved_id
 msgid "Partner Preserved"
 msgstr "Partenaire conservé"
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
+#, python-format
+msgid "Please note that the contact %(src)s is linked to journal entries. "
+"By merging it with %(dst)s, all the accounting history of %(src)s will be moved under %(dst)s."
+msgstr "Attention, le contact %(src)s est relié à des écritures comptables. "
+"En le fusionnant avec %(dst)s, tout l’historique comptable de %(src)s sera déplacé sous %(dst)s."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_dupplicate.py:0
@@ -378,8 +426,22 @@ msgstr "Vous ne pouvez sélectionner que les champs qui ne sont pas de type 'man
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
 #, python-format
+msgid "You can not merge a company with a contact."
+msgstr "Vous ne pouvez pas fusionner un contact de type compagnie avec un contact."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
+#, python-format
 msgid "You can not merge a line which is not to validate."
 msgstr "Vous ne pouvez pas fusionner une ligne qui n'est pas à valider."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/base_partner_merge_automatic_wizard.py:0
+#, python-format
+msgid "You can not merge the contact %(contact)s because it is "
+"linked to journal entries. Please contact your administrator."
+msgstr "Vous ne pouvez pas fusionner le contact %(contact)s car celui-ci "
+"est relié à des écritures comptables. Veuillez contacter votre administrateur."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner.py:0

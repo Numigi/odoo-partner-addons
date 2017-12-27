@@ -2,7 +2,12 @@
 # © 2016 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, models
+from odoo import _, api, models, SUPERUSER_ID
+from odoo.exceptions import UserError
+
+import logging
+
+_logger = logging.getLogger('base.partner.merge')
 
 
 class MergePartnerAutomatic(models.TransientModel):
@@ -14,6 +19,9 @@ class MergePartnerAutomatic(models.TransientModel):
         Ignore the table 'res_partner_duplicate' to avoid merging partner
         duplicates.
         """
+        if ('merge_2_companies' in self.env.context):
+            return []
+
         res = super(MergePartnerAutomatic, self)._get_fk_on(table)
         relations = [r for r in res if 'res_partner_duplicate' not in r[0]]
         return relations
@@ -24,6 +32,9 @@ class MergePartnerAutomatic(models.TransientModel):
         Override completely the original function to avoid merging messages
         and merge only attachments.
         """
+        if src_partners.is_company and dst_partner.is_company:
+            return
+
         self.env.cr.execute("""
             UPDATE ir_attachment
             SET res_id = %(dst_partner)s
@@ -34,10 +45,66 @@ class MergePartnerAutomatic(models.TransientModel):
             'src_partner': src_partners.id,
         })
 
-    @api.model
-    def _update_values(self, src_partners, dst_partner):
+    def _update_children(self, src_partners, dst_partner):
+        src_partners.child_ids.write({'parent_id': dst_partner.id})
+        src_partners.write({
+            'is_company': False,
+            'parent_id': dst_partner.id,
+        })
+
+    def _merge(self, partner_ids, dst_partner):
         """
-        Avoid calling the original method which replaces partner preserved
-        null values with the partner archived values.
+        Override completely the original function to remove useless code.
         """
-        return True
+        Partner = self.env['res.partner']
+        partner_ids = Partner.browse(partner_ids).exists()
+
+        # check only admin can merge partners with different emails
+        if (
+            SUPERUSER_ID != self.env.uid and
+            len(set(partner.email for partner in partner_ids)) > 1
+        ):
+            raise UserError(_(
+                "All contacts must have the same email. Only the "
+                "Administrator can merge contacts with different emails."))
+
+        # remove dst_partner from partners to merge
+        if dst_partner and dst_partner in partner_ids:
+            src_partners = partner_ids - dst_partner
+        else:
+            ordered_partners = self._get_ordered_partner(partner_ids.ids)
+            dst_partner = ordered_partners[-1]
+            src_partners = ordered_partners[:-1]
+        _logger.info("dst_partner: %s", dst_partner.id)
+
+        # for contacts, check only users with enough rights can merge
+        # contact with account moves
+        group = self.env.ref(
+            'partner_duplicate_mgmt.group_contacts_merge_account_moves')
+        if (
+            not src_partners.is_company and not dst_partner.is_company and
+            group not in self.env.user.groups_id and
+            self.env['account.move'].sudo().search([
+                ('partner_id', '=', src_partners.id)
+            ])
+        ):
+            raise UserError(_(
+                "You can not merge the contact %(contact)s because it is "
+                "linked to journal entries. Please contact your "
+                "administrator.") % {
+                    'contact': src_partners.name
+            })
+
+        self._update_reference_fields(src_partners, dst_partner)
+
+        # call sub methods to do the merge
+        if src_partners.is_company and dst_partner.is_company:
+            self.with_context({'merge_2_companies': True})\
+                ._update_foreign_keys(src_partners, dst_partner)
+            self._update_children(src_partners, dst_partner)
+        else:
+            self._update_foreign_keys(src_partners, dst_partner)
+
+        _logger.info(
+            '(uid = %s) merged the partners %r with %s',
+            self._uid, src_partners.ids, dst_partner.id)

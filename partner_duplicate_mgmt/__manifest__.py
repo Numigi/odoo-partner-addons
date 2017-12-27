@@ -15,10 +15,12 @@
         'contacts',
         'crm',
         'mail',
+        'account',
     ],
     'data': [
         'data/ir_config_parameter.xml',
         'data/ir_cron.xml',
+        'data/merger_reason.xml',
         'data/res_partner.xml',
         'demo/res_partner_duplicate_field.xml',
         'demo/res_partner_duplicate_term.xml',
@@ -28,6 +30,7 @@
         'views/res_partner_duplicate.xml',
         'views/res_partner_duplicate_field.xml',
         'views/res_partner_duplicate_term.xml',
+        'views/merger_reason.xml',
     ],
     'external_dependencies': {
         'python': ['unidecode'],

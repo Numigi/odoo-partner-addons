@@ -26,10 +26,10 @@
                 </header>
                 <sheet>
                     <group col="4">
+                        <field name="merger_reason_id"/>
                         <field name="partner_preserved_id"
                             attrs="{'invisible': [('state', '!=', 'merged')]}"
                             readonly="1"/>
-                        <newline/>
                         <field name="partner_1_id" readonly="1"/>
                         <field name="partner_2_id" readonly="1"/>
                     </group>
@@ -58,10 +58,11 @@
             <form string="Merge Partners">
                 <group col="4">
                     <field name="partner_preserved_id" options="{'no_create': True}" domain="['|', ('id', '=', partner_1_id), ('id', '=', partner_2_id)]" required="1"/>
-                    <newline/>
+                    <field name="merger_reason_id"/>
                     <field name="partner_1_id" readonly="1"/>
                     <field name="partner_2_id" readonly="1"/>
                 </group>
+                <field name="warning_message" readonly="1"/>
                 <field name="merge_line_ids">
                     <tree editable="top" create="false" delete="false">
                         <field name="duplicate_field_id" readonly="1"/>

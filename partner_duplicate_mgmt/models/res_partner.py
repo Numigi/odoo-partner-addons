@@ -31,6 +31,8 @@ class ResPartner(models.Model):
         domain=[('state', '=', 'to_validate')])
     duplicate_count = fields.Integer(compute='_compute_duplicate_ids')
 
+    company_type = fields.Selection(store=True)
+
     @api.depends('duplicate_1_ids', 'duplicate_2_ids')
     def _compute_duplicate_ids(self):
         for rec in self:
@@ -87,6 +89,7 @@ class ResPartner(models.Model):
             WHERE p.id != %(id)s
             AND p.active = true
             AND p.indexed_name %% %(name)s
+            AND p.company_type = %(company_type)s
             AND ((p.parent_id IS NOT DISTINCT FROM %(parent)s)
               OR (p.parent_id IS NULL AND p.id != %(parent)s)
               OR (%(parent)s IS NULL AND %(id)s != p.parent_id))
@@ -98,6 +101,7 @@ class ResPartner(models.Model):
             )
         """, {
             'id': self.id or self._origin.id or 0,
+            'company_type': self.company_type,
             'name': indexed_name or '',
             'parent': self.parent_id.id or None,
         })
@@ -105,7 +109,7 @@ class ResPartner(models.Model):
 
         return res
 
-    @api.onchange('name', 'parent_id')
+    @api.onchange('name', 'parent_id', 'company_type', 'is_company')
     def onchange_name(self):
         indexed_name = self._get_indexed_name()
         if self.id or not indexed_name:
@@ -167,7 +171,8 @@ class ResPartner(models.Model):
 
         if (
             'parent_id' in vals or 'name' in vals or
-            'lastname' in vals or 'firstname' in vals
+            'lastname' in vals or 'firstname' in vals or
+            'company_type' in vals or 'is_company' in vals
         ):
             for record in self:
                 duplicates = record._create_duplicates()
@@ -204,13 +209,6 @@ class ResPartner(models.Model):
             del res['views']
 
         return res
-
-    @api.multi
-    def unlink(self):
-        if self.env.context.get('do_not_unlink_partner'):
-            return True
-
-        return super(ResPartner, self).unlink()
 
     @api.model_cr_context
     def _auto_init(self):
@@ -256,6 +254,9 @@ class ResPartner(models.Model):
 
         if len(self) != 2:
             raise UserError(_("Please, select two partners to merge."))
+
+        if self[0].company_type != self[1].company_type:
+            raise UserError(_("You can not merge a company with a contact."))
 
         duplicate = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', self.ids),

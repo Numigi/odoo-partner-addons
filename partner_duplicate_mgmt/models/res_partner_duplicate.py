@@ -22,6 +22,11 @@ class ResPartnerDuplicate(models.Model):
     merge_line_ids = fields.One2many(
         'res.partner.merge.line', 'duplicate_id', string='Merge Lines')
 
+    merger_reason_id = fields.Many2one(
+        'merger.reason', string='Merger Reason')
+
+    warning_message = fields.Char()
+
     state = fields.Selection(
         string='State',
         selection=[
@@ -34,12 +39,33 @@ class ResPartnerDuplicate(models.Model):
 
     @api.onchange('partner_preserved_id')
     def onchange_partner_preserved_id(self):
-        if self.partner_preserved_id:
-            partner_1_preserved = (
-                self.partner_preserved_id == self.partner_1_id)
-            for line in self.merge_line_ids:
-                line.partner_1_selected = partner_1_preserved
-                line.partner_2_selected = not partner_1_preserved
+        if not self.partner_preserved_id:
+            return
+
+        partner_1_preserved = (
+            self.partner_preserved_id == self.partner_1_id)
+        for line in self.merge_line_ids:
+            line.partner_1_selected = partner_1_preserved
+            line.partner_2_selected = not partner_1_preserved
+
+        partners = self.partner_1_id | self.partner_2_id
+        partner_to_archive = partners - self.partner_preserved_id
+        if (
+            not self.partner_preserved_id.is_company and
+            not partner_to_archive.is_company and
+            self.env['account.move'].sudo().search([
+                ('partner_id', '=', partner_to_archive.id)
+            ])
+        ):
+            self.warning_message = (_(
+                "Please note that the contact %(src)s is linked to journal "
+                "entries. By merging it with %(dst)s, all the accounting "
+                "history of %(src)s will be moved under %(dst)s.") % {
+                'src': partner_to_archive.name,
+                'dst': self.partner_preserved_id.name,
+            })
+        else:
+            self.warning_message = ""
 
     def update_preserved_partner(self):
         vals = {}
@@ -80,16 +106,24 @@ class ResPartnerDuplicate(models.Model):
         # Call the method _merge of the crm partner merge widget
         partners = self.partner_1_id | self.partner_2_id
         base_wizard = self.env['base.partner.merge.automatic.wizard']
-        base_wizard.with_context(do_not_unlink_partner=True)._merge(
-            partners.ids, self.partner_preserved_id)
+        base_wizard._merge(partners.ids, self.partner_preserved_id)
 
         # Archive the partner which is not preserved
         partner_to_archive = partners - self.partner_preserved_id
         partner_to_archive.write({'active': False})
 
-        # Add a message to the chatter
-        message = _('Merged into %s') % (self.partner_preserved_id.name)
-        partner_to_archive.message_post(body=message)
+        # Add messages to the chatter
+        message_src = _('Merged into %s') % (self.partner_preserved_id.name)
+        partner_to_archive.message_post(body=message_src)
+
+        message_reason = ""
+        if self.merger_reason_id:
+            message_reason = _(
+                " Merger reason is : %s.") % (self.merger_reason_id.name,)
+
+        message_dst = _('Merged with %s.') % (partner_to_archive.name,)
+        self.partner_preserved_id.message_post(
+            body=(message_dst + message_reason))
 
         # Change duplicate state
         self.write({'state': 'merged'})
@@ -116,6 +150,7 @@ class ResPartnerDuplicate(models.Model):
                 FROM res_partner p1
                 JOIN res_partner p2 ON p1.indexed_name %% p2.indexed_name
                 WHERE p1.id != p2.id
+                AND p1.company_type = p2.company_type
                 AND ((p1.parent_id IS NOT DISTINCT FROM p2.parent_id)
                   OR (p1.parent_id IS NULL AND p1.id != p2.parent_id)
                   OR (p2.parent_id IS NULL AND p2.id != p1.parent_id)

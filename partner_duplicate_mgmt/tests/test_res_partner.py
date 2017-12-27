@@ -18,12 +18,15 @@ class TestResPartner(common.SavepointCase):
 
         cls.partner_1 = cls.env['res.partner'].create({
             'name': '11 Big Partner inc.',
+            'is_company': True,
         })
         cls.partner_2 = cls.env['res.partner'].create({
             'name': 'My Partner inc.',
+            'is_company': True,
         })
         cls.partner_3 = cls.env['res.partner'].create({
             'name': '33 Big Partner',
+            'is_company': True,
         })
 
     def test_01_partner_indexed_name(self):
@@ -133,3 +136,50 @@ class TestResPartner(common.SavepointCase):
                 'Julien Jezequel Breard'))
         self.assertEqual(similarity, '0.7')
         self.assertNotIn(partner_4, partner_5.duplicate_ids)
+
+    def test_12_raise_error_when_try_to_merge_company_with_contact(self):
+        self.partner_4 = self.env['res.partner'].create({
+            'name': 'Julien',
+        })
+
+        partners = self.partner_1 | self.partner_4
+        with self.assertRaises(UserError):
+            partners.action_merge()
+
+    def test_13_should_not_merge_company_with_contact(self):
+        self.partner_4 = self.env['res.partner'].create({
+            'name': 'Partner',
+        })
+        self.assertFalse(self.partner_4.duplicate_ids)
+
+    def test_14_should_merge_2_companies_if_type_is_changed(self):
+        self.partner_4 = self.env['res.partner'].create({
+            'name': 'Partner',
+        })
+        self.partner_4.write({'is_company': True})
+        self.assertTrue(self.partner_4.duplicate_ids)
+
+    def test_15_should_not_merge_contacts_with_different_parents(self):
+        self.partner_1.write({
+            'child_ids': [(0, 0, {'name': 'Julien'})]
+        })
+        self.partner_2.write({
+            'child_ids': [(0, 0, {'name': 'Julien'})]
+        })
+        self.assertFalse(self.partner_2.child_ids.duplicate_ids)
+
+    def test_16_merge_contact_with_parent_and_contact_without_parent(self):
+        partner_3 = self.env['res.partner'].create({
+            'name': 'Partner Test 3',
+            'company_type': 'person',
+        })
+        self.partner_2.write({
+            'child_ids': [(0, 0, {'name': 'Partner Test 4'})]
+        })
+        self.assertIn(self.partner_2.child_ids, partner_3.duplicate_ids)
+
+    def test_17_should_not_merge_entity_with_child(self):
+        self.partner_1.write({
+            'child_ids': [(0, 0, {'name': 'Big Partner'})]
+        })
+        self.assertFalse(self.partner_1.child_ids.duplicate_ids)
