@@ -5,7 +5,7 @@
         <field name="name">res.partner.reference.type.tree</field>
         <field name="model">res.partner.reference.type</field>
         <field name="arch" type="xml">
-            <tree string="Reference Types" editable="top">
+            <tree string="Reference Types" editable="bottom">
                 <field name="name"/>
             </tree>
         </field>

@@ -10,9 +10,9 @@
                 <page name="references" string="References">
                     <field name="reference_ids" context="{'default_partner_id': id}">
                         <tree editable="True">
-                            <field name="reference_type_id"/>
-                            <field name="value"/>
-                            <field name="partner_id"/>
+                            <field name="reference_type_id" required="1"/>
+                            <field name="value" required="1"/>
+                            <field name="partner_id" invisible="1"/>
                         </tree>
                     </field>
                 </page>
