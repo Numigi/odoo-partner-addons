@@ -11,3 +11,4 @@ class ResPartnerReferenceType(models.Model):
     _description = 'Partner Reference Type'
 
     name = fields.Char('Name', required=True, translate=True)
+    active = fields.Boolean('Active', default=True)

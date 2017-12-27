@@ -16,6 +16,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: partner_reference
+#: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type_active
+msgid "Active"
+msgstr "Actif"
+
+#. module: partner_reference
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_create_uid
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type_create_uid
 msgid "Created by"
