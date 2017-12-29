@@ -65,6 +65,12 @@ class TestResPartnerParentModification(common.SavepointCase):
         """
         contact = self.individuals[0]
         new_company = self.companies[1]
+        former_relations = self.env['res.partner.relation.all'].search([
+            ('this_partner_id', '=', contact.id),
+            ('is_automatic', '=', False),
+            ('type_selection_id.type_id.is_work_relation', '=', False),
+            '|', ('active', '=', False), ('active', '=', True)
+        ])
         wizard = self.wizard_model.with_context({
             'active_id': contact.id,
             'active_model': 'res.partner',
@@ -105,12 +111,11 @@ class TestResPartnerParentModification(common.SavepointCase):
             len(new_work_relation), 1,
             'There should be a new relation saying that the new contact '
             'works for the new company.')
-        former_relations = contact.relation_all_ids.filtered(
-            lambda r: not r.is_automatic)
         for relation in former_relations:
             self.assertEqual(
-                relation.date_end, self.today,
-                'All former relations should be ended.')
+                relation.this_partner_id, new_contact,
+                'All former relations should have been transferred on the new'
+                'contact.')
         self.assertFalse(
             contact.active,
             'The former contact should be archived.')
