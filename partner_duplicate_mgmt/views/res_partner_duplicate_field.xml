@@ -10,6 +10,7 @@
                 <field name="technical_name"/>
                 <field name="name"/>
                 <field name="sequence"/>
+                <field name="active"/>
             </tree>
       </field>
     </record>

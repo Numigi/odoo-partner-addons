@@ -12,6 +12,10 @@
         <field name="is_work_relation" attrs="{'readonly': [('is_same_relation', '=', True)]}"/>
       </field>
 
+      <xpath expr="//field[@name='partner_category_left']//.." position="after">
+        <field name="active"/>
+      </xpath>
+
       <field name="contact_type_left" position="attributes">
         <attribute name="attrs">{'readonly': ['|', ('is_same_relation', '=', True), ('is_work_relation', '=', True)]}</attribute>
       </field>
@@ -55,6 +59,7 @@
 
       <field name="is_symmetric" position="after">
         <field name="is_work_relation"/>
+        <field name="active"/>
       </field>
 
     </field>

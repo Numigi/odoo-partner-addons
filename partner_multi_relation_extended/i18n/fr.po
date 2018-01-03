@@ -18,6 +18,11 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 
 #. module: partner_multi_relation_extended
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_type_active
+msgid "Active"
+msgstr "Actif"
+
+#. module: partner_multi_relation_extended
 #: model:ir.model,name:partner_multi_relation_extended.model_res_partner_relation_all
 msgid "All (non-inverse + inverse) relations between partners"
 msgstr "Toutes les relations (non-inverse et inverse) entre partenaires"

@@ -20,3 +20,5 @@ class ResPartnerDuplicateTerm(models.Model):
     )
 
     expression = fields.Char(string='Expression', required=True)
+
+    active = fields.Boolean('Active', default=True)
