@@ -12,8 +12,9 @@
         <field name="is_work_relation" attrs="{'readonly': [('is_same_relation', '=', True)]}"/>
       </field>
 
-      <xpath expr="//field[@name='partner_category_left']//.." position="after">
-        <field name="active"/>
+      <xpath expr="//field[@name='partner_category_left']" position="after">
+        <field name="always_active" invisible="1"/>
+        <field name="active" attrs="{'readonly': [('always_active', '=', True)]}"/>
       </xpath>
 
       <field name="contact_type_left" position="attributes">

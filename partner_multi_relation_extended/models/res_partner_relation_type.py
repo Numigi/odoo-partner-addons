@@ -22,6 +22,10 @@ class ResPartnerRelationType(models.Model):
         'Active', default=True,
     )
 
+    always_active = fields.Boolean(
+        default=False,
+    )
+
     @api.onchange('is_work_relation')
     def _onchange_is_work_relation(self):
         """
