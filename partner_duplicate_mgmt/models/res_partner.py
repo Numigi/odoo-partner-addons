@@ -40,8 +40,11 @@ class ResPartner(models.Model):
             rec.duplicate_count = len(rec.duplicate_ids)
 
     def _get_indexed_name(self):
-        terms = self.env['res.partner.duplicate.term'].search([])
+        if not self.name:
+            return ''
+
         indexed_name = self.name
+        terms = self.env['res.partner.duplicate.term'].search([])
         spaces_begining = '(^|\s+)'
         spaces_end = '($|\s+)'
 
