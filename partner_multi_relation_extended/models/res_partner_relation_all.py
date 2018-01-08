@@ -29,6 +29,10 @@ class ResPartnerRelationAll(models.AbstractModel):
              'Only the system administrator can update or delete it.',
     )
 
+    type_selection_id = fields.Many2one(
+        domain=[('type_id.active', '=', True)],
+    )
+
     @api.model_cr_context
     def _auto_init(self):
         """
