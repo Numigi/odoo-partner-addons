@@ -24,43 +24,43 @@ msgstr "Actif"
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_create_uid
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type_create_uid
 msgid "Created by"
-msgstr "Créé par"
+msgstr ""
 
 #. module: partner_reference
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_create_date
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type_create_date
 msgid "Created on"
-msgstr "Créé le"
+msgstr ""
 
 #. module: partner_reference
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_display_name
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type_display_name
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr ""
 
 #. module: partner_reference
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_id
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type_id
 msgid "ID"
-msgstr "Identifiant"
+msgstr ""
 
 #. module: partner_reference
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference___last_update
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type___last_update
 msgid "Last Modified on"
-msgstr "Dernière modification le"
+msgstr ""
 
 #. module: partner_reference
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type_write_uid
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_write_uid
 msgid "Last Updated by"
-msgstr "Dernière mise à jour par"
+msgstr ""
 
 #. module: partner_reference
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type_write_date
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_write_date
 msgid "Last Updated on"
-msgstr "Dernière mise à jour le"
+msgstr ""
 
 #. module: partner_reference
 #: model:ir.model.fields,field_description:partner_reference.field_res_partner_reference_type_name
