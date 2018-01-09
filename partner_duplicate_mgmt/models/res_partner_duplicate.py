@@ -67,7 +67,7 @@ class ResPartnerDuplicate(models.Model):
         else:
             self.warning_message = ""
 
-    def update_preserved_partner(self):
+    def _update_preserved_partner(self):
         vals = {}
         for line in self.merge_line_ids:
             field_name = line.duplicate_field_id.technical_name
@@ -101,7 +101,7 @@ class ResPartnerDuplicate(models.Model):
                     (line.duplicate_field_id.name))
 
         # Update preserved partner fields values
-        self.update_preserved_partner()
+        self._update_preserved_partner()
 
         # Call the method _merge of the crm partner merge widget
         partners = self.partner_1_id | self.partner_2_id
@@ -113,7 +113,7 @@ class ResPartnerDuplicate(models.Model):
         partner_to_archive.write({'active': False})
 
         # Add messages to the chatter
-        message_src = _('Merged into %s') % (self.partner_preserved_id.name)
+        message_src = _('Merged into %s.') % (self.partner_preserved_id.name)
         partner_to_archive.message_post(body=message_src)
 
         message_reason = ""

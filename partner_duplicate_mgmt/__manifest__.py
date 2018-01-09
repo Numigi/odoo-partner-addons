@@ -4,7 +4,7 @@
 
 {
     'name': 'Partner Duplicate Management',
-    'version': '10.0.1.0.1',
+    'version': '10.0.1.0.0',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Savoir-faire Linux',
     'website': 'http://www.savoirfairelinux.com',

@@ -53,6 +53,22 @@ A new list view shows alls duplicates. The user can:
 * exclude the duplicate by choice 
 
 
+Company and contact merger
+--------------------------
+Not possible
+
+
+Companies merger
+----------------
+Possible
+
+
+Contacts merger
+---------------
+To merge contacts that are linked to journal items, the user must be part of the group
+"Contacts Merge With Account Moves", if not the merger won't be possible.
+
+
 Adjusting the list of fields
 ----------------------------
 The list of fields that appear in the merge wizard is configurable from the menu
@@ -61,15 +77,27 @@ Contacts -> Duplicate Management -> Partner Duplicate Fields.
 
 Adjusting the similarity level
 ------------------------------
-The similarity is computed using a trigram index.
-The level of similarity required so that 2 partners are considered duplicates is 0.7 by default.
-This may be changed in system parameters.
+The similarity of two strings is computed using a trigram index.
+There are 3 levels of similarity:
+
++------------------------------+--------------------+---------------------+
++Name of the system parameter  | Default Value      | String length       |
++==============================+====================+=====================+
++partner_name_similarity_1     | 0.5                | Between 0 and 9     |
++------------------------------+--------------------+---------------------+
++partner_name_similarity_2     | 0.6                | Between 10 and 17   |
++------------------------------+--------------------+---------------------+
++partner_name_similarity_3     | 0.7                | More than 18        |
++------------------------------+--------------------+---------------------+
+
+The level of similarity required so that 2 partners whose names length are less than 9
+are considered duplicates is 0.5 by default.
+These values may be changed in system parameters.
 
 
 Element comparison
 ----------------
 In the actual version, we setted by choice the comparison only on the name of res.partner
-No matter what is the value in boolean 'is a company'
 
 
 Adding terms to exclude from the name comparison
@@ -110,6 +138,6 @@ Roadmap
 -------
 This module is financed and answered to customer needs.
 
-It should be improve:
+It should be improved:
 
 * add parameters in the user's interface to set the field wanted in comparison

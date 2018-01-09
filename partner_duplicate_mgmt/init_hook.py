@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2017-2018 Savoir-faire Linux
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# © 2017 Savoir-faire Linux
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
 from odoo import api, SUPERUSER_ID

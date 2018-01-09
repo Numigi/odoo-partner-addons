@@ -17,7 +17,7 @@
         <field name="name">res.partner.duplicate</field>
         <field name="model">res.partner.duplicate</field>
         <field name="arch" type="xml">
-            <form string="Partner Dupplicate">
+            <form string="Partner Duplicate">
                 <header>
                     <button type="object" name="set_to_draft" string="Set To Draft" states="resolved"/>
                     <button type="object" name="open_partner_merge_wizard" string="Merge" states="to_validate"/>

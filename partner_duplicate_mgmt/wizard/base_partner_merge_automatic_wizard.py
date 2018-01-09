@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2017-2018 Savoir-faire Linux
+# © 2017 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, models, SUPERUSER_ID
@@ -58,15 +58,6 @@ class MergePartnerAutomatic(models.TransientModel):
         """
         Partner = self.env['res.partner']
         partner_ids = Partner.browse(partner_ids).exists()
-
-        # check only admin can merge partners with different emails
-        if (
-            SUPERUSER_ID != self.env.uid and
-            len(set(partner.email for partner in partner_ids)) > 1
-        ):
-            raise UserError(_(
-                "All contacts must have the same email. Only the "
-                "Administrator can merge contacts with different emails."))
 
         # remove dst_partner from partners to merge
         if dst_partner and dst_partner in partner_ids:

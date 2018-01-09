@@ -219,8 +219,8 @@ msgstr "Fusionné"
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
 #, python-format
-msgid "Merged into %s"
-msgstr "Fusionné vers %s"
+msgid "Merged into %s."
+msgstr "Fusionné vers %s."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
@@ -336,7 +336,7 @@ msgstr "Attention, le contact %(src)s est relié à des écritures comptables. "
 "En le fusionnant avec %(dst)s, tout l’historique comptable de %(src)s sera déplacé sous %(dst)s."
 
 #. module: partner_duplicate_mgmt
-#: code:addons/partner_duplicate_mgmt/wizard/res_partner_dupplicate.py:0
+#: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
 #, python-format
 msgid "Please select a value to preserve for the field %s."
 msgstr "Veuillez sélectionner une valeur à conserver pour le champ %s."
