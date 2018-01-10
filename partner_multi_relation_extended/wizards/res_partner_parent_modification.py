@@ -97,6 +97,7 @@ class ResPartnerParentModification(models.TransientModel):
         previous_relations = self.env['res.partner.relation.all'].search([
             ('this_partner_id', '=', self.contact_id.id),
             ('is_automatic', '=', False),
+            ('type_selection_id.type_id', '!=', relation_type_same.id),
             ('type_selection_id.type_id.is_work_relation', '=', False),
             '|', ('active', '=', False), ('active', '=', True)
         ])
