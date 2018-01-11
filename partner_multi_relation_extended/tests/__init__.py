@@ -5,3 +5,4 @@
 from . import test_res_partner
 from . import test_res_partner_parent_modification
 from . import test_res_partner_relation_type
+from . import test_res_partner_relation_type_selection
