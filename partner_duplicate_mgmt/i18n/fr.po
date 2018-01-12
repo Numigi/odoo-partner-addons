@@ -255,6 +255,7 @@ msgstr "Nom"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model,name:partner_duplicate_mgmt.model_res_partner
+#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_search
 msgid "Partner"
 msgstr "Partenaire"
 

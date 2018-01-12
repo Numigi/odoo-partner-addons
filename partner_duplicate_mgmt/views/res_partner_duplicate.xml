@@ -85,6 +85,7 @@
         <field name="model">res.partner.duplicate</field>
         <field name="arch" type="xml">
             <search>
+                <field name="partner_1_id" string="Partner" filter_domain=" ['|', ('partner_1_id', 'ilike', self),  ('partner_2_id', 'ilike', self)]"/>
                 <filter name="to_validate" string="To Validate" domain="[('state','=','to_validate')]"/>
                 <filter name="merged" string="Merged" domain="[('state','=','merged')]"/>
                 <filter name="resolved" string="Resolved (Not Duplicate)" domain="[('state','=','resolved')]"/>
