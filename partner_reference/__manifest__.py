@@ -15,6 +15,7 @@
         'sales_team',
     ],
     'data': [
+        'security/ir.model.access.csv',
         'views/res_partner.xml',
         'views/res_partner_reference_type.xml',
     ],
