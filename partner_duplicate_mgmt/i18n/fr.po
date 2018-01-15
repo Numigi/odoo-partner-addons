@@ -463,6 +463,14 @@ msgstr "Vous ne pouvez pas fusionner le contact %(contact)s car celui-ci "
 "est relié à des écritures comptables. Veuillez contacter votre administrateur."
 
 #. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/base_partner_merge_automatic_wizard.py:0
+#, python-format
+msgid "You can not merge the partner %(partner)s because it is "
+"linked to journal entries. Please contact your administrator."
+msgstr "Vous ne pouvez pas fusionner le partenaire %(partner)s car il est "
+"lié à des écritures comptables. Veuillez contacter votre administrateur."
+
+#. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner.py:0
 #, python-format
 msgid "You don't have access to merge partners."

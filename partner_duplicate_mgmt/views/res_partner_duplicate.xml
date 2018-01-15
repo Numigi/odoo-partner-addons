@@ -26,10 +26,11 @@
                 </header>
                 <sheet>
                     <group col="4">
-                        <field name="merger_reason_id"/>
                         <field name="partner_preserved_id"
                             attrs="{'invisible': [('state', '!=', 'merged')]}"
                             readonly="1"/>
+                        <field name="merger_reason_id"
+                            attrs="{'invisible': [('state', '!=', 'merged')]}"/>
                         <field name="partner_1_id" readonly="1"/>
                         <field name="partner_2_id" readonly="1"/>
                     </group>
