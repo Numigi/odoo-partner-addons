@@ -25,7 +25,7 @@ class ResPartnerDuplicate(models.Model):
     merger_reason_id = fields.Many2one(
         'merger.reason', string='Merger Reason')
 
-    warning_message = fields.Char(compute='_compute_warning_message')
+    warning_message = fields.Char()
 
     state = fields.Selection(
         string='State',
@@ -48,52 +48,24 @@ class ResPartnerDuplicate(models.Model):
             line.partner_1_selected = partner_1_preserved
             line.partner_2_selected = not partner_1_preserved
 
-    @api.multi
-    @api.depends('partner_preserved_id')
-    def _compute_warning_message(self):
-        for record in self:
-            record.warning_message = ""
-
-            partner_1_moves = self.env['account.move'].search([
-                ('partner_id', '=', record.partner_1_id.id)
+        partners = self.partner_1_id | self.partner_2_id
+        partner_to_archive = partners - self.partner_preserved_id
+        if (
+            not self.partner_preserved_id.is_company and
+            not partner_to_archive.is_company and
+            self.env['account.move'].sudo().search([
+                ('partner_id', '=', partner_to_archive.id)
             ])
-            partner_2_moves = self.env['account.move'].search([
-                ('partner_id', '=', record.partner_2_id.id)
-            ])
-            src_partners = self.env['res.partner']
-
-            if (
-                partner_1_moves and (
-                    not record.partner_preserved_id or
-                    record.partner_preserved_id == record.partner_2_id)
-            ):
-                src_partners = record.partner_1_id
-
-            if (
-                partner_2_moves and (
-                    not record.partner_preserved_id or
-                    record.partner_preserved_id == record.partner_1_id)
-            ):
-                src_partners |= record.partner_2_id
-
-            if src_partners:
-                if len(src_partners) == 1:
-                    message = (_(
-                        "Please note that the partner %(src)s is linked "
-                        "to journal entries. ") % {
-                        'src': src_partners.name,
-                    })
-                else:
-                    message = (_(
-                        "Please note that the partners %(src)s are linked "
-                        "to journal entries. ") % {
-                        'src': ', '.join(src_partners.mapped('name')),
-                    })
-                record.warning_message = (
-                    message + _(
-                        "By merging a partner X with a "
-                        "partner Y, all the accounting history of the "
-                        "partner X will be moved under the partner Y."))
+        ):
+            self.warning_message = (_(
+                "Please note that the contact %(src)s is linked to journal "
+                "entries. By merging it with %(dst)s, all the accounting "
+                "history of %(src)s will be moved under %(dst)s.") % {
+                'src': partner_to_archive.name,
+                'dst': self.partner_preserved_id.name,
+            })
+        else:
+            self.warning_message = ""
 
     def update_preserved_partner(self):
         vals = {}

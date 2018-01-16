@@ -77,21 +77,22 @@ class MergePartnerAutomatic(models.TransientModel):
             src_partners = ordered_partners[:-1]
         _logger.info("dst_partner: %s", dst_partner.id)
 
-        # check only users with enough rights can merge partners
-        # with account moves
+        # for contacts, check only users with enough rights can merge
+        # contact with account moves
         group = self.env.ref(
             'partner_duplicate_mgmt.group_contacts_merge_account_moves')
         if (
+            not src_partners.is_company and not dst_partner.is_company and
             group not in self.env.user.groups_id and
             self.env['account.move'].sudo().search([
                 ('partner_id', '=', src_partners.id)
             ])
         ):
             raise UserError(_(
-                "You can not merge the partner %(partner)s because it is "
+                "You can not merge the contact %(contact)s because it is "
                 "linked to journal entries. Please contact your "
                 "administrator.") % {
-                    'partner': src_partners.name
+                    'contact': src_partners.name
             })
 
         self._update_reference_fields(src_partners, dst_partner)

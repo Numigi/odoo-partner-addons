@@ -330,22 +330,10 @@ msgstr "Partenaire conservé"
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
 #, python-format
-msgid "Please note that the partner %(src)s is linked to journal entries. "
-msgstr "Attention, le partenaire %(src)s est relié à des écritures comptables. "
-
-#. module: partner_duplicate_mgmt
-#: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
-#, python-format
-msgid "Please note that the partners %(src)s are linked to journal entries. "
-msgstr "Attention, les partenaires %(src)s sont reliés à des écritures comptables. "
-
-#. module: partner_duplicate_mgmt
-#: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
-#, python-format
-msgid "By merging a partner X with a partner Y, all the accounting history of "
-"the partner X will be moved under the partner Y."
-msgstr "En fusionnant un partenaire X avec un partenaire Y, tout l’historique "
-"comptable du partenaire X sera déplacé sous le partenaire Y."
+msgid "Please note that the contact %(src)s is linked to journal entries. "
+"By merging it with %(dst)s, all the accounting history of %(src)s will be moved under %(dst)s."
+msgstr "Attention, le contact %(src)s est relié à des écritures comptables. "
+"En le fusionnant avec %(dst)s, tout l’historique comptable de %(src)s sera déplacé sous %(dst)s."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_dupplicate.py:0

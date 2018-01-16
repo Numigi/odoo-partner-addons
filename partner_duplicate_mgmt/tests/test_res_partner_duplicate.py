@@ -97,6 +97,9 @@ class TestResPartnerDuplicate(common.SavepointCase):
         cls.company_dup.open_partner_merge_wizard()
         cls.company_merge_lines = cls.company_dup.merge_line_ids
 
+    def test_01_make_sure_that_first_duplicate_exists(self):
+        self.assertTrue(self.contact_dup)
+
     def test_02_cron_executed_twice_wont_create_2_duplicates(self):
         self.cron.method_direct_trigger()
         duplicates = self.env['res.partner.duplicate'].search([
@@ -325,17 +328,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         with self.assertRaises(UserError):
             self.contact_dup.merge_partners()
 
-    def test_22_cannot_merge_company_with_account_moves(self):
-        invoice = self.create_invoice(self.company_2)
-        invoice.action_invoice_open()
-
-        self.company_dup.write({'partner_preserved_id': self.company_1.id})
-        self.company_merge_lines.write({'partner_1_selected': True})
-
-        with self.assertRaises(UserError):
-            self.company_dup.merge_partners()
-
-    def test_23_special_group_can_merge_contact_with_account_moves(self):
+    def test_22_special_group_can_merge_contacts_with_account_moves(self):
         self.env.user.write({'groups_id': [(4, self.group.id)]})
 
         invoice = self.create_invoice(self.contact_2)
@@ -347,23 +340,14 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.contact_dup.merge_partners()
         self.assertEqual(invoice.move_id.partner_id, self.contact_1)
 
-    def test_24_compute_warning_message_partner_1_with_account_moves(self):
+    def test_23_compute_warning_message_partner_1_with_account_moves(self):
         self.assertFalse(self.contact_dup.warning_message)
         self.env.user.write({'groups_id': [(4, self.group.id)]})
 
         invoice = self.create_invoice(self.contact_2)
         invoice.action_invoice_open()
 
+        self.contact_dup.write({'partner_preserved_id': self.contact_1.id})
+        self.contact_dup.onchange_partner_preserved_id()
+
         self.assertIn(self.contact_2.name, self.contact_dup.warning_message)
-
-    def test_25_compute_warning_message_partners_with_account_moves(self):
-        self.assertFalse(self.company_dup.warning_message)
-        self.env.user.write({'groups_id': [(4, self.group.id)]})
-
-        invoice = self.create_invoice(self.company_1)
-        invoice.action_invoice_open()
-        invoice = self.create_invoice(self.company_2)
-        invoice.action_invoice_open()
-
-        self.assertIn(self.company_1.name, self.company_dup.warning_message)
-        self.assertIn(self.company_2.name, self.company_dup.warning_message)
