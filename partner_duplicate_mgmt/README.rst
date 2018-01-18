@@ -53,19 +53,14 @@ A new list view shows alls duplicates. The user can:
 * exclude the duplicate by choice 
 
 
-Company and contact merger
---------------------------
-Not possible
-
-
-Companies merger
+Merging Partners
 ----------------
-Possible
+It is possible to merge partners that are either both companies or both contacts
 
 
-Contacts merger
----------------
-To merge contacts that are linked to journal items, the user must be part of the group
+Merging Contacts with Account Moves
+-----------------------------------
+To merge contacts that are linked to account moves, the user must be part of the group
 "Contacts Merge With Account Moves", if not the merger won't be possible.
 
 
