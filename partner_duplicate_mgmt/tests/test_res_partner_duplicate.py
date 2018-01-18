@@ -304,6 +304,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         })
         self.account_invoice_line = self.env['account.invoice.line'].create({
             'name': 'My line 1',
+            'product_id': self.product.id,
             'account_id': self.account_2.id,
             'price_unit': '20',
         })
