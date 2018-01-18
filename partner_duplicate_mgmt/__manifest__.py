@@ -37,5 +37,5 @@
     },
     'post_init_hook': 'update_partners_indexed_name',
     'installable': True,
-    'application': False,
+    'application': True,
 }
