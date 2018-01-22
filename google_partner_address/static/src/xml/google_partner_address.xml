@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="template" xml:space="preserve">
+    <div t-name="AddressField">
+        <input type="text" class="o_address_input" t-att-placeholder="widget.placeholder"/>
+    </div>
+</templates>
