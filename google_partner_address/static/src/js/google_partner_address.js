@@ -147,7 +147,7 @@ odoo.define('google_partner_address', function (require) {
         set_country: function(country) {
             var country_id = this.field_manager.fields.country_id.get_value();
             if (!country_id){
-                var country_code = address["country"].toLowerCase();
+                var country_code = country.toLowerCase();
                 country_id = this.get_country_id(country_code);
             }
             this.field_manager.fields.country_id.set_value(country_id);
