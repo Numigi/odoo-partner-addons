@@ -128,15 +128,7 @@ class ResPartnerDuplicate(models.Model):
         # Change duplicate state
         self.write({'state': 'merged'})
 
-        view = self.env.ref('partner_duplicate_mgmt.view_partner_form')
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'res.partner',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'views': [(view.id, 'form')],
-            'res_id': self.partner_preserved_id.id,
-        }
+        return self.partner_preserved_id.get_formview_action()
 
     def _find_partner_duplicates(self):
         criteria = []
