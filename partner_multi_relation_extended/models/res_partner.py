@@ -28,8 +28,12 @@ class ResPartner(models.Model):
 
     @api.model
     def create(self, vals):
+        """
+            Create a relation between a contact and its parent only when the
+            parent is a company.
+        """
         res = super(ResPartner, self).create(vals)
-        if res.parent_id:
+        if res.parent_id and res.parent_id.is_company:
             work_relation_type = self.env['res.partner.relation.type'].search([
                 ('is_work_relation', '=', True),
             ])
