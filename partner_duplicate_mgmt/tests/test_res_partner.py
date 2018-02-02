@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2017 Savoir-faire Linux
+# © 2017-2018 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
@@ -64,7 +64,7 @@ class TestResPartner(common.SavepointCase):
         self.assertIn(self.partner_3, self.partner_2.duplicate_ids)
 
         self.assertIn(
-            '11 Big Partner inc.', self.partner_2.message_ids[0].body)
+            '11 Big Partner', self.partner_2.message_ids[0].body)
         self.assertIn('33 Big Partner', self.partner_2.message_ids[0].body)
 
     def test_05_should_not_select_more_than_2_partners_to_merge(self):

@@ -120,35 +120,20 @@
 
     <record id="res_partner_duplicate_resolve_action" model="ir.actions.server">
         <field name="name">Indicate As Resolved</field>
+        <field name="type">ir.actions.server</field>
         <field name="model_id" ref="model_res_partner_duplicate"/>
+        <field name="binding_model_id" ref="model_res_partner_duplicate"/>
         <field name="state">code</field>
         <field name="code">records.action_resolve()</field>
     </record>
 
-    <record id="res_partner_duplicate_resolve" model="ir.values">
-        <field name="model_id" ref="model_res_partner_duplicate" />
-        <field name="name">Indicate As Resolved</field>
-        <field name="key2">client_action_multi</field>
-        <field name="value" eval="'ir.actions.server,' +str(ref('res_partner_duplicate_resolve_action'))" />
-        <field name="key">action</field>
-        <field name="model">res.partner.duplicate</field>
-    </record>
-
     <record id="res_partner_duplicate_merge_action" model="ir.actions.server">
         <field name="name">Merge Partners</field>
+        <field name="type">ir.actions.server</field>
         <field name="model_id" ref="model_res_partner_duplicate"/>
-        <field name="code">
-action = records.open_partner_merge_wizard()
-        </field>
-    </record>
-
-    <record id="res_partner_duplicate_merge" model="ir.values">
-        <field name="model_id" ref="model_res_partner_duplicate" />
-        <field name="name">Merge Partners</field>
-        <field name="key2">client_action_multi</field>
-        <field name="value" eval="'ir.actions.server,' +str(ref('res_partner_duplicate_merge_action'))" />
-        <field name="key">action</field>
-        <field name="model">res.partner.duplicate</field>
+        <field name="binding_model_id" ref="model_res_partner_duplicate"/>
+        <field name="state">code</field>
+        <field name="code">action = records.open_partner_merge_wizard()</field>
     </record>
 
     <menuitem 

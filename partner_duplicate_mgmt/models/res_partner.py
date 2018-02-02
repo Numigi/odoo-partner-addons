@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2017 Savoir-faire Linux
+# © 2017-2018 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
@@ -169,14 +169,16 @@ class ResPartner(models.Model):
     @api.multi
     def write(self, vals):
         res = super(ResPartner, self).write(vals)
-        if 'name' in vals or 'firstname' in vals or 'lastname' in vals:
-            self._update_indexed_name()
+        # if 'name' in vals or 'firstname' in vals or 'lastname' in vals:
+            # self._update_indexed_name()
 
         if (
             'parent_id' in vals or 'name' in vals or
             'lastname' in vals or 'firstname' in vals or
             'company_type' in vals or 'is_company' in vals
         ):
+            self._update_indexed_name()
+
             for record in self:
                 duplicates = record._create_duplicates()
                 record._post_message_duplicates(duplicates)

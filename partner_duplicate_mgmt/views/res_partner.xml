@@ -21,18 +21,9 @@
     <record id="res_partner_merge_action" model="ir.actions.server">
         <field name="name">Merge Selected Partners</field>
         <field name="model_id" ref="model_res_partner"/>
-        <field name="code">
-action = records.action_merge()
-        </field>
-    </record>
-
-    <record id="res_partner_merge" model="ir.values">
-        <field name="model_id" ref="model_res_partner" />
-        <field name="name">Merge Selected Partners</field>
-        <field name="key2">client_action_multi</field>
-        <field name="value" eval="'ir.actions.server,' +str(ref('res_partner_merge_action'))" />
-        <field name="key">action</field>
-        <field name="model">res.partner</field>
+        <field name="binding_model_id" ref="model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_merge()</field>
     </record>
 
 </odoo>
