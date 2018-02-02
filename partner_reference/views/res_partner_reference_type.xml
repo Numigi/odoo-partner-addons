@@ -25,7 +25,7 @@
         id="menu_partner_reference_type"
         name="Partner Reference Types"
         action="partner_reference.action_partner_reference_type"
-        parent="sales_team.menu_config_address_book"
+        parent="contacts.res_partner_menu_config"
         sequence="2"/>
 
 </odoo>
