@@ -97,9 +97,6 @@ class TestResPartnerDuplicate(common.SavepointCase):
         cls.company_dup.open_partner_merge_wizard()
         cls.company_merge_lines = cls.company_dup.merge_line_ids
 
-    def test_01_make_sure_that_first_duplicate_exists(self):
-        self.assertTrue(self.contact_dup)
-
     def test_02_cron_executed_twice_wont_create_2_duplicates(self):
         self.cron.method_direct_trigger()
         duplicates = self.env['res.partner.duplicate'].search([
@@ -352,3 +349,28 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.contact_dup.onchange_partner_preserved_id()
 
         self.assertIn(self.contact_2.name, self.contact_dup.warning_message)
+
+    def _get_current_duplicates(self, id_start):
+        return self.env['res.partner.duplicate'].search([
+            ('partner_1_id', '>=', id_start),
+            ('partner_2_id', '>=', id_start),
+        ])
+
+    def test_23_cron_executed_correctly(self):
+        # Similarity of these 2 partners : 0.53
+        first_partner = self.env['res.partner'].create({'name': 'Julienjez'})
+        self.env['res.partner'].create({'name': 'Julyenjez'})
+
+        # Similarity of these 2 partners : 0.62
+        self.env['res.partner'].create({'name': 'Julienbreard'})
+        self.env['res.partner'].create({'name': 'Julyenbreard'})
+
+        # Similarity of these 2 partners : 0.76
+        self.env['res.partner'].create({'name': 'Julien Jezequel Breard'})
+        self.env['res.partner'].create({'name': 'Julyen Jezequel Breard'})
+
+        self._get_current_duplicates(first_partner.id).unlink()
+        self.cron.method_direct_trigger()
+
+        duplicates_generated_2 = self._get_current_duplicates(first_partner.id)
+        self.assertEqual(len(duplicates_generated_2), 3)

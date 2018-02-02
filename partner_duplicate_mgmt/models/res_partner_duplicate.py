@@ -144,6 +144,7 @@ class ResPartnerDuplicate(models.Model):
             'partner_duplicate_mgmt.partner_name_similarity_3')
         criteria.append((similarity_3, 18, 100))
 
+        duplicates = []
         cr = self.env.cr
         for criterion in criteria:
             cr.execute('SELECT set_limit(%s)', (criterion[0],))
@@ -170,7 +171,9 @@ class ResPartnerDuplicate(models.Model):
                 'max_length': criterion[2],
             })
 
-        return cr.fetchall()
+            duplicates += cr.fetchall()
+
+        return duplicates
 
     def create_duplicates(self):
         res = self._find_partner_duplicates()
