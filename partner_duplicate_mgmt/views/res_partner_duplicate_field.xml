@@ -9,7 +9,7 @@
                 <field name="field_id" options="{'no_open': True, 'no_create_edit': True, 'no_create': True}" context="{'special_display_name': True}"/>
                 <field name="technical_name"/>
                 <field name="name"/>
-                <field name="sequence"/>
+                <field name="sequence" widget="handle"/>
                 <field name="active"/>
             </tree>
       </field>
