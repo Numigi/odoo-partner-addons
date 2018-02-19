@@ -16,7 +16,7 @@ class ResPartnerDuplicateField(models.Model):
             ('model', '=', 'res.partner'),
             ('ttype', 'not in', ('many2many', 'one2many')),
             ('related', '=', False),
-            ('compute', '=', False),
+            ('readonly', '=', False),
         ], help=_(
             'You can only select fields which are not many2many, '
             'one2many, related and computed.')
