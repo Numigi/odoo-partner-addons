@@ -22,5 +22,60 @@
             <field name="sequence" eval="4"/>
         </record>
 
+        <record id="duplicate_field_city" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_city')"/>
+            <field name="sequence" eval="5"/>
+        </record>
+
+        <record id="duplicate_field_country_id" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_country_id')"/>
+            <field name="sequence" eval="6"/>
+        </record>
+
+        <record id="duplicate_field_state_id" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_state_id')"/>
+            <field name="sequence" eval="7"/>
+        </record>
+
+        <record id="duplicate_field_street" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_street')"/>
+            <field name="sequence" eval="8"/>
+        </record>
+
+        <record id="duplicate_field_street2" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_street2')"/>
+            <field name="sequence" eval="9"/>
+        </record>
+
+        <record id="duplicate_field_zip" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_zip')"/>
+            <field name="sequence" eval="10"/>
+        </record>
+
+        <record id="duplicate_field_email" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_email')"/>
+            <field name="sequence" eval="11"/>
+        </record>
+
+        <record id="duplicate_field_phone" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_phone')"/>
+            <field name="sequence" eval="12"/>
+        </record>
+
+        <record id="duplicate_field_mobile" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_mobile')"/>
+            <field name="sequence" eval="13"/>
+        </record>
+
+        <record id="duplicate_field_fax" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_fax')"/>
+            <field name="sequence" eval="14"/>
+        </record>
+
+        <record id="duplicate_field_lang" model="res.partner.duplicate.field">
+            <field name="field_id" eval="ref('base.field_res_partner_lang')"/>
+            <field name="sequence" eval="15"/>
+        </record>
+
     </data>
 </odoo>
