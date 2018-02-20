@@ -77,17 +77,21 @@ class ResPartnerDuplicate(models.Model):
                 self.partner_preserved_id == self.partner_1_id and
                 line.partner_2_selected
             ):
-                field_value = line.partner_2_value
+                if line.duplicate_field_id.type == 'many2one':
+                    field_value = getattr(self.partner_2_id, field_name).id
+                else:
+                    field_value = line.partner_2_value
 
             if (
                 self.partner_preserved_id == self.partner_2_id and
                 line.partner_1_selected
             ):
-                field_value = line.partner_1_value
+                if line.duplicate_field_id.type == 'many2one':
+                    field_value = getattr(self.partner_1_id, field_name).id
+                else:
+                    field_value = line.partner_1_value
 
             if field_value:
-                if line.duplicate_field_id.type == 'many2one':
-                    field_value = getattr(self.partner_2_id, field_name).id
                 vals[field_name] = field_value
 
         self.partner_preserved_id.write(vals)
