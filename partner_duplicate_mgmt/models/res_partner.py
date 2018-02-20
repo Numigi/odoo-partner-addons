@@ -87,7 +87,7 @@ class ResPartner(models.Model):
         cr = self.env.cr
         cr.execute('SELECT set_limit(%s)', (min_similarity,))
         cr.execute("""
-            SELECT p.id, p.name
+            SELECT p.id
             FROM res_partner p
             WHERE p.id != %(id)s
             AND p.active = true
@@ -108,9 +108,10 @@ class ResPartner(models.Model):
             'name': indexed_name or '',
             'parent': self.parent_id.id or None,
         })
-        res = cr.dictfetchall()
 
-        return res
+        res = cr.fetchall()
+        ids = [p[0] for p in res]
+        return self.browse(ids)
 
     @api.onchange('name', 'parent_id', 'company_type', 'is_company')
     def onchange_name(self):
@@ -141,14 +142,15 @@ class ResPartner(models.Model):
 
     def _create_duplicates(self):
         partners = self._get_duplicates()
-        records = self.env['res.partner.duplicate']
+        duplicates = self.env['res.partner.duplicate']
         for partner in partners:
-            records |= self.env['res.partner.duplicate'].create({
-                'partner_1_id': self.id,
-                'partner_2_id': partner['id'],
+            duplicated_partners = (partner | self).sorted('id')
+            duplicates |= self.env['res.partner.duplicate'].create({
+                'partner_1_id': duplicated_partners[0].id,
+                'partner_2_id': duplicated_partners[1].id,
             })
 
-        return records.mapped('partner_2_id')
+        return partners
 
     def _post_message_duplicates(self, duplicates):
         for record in self:
@@ -292,3 +294,19 @@ class ResPartner(models.Model):
             ('name', '=', 'Merge Selected Contacts')])
         if action:
             action.unlink()
+
+    @api.multi
+    def name_get(self):
+        if self.env.context.get('order_by_id'):
+            return super(ResPartner, self.sorted('id')).name_get()
+
+        if self.env.context.get('show_address'):
+            res = []
+            for partner in self:
+                res.append((
+                    partner.id,
+                    '%s (%s)' % (partner.display_name, partner.street or '',)))
+
+            return res
+
+        return super(ResPartner, self).name_get()

@@ -58,7 +58,7 @@
         <field name="arch" type="xml">
             <form string="Merge Partners">
                 <group col="4">
-                    <field name="partner_preserved_id" options="{'no_create': True}" domain="['|', ('id', '=', partner_1_id), ('id', '=', partner_2_id)]" required="1"/>
+                    <field name="partner_preserved_id" options="{'no_create': True}" domain="['|', ('id', '=', partner_1_id), ('id', '=', partner_2_id)]" required="1" context="{'order_by_id': True}"/>
                     <field name="merger_reason_id"/>
                     <field name="partner_1_id" readonly="1"/>
                     <field name="partner_2_id" readonly="1"/>
