@@ -295,9 +295,12 @@ class ResPartner(models.Model):
         if action:
             action.unlink()
 
-    @api.multi
-    def name_get(self):
-        if self.env.context.get('order_by_id'):
-            return super(ResPartner, self.sorted('id')).name_get()
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        if not self._context.get('duplicate_partner_1_id'):
+            return super(ResPartner, self).name_search(
+                name, args, operator, limit)
 
-        return super(ResPartner, self).name_get()
+        partner_1 = self.browse(self._context.get('duplicate_partner_1_id'))
+        partner_2 = self.browse(self._context.get('duplicate_partner_2_id'))
+        return (partner_1 | partner_2).name_get()

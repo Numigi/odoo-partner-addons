@@ -11,7 +11,7 @@ class IrModelFields(models.Model):
 
     @api.multi
     def name_get(self):
-        if not self.env.context.get('no_display_model_name'):
+        if not self._context.get('no_display_model_name'):
             return super(IrModelFields, self).name_get()
 
         res = []
