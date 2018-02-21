@@ -87,7 +87,7 @@ class ResPartner(models.Model):
         cr = self.env.cr
         cr.execute('SELECT set_limit(%s)', (min_similarity,))
         cr.execute("""
-            SELECT p.id
+            SELECT p.id, p.name
             FROM res_partner p
             WHERE p.id != %(id)s
             AND p.active = true
@@ -109,9 +109,7 @@ class ResPartner(models.Model):
             'parent': self.parent_id.id or None,
         })
 
-        res = cr.fetchall()
-        ids = [p[0] for p in res]
-        return self.browse(ids)
+        return cr.dictfetchall()
 
     @api.onchange('name', 'parent_id', 'company_type', 'is_company')
     def onchange_name(self):
@@ -142,15 +140,15 @@ class ResPartner(models.Model):
 
     def _create_duplicates(self):
         partners = self._get_duplicates()
-        duplicates = self.env['res.partner.duplicate']
+        duplicates = self.env['res.partner']
         for partner in partners:
-            duplicated_partners = (partner | self).sorted('id')
-            duplicates |= self.env['res.partner.duplicate'].create({
-                'partner_1_id': duplicated_partners[0].id,
-                'partner_2_id': duplicated_partners[1].id,
+            self.env['res.partner.duplicate'].create({
+                'partner_1_id': min(self.id, partner['id']),
+                'partner_2_id': max(self.id, partner['id']),
             })
+            duplicates |= self.browse(partner['id'])
 
-        return partners
+        return duplicates
 
     def _post_message_duplicates(self, duplicates):
         for record in self:
