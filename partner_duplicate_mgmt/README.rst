@@ -109,6 +109,7 @@ Contributors
 * Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)
 * David Dufresne (david.dufresne@savoirfairelinux.com)
 * Bruno Joliveau (bruno.joliveau@savoirfairelinux.com)
+* Julien Jezequel-Breard (julien.jezequel-breard@savoirfairelinux.com)
 
 
 Dependencies
