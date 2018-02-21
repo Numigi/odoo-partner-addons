@@ -86,7 +86,7 @@ class ResPartnerDuplicate(models.Model):
                 partner = self.partner_1_id
 
             if partner:
-                field_value = partner._get_field_value(line.duplicate_field_id)
+                field_value = partner._get_field_value(field_name)
                 if field_value:
                     vals[field_name] = field_value
 

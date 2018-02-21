@@ -303,11 +303,6 @@ class ResPartner(models.Model):
         partner_2 = self.browse(self._context.get('duplicate_partner_2_id'))
         return (partner_1 | partner_2).name_get()
 
-    def _get_field_value(self, field):
-        field_value = False
-        if field.type == 'many2one':
-            field_value = getattr(self, field.technical_name).id
-        else:
-            field_value = getattr(self, field.technical_name)
-
-        return field_value
+    def _get_field_value(self, field_name):
+        field_value = getattr(self, field_name)
+        return self._fields[field_name].convert_to_write(field_value, self)
