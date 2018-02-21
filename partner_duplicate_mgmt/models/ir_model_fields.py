@@ -14,8 +14,4 @@ class IrModelFields(models.Model):
         if not self._context.get('no_display_model_name'):
             return super(IrModelFields, self).name_get()
 
-        res = []
-        for field in self:
-            res.append((field.id, '%s' % (field.field_description,)))
-
-        return res
+        return [(f.id, f.field_description) for f in self]
