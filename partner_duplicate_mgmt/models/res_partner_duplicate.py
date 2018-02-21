@@ -234,5 +234,4 @@ class ResPartnerDuplicate(models.Model):
             'views': [(view.id, 'form')],
             'target': 'new',
             'res_id': self.id,
-            'context': {'show_address': True},
         }

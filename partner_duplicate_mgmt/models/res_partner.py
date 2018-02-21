@@ -300,13 +300,4 @@ class ResPartner(models.Model):
         if self.env.context.get('order_by_id'):
             return super(ResPartner, self.sorted('id')).name_get()
 
-        if self.env.context.get('show_address'):
-            res = []
-            for partner in self:
-                res.append((
-                    partner.id,
-                    '%s (%s)' % (partner.display_name, partner.street or '',)))
-
-            return res
-
         return super(ResPartner, self).name_get()
