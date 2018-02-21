@@ -132,6 +132,14 @@ class ResPartnerDuplicate(models.Model):
         # Change duplicate state
         self.write({'state': 'merged'})
 
+        # Resolve all other duplicates linked to the partner archived
+        self.search([
+            '|',
+            ('partner_1_id', '=', partner_to_archive.id),
+            ('partner_2_id', '=', partner_to_archive.id),
+            ('state', '=', 'to_validate')
+        ]).action_resolve()
+
         return self.partner_preserved_id.get_formview_action()
 
     def _find_partner_duplicates(self):

@@ -359,3 +359,30 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         duplicates_generated_2 = self._get_current_duplicates(first_partner.id)
         self.assertEqual(len(duplicates_generated_2), 3)
+
+    def test_23_when_partner_is_archived_duplicates_left_are_resolved(self):
+        partner_1 = self.env['res.partner'].create({'name': 'Partner 1'})
+        partner_2 = self.env['res.partner'].create({'name': 'Partner 2'})
+        partner_3 = self.env['res.partner'].create({'name': 'Partner 3'})
+
+        dup1 = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', '=', partner_1.id),
+            ('partner_2_id', '=', partner_2.id)
+        ])
+        dup2 = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', '=', partner_1.id),
+            ('partner_2_id', '=', partner_3.id)
+        ])
+        dup3 = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', '=', partner_2.id),
+            ('partner_2_id', '=', partner_3.id)
+        ])
+
+        dup1.open_partner_merge_wizard()
+        dup1.write({'partner_preserved_id': partner_2.id})
+        dup1.merge_line_ids.write({'partner_2_selected': True})
+        dup1.merge_partners()
+
+        self.assertEqual(dup1.state, 'merged')
+        self.assertEqual(dup2.state, 'resolved')
+        self.assertEqual(dup3.state, 'to_validate')
