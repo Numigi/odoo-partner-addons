@@ -8,7 +8,7 @@ from odoo import api, models, fields
 class ResPartnerMergeLine(models.Model):
 
     _name = 'res.partner.merge.line'
-    _description = __doc__
+    _description = 'Merger Line'
 
     duplicate_id = fields.Many2one(
         'res.partner.duplicate', ondelete='cascade', required=True)
