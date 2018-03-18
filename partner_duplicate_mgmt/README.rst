@@ -24,7 +24,7 @@ A wizard will appear, asking you which partner you would like to keep.
 Then, you may select the field values to keep from each partner.
 
 
-Partner Preserved:  Agrolait, Michel Fletcher
+Preserved Partner:  Agrolait, Michel Fletcher
 
 Partner 1:          Michelle Fletcher          Partner 2:         Agrolait, Michel Fletcher
 

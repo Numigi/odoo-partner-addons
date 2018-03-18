@@ -17,8 +17,12 @@ class ResPartnerDuplicate(models.Model):
     partner_2_id = fields.Many2one(
         'res.partner', string='Partner 2', readonly=True)
     partner_preserved_id = fields.Many2one(
-        'res.partner', string='Partner Preserved',
+        'res.partner', string='Preserved Partner',
         track_visibility='onchange')
+    partner_archived_id = fields.Many2one(
+        'res.partner', string='Archived Partner',
+        compute='_compute_partner_archived_id')
+
     merge_line_ids = fields.One2many(
         'res.partner.merge.line', 'duplicate_id', string='Merge Lines')
 
@@ -36,6 +40,17 @@ class ResPartnerDuplicate(models.Model):
         ], default='to_validate',
         track_visibility='onchange',
     )
+
+    @api.depends('partner_1_id', 'partner_2_id', 'partner_preserved_id')
+    def _compute_partner_archived_id(self):
+        for rec in self:
+            if not rec.partner_preserved_id:
+                continue
+
+            if rec.partner_preserved_id == rec.partner_1_id:
+                rec.partner_archived_id = rec.partner_2_id
+            else:
+                rec.partner_archived_id = rec.partner_1_id
 
     @api.model
     def create(self, vals):
@@ -131,17 +146,7 @@ class ResPartnerDuplicate(models.Model):
         partner_to_archive.write({'active': False})
 
         # Add messages to the chatter
-        message_src = _('Merged into %s.') % (self.partner_preserved_id.name)
-        partner_to_archive.message_post(body=message_src)
-
-        message_reason = ""
-        if self.merger_reason_id:
-            message_reason = _(
-                " Merger reason is : %s.") % (self.merger_reason_id.name,)
-
-        message_dst = _('Merged with %s.') % (partner_to_archive.name,)
-        self.partner_preserved_id.message_post(
-            body=(message_dst + message_reason))
+        self._log_merge_messages()
 
         # Change duplicate state
         self.write({'state': 'merged'})
@@ -155,6 +160,26 @@ class ResPartnerDuplicate(models.Model):
         ]).action_resolve()
 
         return self.partner_preserved_id.get_formview_action()
+
+    def _log_merge_messages(self):
+        """Log messages in the mail threads of the merged partners.
+
+        The merge reason is logged in the thread of the preserved
+        partner.
+        """
+        message_src = _('Merged into %s.') % \
+            self.partner_preserved_id.display_name
+        self.partner_archived_id.message_post(body=message_src)
+
+        message_reason = ""
+        if self.merger_reason_id:
+            message_reason = _(" Merger reason is : %s.") % \
+                self.merger_reason_id.name
+
+        message_dst = _('Merged with %s.') % \
+            self.partner_archived_id.display_name
+        self.partner_preserved_id.message_post(
+            body=(message_dst + message_reason))
 
     def _find_partner_duplicates(self):
         criteria = []

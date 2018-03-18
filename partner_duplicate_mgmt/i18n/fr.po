@@ -22,6 +22,11 @@ msgid "Active"
 msgstr "Actif"
 
 #. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_archived_id
+msgid "Archived Partner"
+msgstr "Partenaire archivé"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_merge_wizard_form
 msgid "Cancel"
 msgstr "Annuler"
@@ -329,7 +334,7 @@ msgstr "Champ d'un partenaire"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_preserved_id
-msgid "Partner Preserved"
+msgid "Preserved Partner"
 msgstr "Partenaire conservé"
 
 #. module: partner_duplicate_mgmt
