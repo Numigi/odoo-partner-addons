@@ -37,6 +37,24 @@ class ResPartnerDuplicate(models.Model):
         track_visibility='onchange',
     )
 
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        res._update_partner_order()
+        return res
+
+    def _update_partner_order(self):
+        """Update the order of the partners on the duplicate record.
+
+        The left partner (partner_1_id) must be the partner with the lower id.
+        """
+        for duplicate in self:
+            if duplicate.partner_1_id.id > duplicate.partner_2_id.id:
+                duplicate.write({
+                    'partner_1_id': duplicate.partner_2_id.id,
+                    'partner_2_id': duplicate.partner_1_id.id,
+                })
+
     @api.onchange('partner_preserved_id')
     def onchange_partner_preserved_id(self):
         if not self.partner_preserved_id:

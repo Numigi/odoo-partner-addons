@@ -90,11 +90,6 @@ are considered duplicates is 0.5 by default.
 These values may be changed in system parameters.
 
 
-Element comparison
-----------------
-In the actual version, we setted by choice the comparison only on the name of res.partner
-
-
 Adding terms to exclude from the name comparison
 ------------------------------------------------
 When comparing 2 partners, some terms must be excluded from the names.
@@ -121,13 +116,6 @@ not install properly.
 In order to install the extension, you may log in to your database as superuser and run:
 
 > CREATE EXTENSION pg_trgm
-
-
-More information
-----------------
-* Module developed and tested with Odoo version 10.0
-* For questions, please contact our support services
-(support@savoirfairelinux.com)
 
 
 Roadmap
