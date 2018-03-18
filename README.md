@@ -1,2 +1,3 @@
-# partner-addons
-Partner related addons
+# Partner Addons
+
+This repository contains Odoo addons related to partners.
