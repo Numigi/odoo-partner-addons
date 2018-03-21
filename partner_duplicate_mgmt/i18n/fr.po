@@ -224,20 +224,20 @@ msgstr "Fusionné"
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
 #, python-format
-msgid "Merged into %s."
-msgstr "Fusionné vers %s."
+msgid "Merged into {partner}."
+msgstr "Fusionné vers {partner}."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
 #, python-format
-msgid "Merged with %s."
-msgstr "Fusionné avec %s."
+msgid "Merged with {partner}."
+msgstr "Fusionné avec {partner}."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
 #, python-format
-msgid " Merger reason is : %s."
-msgstr " La raison de fusion est : %s."
+msgid "The merger reason is: {reason}."
+msgstr "La raison de fusion est : {reason}."
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model,name:partner_duplicate_mgmt.model_res_partner_merger_line
