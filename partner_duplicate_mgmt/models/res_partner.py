@@ -169,8 +169,6 @@ class ResPartner(models.Model):
     @api.multi
     def write(self, vals):
         res = super(ResPartner, self).write(vals)
-        # if 'name' in vals or 'firstname' in vals or 'lastname' in vals:
-            # self._update_indexed_name()
 
         if (
             'parent_id' in vals or 'name' in vals or

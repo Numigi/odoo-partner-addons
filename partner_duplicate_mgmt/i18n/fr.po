@@ -22,6 +22,11 @@ msgid "Active"
 msgstr "Actif"
 
 #. module: partner_duplicate_mgmt
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_archived_id
+msgid "Archived Partner"
+msgstr "Partenaire archivé"
+
+#. module: partner_duplicate_mgmt
 #: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_merge_wizard_form
 msgid "Cancel"
 msgstr "Annuler"
@@ -219,20 +224,20 @@ msgstr "Fusionné"
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
 #, python-format
-msgid "Merged into %s."
-msgstr "Fusionné vers %s."
+msgid "Merged into {partner}."
+msgstr "Fusionné vers {partner}."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
 #, python-format
-msgid "Merged with %s."
-msgstr "Fusionné avec %s."
+msgid "Merged with {partner}."
+msgstr "Fusionné avec {partner}."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
 #, python-format
-msgid " Merger reason is : %s."
-msgstr " La raison de fusion est : %s."
+msgid "The merger reason is: {reason}."
+msgstr "La raison de fusion est : {reason}."
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model,name:partner_duplicate_mgmt.model_res_partner_merger_line
@@ -329,7 +334,7 @@ msgstr "Champ d'un partenaire"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_partner_preserved_id
-msgid "Partner Preserved"
+msgid "Preserved Partner"
 msgstr "Partenaire conservé"
 
 #. module: partner_duplicate_mgmt

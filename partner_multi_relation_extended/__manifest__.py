@@ -29,6 +29,6 @@
         'views/res_partner_relation_strength.xml',
     ],
     "auto_install": False,
-    "installable": True,
+    "installable": False,
     'application': False,
 }

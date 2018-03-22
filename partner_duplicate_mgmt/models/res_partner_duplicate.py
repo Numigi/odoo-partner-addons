@@ -17,8 +17,12 @@ class ResPartnerDuplicate(models.Model):
     partner_2_id = fields.Many2one(
         'res.partner', string='Partner 2', readonly=True)
     partner_preserved_id = fields.Many2one(
-        'res.partner', string='Partner Preserved',
+        'res.partner', string='Preserved Partner',
         track_visibility='onchange')
+    partner_archived_id = fields.Many2one(
+        'res.partner', string='Archived Partner',
+        compute='_compute_partner_archived_id')
+
     merge_line_ids = fields.One2many(
         'res.partner.merge.line', 'duplicate_id', string='Merge Lines')
 
@@ -36,6 +40,33 @@ class ResPartnerDuplicate(models.Model):
         ], default='to_validate',
         track_visibility='onchange',
     )
+
+    @api.depends('partner_1_id', 'partner_2_id', 'partner_preserved_id')
+    def _compute_partner_archived_id(self):
+        for rec in self.filtered(lambda r: r.partner_preserved_id):
+            rec.partner_archived_id = (
+                rec.partner_2_id
+                if rec.partner_preserved_id == rec.partner_1_id
+                else rec.partner_1_id
+            )
+
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        res._update_partner_order()
+        return res
+
+    def _update_partner_order(self):
+        """Update the order of the partners on the duplicate record.
+
+        The left partner (partner_1_id) must be the partner with the lower id.
+        """
+        duplicates_in_wrong_order = (d for d in self if d.partner_1_id.id > d.partner_2_id.id)
+        for duplicate in duplicates_in_wrong_order:
+            duplicate.write({
+                'partner_1_id': duplicate.partner_2_id.id,
+                'partner_2_id': duplicate.partner_1_id.id,
+            })
 
     @api.onchange('partner_preserved_id')
     def onchange_partner_preserved_id(self):
@@ -113,17 +144,8 @@ class ResPartnerDuplicate(models.Model):
         partner_to_archive.write({'active': False})
 
         # Add messages to the chatter
-        message_src = _('Merged into %s.') % (self.partner_preserved_id.name)
-        partner_to_archive.message_post(body=message_src)
-
-        message_reason = ""
-        if self.merger_reason_id:
-            message_reason = _(
-                " Merger reason is : %s.") % (self.merger_reason_id.name,)
-
-        message_dst = _('Merged with %s.') % (partner_to_archive.name,)
-        self.partner_preserved_id.message_post(
-            body=(message_dst + message_reason))
+        self._log_archived_partner_message()
+        self._log_preserved_partner_message()
 
         # Change duplicate state
         self.write({'state': 'merged'})
@@ -137,6 +159,21 @@ class ResPartnerDuplicate(models.Model):
         ]).action_resolve()
 
         return self.partner_preserved_id.get_formview_action()
+
+    def _log_archived_partner_message(self):
+        """Log the message in the mail thread of the archived partner."""
+        message = _('Merged into {partner}.').format(partner=self.partner_preserved_id.display_name)
+        self.partner_archived_id.message_post(body=message)
+
+    def _log_preserved_partner_message(self):
+        """Log the message in the mail thread of the preserved partner."""
+        message = _('Merged with {partner}.').format(partner=self.partner_archived_id.display_name)
+
+        if self.merger_reason_id:
+            reason = _("The merger reason is: {reason}.").format(reason=self.merger_reason_id.name)
+            message = '{message}\n\n{reason}'.format(message=message, reason=reason)
+
+        self.partner_preserved_id.message_post(body=message)
 
     def _find_partner_duplicates(self):
         criteria = []

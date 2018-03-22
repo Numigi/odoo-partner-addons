@@ -67,11 +67,6 @@
             <field name="sequence" eval="13"/>
         </record>
 
-        <record id="duplicate_field_fax" model="res.partner.duplicate.field">
-            <field name="field_id" eval="ref('base.field_res_partner_fax')"/>
-            <field name="sequence" eval="14"/>
-        </record>
-
         <record id="duplicate_field_lang" model="res.partner.duplicate.field">
             <field name="field_id" eval="ref('base.field_res_partner_lang')"/>
             <field name="sequence" eval="15"/>

@@ -20,7 +20,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         cls.cron = cls.env.ref(
             'partner_duplicate_mgmt.ir_cron_create_duplicates')
 
-        cls.group = cls.env.ref(
+        cls.account_move_group = cls.env.ref(
             'partner_duplicate_mgmt.group_contacts_merge_account_moves')
 
         cls.duplicate_email = cls.env.ref(
@@ -308,11 +308,13 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.contact_dup.write({'partner_preserved_id': self.contact_1.id})
         self.contact_merge_lines.write({'partner_1_selected': True})
 
+        self.env.user.write({'groups_id': [(3, self.account_move_group.id)]})
+
         with self.assertRaises(UserError):
             self.contact_dup.merge_partners()
 
     def test_20_special_group_can_merge_contacts_with_account_moves(self):
-        self.env.user.write({'groups_id': [(4, self.group.id)]})
+        self.env.user.write({'groups_id': [(4, self.account_move_group.id)]})
 
         invoice = self.create_invoice(self.contact_2)
         invoice.action_invoice_open()
@@ -325,7 +327,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
     def test_21_compute_warning_message_partner_1_with_account_moves(self):
         self.assertFalse(self.contact_dup.warning_message)
-        self.env.user.write({'groups_id': [(4, self.group.id)]})
+        self.env.user.write({'groups_id': [(4, self.account_move_group.id)]})
 
         invoice = self.create_invoice(self.contact_2)
         invoice.action_invoice_open()
