@@ -162,12 +162,12 @@ class ResPartnerDuplicate(models.Model):
 
     def _log_archived_partner_message(self):
         """Log the message in the mail thread of the archived partner."""
-        message = _('Merged into {partner}.').format(self.partner_preserved_id.display_name)
+        message = _('Merged into {partner}.').format(partner=self.partner_preserved_id.display_name)
         self.partner_archived_id.message_post(body=message)
 
     def _log_preserved_partner_message(self):
         """Log the message in the mail thread of the preserved partner."""
-        message = _('Merged with {partner}.').format(self.partner_archived_id.display_name)
+        message = _('Merged with {partner}.').format(partner=self.partner_archived_id.display_name)
 
         if self.merger_reason_id:
             reason = _("The merger reason is: {reason}.").format(reason=self.merger_reason_id.name)
