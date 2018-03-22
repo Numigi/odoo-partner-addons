@@ -8,5 +8,7 @@ RUN pip3 install -r requirements.txt
 
 USER odoo
 
-COPY .docker_files/odoo.conf /etc/odoo
 COPY partner_duplicate_mgmt /mnt/extra-addons/partner_duplicate_mgmt
+
+COPY .docker_files/main /mnt/extra-addons/main
+COPY .docker_files/odoo.conf /etc/odoo

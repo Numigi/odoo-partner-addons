@@ -10,11 +10,11 @@ jobs:
 
        - run:
           name: Build -- Init Database
-          command: docker-compose run --rm odoo odoo --stop-after-init -i partner_duplicate_mgmt,partner_reference
+          command: docker-compose run --rm odoo odoo --stop-after-init -i main
 
        - run:
           name: Setup Log Folder For Reports
-          command: sudo mkdir -p ./log && sudo chmod 777 ./log
+          command: sudo mkdir -p .log && sudo chmod 777 .log
 
        - run:
           name: Run Test
@@ -24,10 +24,10 @@ jobs:
           name: Codacy Coverage
           command: |
             pip install codacy-coverage==1.3.10
-            python-codacy-coverage -r ./log/coverage.xml
+            python-codacy-coverage -r .log/coverage.xml
 
        - store_test_results:
-          path: ./log
+          path: .log
 
 workflows:
   version: 2
