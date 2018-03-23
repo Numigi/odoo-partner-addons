@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend" name="partner_multi_phone_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/partner_multi_phone/static/src/js/partner_multi_phone.js"></script>
+            <link rel="stylesheet" type="text/less" href="/partner_multi_phone/static/src/less/partner_multi_phone.less"/>
+        </xpath>
+    </template>
+
+</odoo>
