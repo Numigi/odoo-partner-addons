@@ -45,7 +45,7 @@ class ResPartner(models.Model):
             _check_extension_number(self.phone_other_extension)
 
 
-def _check_extension_number(self, extension):
+def _check_extension_number(extension):
     """Check that the given extension is valid.
 
     :param str extension: the extension to check
