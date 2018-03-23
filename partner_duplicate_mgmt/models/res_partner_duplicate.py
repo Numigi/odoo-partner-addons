@@ -177,16 +177,13 @@ class ResPartnerDuplicate(models.Model):
 
     def _find_partner_duplicates(self):
         criteria = []
-        similarity_1 = self.env['ir.config_parameter'].get_param(
-            'partner_duplicate_mgmt.partner_name_similarity_1')
+        similarity_1 = self._get_partner_name_similarity(1)
         criteria.append((similarity_1, 0, 9))
 
-        similarity_2 = self.env['ir.config_parameter'].get_param(
-            'partner_duplicate_mgmt.partner_name_similarity_2')
+        similarity_2 = self._get_partner_name_similarity(2)
         criteria.append((similarity_2, 10, 17))
 
-        similarity_3 = self.env['ir.config_parameter'].get_param(
-            'partner_duplicate_mgmt.partner_name_similarity_3')
+        similarity_3 = self._get_partner_name_similarity(3)
         criteria.append((similarity_3, 18, 100))
 
         duplicates = []
@@ -219,6 +216,15 @@ class ResPartnerDuplicate(models.Model):
             duplicates += cr.fetchall()
 
         return duplicates
+
+    def _get_partner_name_similarity(self, level):
+        """Get the floor similarity for the given similarity level.
+
+        :param level: the similarity level from 1 to 3
+        :return: the floor similarity limit
+        """
+        return self.env['ir.config_parameter'].get_param(
+            'partner_duplicate_mgmt.partner_name_similarity_{level}'.format(level=level))
 
     def create_duplicates(self):
         res = self._find_partner_duplicates()

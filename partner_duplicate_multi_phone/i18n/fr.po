@@ -1,0 +1,50 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_duplicate_mgmt_specific
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-27 15:42+0000\n"
+"PO-Revision-Date: 2017-12-27 15:42+0000\n"
+"Last-Translator: Yasmine El Mrini <yasmine.elmrini@savoirfairelinux.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_duplicate_mgmt_specific
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt_specific.field_res_partner_duplicate_partner_1_type
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt_specific.field_res_partner_duplicate_partner_2_type
+msgid "Company Type"
+msgstr "Type de société"
+
+#. module: partner_duplicate_mgmt_specific
+#: code:addons/partner_duplicate_mgmt_specific/models/res_partner.py:139
+#, python-format
+msgid "Duplicate partners (with the same phone number) : %s"
+msgstr "Partenaires doublons (avec le même numéro de téléphone) : %s"
+
+#. module: partner_duplicate_mgmt_specific
+#: model:ir.model,name:partner_duplicate_mgmt_specific.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: partner_duplicate_mgmt_specific
+#: model:ir.model,name:partner_duplicate_mgmt_specific.model_res_partner_duplicate
+msgid "Partner Duplicate"
+msgstr "Ligne de doublons"
+
+#. module: partner_duplicate_mgmt_specific
+#: code:addons/partner_duplicate_mgmt_specific/models/res_partner.py:42
+#, python-format
+msgid ""
+"This partner ({new_partner}) might be a duplicate of the following partners: "
+"\n\n\t{partner_names}.\n\n\t "
+"These partners have identical phone numbers ({number})."
+msgstr ""
+"Le partenaire ({new_partner}) pourrait être un duplicat des partenaires suivants: "
+"\n\n\t{partner_names}.\n\n\t "
+"Ces partenaires ont un numéro de téléphone identique ({number})."

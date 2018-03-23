@@ -7,6 +7,8 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
+      - ./partner_duplicate_mgmt:/mnt/extra-addons/partner_duplicate_mgmt
+      - ./partner_duplicate_multi_phone:/mnt/extra-addons/partner_duplicate_multi_phone
     ports:
       - "8069:8069"
       - "8071:8071"
