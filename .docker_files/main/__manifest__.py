@@ -12,6 +12,7 @@
     'summary': 'Install all addons required for testing.',
     'depends': [
         'partner_duplicate_mgmt',
+        'partner_multi_phone',
     ],
     'installable': True,
 }
