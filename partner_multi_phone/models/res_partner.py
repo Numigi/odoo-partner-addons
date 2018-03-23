@@ -37,14 +37,19 @@ class ResPartner(models.Model):
     @api.constrains('phone_extension')
     def _check_phone_extension(self):
         if self.phone_extension:
-            self._check_extension_number(self.phone_extension)
+            _check_extension_number(self.phone_extension)
 
     @api.constrains('phone_other_extension')
     def _check_phone_other_extension(self):
         if self.phone_other_extension:
-            self._check_extension_number(self.phone_other_extension)
+            _check_extension_number(self.phone_other_extension)
 
-    def _check_extension_number(self, number):
-        if not number.isdigit():
-            raise ValidationError(
-                _('The phone extension must contain only digits.'))
+
+def _check_extension_number(self, extension):
+    """Check that the given extension is valid.
+
+    :param str extension: the extension to check
+    """
+    if not extension.isdigit():
+        raise ValidationError(
+            _('The phone extension must contain only digits.'))
