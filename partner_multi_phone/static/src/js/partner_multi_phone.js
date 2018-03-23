@@ -7,7 +7,7 @@ var PhoneExtension = require("web.basic_fields").FieldChar.extend({
 
     _renderReadonly() {
         this._super.apply(this, arguments);
-        var label = $('<span>', {class: "o_phone_extension__label", text: "Ext: "});
+        var label = $("<span>", {class: "o_phone_extension__label", text: "Ext: "});
         this.$el.prepend(label);
     },
 });

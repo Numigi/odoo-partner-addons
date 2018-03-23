@@ -19,7 +19,7 @@ If the field Main Phone is filled, the selected phone type becomes mandatory.
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (http://bit.ly/numigiens)
+* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 * Savoir-faire Linux
 
 More information
