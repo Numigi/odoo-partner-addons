@@ -68,11 +68,11 @@ class ResPartner(models.Model):
                     'message': _(
                         "This partner ({new_partner}) might be a duplicate "
                         "of the following partners: "
-                        "\n\n\t{partner_names}.\n\n\t "
+                        "\n\n{partner_names}\n\n "
                         "These partners have identical phone numbers ({number})."
                     ).format(
                         new_partner=self.display_name,
-                        partner_names="\n\t".join([p.display_name for p in duplicates]),
+                        partner_names="\n".join([p.display_name for p in duplicates]),
                         number=number
                     )
                 }
