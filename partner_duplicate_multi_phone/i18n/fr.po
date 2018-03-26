@@ -1,0 +1,81 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_duplicate_multi_phone
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-25 23:50-0400\n"
+"PO-Revision-Date: 2018-03-25 23:52-0400\n"
+"Last-Translator: Yasmine El Mrini <yasmine.elmrini@savoirfairelinux."
+"com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. module: partner_duplicate_multi_phone
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_partner_duplicate_partner_1_type
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_partner_duplicate_partner_2_type
+msgid "Company Type"
+msgstr "Type de société"
+
+#. module: partner_duplicate_multi_phone
+#: model:ir.model,name:partner_duplicate_multi_phone.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: partner_duplicate_multi_phone
+#: code:addons/partner_duplicate_multi_phone/models/res_partner.py:130
+#, python-format
+msgid "Duplicate partners found (with the same phone number): {partners}"
+msgstr ""
+"Partenaires en double trouvés (avec un numéro de téléphone identique): "
+"{partners}"
+
+#. module: partner_duplicate_multi_phone
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_partner_mobile_indexed
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_users_mobile_indexed
+msgid "Mobile Indexed"
+msgstr "Mobile Indexé"
+
+#. module: partner_duplicate_multi_phone
+#: model:ir.model,name:partner_duplicate_multi_phone.model_res_partner_duplicate
+msgid "Partner Duplicate"
+msgstr "Ligne de doublons"
+
+#. module: partner_duplicate_multi_phone
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_partner_phone_home_indexed
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_users_phone_home_indexed
+msgid "Phone Home Indexed"
+msgstr "Téléphone domicile indexé"
+
+#. module: partner_duplicate_multi_phone
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_partner_phone_indexed
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_users_phone_indexed
+msgid "Phone Indexed"
+msgstr "Téléphone travail indexé"
+
+#. module: partner_duplicate_multi_phone
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_partner_phone_other_indexed
+#: model:ir.model.fields,field_description:partner_duplicate_multi_phone.field_res_users_phone_other_indexed
+msgid "Phone Other Indexed"
+msgstr "Téléphone autre indexé"
+
+#. module: partner_duplicate_multi_phone
+#: code:addons/partner_duplicate_multi_phone/models/res_partner.py:68
+#, python-format
+msgid ""
+"This partner ({new_partner}) might be a duplicate "
+"of the following partners: "
+"\n\n{partner_names}\n\n "
+"These partners have identical phone numbers ({number})."
+msgstr ""
+"Le partenaire ({new_partner}) pourrait être un duplicat des partenaires "
+"suivants: "
+"\n\n{partner_names}\n\n"
+"Ces partenaires ont un numéro de téléphone identique ({number})."

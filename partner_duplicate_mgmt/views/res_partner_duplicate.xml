@@ -81,6 +81,25 @@
         </field>
     </record>
 
+    <record id="res_partner_merge_wizard_form_merger_reason_required" model="ir.ui.view">
+        <field name="name">Make merger reason required when both partners are companies.</field>
+        <field name="model">res.partner.duplicate</field>
+        <field name="inherit_id" ref="res_partner_merge_wizard_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_preserved_id" position="before">
+                <field name="partner_1_type" invisible="1"/>
+                <field name="partner_2_type" invisible="1"/>
+            </field>
+            <field name="merger_reason_id" position="attributes">
+                <attribute name="attrs">{
+                    'required': [
+                        ('partner_1_type','=','company'),
+                        ('partner_2_type','=','company')]
+                }</attribute>
+            </field>
+        </field>
+    </record>
+
     <record id="res_partner_duplicate_search" model="ir.ui.view">
         <field name="name">res.partner.duplicate.search</field>
         <field name="model">res.partner.duplicate</field>

@@ -340,10 +340,10 @@ msgstr "Partenaire conservé"
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
 #, python-format
-msgid "Please note that the contact %(src)s is linked to journal entries. "
-"By merging it with %(dst)s, all the accounting history of %(src)s will be moved under %(dst)s."
-msgstr "Attention, le contact %(src)s est relié à des écritures comptables. "
-"En le fusionnant avec %(dst)s, tout l’historique comptable de %(src)s sera déplacé sous %(dst)s."
+msgid "Please note that the contact {archived_partner} is linked to journal entries. "
+"By merging it with {preserved_partner}, all the accounting history of {archived_partner} will be moved under {preserved_partner}."
+msgstr "Attention, le contact {archived_partner} est relié à des écritures comptables. "
+"En le fusionnant avec {preserved_partner}, tout l’historique comptable de {archived_partner} sera déplacé sous {preserved_partner}."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/wizard/res_partner_duplicate.py:0
@@ -413,8 +413,8 @@ msgstr "Nom technique"
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
 #, python-format
-msgid "The duplicate line (%s, %s) is resolved."
-msgstr "La ligne de doublons (%s, %s) est résolue."
+msgid "The duplicate line ({partner_1}, {partner_2}) is resolved."
+msgstr "La ligne de doublons ({partner_1}, {partner_2}) est résolue."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner.py:81
