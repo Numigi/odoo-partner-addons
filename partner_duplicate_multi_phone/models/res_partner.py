@@ -3,8 +3,6 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 from odoo import _, api, fields, models
 
-import re
-
 
 class ResPartner(models.Model):
 
