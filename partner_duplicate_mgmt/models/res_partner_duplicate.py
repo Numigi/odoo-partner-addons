@@ -7,6 +7,7 @@ from odoo.exceptions import UserError
 
 
 class ResPartnerDuplicate(models.Model):
+    """A model reprensenting a combination of 2 duplicate partners."""
 
     _name = 'res.partner.duplicate'
     _description = 'Partner Duplicate'
@@ -92,20 +93,31 @@ class ResPartnerDuplicate(models.Model):
         When merging 2 contacts, the user must be warned because this operation
         is not reversible.
         """
-        if (
+        both_partners_are_contacts = (
+            self.partner_preserved_id and
             self.partner_archived_id and
             not self.partner_preserved_id.is_company and
-            not self.partner_archived_id.is_company and
-            self.env['account.move'].sudo().search(
-                [('partner_id', '=', self.partner_archived_id.id)])
-        ):
-            self.warning_message = (_(
-                "Please note that the contact %(src)s is linked to journal "
-                "entries. By merging it with %(dst)s, all the accounting "
-                "history of %(src)s will be moved under %(dst)s.") % {
-                'src': self.partner_archived_id.name,
-                'dst': self.partner_preserved_id.name,
-            })
+            not self.partner_archived_id.is_company
+        )
+
+        def partner_has_journal_entries(partner):
+            """Verify whether a partner has journal entries or not.
+
+            :return True if the partner has journal entries, False otherwise.
+            """
+            if not partner:
+                return False
+            return self.env['account.move'].sudo().search(
+                [('partner_id', '=', partner.id)], count=True)
+
+        if both_partners_are_contacts and partner_has_journal_entries(self.partner_archived_id):
+            self.warning_message = _(
+                "Please note that the contact {archived_partner} is linked to journal "
+                "entries. By merging it with {preserved_partner}, all the accounting "
+                "history of {archived_partner} will be moved under {preserved_partner}.").format(
+                archived_partner=self.partner_archived_id.name,
+                preserved_partner=self.partner_preserved_id.name,
+            )
         else:
             self.warning_message = ""
 
@@ -308,3 +320,19 @@ class ResPartnerDuplicate(models.Model):
                 'partner_2_value': partner_2_value,
             })
         return lines
+
+
+class ResPartnerDuplicateWithPartnerType(models.Model):
+    """Add partner types on partner duplicates.
+
+    Partner types are required to add define whether the merger reason
+    is required for merging 2 partners.
+
+    The merger reason is mandatory when both companies merged are companies.
+    Merging companies is more critical then merging contacts.
+    """
+
+    _inherit = 'res.partner.duplicate'
+
+    partner_1_type = fields.Selection(related='partner_1_id.company_type')
+    partner_2_type = fields.Selection(related='partner_2_id.company_type')

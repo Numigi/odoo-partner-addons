@@ -7,7 +7,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
-class ResPartner(models.Model):
+class ResPartnerWithExtraPhones(models.Model):
 
     _name = 'res.partner'
     _inherit = ['res.partner', 'phone.validation.mixin']

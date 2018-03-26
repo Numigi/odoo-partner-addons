@@ -4,7 +4,15 @@
 from odoo import _, api, fields, models
 
 
-class ResPartner(models.Model):
+class ResPartnerWithIndexedPhones(models.Model):
+    """Add indexed phone columns on partners.
+
+    The new columns are required to run the phone comparisons quickly.
+
+    The values stored in the indexed columns are the phone numbers
+    without any formating, so that a phone such as 1-450-222-3333 on a
+    partner will match +1 (450) 222-3333 on another.
+    """
 
     _inherit = 'res.partner'
 
@@ -78,7 +86,7 @@ class ResPartner(models.Model):
 
     @api.multi
     def write(self, vals):
-        res = super(ResPartner, self).write(vals)
+        res = super().write(vals)
         for record in self:
             duplicates = record._search_for_duplicates(vals)
             if duplicates:
@@ -87,7 +95,7 @@ class ResPartner(models.Model):
 
     @api.model
     def create(self, vals):
-        res = super(ResPartner, self).create(vals)
+        res = super().create(vals)
         duplicates = res._search_for_duplicates(vals)
         if duplicates:
             res._post_message_phone_duplicates(duplicates)

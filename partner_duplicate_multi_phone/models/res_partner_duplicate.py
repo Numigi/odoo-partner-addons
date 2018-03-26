@@ -6,19 +6,17 @@
 from odoo import fields, models
 
 
-class ResPartnerDuplicate(models.Model):
+class ResPartnerDuplicateWithPhoneComparisons(models.Model):
+    """Add phone comparisons to the cron to find duplicates."""
 
     _inherit = 'res.partner.duplicate'
-
-    partner_1_type = fields.Selection(related='partner_1_id.company_type')
-    partner_2_type = fields.Selection(related='partner_2_id.company_type')
 
     def _find_duplicate_partner_ids(self):
         """Find matching partner duplicates based on phone numbers.
 
         Any of the 4 phone types may match any other phone type.
         """
-        res = super(ResPartnerDuplicate, self)._find_duplicate_partner_ids()
+        res = super()._find_duplicate_partner_ids()
 
         def phone_comparison(phone_field):
             return """

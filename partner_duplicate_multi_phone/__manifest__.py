@@ -5,7 +5,7 @@
 
 {
     'name': 'Partner Duplicate with Phone Numbers',
-    'version': '10.0.1.0.1',
+    'version': '11.0.1.0.1',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Numigi',
     'website': 'https://www.numigi.com',
@@ -15,9 +15,6 @@
     'depends': [
         'partner_duplicate_mgmt',
         'partner_multi_phone',
-    ],
-    'data': [
-        'views/res_partner_duplicate.xml',
     ],
     'installable': True,
     'application': False,
