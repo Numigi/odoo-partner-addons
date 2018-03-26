@@ -333,7 +333,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         invoice.action_invoice_open()
 
         self.contact_dup.write({'partner_preserved_id': self.contact_1.id})
-        self.contact_dup.onchange_partner_preserved_id()
+        self.contact_dup._onchange_check_contacts_with_journal_entries()
 
         self.assertIn(self.contact_2.name, self.contact_dup.warning_message)
 

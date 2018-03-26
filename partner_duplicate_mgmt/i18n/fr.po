@@ -413,8 +413,8 @@ msgstr "Nom technique"
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate.py:0
 #, python-format
-msgid "The duplicate line (%s, %s) is resolved."
-msgstr "La ligne de doublons (%s, %s) est résolue."
+msgid "The duplicate line ({partner_1}, {partner_2}) is resolved."
+msgstr "La ligne de doublons ({partner_1}, {partner_2}) est résolue."
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner.py:81

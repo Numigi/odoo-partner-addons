@@ -69,57 +69,67 @@ class ResPartnerDuplicate(models.Model):
             })
 
     @api.onchange('partner_preserved_id')
-    def onchange_partner_preserved_id(self):
+    def _onchange_auto_select_preserved_partner(self):
+        """Automatically select the preserved partner for all field lines."""
         if not self.partner_preserved_id:
             return
 
-        partner_1_preserved = (
-            self.partner_preserved_id == self.partner_1_id)
+        partner_1_preserved = self.partner_preserved_id == self.partner_1_id
         for line in self.merge_line_ids:
             line.partner_1_selected = partner_1_preserved
             line.partner_2_selected = not partner_1_preserved
 
-        partners = self.partner_1_id | self.partner_2_id
-        partner_to_archive = partners - self.partner_preserved_id
+    @api.onchange('partner_preserved_id')
+    def _onchange_check_contacts_with_journal_entries(self):
+        """Check for contacts with journal entries.
+
+        Contacts are partners that are not companies (people or addresses).
+
+        When 2 contacts are merged together, every table rows linked to
+        the archived contact are changed to point on the preserved contact.
+        This includes journal entries, invoices, payments, etc.
+
+        When merging 2 contacts, the user must be warned because this operation
+        is not reversible.
+        """
         if (
+            self.partner_archived_id and
             not self.partner_preserved_id.is_company and
-            not partner_to_archive.is_company and
-            self.env['account.move'].sudo().search([
-                ('partner_id', '=', partner_to_archive.id)
-            ])
+            not self.partner_archived_id.is_company and
+            self.env['account.move'].sudo().search(
+                [('partner_id', '=', self.partner_archived_id.id)])
         ):
             self.warning_message = (_(
                 "Please note that the contact %(src)s is linked to journal "
                 "entries. By merging it with %(dst)s, all the accounting "
                 "history of %(src)s will be moved under %(dst)s.") % {
-                'src': partner_to_archive.name,
+                'src': self.partner_archived_id.name,
                 'dst': self.partner_preserved_id.name,
             })
         else:
             self.warning_message = ""
 
     def _update_preserved_partner(self):
+        """Update field values on the preserved partner.
+
+        All field values selected on the archived partner are written to
+        the preserved partner.
+
+        Values selected on the preserved partner are ignored.
+        """
         vals = {}
+
+        partner_1_preserved = self.partner_preserved_id == self.partner_1_id
+        partner_2_preserved = self.partner_preserved_id == self.partner_2_id
+
         for line in self.merge_line_ids:
             field_name = line.duplicate_field_id.technical_name
-            partner = False
 
-            if (
-                self.partner_preserved_id == self.partner_1_id and
-                line.partner_2_selected
-            ):
-                partner = self.partner_2_id
+            if partner_1_preserved and line.partner_2_selected:
+                vals[field_name] = self.partner_2_id._get_field_value(field_name)
 
-            if (
-                self.partner_preserved_id == self.partner_2_id and
-                line.partner_1_selected
-            ):
-                partner = self.partner_1_id
-
-            if partner:
-                field_value = partner._get_field_value(field_name)
-                if field_value:
-                    vals[field_name] = field_value
+            elif partner_2_preserved and line.partner_1_selected:
+                vals[field_name] = self.partner_1_id._get_field_value(field_name)
 
         self.partner_preserved_id.write(vals)
 
@@ -175,7 +185,11 @@ class ResPartnerDuplicate(models.Model):
 
         self.partner_preserved_id.message_post(body=message)
 
-    def _find_partner_duplicates(self):
+    def _find_duplicate_partner_ids(self):
+        """Find all combinations of 2 partners that match as duplicates.
+
+        :return: list of tuples containing partner ids (i.e. [(1, 2), (1, 3), ...])
+        """
         criteria = []
         similarity_1 = self._get_partner_name_similarity(1)
         criteria.append((similarity_1, 0, 9))
@@ -227,7 +241,7 @@ class ResPartnerDuplicate(models.Model):
             'partner_duplicate_mgmt.partner_name_similarity_{level}'.format(level=level))
 
     def create_duplicates(self):
-        res = self._find_partner_duplicates()
+        res = self._find_duplicate_partner_ids()
         duplicates_sorted = [tuple(sorted(r)) for r in res]
         duplicates = list(set(duplicates_sorted))
 
@@ -236,13 +250,13 @@ class ResPartnerDuplicate(models.Model):
 
     @api.multi
     def action_resolve(self):
-        self.filtered(
-            lambda x: x.state == 'to_validate').write({
-                'state': 'resolved'})
+        self.filtered(lambda x: x.state == 'to_validate').write({'state': 'resolved'})
 
         for record in self:
-            message = _('The duplicate line (%s, %s) is resolved.') % (
-                record.partner_1_id.name, record.partner_2_id.name)
+            message = _('The duplicate line ({partner_1}, {partner_2}) is resolved.').format(
+                partner_1=record.partner_1_id.display_name,
+                partner_2=record.partner_2_id.display_name,
+            )
             record.partner_1_id.message_post(body=message)
             record.partner_2_id.message_post(body=message)
 
@@ -256,15 +270,12 @@ class ResPartnerDuplicate(models.Model):
             raise UserError(_("Please, select only one duplicate."))
 
         if self.state != 'to_validate':
-            raise UserError(_(
-                "You can not merge a line which is not to validate."))
+            raise UserError(_("You can not merge a line which is not to validate."))
 
-        merge_lines = (
-            self.env['res.partner.merge.line'].create_merge_lines(self))
+        merge_lines = self._create_merge_lines()
         self.write({'merge_line_ids': [(6, 0, merge_lines.ids)]})
 
-        view = self.env.ref(
-            'partner_duplicate_mgmt.res_partner_merge_wizard_form')
+        view = self.env.ref('partner_duplicate_mgmt.res_partner_merge_wizard_form')
         return {
             'type': 'ir.actions.act_window',
             'res_model': self._name,
@@ -274,3 +285,26 @@ class ResPartnerDuplicate(models.Model):
             'target': 'new',
             'res_id': self.id,
         }
+
+    def _create_merge_lines(self):
+        lines = self.env['res.partner.merge.line']
+        duplicate_fields = self.env['res.partner.duplicate.field'].search([])
+        partner_1 = self.partner_1_id
+        partner_2 = self.partner_2_id
+
+        for duplicate_field in duplicate_fields:
+            field = partner_1._fields[duplicate_field.technical_name]
+            partner_1_value = field.convert_to_display_name(
+                getattr(partner_1, duplicate_field.technical_name),
+                partner_1)
+            partner_2_value = field.convert_to_display_name(
+                getattr(partner_2, duplicate_field.technical_name),
+                partner_2)
+
+            lines |= self.env['res.partner.merge.line'].create({
+                'duplicate_id': self.id,
+                'duplicate_field_id': duplicate_field.id,
+                'partner_1_value': partner_1_value,
+                'partner_2_value': partner_2_value,
+            })
+        return lines

@@ -13,40 +13,36 @@ class ResPartnerDuplicate(models.Model):
     partner_1_type = fields.Selection(related='partner_1_id.company_type')
     partner_2_type = fields.Selection(related='partner_2_id.company_type')
 
-    def _find_partner_duplicates(self):
-        res = super(ResPartnerDuplicate, self)._find_partner_duplicates()
+    def _find_duplicate_partner_ids(self):
+        """Find matching partner duplicates based on phone numbers.
 
-        self.env.cr.execute("""
+        Any of the 4 phone types may match any other phone type.
+        """
+        res = super(ResPartnerDuplicate, self)._find_duplicate_partner_ids()
+
+        def phone_comparison(phone_field):
+            return """
+                p1.{phone_field} is not NULL
+                AND p1.{phone_field} != ''
+                AND (
+                    p1.{phone_field} = p2.phone_indexed
+                    OR p1.{phone_field} = p2.mobile_indexed
+                    OR p1.{phone_field} = p2.phone_home_indexed
+                    OR p1.{phone_field} = p2.phone_other_indexed
+                )
+            """.format(phone_field=phone_field)
+
+        query = """
             SELECT p1.id, p2.id
             FROM res_partner p1, res_partner p2
             WHERE p1.id != p2.id
             AND p1.active = true
             AND p2.active = true
             AND (
-                p1.phone_home_indexed is not NULL AND (
-                    p1.phone_home_indexed = p2.phone_home_indexed
-                    OR p1.phone_home_indexed = p2.mobile_indexed
-                    OR p1.phone_home_indexed = p2.phone_indexed
-                    OR p1.phone_home_indexed = p2.phone_other_indexed
-                )
-                OR p1.mobile_indexed is not NULL AND (
-                    p1.mobile_indexed = p2.phone_home_indexed
-                    OR p1.mobile_indexed = p2.mobile_indexed
-                    OR p1.mobile_indexed = p2.phone_indexed
-                    OR p1.mobile_indexed = p2.phone_other_indexed
-                )
-                OR p1.phone_indexed is not NULL AND (
-                    p1.phone_indexed = p2.phone_home_indexed
-                    OR p1.phone_indexed = p2.mobile_indexed
-                    OR p1.phone_indexed = p2.phone_indexed
-                    OR p1.phone_indexed = p2.phone_other_indexed
-                )
-                OR p1.phone_other_indexed is not NULL AND (
-                    p1.phone_other_indexed = p2.phone_home_indexed
-                    OR p1.phone_other_indexed = p2.mobile_indexed
-                    OR p1.phone_other_indexed = p2.phone_indexed
-                    OR p1.phone_other_indexed = p2.phone_other_indexed
-                )
+                {comparison_1}
+                OR {comparison_2}
+                OR {comparison_3}
+                OR {comparison_4}
             )
             AND NOT EXISTS (
                 SELECT NULL
@@ -54,6 +50,12 @@ class ResPartnerDuplicate(models.Model):
                 WHERE (d.partner_1_id = p1.id AND d.partner_2_id = p2.id)
                 OR    (d.partner_1_id = p2.id AND d.partner_2_id = p1.id)
             )
-        """)
+        """.format(
+            comparison_1=phone_comparison('phone_indexed'),
+            comparison_2=phone_comparison('mobile_indexed'),
+            comparison_3=phone_comparison('phone_home_indexed'),
+            comparison_4=phone_comparison('phone_other_indexed'),
+        )
 
+        self.env.cr.execute(query)
         return res + self.env.cr.fetchall()

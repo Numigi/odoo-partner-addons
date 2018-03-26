@@ -19,8 +19,46 @@ class ResPartner(models.Model):
     phone_other_indexed = fields.Char(
         compute='_compute_phone_other_indexed', index=True, store=True)
 
+    @api.depends('phone', 'phone_extension')
+    def _compute_phone_indexed(self):
+        for record in self:
+            record.phone_indexed = generate_phone_indexed_value(
+                record.phone, record.phone_extension)
+
+    @api.depends('phone_other', 'phone_other_extension')
+    def _compute_phone_other_indexed(self):
+        for record in self:
+            record.phone_other_indexed = generate_phone_indexed_value(
+                record.phone_other, record.phone_other_extension)
+
+    @api.depends('mobile')
+    def _compute_mobile_indexed(self):
+        for record in self:
+            record.mobile_indexed = generate_phone_indexed_value(record.mobile)
+
+    @api.depends('phone_home')
+    def _compute_phone_home_indexed(self):
+        for record in self:
+            record.phone_home_indexed = generate_phone_indexed_value(record.phone_home)
+
+    @api.onchange('phone', 'phone_extension')
+    def _onchange_phone_country(self):
+        return self._onchange_phone_number(self.phone, self.phone_extension)
+
+    @api.onchange('mobile')
+    def _onchange_mobile_country(self):
+        return self._onchange_phone_number(self.mobile)
+
+    @api.onchange('phone_home')
+    def _onchange_phone_home_country(self):
+        return self._onchange_phone_number(self.phone_home)
+
+    @api.onchange('phone_other', 'phone_other_extension')
+    def _onchange_phone_other_country(self):
+        return self._onchange_phone_number(self.phone_other, self.phone_other_extension)
+
     def _onchange_phone_number(self, number, extension=None):
-        number = _generate_phone_indexed_value(number, extension)
+        number = generate_phone_indexed_value(number, extension)
         duplicates = self._get_duplicates_by_phone(number)
 
         if duplicates:
@@ -40,43 +78,59 @@ class ResPartner(models.Model):
                 }
             }
 
-    @api.onchange('phone', 'phone_extension')
-    def _onchange_phone_country(self):
-        return self._onchange_phone_number(self.phone, self.phone_extension)
-
-    @api.onchange('mobile')
-    def _onchange_mobile_country(self):
-        return self._onchange_phone_number(self.mobile)
-
-    @api.onchange('phone_home')
-    def _onchange_phone_home_country(self):
-        return self._onchange_phone_number(self.phone_home)
-
-    @api.onchange('phone_other', 'phone_other_extension')
-    def _onchange_phone_other_country(self):
-        return self._onchange_phone_number(self.phone_other, self.phone_other_extension)
-
-    @api.depends('phone', 'phone_extension')
-    def _compute_phone_indexed(self):
+    @api.multi
+    def write(self, vals):
+        res = super(ResPartner, self).write(vals)
         for record in self:
-            record.phone_indexed = _generate_phone_indexed_value(
-                record.phone, record.phone_extension)
+            duplicates = record._search_for_duplicates(vals)
+            if duplicates:
+                record._post_message_phone_duplicates(duplicates)
+        return res
 
-    @api.depends('phone_other', 'phone_other_extension')
-    def _compute_phone_other_indexed(self):
-        for record in self:
-            record.phone_other_indexed = _generate_phone_indexed_value(
-                record.phone_other, record.phone_other_extension)
+    @api.model
+    def create(self, vals):
+        res = super(ResPartner, self).create(vals)
+        duplicates = res._search_for_duplicates(vals)
+        if duplicates:
+            res._post_message_phone_duplicates(duplicates)
+        return res
 
-    @api.depends('mobile')
-    def _compute_mobile_indexed(self):
-        for record in self:
-            record.mobile_indexed = _generate_phone_indexed_value(record.mobile)
+    def _search_for_duplicates(self, vals):
+        res = self.env['res.partner']
 
-    @api.depends('phone_home')
-    def _compute_phone_home_indexed(self):
+        if vals.get('phone_home'):
+            res |= self._create_phone_duplicates(self.phone_home_indexed)
+
+        if vals.get('mobile'):
+            res |= self._create_phone_duplicates(self.mobile_indexed)
+
+        if vals.get('phone') or vals.get('phone_extension'):
+            res |= self._create_phone_duplicates(self.phone_indexed)
+
+        if vals.get('phone_other') or vals.get('phone_other_extension'):
+            res |= self._create_phone_duplicates(self.phone_other_indexed)
+
+        return res
+
+    def _create_phone_duplicates(self, phone):
+        partners = self._get_duplicates_by_phone(phone)
+        if partners:
+            records = self.env['res.partner.duplicate']
+            for partner in partners:
+                records |= self.env['res.partner.duplicate'].create({
+                    'partner_1_id': self.id,
+                    'partner_2_id': partner.id,
+                })
+            return partners
+
+        return self.env['res.partner']
+
+    def _post_message_phone_duplicates(self, duplicates):
         for record in self:
-            record.phone_home_indexed = _generate_phone_indexed_value(record.phone_home)
+            message = _(
+                'Duplicate partners found (with the same phone number): {partners}'
+            ).format(partners=', '.join(duplicates.mapped('name')))
+            record.message_post(body=message)
 
     def _get_duplicates_by_phone(self, phone):
         """Get existing partner duplicates given a phone number.
@@ -123,61 +177,8 @@ class ResPartner(models.Model):
 
         return self.env['res.partner'].browse([r[0] for r in cr.fetchall()])
 
-    def _create_phone_duplicates(self, phone):
-        partners = self._get_duplicates_by_phone(phone)
-        if partners:
-            records = self.env['res.partner.duplicate']
-            for partner in partners:
-                records |= self.env['res.partner.duplicate'].create({
-                    'partner_1_id': self.id,
-                    'partner_2_id': partner.id,
-                })
-            return partners
 
-        return self.env['res.partner']
-
-    def _search_for_duplicates(self, vals):
-        res = self.env['res.partner']
-
-        if vals.get('phone_home'):
-            res |= self._create_phone_duplicates(self.phone_home_indexed)
-
-        if vals.get('mobile'):
-            res |= self._create_phone_duplicates(self.mobile_indexed)
-
-        if vals.get('phone') or vals.get('phone_extension'):
-            res |= self._create_phone_duplicates(self.phone_indexed)
-
-        if vals.get('phone_other') or vals.get('phone_other_extension'):
-            res |= self._create_phone_duplicates(self.phone_other_indexed)
-
-        return res
-
-    def _post_message_phone_duplicates(self, duplicates):
-        for record in self:
-            if duplicates:
-                message = _(
-                    'Duplicate partners found (with the same phone number): {partners}'
-                ).format(partners=', '.join(duplicates.mapped('name')))
-                record.message_post(body=message)
-
-    @api.multi
-    def write(self, vals):
-        res = super(ResPartner, self).write(vals)
-        for record in self:
-            duplicates = record._search_for_duplicates(vals)
-            record._post_message_phone_duplicates(duplicates)
-        return res
-
-    @api.model
-    def create(self, vals):
-        res = super(ResPartner, self).create(vals)
-        duplicates = res._search_for_duplicates(vals)
-        res._post_message_phone_duplicates(duplicates)
-        return res
-
-
-def _generate_phone_indexed_value(phone, extension=None):
+def generate_phone_indexed_value(phone, extension=None):
     """Generate a concatenated phone number with the extension.
 
     This function is used to create an indexedable string containing
