@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-20 16:19-0400\n"
-"PO-Revision-Date: 2017-10-20 16:21-0400\n"
+"POT-Creation-Date: 2018-03-27 17:59-0400\n"
+"PO-Revision-Date: 2018-03-27 18:00-0400\n"
 "Last-Translator: Agathe Mollé <agathe.molle@savoirfairelinux.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -18,22 +18,6 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 
 #. module: partner_change_parent
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_type_active
-msgid "Active"
-msgstr "Actif"
-
-#. module: partner_change_parent
-#: model:ir.model,name:partner_change_parent.model_res_partner_relation_all
-msgid "All (non-inverse + inverse) relations between partners"
-msgstr "Toutes les relations (non-inverse et inverse) entre partenaires"
-
-#. module: partner_change_parent
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_all_is_automatic
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_is_automatic
-msgid "Automatic"
-msgstr "Automatique"
-
-#. module: partner_change_parent
 #: model:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
 msgid "Cancel"
 msgstr "Annuler"
@@ -41,72 +25,50 @@ msgstr "Annuler"
 #. module: partner_change_parent
 #: model:ir.actions.act_window,name:partner_change_parent.action_res_partner_change_parent
 #: model:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
-#: model:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
+#: model:ir.ui.view,arch_db:partner_change_parent.view_partner_form_with_change_company_button
 msgid "Change Parent Entity"
-msgstr "Changer l'entité parente"
+msgstr "Changer la société parente"
 
 #. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_contact_id
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_new_contact_id
 msgid "Contact"
 msgstr "Contact"
 
 #. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_create_uid
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength_create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_create_date
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength_create_date
 msgid "Created on"
 msgstr ""
 
 #. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_display_name
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength_display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: partner_change_parent
-#: model:res.partner.relation.type,name_inverse:partner_change_parent.relation_type_work
-msgid "Has employee"
-msgstr "A pour employé"
-
-#. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_id
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength_id
 msgid "ID"
 msgstr ""
 
 #. module: partner_change_parent
-#: model:res.partner.relation.type,name:partner_change_parent.relation_type_same
-#: model:res.partner.relation.type,name_inverse:partner_change_parent.relation_type_same
-msgid "Is the same person as"
-msgstr "Est la même personne que"
-
-#. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent___last_update
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength___last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_write_uid
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength_write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_write_date
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength_write_date
 msgid "Last Updated on"
 msgstr ""
-
-#. module: partner_change_parent
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength_name
-msgid "Name"
-msgstr "Nom"
 
 #. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_new_company_id
@@ -114,186 +76,20 @@ msgid "New Company"
 msgstr "Nouvelle société"
 
 #. module: partner_change_parent
-#: code:addons/partner_change_parent/wizards/res_partner_change_parent.py:106
+#: code:addons/partner_change_parent/wizard/res_partner_change_parent.py:58
 #, python-format
 msgid "New Contact"
 msgstr "Nouveau Contact"
 
 #. module: partner_change_parent
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_all_note
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_note
-msgid "Note"
-msgstr "Note"
-
-#. module: partner_change_parent
-#: model:ir.model,name:partner_change_parent.model_res_partner
-msgid "Partner"
-msgstr "Partenaire"
-
-#. module: partner_change_parent
 #: model:ir.model,name:partner_change_parent.model_res_partner_change_parent
-msgid "Partner Parent Modification"
-msgstr "Modification de parent de partenaire"
-
-#. module: partner_change_parent
-#: model:ir.model,name:partner_change_parent.model_res_partner_relation_strength
-msgid "Partner Relation Strength"
-msgstr "Force d'une relation de partenaire"
-
-#. module: partner_change_parent
-#: model:ir.actions.act_window,name:partner_change_parent.action_res_partner_relation_strength
-#: model:ir.ui.menu,name:partner_change_parent.menu_res_partner_relation_strength_action
-#: model:ir.ui.view,arch_db:partner_change_parent.tree_res_partner_relation_strength
-msgid "Partner Relation Strengths"
-msgstr "Forces d'une relation de partenaires"
-
-#. module: partner_change_parent
-#: model:ir.model,name:partner_change_parent.model_res_partner_relation_type
-msgid "Partner Relation Type"
-msgstr "Type de relation de partenaire"
-
-#. module: partner_change_parent
-#: model:ir.model,name:partner_change_parent.model_res_partner_relation
-msgid "Partner relation"
-msgstr "Relation de partenaire"
-
-#. module: partner_change_parent
-#: code:addons/partner_change_parent/wizards/res_partner_change_parent.py:48
-#, python-format
-msgid ""
-"Prior to attribute a new work relation, you need to define a partner "
-"relation type flagged as \"Work Relation\"."
-msgstr ""
-"Avant d'attribuer une nouvelle relation d'emploi, vous devez définir un type "
-"de relation de partenaire catégorisé comme \"Relation d'emploi\"."
-
-#. module: partner_change_parent
-#: model:ir.ui.menu,name:partner_change_parent.menu_res_partner_relation_contacts
-msgid "Relations"
-msgstr "Relations"
-
-#. module: partner_change_parent
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_type_is_same_relation
-msgid "Same Relation"
-msgstr "Relation 'identique'"
-
-#. module: partner_change_parent
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength_sequence
-msgid "Sequence"
-msgstr "Séquence"
-
-#. module: partner_change_parent
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_all_strength
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_strength
-msgid "Strength"
-msgstr "Force"
-
-#. module: partner_change_parent
-#: code:addons/partner_change_parent/models/res_partner_relation_type.py:44
-#, python-format
-msgid ""
-"There is already a Partner Relation Type categorized as \"Work Relation\"."
-msgstr ""
-"Il y a déjà un type de relation de partenaire catégorisé comme \"Relation "
-"d'emploi\""
-
-#. module: partner_change_parent
-#: model:ir.model.fields,help:partner_change_parent.field_res_partner_relation_all_is_automatic
-#: model:ir.model.fields,help:partner_change_parent.field_res_partner_relation_is_automatic
-msgid ""
-"This relation has been automatically created by the system. Only the system "
-"administrator can update or delete it."
-msgstr ""
-"Cette relation a été créée automatiquement par le système. Seule "
-"l'administrateur du système peut la modifier ou la supprimer."
-
-#. module: partner_change_parent
-#: model:ir.model.fields,help:partner_change_parent.field_res_partner_relation_all_note
-#: model:ir.model.fields,help:partner_change_parent.field_res_partner_relation_note
-msgid ""
-"Use this field to add information about the relation. For example, if the "
-"relation is \"Belongs to the professional order\", you can put here the "
-"professional order number."
-msgstr ""
-"Utilisez ce champ pour ajouter de l'information à propos d'une relation. Par "
-"exemple, si la relation est \"Appartient à l'ordre professionnel\", vous "
-"pouvez renseigner ici le numéro d'ordre professionnel."
+msgid "Partner Parent Change Wizard"
+msgstr "Assistant de changement de société parente"
 
 #. module: partner_change_parent
 #: model:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
 msgid "Validate"
 msgstr "Valider"
-
-#. module: partner_change_parent
-#: code:addons/partner_change_parent/models/res_partner.py:21
-#: code:addons/partner_change_parent/models/res_partner_relation_all.py:82
-#, python-format
-msgid "Warning"
-msgstr "Attention"
-
-#. module: partner_change_parent
-#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_relation_type_is_work_relation
-msgid "Work Relation"
-msgstr "Relation d'emploi"
-
-#. module: partner_change_parent
-#: code:addons/partner_change_parent/models/res_partner_relation_all.py:83
-#, python-format
-msgid ""
-"Work type relations cannot be created/updated manually. If you need to add a "
-"new relation flagged as \"Work Relation\", please use the \"Change Parent "
-"Entity\" button on the partner form."
-msgstr ""
-"Les relations de type emploi ne peuvent être crées/modifiées manuellement. "
-"Si vous souhaitez ajouter une nouvelle relation catégorisée comme \"Relation "
-"d'emploi\", veuillez utiliser le bouton \"Changer l'entité parente\" "
-"disponible sur le formulaire du partenaire."
-
-#. module: partner_change_parent
-#: model:res.partner.relation.type,name:partner_change_parent.relation_type_work
-msgid "Works for"
-msgstr "Travaille pour"
-
-#. module: partner_change_parent
-#: code:addons/partner_change_parent/models/res_partner_relation_all.py:70
-#, python-format
-msgid ""
-"You cannot delete a partner relation that has been automatically created by "
-"the system. Only the system administrator can."
-msgstr ""
-"Vous ne pouvez pas supprimer une relation de partenaire créée "
-"automatiquement par le système. Seul l'administrateur système le peut."
-
-#. module: partner_change_parent
-#: code:addons/partner_change_parent/models/res_partner_relation_type.py:60
-#, python-format
-msgid ""
-"You cannot delete the relation type which identifies two partners as the "
-"same one. It is necessary in the parent entity modification process."
-msgstr ""
-"Vous ne pouvez pas supprimer le type de relation qui identifie deux "
-"partenaires comme étant la même personne. Celui-ci est nécessaire dans le "
-"processus de changement d'entité parente."
-
-#. module: partner_change_parent
-#: code:addons/partner_change_parent/models/res_partner.py:22
-#, python-format
-msgid ""
-"You cannot set a parent entity, as there is not any partner relation type "
-"flagged as \"Work Relation\"."
-msgstr ""
-"Vous ne pouvez pas définir d'entité parente, car il n'y a pas de type de "
-"relation de partenaire catégorisé comme \"Relation d'emploi\"."
-
-#. module: partner_change_parent
-#: code:addons/partner_change_parent/models/res_partner_relation_all.py:54
-#, python-format
-msgid ""
-"You cannot update a partner relation that has been automatically created by "
-"the system. Only the system administrator can."
-msgstr ""
-"Vous ne pouvez pas modifier une relation de partenaire créée automatiquement "
-"par le système. Seul l'administrateur système le peut."
 
 #. module: partner_change_parent
 #: model:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent

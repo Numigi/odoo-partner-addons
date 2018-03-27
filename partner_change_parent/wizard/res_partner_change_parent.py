@@ -70,15 +70,23 @@ class ResPartnerParentChange(models.TransientModel):
         The email must be removed from the old contact because of the unique
         constraint on res_partner.email.
 
+        The name of the contact must be rewritten after the copy to remove
+        because Odoo automatically adds `(copy)`.
+
         :return: the new contact
         """
         email = self.contact_id.email
         self.contact_id.email = ''
-        new_contact = self.contact_id.copy(default={'parent_id': False})
-        new_contact.write({
+        new_contact = self.contact_id\
+            .with_context(mail_notrack=True)\
+            .copy(default={'parent_id': False})
+
+        new_contact.with_context(mail_notrack=True).write({
+            'name': self.contact_id.name,
             'email': email,
-            'parent_id': self.new_company_id.id,
         })
+
+        new_contact.parent_id = self.new_company_id
         return new_contact
 
     def _archive_old_contact(self):
