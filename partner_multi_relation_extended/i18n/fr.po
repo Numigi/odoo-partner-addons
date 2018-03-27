@@ -34,36 +34,36 @@ msgid "Automatic"
 msgstr "Automatique"
 
 #. module: partner_multi_relation_extended
-#: model:ir.ui.view,arch_db:partner_multi_relation_extended.form_res_partner_parent_modification
+#: model:ir.ui.view,arch_db:partner_multi_relation_extended.form_res_partner_change_parent
 msgid "Cancel"
 msgstr "Annuler"
 
 #. module: partner_multi_relation_extended
-#: model:ir.actions.act_window,name:partner_multi_relation_extended.action_res_partner_parent_modification
+#: model:ir.actions.act_window,name:partner_multi_relation_extended.action_res_partner_change_parent
 #: model:ir.ui.view,arch_db:partner_multi_relation_extended.form_res_partner_multi_relation_extended
-#: model:ir.ui.view,arch_db:partner_multi_relation_extended.form_res_partner_parent_modification
+#: model:ir.ui.view,arch_db:partner_multi_relation_extended.form_res_partner_change_parent
 msgid "Change Parent Entity"
 msgstr "Changer l'entité parente"
 
 #. module: partner_multi_relation_extended
-#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_parent_modification_contact_id
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_change_parent_contact_id
 msgid "Contact"
 msgstr "Contact"
 
 #. module: partner_multi_relation_extended
-#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_parent_modification_create_uid
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_change_parent_create_uid
 #: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_strength_create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: partner_multi_relation_extended
-#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_parent_modification_create_date
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_change_parent_create_date
 #: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_strength_create_date
 msgid "Created on"
 msgstr ""
 
 #. module: partner_multi_relation_extended
-#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_parent_modification_display_name
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_change_parent_display_name
 #: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_strength_display_name
 msgid "Display Name"
 msgstr ""
@@ -74,7 +74,7 @@ msgid "Has employee"
 msgstr "A pour employé"
 
 #. module: partner_multi_relation_extended
-#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_parent_modification_id
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_change_parent_id
 #: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_strength_id
 msgid "ID"
 msgstr ""
@@ -86,19 +86,19 @@ msgid "Is the same person as"
 msgstr "Est la même personne que"
 
 #. module: partner_multi_relation_extended
-#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_parent_modification___last_update
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_change_parent___last_update
 #: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_strength___last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: partner_multi_relation_extended
-#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_parent_modification_write_uid
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_change_parent_write_uid
 #: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_strength_write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: partner_multi_relation_extended
-#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_parent_modification_write_date
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_change_parent_write_date
 #: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_relation_strength_write_date
 msgid "Last Updated on"
 msgstr ""
@@ -109,12 +109,12 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: partner_multi_relation_extended
-#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_parent_modification_new_company_id
+#: model:ir.model.fields,field_description:partner_multi_relation_extended.field_res_partner_change_parent_new_company_id
 msgid "New Company"
 msgstr "Nouvelle société"
 
 #. module: partner_multi_relation_extended
-#: code:addons/partner_multi_relation_extended/wizards/res_partner_parent_modification.py:106
+#: code:addons/partner_multi_relation_extended/wizards/res_partner_change_parent.py:106
 #, python-format
 msgid "New Contact"
 msgstr "Nouveau Contact"
@@ -131,7 +131,7 @@ msgid "Partner"
 msgstr "Partenaire"
 
 #. module: partner_multi_relation_extended
-#: model:ir.model,name:partner_multi_relation_extended.model_res_partner_parent_modification
+#: model:ir.model,name:partner_multi_relation_extended.model_res_partner_change_parent
 msgid "Partner Parent Modification"
 msgstr "Modification de parent de partenaire"
 
@@ -158,7 +158,7 @@ msgid "Partner relation"
 msgstr "Relation de partenaire"
 
 #. module: partner_multi_relation_extended
-#: code:addons/partner_multi_relation_extended/wizards/res_partner_parent_modification.py:48
+#: code:addons/partner_multi_relation_extended/wizards/res_partner_change_parent.py:48
 #, python-format
 msgid ""
 "Prior to attribute a new work relation, you need to define a partner "
@@ -220,7 +220,7 @@ msgstr ""
 "pouvez renseigner ici le numéro d'ordre professionnel."
 
 #. module: partner_multi_relation_extended
-#: model:ir.ui.view,arch_db:partner_multi_relation_extended.form_res_partner_parent_modification
+#: model:ir.ui.view,arch_db:partner_multi_relation_extended.form_res_partner_change_parent
 msgid "Validate"
 msgstr "Valider"
 
@@ -296,6 +296,6 @@ msgstr ""
 "par le système. Seul l'administrateur système le peut."
 
 #. module: partner_multi_relation_extended
-#: model:ir.ui.view,arch_db:partner_multi_relation_extended.form_res_partner_parent_modification
+#: model:ir.ui.view,arch_db:partner_multi_relation_extended.form_res_partner_change_parent
 msgid "or"
 msgstr "ou"

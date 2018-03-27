@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="form_res_partner_change_parent" model="ir.ui.view">
+        <field name="name">res.partner.change.parent.form</field>
+        <field name="model">res.partner.change.parent</field>
+        <field name="arch" type="xml">
+            <form string="Change Parent Entity">
+                <group>
+                    <field name="contact_id"/>
+                    <field name="new_company_id"/>
+                </group>
+                <footer>
+                    <button class="oe_highlight" name="validate" string="Validate" type="object"/>
+                    or
+                    <button class="oe_link" special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_res_partner_change_parent">
+        <field name="name">Change Parent Entity</field>
+        <field name="res_model">res.partner.change.parent</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="form_res_partner_change_parent"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

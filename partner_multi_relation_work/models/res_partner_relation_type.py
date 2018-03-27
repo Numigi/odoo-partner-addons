@@ -14,9 +14,11 @@ class ResPartnerRelationTypeSameRelation(models.Model):
     is_same_relation = fields.Boolean('Same Relation', compute='_compute_is_same_relation')
 
     def _compute_is_same_relation(self):
-        is_same_relation = self.env.ref('partner_multi_relation_work.relation_type_same')
-        for rec in self:
-            rec.is_same_relation = rec == is_same_relation
+        is_same_relation = self.env.ref(
+            'partner_multi_relation_work.relation_type_same', raise_if_not_found=False)
+        if is_same_relation is not None:
+            for rec in self:
+                rec.is_same_relation = rec == is_same_relation
 
     @api.constrains('contact_type_left', 'contact_type_right')
     def _check_same_relation_from_individual_to_individual(self):
@@ -52,9 +54,12 @@ class ResPartnerRelationTypeWorkRelation(models.Model):
     is_work_relation = fields.Boolean('Work Relation', compute='_compute_is_work_relation')
 
     def _compute_is_work_relation(self):
-        is_work_relation = self.env.ref('partner_multi_relation_work.relation_type_work')
-        for rec in self:
-            rec.is_work_relation = rec == is_work_relation
+        is_work_relation = self.env.ref(
+            'partner_multi_relation_work.relation_type_work', raise_if_not_found=False)
+
+        if is_work_relation is not None:
+            for rec in self:
+                rec.is_work_relation = rec == is_work_relation
 
     @api.constrains('contact_type_left', 'contact_type_right')
     def _check_work_relation_from_individual_to_company(self):

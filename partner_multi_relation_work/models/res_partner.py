@@ -12,17 +12,17 @@ class ResPartner(models.Model):
 
     @api.model
     def create(self, vals):
-        """Autoomatically create a work relation when creating a contact.
+        """Automatically create a work relation when creating a contact.
 
         When creating a contact, if it has a company as parent, automatically
         create a work relation between the company and the contact.
         """
         res = super().create(vals)
         if res.parent_id.is_company:
-            self.env['res.partner.relation'].create({
+            self.env['res.partner.relation'].sudo().create({
                 'left_partner_id': res.id,
                 'right_partner_id': res.parent_id.id,
                 'type_id': self.env.ref('partner_multi_relation_work.relation_type_work').id,
-                'date_start': fields.Date.today(),
+                'date_start': fields.Date.context_today(self),
             })
         return res

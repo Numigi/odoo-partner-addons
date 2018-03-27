@@ -7,45 +7,90 @@ from odoo import _, api, fields, models
 from odoo.exceptions import AccessError
 
 
-class ResPartnerRelationAll(models.AbstractModel):
+class ResPartnerRelationPreventModifyWorkRelations(models.Model):
+    """Prevent modifying a work relation by a non-admin user."""
 
-    _inherit = 'res.partner.relation.all'
+    _inherit = 'res.partner.relation'
 
-    is_work_relation = fields.Boolean(
-        'Is Work Relation', related='type_selection_id.type_id.is_work_relation')
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        res._prevent_modifying_work_relations()
+        return res
 
     @api.multi
     def write(self, vals):
-        """Prevent updating work relations."""
-        work_relations = self.filtered(lambda r: r.is_work_relation)
-        if work_relations and not self.env.user.has_group('base.group_system'):
-            raise AccessError(_(
-                "You cannot update a partner relation that has been "
-                "automatically created by the system. Only the system "
-                "administrator can."
-            ))
-        return super(ResPartnerRelationAll, self).write(vals)
+        self._prevent_modifying_work_relations()
+        super().write(vals)
+        self._prevent_modifying_work_relations()
+        return True
 
     @api.multi
     def unlink(self):
-        """Prevent deleting work relations."""
-        work_relations = self.filtered(lambda r: r.is_work_relation)
+        self._prevent_modifying_work_relations()
+        return super().unlink()
+
+    def _prevent_modifying_work_relations(self):
+        work_relations = self.filtered(lambda r: r.type_id.is_work_relation)
         if work_relations and not self.env.user.has_group('base.group_system'):
             raise AccessError(_(
-                "You cannot delete a partner relation that has been "
-                "automatically created by the system. Only the system "
-                "administrator can."
-            ))
-        return super(ResPartnerRelationAll, self).unlink()
+                "Only the system administrator can create, delete or modify a work relation."))
 
     @api.onchange('type_selection_id')
     def onchange_type_selection_id(self):
-        res = super(ResPartnerRelationAll, self).onchange_type_selection_id()
-        if self.type_selection_id.type_id.is_work_relation:
+        res = super().onchange_type_selection_id()
+        if self.type_id.is_work_relation:
             res['warning'] = {
                 'title': _('Warning'),
                 'message': _(
-                    'Work type relations cannot be created/updated manually. '
+                    'Work relations cannot be created/updated manually. '
+                    'If you need to add a new relation flagged as "Work '
+                    'Relation", please use the "Change Parent Entity" button '
+                    'on the partner form.'
+                )
+            }
+            self.type_selection_id = False
+        return res
+
+
+class ResPartnerRelationPreventModifySamePersonRelations(models.Model):
+    """Prevent modifying a same-person relation by a non-admin user."""
+
+    _inherit = 'res.partner.relation'
+
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        res._prevent_modifying_same_person_relations()
+        return res
+
+    @api.multi
+    def write(self, vals):
+        self._prevent_modifying_same_person_relations()
+        super().write(vals)
+        self._prevent_modifying_same_person_relations()
+        return True
+
+    @api.multi
+    def unlink(self):
+        self._prevent_modifying_same_person_relations()
+        return super().unlink()
+
+    def _prevent_modifying_same_person_relations(self):
+        same_relations = self.filtered(lambda r: r.type_id.is_same_relation)
+        if same_relations and not self.env.user.has_group('base.group_system'):
+            raise AccessError(_(
+                "Only the system administrator can create, delete or modify a "
+                "same-person relation."))
+
+    @api.onchange('type_selection_id')
+    def onchange_type_selection_id(self):
+        res = super().onchange_type_selection_id()
+        if self.type_id.is_same_relation:
+            res['warning'] = {
+                'title': _('Warning'),
+                'message': _(
+                    'Same-person relations cannot be created/updated manually. '
                     'If you need to add a new relation flagged as "Work '
                     'Relation", please use the "Change Parent Entity" button '
                     'on the partner form.'

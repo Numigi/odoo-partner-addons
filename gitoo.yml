@@ -1,0 +1,7 @@
+- url: https://github.com/OCA/partner-contact
+  branch: "11.0"
+  commit: 575d4e4fdee1b65758170c281a55bc39a72431ae
+  patches:
+    - url: https://github.com/ddufresne/partner-contact
+      branch: 11.0-mig-partner_multi_relation
+      commit: 551c04f8e0cc1e044146a15ea7f25a0d3892c0e2
