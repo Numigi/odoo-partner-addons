@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
+# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, fields, models
@@ -22,70 +23,14 @@ class ResPartnerRelationAll(models.AbstractModel):
              ' you can put here the professional order number.',
     )
 
-    is_automatic = fields.Char(
-        'Automatic',
-        readonly=True,
-        help='This relation has been automatically created by the system. '
-             'Only the system administrator can update or delete it.',
-    )
-
     @api.model_cr_context
     def _auto_init(self):
-        """
-        Add new fields to auto_init
-        """
-        if 'strength' not in self._additional_view_fields:
-            self._additional_view_fields.append('strength')
-        if 'note' not in self._additional_view_fields:
-            self._additional_view_fields.append('note')
-        if 'is_automatic' not in self._additional_view_fields:
-            self._additional_view_fields.append('is_automatic')
+        """Add new fields to auto_init."""
+        def add_additional_view_field(field):
+            if field not in self._additional_view_fields:
+                self._additional_view_fields.append(field)
+
+        add_additional_view_field('strength')
+        add_additional_view_field('note')
+
         return super(ResPartnerRelationAll, self)._auto_init()
-
-    @api.multi
-    def write(self, vals):
-        """
-        Only the administrator can update a partner relation which is
-        automatic
-        """
-        user = self.env['res.users'].browse(self.env.uid)
-        if not user.has_group('base.group_system') and any(
-                self.mapped('is_automatic')):
-            raise AccessError(_(
-                "You cannot update a partner relation that has been "
-                "automatically created by the system. Only the system "
-                "administrator can."
-            ))
-        return super(ResPartnerRelationAll, self).write(vals)
-
-    @api.multi
-    def unlink(self):
-        """
-        Only the administrator can unlink a partner relation which is
-        automatic
-        """
-        user = self.env['res.users'].browse(self.env.uid)
-        if not user.has_group('base.group_system') and any(
-                self.mapped('is_automatic')):
-            raise AccessError(_(
-                "You cannot delete a partner relation that has been "
-                "automatically created by the system. Only the system "
-                "administrator can."
-            ))
-        return super(ResPartnerRelationAll, self).unlink()
-
-    @api.onchange('type_selection_id')
-    def onchange_type_selection_id(self):
-        res = super(ResPartnerRelationAll, self).onchange_type_selection_id()
-        if self.type_selection_id.type_id.is_work_relation:
-            res['warning'] = {
-                'title': _('Warning'),
-                'message': _(
-                    'Work type relations cannot be created/updated manually. '
-                    'If you need to add a new relation flagged as "Work '
-                    'Relation", please use the "Change Parent Entity" button '
-                    'on the partner form.'
-                )
-            }
-            self.type_selection_id = False
-        return res

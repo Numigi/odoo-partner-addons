@@ -17,9 +17,9 @@
         'contacts',
     ],
     "data": [
-        'security/ir.model.access.csv',
-        'views/res_partner_relation_all.xml',
-        'views/res_partner_relation_strength.xml',
+        'data/res_partner_relation_type.xml',
+        'wizards/res_partner_parent_modification.xml',
+        'views/res_partner.xml',
     ],
     "installable": True,
 }
