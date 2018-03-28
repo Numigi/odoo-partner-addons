@@ -57,6 +57,11 @@ class TestResPartnerChangeParent(common.SavepointCase):
         self.assertFalse(new_contact.parent_id)
 
     def test_no_source_parent(self):
-        self.contact_1.parent_id = False
-        new_contact = self._run_partner_change_wizard(self.contact_1, self.company_1)
+        contact_with_no_company = self.env['res.partner'].create({
+            'name': 'Contact With No Company',
+            'is_company': False,
+            'email': 'test2@localhost',
+            'parent_id': False,
+        })
+        new_contact = self._run_partner_change_wizard(contact_with_no_company, self.company_1)
         self.assertEqual(new_contact.parent_id, self.company_1)
