@@ -14,10 +14,11 @@ class TestResPartnerChangeParent(common.SavepointCase):
         cls.company_1 = cls.env['res.partner'].create({'name': 'Company 1', 'is_company': True})
         cls.company_2 = cls.env['res.partner'].create({'name': 'Company 2', 'is_company': True})
 
+        cls.contact_1_email = 'test1@localhost'
         cls.contact_1 = cls.env['res.partner'].create({
             'name': 'Contact 1',
             'is_company': False,
-            'email': 'test1@localhost',
+            'email': cls.contact_1_email,
             'parent_id': cls.company_1.id,
         })
 
@@ -38,7 +39,7 @@ class TestResPartnerChangeParent(common.SavepointCase):
 
     def test_email_propagation_to_new_contact(self):
         new_contact = self._run_partner_change_wizard(self.contact_1, self.company_2)
-        self.assertEqual(new_contact.email, 'test1@localhost')
+        self.assertEqual(new_contact.email, self.contact_1_email)
 
     def test_old_contact_is_archived(self):
         self._run_partner_change_wizard(self.contact_1, self.company_2)

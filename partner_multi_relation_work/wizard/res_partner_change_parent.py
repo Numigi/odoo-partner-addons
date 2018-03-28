@@ -40,6 +40,8 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
             ('type_selection_id.type_id', '=', relation_type_same.id),
         ])
         for old_identity in same_person:
+            # Same partner relations can not be created manually by a user.
+            # This is why .sudo() is required.
             self.env['res.partner.relation'].sudo().create({
                 'left_partner_id': self.new_contact_id.id,
                 'type_id': relation_type_same.id,
@@ -57,7 +59,7 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
                 ('type_selection_id.type_id', '!=', work_relation_type.id),
             ])
         for relation in previous_relations:
-            relation.sudo().this_partner_id = self.new_contact_id.id
+            relation.this_partner_id = self.new_contact_id.id
 
     def _transfer_work_relations(self):
         """Transfer old work relations to the new contact."""
@@ -68,11 +70,14 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
                 ('type_selection_id.type_id', '=', work_relation_type.id),
             ])
         for relation in previous_relations:
-            relation.sudo().this_partner_id = self.new_contact_id.id
+            relation.this_partner_id = self.new_contact_id.id
 
     def _add_same_relation_with_old_contact(self):
         """Add a relation saying that the former contact and the new one are the same person."""
         relation_type_same = self._get_same_relation_type()
+
+        # Same partner relations can not be created manually by a user.
+        # This is why .sudo() is required.
         self.env['res.partner.relation'].sudo().create({
             'left_partner_id': self.contact_id.id,
             'right_partner_id': self.new_contact_id.id,
@@ -91,12 +96,12 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
                 ('date_end', '=', False),
             ])
         for relation in previous_relations:
-            relation.sudo().date_end = fields.Date.context_today(self)
+            relation.date_end = fields.Date.context_today(self)
 
     def _add_new_work_relation(self):
         """Add a work relation between the new contact and the parent entity."""
         work_relation_type = self._get_work_relation_type()
-        self.env['res.partner.relation'].sudo().create({
+        self.env['res.partner.relation'].create({
             'left_partner_id': self.new_contact_id.id,
             'right_partner_id': self.new_company_id.id,
             'type_id': work_relation_type.id,

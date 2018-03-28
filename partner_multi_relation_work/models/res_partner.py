@@ -19,7 +19,7 @@ class ResPartner(models.Model):
         """
         res = super().create(vals)
         if res.parent_id.is_company:
-            self.env['res.partner.relation'].sudo().create({
+            self.env['res.partner.relation'].create({
                 'left_partner_id': res.id,
                 'right_partner_id': res.parent_id.id,
                 'type_id': self.env.ref('partner_multi_relation_work.relation_type_work').id,

@@ -9,4 +9,5 @@ from .common import PartnerRelationCase
 class TestResPartner(PartnerRelationCase):
 
     def test_auto_create_work_relation_with_parent(self):
-        self._find_single_relation(self.contact_1, self.company_1, self.relation_type_work)
+        self._find_and_verify_single_relation(
+            self.contact_1, self.company_1, self.relation_type_work)

@@ -88,9 +88,7 @@ msgstr ""
 #: code:addons/partner_multi_relation_work/models/res_partner_relation_all.py:92
 #, python-format
 msgid ""
-"Same-person relations cannot be created/updated manually. If you need to add "
-"a new relation flagged as \"Work Relation\", please use the \"Change Parent "
-"Entity\" button on the partner form."
+"Same-person relations cannot be created/updated manually."
 msgstr ""
 "Une relation de type 'Est la même personne que' ne peut pas être modifiée/"
 "mise à jour manuellement."

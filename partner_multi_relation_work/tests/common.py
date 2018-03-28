@@ -71,8 +71,10 @@ class PartnerRelationCase(common.SavepointCase):
             'date_start': datetime.now(),
         })
 
-    def _find_single_relation(self, left_partner, right_partner, relation_type):
+    def _find_and_verify_single_relation(self, left_partner, right_partner, relation_type):
         """Find a single relation of a given type between 2 partners.
+
+        Verify that there is one and only one relation for the given parameters.
 
         :param left_partner: the left partner in the relation
         :param right_partner: the right partner in the relation
