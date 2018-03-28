@@ -4,7 +4,7 @@
 
 {
     'name': 'Google Partner Address',
-    'version': '10.0.1.0.1',
+    'version': '1.0.1',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Savoir-faire Linux',
     'website': 'http://www.savoirfairelinux.com',

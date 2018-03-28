@@ -5,7 +5,7 @@
 
 {
     'name': 'Partner Duplicate with Phone Numbers',
-    'version': '11.0.1.0.1',
+    'version': '1.0.1',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Numigi',
     'website': 'https://www.numigi.com',

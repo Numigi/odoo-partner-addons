@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_change_parent
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-27 17:59-0400\n"
+"PO-Revision-Date: 2018-03-27 18:00-0400\n"
+"Last-Translator: Agathe Mollé <agathe.molle@savoirfairelinux.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. module: partner_change_parent
+#: model:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: partner_change_parent
+#: model:ir.actions.act_window,name:partner_change_parent.action_res_partner_change_parent
+#: model:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
+#: model:ir.ui.view,arch_db:partner_change_parent.view_partner_form_with_change_company_button
+msgid "Change Parent Entity"
+msgstr "Changer la société parente"
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_contact_id
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_new_contact_id
+msgid "Contact"
+msgstr "Contact"
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_id
+msgid "ID"
+msgstr ""
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent_new_company_id
+msgid "New Company"
+msgstr "Nouvelle société"
+
+#. module: partner_change_parent
+#: code:addons/partner_change_parent/wizard/res_partner_change_parent.py:58
+#, python-format
+msgid "New Contact"
+msgstr "Nouveau Contact"
+
+#. module: partner_change_parent
+#: model:ir.model,name:partner_change_parent.model_res_partner_change_parent
+msgid "Partner Parent Change Wizard"
+msgstr "Assistant de changement de société parente"
+
+#. module: partner_change_parent
+#: model:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
+msgid "Validate"
+msgstr "Valider"
+
+#. module: partner_change_parent
+#: model:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
+msgid "or"
+msgstr "ou"

@@ -11,9 +11,11 @@
     'category': 'Other',
     'summary': 'Install all addons required for testing.',
     'depends': [
+        'partner_change_parent',
         'partner_duplicate_mgmt',
         'partner_duplicate_multi_phone',
         'partner_multi_phone',
+        'partner_multi_relation_work',
     ],
     'installable': True,
 }
