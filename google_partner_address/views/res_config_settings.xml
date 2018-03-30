@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">General Settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <div name="integration" position="inside">
+                <div class="col-xs-12 col-md-6 o_setting_box">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <label string="Google Partner Addresses" for="module_google_drive"/>
+                        <div class="text-muted">Generate Google Maps API Key</div>
+                        <div class="content-group">
+                            <field name="google_maps_api_uri" widget="url" class="oe_inline oe_bold" target="blank"/>
+                        </div>
+                        <div class="text-muted">and paste it here</div>
+                        <div class="content-group">
+                            <field name="google_maps_api_key" class="oe_inline"/>
+                        </div>
+                        <div class="text-muted">then <strong>Save</strong> this page.</div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+</odoo>

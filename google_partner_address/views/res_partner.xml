@@ -1,116 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="view_partner_form" model="ir.ui.view">
+    <record id="view_partner_form_with_place_autocomplete" model="ir.ui.view">
         <field name="name">res.partner.form</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <label for="street" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </label>
+            <field name="street" position="before">
+                <field name="place" widget="google_partner_address"/>
+            </field>
 
-            <xpath expr="//group[1]//div" position="replace">
-                <!-- The only thing kept from the original tag -->
-                <div class="o_address_format">
-                    <div class="oe_edit_only">
-                        <button
-                            name="open_parent"
-                            type="object"
-                            string="(edit)"
-                            class="oe_link"
-                            attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"
-                        />
-                    </div>
-                </div>
-
-                <field
-                    name="country_id"
-                    options='{"no_open": True, "no_create": True}'
-                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-
-                <field
-                    name="zip"
-                    style="width: 32%"
-                    string="Postal Code / Zip"
-                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-
-                <label
-                    for="google_partner_address"
-                    string="Place"
-                    class="oe_edit_only"
-                    attrs="{'invisible': ['&amp;', ('type', '=', 'contact'), ('parent_id', '!=', False)]}"/>
-                <widget type="google_partner_address" class="place_blank"/>
-
-                <field
-                    name="street"
-                    string="Address"
-                    placeholder="Street and number"
-                    attrs="{'readonly': [('type', '=', 'contact'), ('parent_id', '!=', False)]}"/>
-
-                <label for="street2" string="Street 2" invisible="1"/>
-                <field
-                    name="street2"
-                    placeholder="Suite, unit, floor, etc"
-                    nolabel="1"
-                    attrs="{'readonly': [('type', '=', 'contact'), ('parent_id', '!=', False)]}"/>
-
-                <field name="city" attrs="{'readonly': [('type', '=', 'contact'), ('parent_id', '!=', False)]}"/>
-                <field
-                    name="state_id"
-                    string="Province / State"
-                    options='{"no_open": True}'
-                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
-                    context="{'country_id': country_id, 'zip': zip}"/>
+            <xpath expr="//field[@name='child_ids']/form//field[@name='street']" position="before">
+                <field name="place" widget="google_partner_address"/>
             </xpath>
-
-            <xpath expr="//field[@name='child_ids']/form/sheet//group[1]//group[1]" position="replace">
-                <group attrs="{'invisible': [('type','=', 'contact')]}">
-                        <field name="country_id" options='{"no_open": True, "no_create": True}'/>
-                        <field name="zip" style="width: 32%" string="Postal Code / Zip"/>
-                        <label for="google_partner_address" string="Place" class="oe_edit_only"/>
-                        <widget type="google_partner_address" class="place_blank"/>
-                        <field name="street" string="Address"/>
-                        <label for="street2" string="Street 2" invisible="1"/>
-                        <field name="street2" nolabel="1"/>
-                        <field name="city"/>
-                        <field name="state_id" string="Province / State" context="{'country_id': country_id, 'zip': zip}"/>
-                </group>
-            </xpath>
-
         </field>
     </record>
 
-    <record id="view_partner_address_form" model="ir.ui.view">
-        <field name="name">res.partner.form</field>
+    <record id="view_partner_short_form_with_place_autocomplete" model="ir.ui.view">
+        <field name="name">Partner Short Form With Place Aucomplete</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_address_form"/>
+        <field name="inherit_id" ref="base.view_partner_short_form"/>
         <field name="arch" type="xml">
-            <label for="street" position="replace"/>
-
-            <div class="o_address_format" position="replace">
-                <field name="country_id" options='{"no_open": True, "no_create": True}'/>
-                <field name="zip" style="width: 32%" string="Postal Code / Zip"/>
-                <label for="google_partner_address" string="Place" class="oe_edit_only"/>
-                <widget type="google_partner_address" class="place_blank"/>
-                <field name="street" string="Address"/>
-                <label for="street2" string="Street 2" invisible="1"/>
-                <field name="street2" nolabel="1"/>
-                <field name="city"/>
-                <field name="state_id" string="Province / State" context="{'country_id': country_id, 'zip': zip}"/>
-            </div>
+            <field name="street" position="before">
+                <field name="place" widget="google_partner_address"/>
+            </field>
         </field>
     </record>
 
     <template id="assets_backend" name="google_partner_address_assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/google_partner_address/static/src/js/google_partner_address.js"></script>
-        </xpath>
-    </template>
-
-    <template id="assets_frontend_color_change" inherit_id="web_enterprise.assets_backend">
-        <xpath expr="." position="inside">
-            <link type="text/less" rel="stylesheet" href="/google_partner_address/static/src/css/google_partner_address.less"/>
+            <link type="text/css" rel="stylesheet" href="/google_partner_address/static/src/css/google_partner_address.css"/>
         </xpath>
     </template>
 
