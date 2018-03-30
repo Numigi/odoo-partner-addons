@@ -9,6 +9,7 @@ class ResPartnerWithPlace(models.Model):
     """Add a field place on the partners.
 
     The field does not need to be stored as a column.
+
     However, it needs to be defined in order to be placed inside the form view.
 
     The place widget must be defined as a field in the form view because
@@ -18,4 +19,6 @@ class ResPartnerWithPlace(models.Model):
 
     _inherit = 'res.partner'
 
-    place = fields.Char(compute=lambda self: None)
+    # The compute parameter prevents adding a column in the res_partner table.
+    # The inverse parameter makes the field editable in views.
+    place = fields.Char(compute=lambda self: None, inverse=lambda self: None)

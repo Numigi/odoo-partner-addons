@@ -12,14 +12,36 @@ var registry = require("web.field_registry");
 var rpc = require("web.rpc");
 var Class = require('web.Class');
 
+/**
+ * Class responsible for converting data about countries and states.
+ *
+ * The countries/states data is fetched once from the database.
+ * Then, it allows external classes to convert ids to country/state codes and vice versa.
+ */
 var CountryRegistry = Class.extend({
     init() {
         this._countriesById = {};
         this._countriesByCode = {};
         this._statesByCountry = {};
         this._statesById = {};
-        this._fetchCountries();
-        this._fetchStates();
+
+        this._querySent = false;
+        this._countriesFetched = $.Deferred();
+        this._statesFetched = $.Deferred();
+
+        // Deferred that allows external classes to know when all data required by
+        // the registry been fetched from the database.
+        this.ready = $.when(this._countriesFetched, this._statesFetched);
+    },
+    /**
+     * Fetch data from the server in order to fill the registry.
+     */
+    fetchData(){
+        if(!this._querySent){
+            this._fetchCountries();
+            this._fetchStates();
+            this._querySent = true;
+        }
     },
     /**
      * Fetch country codes from the server.
@@ -35,7 +57,8 @@ var CountryRegistry = Class.extend({
                 var code = el.code.toLowerCase();
                 self._countriesById[el.id] = code;
                 self._countriesByCode[code] = el.id;
-            })
+            });
+            self._countriesFetched.resolve();
         });
     },
     /**
@@ -57,6 +80,7 @@ var CountryRegistry = Class.extend({
                 self._statesByCountry[countryId][code] = el.id;
                 self._statesById[el.id] = [countryId, code];
             });
+            self._statesFetched.resolve();
         });
     },
     /**
@@ -262,20 +286,20 @@ var PlaceBoundaryProxy = Class.extend({
 
 var AddressWidget = AbstractField.extend({
     tagName: "input",
-    init(parent, name, record, options) {
-        this._super.apply(this, arguments);
-    },
     start() {
         this._super.apply(this, arguments);
-        this.input = this.$el
+        this.input = this.$el;
         this._autocomplete = new google.maps.places.Autocomplete(this.input[0]);
         this._autocompleteService = new google.maps.places.AutocompleteService();
         this._placesService = new google.maps.places.PlacesService($("<div></div>")[0]);
+
         var self = this;
         setTimeout(function(){
             self._setupFieldListeners();
             self._setBoundaries();
         }, 0);
+
+        countryRegistry.fetchData();
     },
     _renderEdit() {
         var input = this.$el || $("<input/>");
@@ -323,16 +347,22 @@ var AddressWidget = AbstractField.extend({
         this._setInputValue("city", proxy.getCity());
         this._setInputValue("zip", proxy.getZip());
 
+        var self = this;
+
         var countryCode = proxy.getCountryCode();
         if (countryCode){
-            var countryId = countryRegistry.getCountryId(countryCode);
-            this._setMany2oneValue("country_id", countryId);
+            countryRegistry.ready.then(function(){
+                var countryId = countryRegistry.getCountryId(countryCode);
+                self._setMany2oneValue("country_id", countryId);
+            });
         }
 
         var stateCode = proxy.getStateCode();
         if(countryCode && stateCode){
-            var stateId = countryRegistry.getStateId(countryCode, stateCode);
-            this._setMany2oneValue("state_id", stateId);
+            countryRegistry.ready.then(function(){
+                var stateId = countryRegistry.getStateId(countryCode, stateCode);
+                self._setMany2oneValue("state_id", stateId);
+            });
         }
     },
     /**
@@ -394,6 +424,19 @@ var AddressWidget = AbstractField.extend({
         }
     },
     /**
+     * Set the zip boundaries on the place autocomplete widget.
+     */
+    _setBoundaries() {
+        var self = this;
+        countryRegistry.ready.then(function(){
+            var countryCode = self._getCountryCode();
+            var zip = self._getZipCode();
+            var proxy = new PlaceBoundaryProxy(
+                self._autocomplete, self._autocompleteService, self._placesService);
+            proxy.setBoundaries(countryCode, zip);
+        });
+    },
+    /**
      * Get the zip code from the partner form.
      * @returns {string} the zip code
      */
@@ -402,6 +445,10 @@ var AddressWidget = AbstractField.extend({
     },
     /**
      * Get the country code from the partner form.
+     *
+     * When calling this method, the country registry must be ready.
+     * See attribute `ready` of `.CountryRegistry`
+     *
      * @returns {string} the country code
      */
     _getCountryCode(){
@@ -417,16 +464,6 @@ var AddressWidget = AbstractField.extend({
     _setMany2oneValue(field_name, value){
         var field = this._getFieldByName(field_name);
         field.reinitialize(value || null);
-    },
-    /**
-     * Set the zip boundaries on the place autocomplete widget.
-     */
-    _setBoundaries() {
-        var countryCode = this._getCountryCode();
-        var zip = this._getZipCode();
-        var proxy = new PlaceBoundaryProxy(
-            this._autocomplete, this._autocompleteService, this._placesService);
-        proxy.setBoundaries(countryCode, zip);
     },
 });
 

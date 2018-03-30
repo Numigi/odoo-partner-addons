@@ -16,8 +16,5 @@
         'views/res_config_settings.xml',
         'views/res_partner.xml',
     ],
-    'qweb': [
-        'static/src/xml/google_partner_address.xml',
-    ],
     'installable': True,
 }
