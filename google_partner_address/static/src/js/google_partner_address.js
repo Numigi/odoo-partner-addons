@@ -413,18 +413,25 @@ var AddressWidget = AbstractField.extend({
     _getMany2oneFieldValue(fieldName){
         var field = this._getFieldByName(fieldName);
         var value = (typeof field.lastSetValue !== "undefined") ? field.lastSetValue : field.value;
-        if(typeof(value) === "number"){
+
+        // Case where the value stored is a raw record id.
+        if(typeof value === "number"){
             return value;
         }
-        else if(value && value.res_id){
+
+        // Case where the field contains a record.
+        // Odoo is inconsistent with many2one records fetched from the server.
+        // Sometimes, the record id is contained in the attribute res_id.
+        // Sometimes, the record id is contained in the attribute id.
+        if(value && value.res_id){
             return value.res_id;
         }
-        else if(value && value.id){
+        if(value && value.id){
             return value.id;
         }
-        else{
-            return null;
-        }
+
+        // Case where the field is empty.
+        return null;
     },
     /**
      * Set the zip boundaries on the place autocomplete widget.
