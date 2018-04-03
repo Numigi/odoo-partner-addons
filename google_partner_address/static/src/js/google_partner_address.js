@@ -10,7 +10,7 @@ var AbstractField = require("web.AbstractField");
 var registry = require("web.field_registry");
 
 var rpc = require("web.rpc");
-var Class = require('web.Class');
+var Class = require("web.Class");
 
 /**
  * Class responsible for converting data about countries and states.
@@ -26,8 +26,8 @@ var CountryRegistry = Class.extend({
         this._statesById = {};
 
         this._querySent = false;
-        this._countriesFetched = $.Deferred();
-        this._statesFetched = $.Deferred();
+        this._countriesFetched = new $.Deferred();
+        this._statesFetched = new $.Deferred();
 
         // Deferred that allows external classes to know when all data required by
         // the registry been fetched from the database.
@@ -75,7 +75,7 @@ var CountryRegistry = Class.extend({
                 var countryId = el.country_id[0];
                 var code = el.code.toLowerCase();
                 if (!self._statesByCountry[countryId]){
-                    self._statesByCountry[countryId] = {}
+                    self._statesByCountry[countryId] = {};
                 }
                 self._statesByCountry[countryId][code] = el.id;
                 self._statesById[el.id] = [countryId, code];
@@ -90,7 +90,7 @@ var CountryRegistry = Class.extend({
      */
     getCountryCode(countryId){
         if(!this._countriesById[countryId]){
-            throw new Error('No country registered with the id ' + countryId + '.');
+            throw new Error("No country registered with the id " + countryId + ".");
         }
         return this._countriesById[countryId];
     },
@@ -99,9 +99,9 @@ var CountryRegistry = Class.extend({
      * @param {string} countryCode - the code of a country
      * @returns {number} the country id
      */
-    getCountryId: function(countryCode) {
+    getCountryId(countryCode) {
         if(!this._countriesByCode[countryCode]){
-            throw new Error('No country registered with the code ' + countryCode + '.');
+            throw new Error("No country registered with the code " + countryCode + ".");
         }
         return this._countriesByCode[countryCode];
     },
@@ -112,7 +112,7 @@ var CountryRegistry = Class.extend({
      */
     getStateCode(stateId){
         if(!this._statesById[stateId]){
-            throw new Error('No country state registered with the id ' + stateId + '.');
+            throw new Error("No country state registered with the id " + stateId + ".");
         }
         return this._statesById[stateId];
     },
@@ -121,7 +121,7 @@ var CountryRegistry = Class.extend({
      * @param {string} countryCode - the code of a state
      * @returns {number} the state id
      */
-    getStateId: function(countryCode, stateCode) {
+    getStateId(countryCode, stateCode) {
         var countryId = this.getCountryId(countryCode);
         var states = this._statesByCountry[countryId];
         if(!states || !states[stateCode]){
@@ -370,46 +370,48 @@ var AddressWidget = AbstractField.extend({
      *
      * Throw an error if the field does not exist.
      *
-     * @param {string} field_name - The name of the field
+     * @param {string} fieldName - The name of the field
      * @returns {web.AbstractField}
      */
-    _getFieldByName: function(field_name) {
+    _getFieldByName(fieldName) {
         var form = this.getParent();
-        var field = form.allFieldWidgets[form.state.id].find(function(field){return field.name === field_name});
+        var field = form.allFieldWidgets[form.state.id].find(function(field){
+            return field.name === fieldName;
+        });
         if(!field){
-            throw new Error('The field ' + field_name + ' is not registered inside the form view.');
+            throw new Error("The field " + fieldName + " is not registered inside the form view.");
         }
         return field;
     },
     /**
      * Set the value of an input field on the form view.
      *
-     * @param {string} field_name - the name of the field
+     * @param {string} fieldName - the name of the field
      * @param {string} value - the value to set
      */
-    _setInputValue(field_name, value){
-        var field = this._getFieldByName(field_name);
+    _setInputValue(fieldName, value){
+        var field = this._getFieldByName(fieldName);
         field.$input.val(value).trigger("input");
     },
     /**
      * Get the value of a field from the form view.
      *
-     * @param {string} field_name - the name of the field
+     * @param {string} fieldName - the name of the field
      * @returns {string} the input value
      */
-    _getFieldValue(field_name){
-        var field = this._getFieldByName(field_name);
-        return field.lastSetValue !== undefined ? field.lastSetValue : field.value;
+    _getFieldValue(fieldName){
+        var field = this._getFieldByName(fieldName);
+        return (typeof field.lastSetValue !== 'undefined') ? field.lastSetValue : field.value;
     },
     /**
      * Get the value of a field from the form view.
      *
-     * @param {string} field_name - the name of the field
+     * @param {string} fieldName - the name of the field
      * @returns {string} the input value
      */
-    _getMany2oneFieldValue(field_name){
-        var field = this._getFieldByName(field_name);
-        var value = field.lastSetValue !== undefined ? field.lastSetValue : field.value;
+    _getMany2oneFieldValue(fieldName){
+        var field = this._getFieldByName(fieldName);
+        var value = (typeof field.lastSetValue !== 'undefined') ? field.lastSetValue : field.value;
         if(typeof(value) === "number"){
             return value;
         }
@@ -441,7 +443,7 @@ var AddressWidget = AbstractField.extend({
      * @returns {string} the zip code
      */
     _getZipCode(){
-        return this._getFieldValue('zip');
+        return this._getFieldValue("zip");
     },
     /**
      * Get the country code from the partner form.
@@ -452,17 +454,17 @@ var AddressWidget = AbstractField.extend({
      * @returns {string} the country code
      */
     _getCountryCode(){
-        var countryId = this._getMany2oneFieldValue('country_id');
+        var countryId = this._getMany2oneFieldValue("country_id");
         return countryId ? countryRegistry.getCountryCode(countryId) : null; 
     },
     /**
      * Set the value of an many2one field on the form view.
      *
-     * @param {string} field_name - the name of the field
+     * @param {string} fieldName - the name of the field
      * @param {string} value - the id of the foreign record.
      */
-    _setMany2oneValue(field_name, value){
-        var field = this._getFieldByName(field_name);
+    _setMany2oneValue(fieldName, value){
+        var field = this._getFieldByName(fieldName);
         field.reinitialize(value || null);
     },
 });
@@ -474,6 +476,6 @@ return {
     PlaceAutocompleteProxy,
     PlaceBoundaryProxy,
     AddressWidget,
-}
+};
 
 });
