@@ -20,10 +20,10 @@ var Class = require("web.Class");
  */
 var CountryRegistry = Class.extend({
     init() {
-        this._countriesById = {};
-        this._countriesByCode = {};
-        this._statesByCountry = {};
-        this._statesById = {};
+        this._countriesById = new Map();
+        this._countriesByCode = new Map();
+        this._statesByCountry = new Map();
+        this._statesById = new Map();
 
         this._querySent = false;
         this._countriesFetched = new $.Deferred();
@@ -55,8 +55,8 @@ var CountryRegistry = Class.extend({
         }).then(function(result) {
             result.forEach(function(el){
                 var code = el.code.toLowerCase();
-                self._countriesById[el.id] = code;
-                self._countriesByCode[code] = el.id;
+                self._countriesById.set(el.id, code);
+                self._countriesByCode.set(code, el.id);
             });
             self._countriesFetched.resolve();
         });
@@ -74,11 +74,11 @@ var CountryRegistry = Class.extend({
             result.forEach(function(el){
                 var countryId = el.country_id[0];
                 var code = el.code.toLowerCase();
-                if (!self._statesByCountry[countryId]){
-                    self._statesByCountry[countryId] = {};
+                if (!self._statesByCountry.get(countryId)){
+                    self._statesByCountry.set(countryId, new Map());
                 }
-                self._statesByCountry[countryId][code] = el.id;
-                self._statesById[el.id] = [countryId, code];
+                self._statesByCountry.get(countryId).set(code, el.id);
+                self._statesById.set(el.id, [countryId, code]);
             });
             self._statesFetched.resolve();
         });
@@ -89,10 +89,10 @@ var CountryRegistry = Class.extend({
      * @returns {string} the country code
      */
     getCountryCode(countryId){
-        if(!this._countriesById[countryId]){
+        if(!this._countriesById.get(countryId)){
             throw new Error("No country registered with the id " + countryId + ".");
         }
-        return this._countriesById[countryId];
+        return this._countriesById.get(countryId);
     },
     /**
      * Get the id of a country.
@@ -100,10 +100,10 @@ var CountryRegistry = Class.extend({
      * @returns {number} the country id
      */
     getCountryId(countryCode) {
-        if(!this._countriesByCode[countryCode]){
+        if(!this._countriesByCode.get(countryCode)){
             throw new Error("No country registered with the code " + countryCode + ".");
         }
-        return this._countriesByCode[countryCode];
+        return this._countriesByCode.get(countryCode);
     },
     /**
      * Get the code of a state.
@@ -111,10 +111,10 @@ var CountryRegistry = Class.extend({
      * @returns {string} the state code
      */
     getStateCode(stateId){
-        if(!this._statesById[stateId]){
+        if(!this._statesById.get(stateId)){
             throw new Error("No country state registered with the id " + stateId + ".");
         }
-        return this._statesById[stateId];
+        return this._statesById.get(stateId);
     },
     /**
      * Get the id of a state.
@@ -123,11 +123,11 @@ var CountryRegistry = Class.extend({
      */
     getStateId(countryCode, stateCode) {
         var countryId = this.getCountryId(countryCode);
-        var states = this._statesByCountry[countryId];
-        if(!states || !states[stateCode]){
+        var states = this._statesByCountry.get(countryId);
+        if(!states || !states.get(stateCode)){
             return null;
         }
-        return states[stateCode];
+        return states.get(stateCode);
     },
 });
 
@@ -145,7 +145,7 @@ var PlaceAutocompleteProxy = Class.extend({
      */
     init(autocomplete){
         this._autocomplete = autocomplete;
-        this._address = {};
+        this._address = new Map();
         this._fetchPlaces();
     },
     /**
@@ -153,14 +153,15 @@ var PlaceAutocompleteProxy = Class.extend({
      */
     _fetchPlaces(){
         var place = this._autocomplete.getPlace();
-        for (var i = 0; i < place.address_components.length; i++) {
-            var addressType = place.address_components[i].types[0];
+        var self = this;
+        place.address_components.forEach(function(component){
+            var addressType = component.types[0];
             if (addressType === "route") {
-                this._address[addressType] = place.address_components[i].long_name;
+                self._address.set(addressType, component.long_name);
             } else {
-                this._address[addressType] = place.address_components[i].short_name;
+                self._address.set(addressType, component.short_name);
             }
-        }
+        });
     },
     /**
      * Get the value for the street field.
@@ -168,11 +169,11 @@ var PlaceAutocompleteProxy = Class.extend({
      */
     getStreet(){
         var streetParts = [];
-        if(this._address.street_number){
-            streetParts.push(this._address.street_number);
+        if(this._address.get("street_number")){
+            streetParts.push(this._address.get("street_number"));
         }
-        if(this._address.route){
-            streetParts.push(this._address.route);
+        if(this._address.get("route")){
+            streetParts.push(this._address.get("route"));
         }
         return streetParts.join(" ");
     },
@@ -181,14 +182,14 @@ var PlaceAutocompleteProxy = Class.extend({
      * @returns {string | null}
      */
     getCity(){
-        return this._address.locality || null;
+        return this._address.get("locality") || null;
     },
     /**
      * Get the code of the country.
      * @returns {string | null}
      */
     getCountryCode(){
-        var code = this._address.country;
+        var code = this._address.get("country");
         return code ? code.toLowerCase() : null;
     },
     /**
@@ -196,7 +197,7 @@ var PlaceAutocompleteProxy = Class.extend({
      * @returns {string | null}
      */
     getStateCode(){
-        var code = this._address.administrative_area_level_1;
+        var code = this._address.get("administrative_area_level_1");
         return code ? code.toLowerCase() : null;
     },
     /**
@@ -208,16 +209,16 @@ var PlaceAutocompleteProxy = Class.extend({
         if(countryCode === "us"){
             return this._getZipUS();
         }
-        return this._address.postal_code || null;
+        return this._address.get("postal_code") || null;
     },
     /**
      * Get the zip code for an address in the United States.
      * @returns {string | null}
      */
     _getZipUS(){
-        var zip = this._address.postal_code;
+        var zip = this._address.get("postal_code");
         if(zip){
-            var suffix = this._address.postal_code_suffix;
+            var suffix = this._address.get("postal_code_suffix");
             if(suffix){
                 zip = zip.concat("-").concat(suffix);
             }
@@ -401,7 +402,7 @@ var AddressWidget = AbstractField.extend({
      */
     _getFieldValue(fieldName){
         var field = this._getFieldByName(fieldName);
-        return (typeof field.lastSetValue !== 'undefined') ? field.lastSetValue : field.value;
+        return (typeof field.lastSetValue !== "undefined") ? field.lastSetValue : field.value;
     },
     /**
      * Get the value of a field from the form view.
@@ -411,7 +412,7 @@ var AddressWidget = AbstractField.extend({
      */
     _getMany2oneFieldValue(fieldName){
         var field = this._getFieldByName(fieldName);
-        var value = (typeof field.lastSetValue !== 'undefined') ? field.lastSetValue : field.value;
+        var value = (typeof field.lastSetValue !== "undefined") ? field.lastSetValue : field.value;
         if(typeof(value) === "number"){
             return value;
         }
