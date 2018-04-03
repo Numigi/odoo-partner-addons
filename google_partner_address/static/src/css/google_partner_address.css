@@ -1,0 +1,6 @@
+/**
+ * Make the google place autocomplete widget visible on modals
+ */
+.pac-container {
+    z-index: 1200;
+}
