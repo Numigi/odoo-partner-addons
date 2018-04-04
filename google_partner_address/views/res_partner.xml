@@ -49,7 +49,8 @@
 
     <template id="layout_map" name="Web layout with google map" inherit_id="web.layout">
         <xpath expr="//script" position="before">
-            <script t-attf-src="//maps.googleapis.com/maps/api/js?key={{env['ir.config_parameter'].get_param('google_maps_api_key')}}&amp;libraries=places"></script>
+            <!-- The sudo() is required because fetching the qweb templates can be done by any user -->
+            <script t-attf-src="//maps.googleapis.com/maps/api/js?key={{env['ir.config_parameter'].sudo().get_param('google_maps_api_key')}}&amp;libraries=places"></script>
         </xpath>
     </template>
 
