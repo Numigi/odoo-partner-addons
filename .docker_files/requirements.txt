@@ -1,1 +1,2 @@
 unidecode==1.0.22
+freezegun==0.3.10
