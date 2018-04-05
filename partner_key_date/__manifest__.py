@@ -21,4 +21,7 @@
         'views/res_partner_date_type.xml',
     ],
     'installable': True,
+    'external_dependencies': {
+        'python': ['freezegun'],
+    },
 }
