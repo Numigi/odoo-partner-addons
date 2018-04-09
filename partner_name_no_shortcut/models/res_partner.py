@@ -5,7 +5,7 @@
 
 import re
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class ResPartner(models.Model):
