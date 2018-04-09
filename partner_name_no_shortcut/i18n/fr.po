@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_name_no_shortcut
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-09 22:04+0000\n"
+"PO-Revision-Date: 2018-04-09 22:04+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_name_no_shortcut
+#: model:ir.model.fields,field_description:partner_name_no_shortcut.field_res_partner_business_type_shortcut
+msgid "Abbreviation"
+msgstr "Abréviation"
+
+#. module: partner_name_no_shortcut
+#: model:ir.model,name:partner_name_no_shortcut.model_res_partner_business_type
+#: model:ir.ui.view,arch_db:partner_name_no_shortcut.view_business_type_form
+msgid "Business Type"
+msgstr "Type de compagnie"
+
+#. module: partner_name_no_shortcut
+#: model:ir.actions.act_window,name:partner_name_no_shortcut.action_business_type_contact
+#: model:ir.ui.menu,name:partner_name_no_shortcut.menu_business_type_contact
+#: model:ir.ui.view,arch_db:partner_name_no_shortcut.view_business_type_tree
+msgid "Business Types"
+msgstr "Types de compagnies"
+
+#. module: partner_name_no_shortcut
+#: model:ir.model,name:partner_name_no_shortcut.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: partner_name_no_shortcut
+#: model:ir.model.fields,field_description:partner_name_no_shortcut.field_res_partner_business_type_name
+msgid "Name"
+msgstr "Nom"
