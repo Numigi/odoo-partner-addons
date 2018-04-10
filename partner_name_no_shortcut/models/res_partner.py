@@ -68,7 +68,8 @@ class PartnerNameCleaner:
         self._fields_to_clean = fields_to_clean
         self._terms_to_exclude_regex_list = self._build_regex_list(terms_to_exclude)
 
-    def _build_regex_list(self, terms_to_exclude):
+    @staticmethod
+    def _build_regex_list(terms_to_exclude):
         """Build a list of string replacement regex.
 
         Each regex attempts to match the given term as a complete word.
