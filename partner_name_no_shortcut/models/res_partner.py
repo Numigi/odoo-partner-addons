@@ -54,7 +54,7 @@ def get_shortcut_list(env, model):
     ])
     res.extend(translations.mapped('value'))
     res.extend(translations.mapped('src'))
-    return res
+    return list(set(res))
 
 
 class PartnerNameCleaner:
