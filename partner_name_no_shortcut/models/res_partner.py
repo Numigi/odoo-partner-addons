@@ -29,8 +29,8 @@ class ResPartner(models.Model):
 
     def _remove_shortcuts_from_partner_name(self):
         """Remove business type and title shortcuts from the partner name fields."""
-        titles = get_shortcut_list(self.env, 'res.partner.title')
-        business_types = get_shortcut_list(self.env, 'res.partner.business.type')
+        titles = get_shortcut_list(self.env['res.partner.title'])
+        business_types = get_shortcut_list(self.env['res.partner.business.type'])
         terms_to_exclude = titles + business_types
 
         cleaner = PartnerNameCleaner(PARTNER_NAME_FIELDS, terms_to_exclude)
@@ -39,18 +39,16 @@ class ResPartner(models.Model):
             cleaner.clean(partner)
 
 
-def get_shortcut_list(env, model):
+def get_shortcut_list(model_cls):
     """Get a complete list of shorcuts including the translated values.
 
-    :param env: an Odoo environment
-    :param model: the name of the model for which to find shortcuts
+    :param model_cls: the class of the model for which to find shortcuts
     :return: a list of terms
     """
-    model_cls = env[model]
     res = model_cls.search([]).mapped('shortcut')
-    translations = env['ir.translation'].search([
+    translations = model_cls.env['ir.translation'].search([
         ('type', '=', 'model'),
-        ('name', '=', '{model},shortcut'.format(model=model)),
+        ('name', '=', '{model},shortcut'.format(model=model_cls._name)),
     ])
     res.extend(translations.mapped('value'))
     res.extend(translations.mapped('src'))
@@ -102,10 +100,10 @@ class PartnerNameCleaner:
 
         :param partner: the partner to clean.
         """
-        name_fields_set_on_partner = [
+        name_fields_set_on_partner = (
             f for f in self._fields_to_clean
             if f in partner._fields and partner[f]
-        ]
+        )
 
         for field_name in name_fields_set_on_partner:
             value_before = partner[field_name]
