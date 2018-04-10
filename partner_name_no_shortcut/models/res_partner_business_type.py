@@ -14,19 +14,3 @@ class ResPartnerBusinessType(models.Model):
 
     name = fields.Char(string='Name', required=True, translate=True)
     shortcut = fields.Char(string='Abbreviation', translate=True)
-
-    @api.model
-    def get_shortcut_list(self):
-        """Get a complete list of business type shorcuts including the translated values.
-
-        :return: a list of terms
-        :rtype: list
-        """
-        res = self.search([]).mapped('shortcut')
-        translations = self.env['ir.translation'].search([
-            ('type', '=', 'model'),
-            ('name', '=', 'res.partner.business.type,shortcut'),
-        ])
-        res.extend(translations.mapped('value'))
-        res.extend(translations.mapped('src'))
-        return res

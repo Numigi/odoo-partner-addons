@@ -7,6 +7,8 @@ import re
 
 from odoo import api, models
 
+PARTNER_NAME_FIELDS = ('firstname', 'lastname', 'name')
+
 
 class ResPartner(models.Model):
 
@@ -15,7 +17,7 @@ class ResPartner(models.Model):
     @api.multi
     def write(self, vals):
         super().write(vals)
-        if {'firstname', 'lastname', 'name'}.intersection(vals):
+        if any(f in vals for f in PARTNER_NAME_FIELDS):
             self._remove_shortcuts_from_partner_name()
         return True
 
@@ -27,16 +29,32 @@ class ResPartner(models.Model):
 
     def _remove_shortcuts_from_partner_name(self):
         """Remove business type and title shortcuts from the partner name fields."""
-        name_fields = ['firstname', 'lastname', 'name']
-
-        titles = self.env['res.partner.title'].get_shortcut_list()
-        business_types = self.env['res.partner.business.type'].get_shortcut_list()
+        titles = get_shortcut_list(self.env, 'res.partner.title')
+        business_types = get_shortcut_list(self.env, 'res.partner.business.type')
         terms_to_exclude = titles + business_types
 
-        cleaner = PartnerNameCleaner(name_fields, terms_to_exclude)
+        cleaner = PartnerNameCleaner(PARTNER_NAME_FIELDS, terms_to_exclude)
 
         for partner in self:
             cleaner.clean(partner)
+
+
+def get_shortcut_list(env, model):
+    """Get a complete list of shorcuts including the translated values.
+
+    :param env: an Odoo environment
+    :param model: the name of the model for which to find shortcuts
+    :return: a list of terms
+    """
+    model_cls = env[model]
+    res = model_cls.search([]).mapped('shortcut')
+    translations = env['ir.translation'].search([
+        ('type', '=', 'model'),
+        ('name', '=', '{model},shortcut'.format(model=model)),
+    ])
+    res.extend(translations.mapped('value'))
+    res.extend(translations.mapped('src'))
+    return res
 
 
 class PartnerNameCleaner:
@@ -48,7 +66,7 @@ class PartnerNameCleaner:
         :param terms_to_exclude: a list of strings that must be excluded from the partner name.
         """
         self._fields_to_clean = fields_to_clean
-        self._build_regex_list(terms_to_exclude)
+        self._terms_to_exclude_regex_list = self._build_regex_list(terms_to_exclude)
 
     def _build_regex_list(self, terms_to_exclude):
         """Build a list of string replacement regex.
@@ -61,6 +79,7 @@ class PartnerNameCleaner:
         * at the end of the string (usually, business types are after the name)
 
         :param terms_to_exclude: a list of strings that must be excluded from the partner name.
+        :return: a list of string replacement regex
         """
         # Strip terms
         terms_to_exclude = [t.strip() for t in terms_to_exclude]
@@ -72,7 +91,7 @@ class PartnerNameCleaner:
         # Escape terms before computing the regex list
         terms_to_exclude = [re.escape(t) for t in terms_to_exclude]
 
-        self._terms_to_exclude_regex_list = [
+        return [
             re.compile('^\s*{term}\\.?\s+|\s+{term}\\.?\s*$'.format(term=t), re.IGNORECASE)
             for t in terms_to_exclude
         ]
@@ -82,9 +101,12 @@ class PartnerNameCleaner:
 
         :param partner: the partner to clean.
         """
-        fields_to_check = [f for f in self._fields_to_clean if f in partner._fields and partner[f]]
+        name_fields_set_on_partner = [
+            f for f in self._fields_to_clean
+            if f in partner._fields and partner[f]
+        ]
 
-        for field_name in fields_to_check:
+        for field_name in name_fields_set_on_partner:
             value_before = partner[field_name]
             value_after = self._remove_terms_from_string(value_before)
             if value_before != value_after:

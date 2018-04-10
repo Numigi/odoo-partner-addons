@@ -6,5 +6,4 @@
 from . import (
     res_partner,
     res_partner_business_type,
-    res_partner_title,
 )
