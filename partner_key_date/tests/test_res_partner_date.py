@@ -3,17 +3,20 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from datetime import date
+import pytz
+
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 
 from odoo.tests import common
 from odoo.exceptions import UserError
 
-_2_YEARS_AGO = date.today() - relativedelta(years=2)
-_18_MONTHS_AGO = date.today() - relativedelta(months=18)
-_4_MONTHS_AGO = date.today() - relativedelta(months=4)
-_1_YEAR_LATER = date.today() + relativedelta(years=1)
+_NOW = datetime.now(pytz.utc)
+_2_YEARS_AGO = _NOW - relativedelta(years=2)
+_18_MONTHS_AGO = _NOW.now() - relativedelta(months=18)
+_4_MONTHS_AGO = _NOW.now() - relativedelta(months=4)
+_1_YEAR_LATER = _NOW.now() + relativedelta(years=1)
 
 
 class TestResPartnerDate(common.SavepointCase):
@@ -22,7 +25,7 @@ class TestResPartnerDate(common.SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.tz = 'Canada/Eastern'
+        cls.env.user.tz = 'Canada/Eastern'
 
         cls.partner = cls.env['res.partner'].create({
             'name': 'My Partner',
@@ -70,7 +73,7 @@ class TestResPartnerDate(common.SavepointCase):
 
     def test_send_anniversary_email(self):
         self.partner_date_1.write({
-            'date': _2_YEARS_AGO,
+            'date': _2_YEARS_AGO.astimezone(pytz.timezone('Canada/Eastern')),
             'diffusion': True,
         })
         self.env['res.partner.date'].send_anniversary_emails()
@@ -83,7 +86,7 @@ class TestResPartnerDate(common.SavepointCase):
     def test_send_anniversary_with_no_email(self):
         self.partner.email = None
         self.partner_date_1.write({
-            'date': _2_YEARS_AGO,
+            'date': _2_YEARS_AGO.astimezone(pytz.timezone('Canada/Eastern')),
             'diffusion': True,
         })
         with self.assertRaises(UserError):
