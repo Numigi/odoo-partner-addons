@@ -1,0 +1,26 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_unique_email
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-12 17:28+0000\n"
+"PO-Revision-Date: 2018-04-12 17:28+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_unique_email
+#: code:addons/partner_unique_email/models/res_partner.py:0
+#, python-format
+msgid ""
+"The email ({email}) entered for {partner} is identical to the email "
+"of another partner ({other_partner})."
+msgstr ""
+"L'adresse courriel saisie ({email}) pour {partner} est identique à l'adresse courriel "
+"d'un autre partenaire ({other_partner})."
