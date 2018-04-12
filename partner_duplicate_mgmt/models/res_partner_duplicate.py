@@ -124,10 +124,26 @@ class ResPartnerDuplicate(models.Model):
     def _update_preserved_partner(self):
         """Update field values on the preserved partner.
 
+        If the email is copied from the archived partner to the preserved partner,
+        then, we remove the email from the archived partner.
+        """
+        vals = self._get_values_to_write_on_preserved_partner()
+
+        # Prevent having 2 partners with the same email.
+        if vals.get('email') == self.partner_archived_id.email:
+            self.partner_archived_id.email = None
+
+        self.partner_preserved_id.write(vals)
+
+    def _get_values_to_write_on_preserved_partner(self):
+        """Get the values to write on the preserved partner.
+
         All field values selected on the archived partner are written to
         the preserved partner.
 
         Values selected on the preserved partner are ignored.
+
+        :return: a dict of field values
         """
         vals = {}
 
@@ -143,7 +159,7 @@ class ResPartnerDuplicate(models.Model):
             elif partner_2_preserved and line.partner_1_selected:
                 vals[field_name] = self.partner_1_id._get_field_value(field_name)
 
-        self.partner_preserved_id.write(vals)
+        return vals
 
     def merge_partners(self):
         # Verify that a partner is checked for all lines
