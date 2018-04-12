@@ -54,4 +54,9 @@ class ResPartnerWithUniqueEmail(models.Model):
         if not isinstance(self.id, models.NewId):
             domain.append(('id', '!=', self.id))
 
-        return self.env['res.partner'].with_context(active_test=False).search(domain, limit=1)
+        return (
+            self.env['res.partner']
+            .sudo()  # Prevent access rules from interfering with the constraint.
+            .with_context(active_test=False)  # Find duplicate emails in archived partners as well.
+            .search(domain, limit=1)
+        )
