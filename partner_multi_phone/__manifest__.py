@@ -16,7 +16,6 @@
         'sms',
     ],
     'data': [
-        'views/partner_multi_phone.xml',
         'views/res_partner.xml',
     ],
     'installable': True,

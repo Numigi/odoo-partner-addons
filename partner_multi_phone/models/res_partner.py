@@ -19,10 +19,8 @@ class ResPartnerWithExtraPhones(models.Model):
             ('home', 'Home'),
             ('other', 'Other'),
         ])
-    phone_extension = fields.Char()
     phone_home = fields.Char(string='Home')
     phone_other = fields.Char(string='Other')
-    phone_other_extension = fields.Char()
 
     @api.onchange('phone_home', 'country_id', 'company_id')
     def _onchange_phone_home_validation(self):
@@ -33,23 +31,3 @@ class ResPartnerWithExtraPhones(models.Model):
     def _onchange_phone_other_validation(self):
         if self.phone_other:
             self.phone_other = self.phone_format(self.phone_other)
-
-    @api.constrains('phone_extension')
-    def _check_phone_extension(self):
-        if self.phone_extension:
-            _check_extension_number(self.phone_extension)
-
-    @api.constrains('phone_other_extension')
-    def _check_phone_other_extension(self):
-        if self.phone_other_extension:
-            _check_extension_number(self.phone_other_extension)
-
-
-def _check_extension_number(extension):
-    """Check that the given extension is valid.
-
-    :param str extension: the extension to check
-    """
-    if not extension.isdigit():
-        raise ValidationError(
-            _('The phone extension must contain only digits.'))
