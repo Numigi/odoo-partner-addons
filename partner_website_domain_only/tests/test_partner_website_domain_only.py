@@ -15,19 +15,19 @@ class TestPartnerWebsiteDomainOnly(common.SavepointCase):
     def test_website_with_no_path(self):
         self.partner.website = 'https://www.odoo.com'
         self.partner.refresh()
-        assert self.partner.website == 'https://www.odoo.com'
+        self.assertEqual(self.partner.website, 'https://www.odoo.com')
 
     def test_website_with_path(self):
         self.partner.website = 'https://www.odoo.com/page/tour'
         self.partner.refresh()
-        assert self.partner.website == 'https://www.odoo.com'
+        self.assertEqual(self.partner.website, 'https://www.odoo.com')
 
     def test_website_with_query_string(self):
         self.partner.website = 'https://www.odoo.com?debug='
         self.partner.refresh()
-        assert self.partner.website == 'https://www.odoo.com'
+        self.assertEqual(self.partner.website, 'https://www.odoo.com')
 
     def test_website_with_path_and_fragment(self):
         self.partner.website = 'https://www.odoo.com/page/tour#contact_us'
         self.partner.refresh()
-        assert self.partner.website == 'https://www.odoo.com'
+        self.assertEqual(self.partner.website, 'https://www.odoo.com')
