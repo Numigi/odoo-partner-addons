@@ -22,6 +22,7 @@ COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
 COPY partner_multi_relation_work /mnt/extra-addons/partner_multi_relation_work
 COPY partner_name_no_shortcut /mnt/extra-addons/partner_name_no_shortcut
 COPY partner_unique_email /mnt/extra-addons/partner_unique_email
+COPY partner_website_domain_only /mnt/extra-addons/partner_website_domain_only
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
