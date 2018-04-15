@@ -25,17 +25,15 @@ class ResPartnerWithIndexedPhones(models.Model):
     phone_other_indexed = fields.Char(
         compute='_compute_phone_other_indexed', index=True, store=True)
 
-    @api.depends('phone', 'phone_extension')
+    @api.depends('phone')
     def _compute_phone_indexed(self):
         for record in self:
-            record.phone_indexed = generate_phone_indexed_value(
-                record.phone, record.phone_extension)
+            record.phone_indexed = generate_phone_indexed_value(record.phone)
 
-    @api.depends('phone_other', 'phone_other_extension')
+    @api.depends('phone_other')
     def _compute_phone_other_indexed(self):
         for record in self:
-            record.phone_other_indexed = generate_phone_indexed_value(
-                record.phone_other, record.phone_other_extension)
+            record.phone_other_indexed = generate_phone_indexed_value(record.phone_other)
 
     @api.depends('mobile')
     def _compute_mobile_indexed(self):
@@ -47,9 +45,9 @@ class ResPartnerWithIndexedPhones(models.Model):
         for record in self:
             record.phone_home_indexed = generate_phone_indexed_value(record.phone_home)
 
-    @api.onchange('phone', 'phone_extension')
+    @api.onchange('phone')
     def _onchange_phone_country(self):
-        return self._onchange_phone_number(self.phone, self.phone_extension)
+        return self._onchange_phone_number(self.phone)
 
     @api.onchange('mobile')
     def _onchange_mobile_country(self):
@@ -59,12 +57,12 @@ class ResPartnerWithIndexedPhones(models.Model):
     def _onchange_phone_home_country(self):
         return self._onchange_phone_number(self.phone_home)
 
-    @api.onchange('phone_other', 'phone_other_extension')
+    @api.onchange('phone_other')
     def _onchange_phone_other_country(self):
-        return self._onchange_phone_number(self.phone_other, self.phone_other_extension)
+        return self._onchange_phone_number(self.phone_other)
 
-    def _onchange_phone_number(self, number, extension=None):
-        number = generate_phone_indexed_value(number, extension)
+    def _onchange_phone_number(self, number):
+        number = generate_phone_indexed_value(number)
         duplicates = self._get_duplicates_by_phone(number)
 
         if duplicates:
@@ -110,10 +108,10 @@ class ResPartnerWithIndexedPhones(models.Model):
         if vals.get('mobile'):
             res |= self._create_phone_duplicates(self.mobile_indexed)
 
-        if vals.get('phone') or vals.get('phone_extension'):
+        if vals.get('phone'):
             res |= self._create_phone_duplicates(self.phone_indexed)
 
-        if vals.get('phone_other') or vals.get('phone_other_extension'):
+        if vals.get('phone_other'):
             res |= self._create_phone_duplicates(self.phone_other_indexed)
 
         return res
@@ -184,21 +182,10 @@ class ResPartnerWithIndexedPhones(models.Model):
         return self.env['res.partner'].browse([r[0] for r in cr.fetchall()])
 
 
-def generate_phone_indexed_value(phone, extension=None):
-    """Generate a concatenated phone number with the extension.
-
-    This function is used to create an indexedable string containing
-    the whole number of a contact.
+def generate_phone_indexed_value(phone):
+    """Generate a phone string to index for search index comparison.
 
     :param phone: a phone number string
-    :param extension: a phone extension string
-    :return: the concatenated phone and extension string
+    :return: a phone number string
     """
-    if phone is None:
-        phone = ''
-
-    if extension is None:
-        extension = ''
-
-    number = '{phone}{extension}'.format(phone=phone, extension=extension)
-    return (''.join(c for c in number if c.isdigit()))
+    return (''.join(c for c in phone if c.isdigit())) if phone else None

@@ -15,25 +15,23 @@ class TestResPartner(common.SavepointCase):
         cls.partner_1 = cls.env['res.partner'].create({
             'name': 'Hadi',
             'phone': '(415) 555-2671',
-            'phone_extension': '333',
             'mobile': '+1 (415) 678-4529',
         })
 
         cls.partner_2 = cls.env['res.partner'].create({
             'name': 'Cohen',
             'phone_other': '415-222-3456',
-            'phone_other_extension': '331',
             'phone_home': '581-999-5555',
         })
 
     def test_compute_phone_indexed(self):
-        self.assertEqual('4155552671333', self.partner_1.phone_indexed)
+        self.assertEqual('4155552671', self.partner_1.phone_indexed)
 
     def test_compute_mobile_indexed(self):
         self.assertEqual('14156784529', self.partner_1.mobile_indexed)
 
     def test_compute_phone_other_indexed(self):
-        self.assertEqual('4152223456331', self.partner_2.phone_other_indexed)
+        self.assertEqual('4152223456', self.partner_2.phone_other_indexed)
 
     def test_compute_phone_home_indexed(self):
         self.assertEqual('5819995555', self.partner_2.phone_home_indexed)
@@ -56,7 +54,6 @@ class TestResPartner(common.SavepointCase):
         self.partner_3 = self.env['res.partner'].create({
             'name': 'Partner XYZ',
             'phone': '4152223456',
-            'phone_extension': '331'
         })
         self.assertEqual(len(self.partner_3.duplicate_ids), 1)
 
@@ -64,14 +61,13 @@ class TestResPartner(common.SavepointCase):
         self.partner_3 = self.env['res.partner'].create({
             'name': 'Partner XYZ',
             'phone_other': '4152223456',
-            'phone_other_extension': '331'})
+        })
         self.assertEqual(len(self.partner_3.duplicate_ids), 1)
 
     def test_create_partner_with_duplicate_phone_numbers(self):
         self.partner_3 = self.env['res.partner'].create({
             'name': 'Partner XYZ',
             'phone_other': '4152223456',
-            'phone_other_extension': '331',
             'phone_home': '14156784529',
         })
         self.assertTrue(self.partner_3.duplicate_ids)
@@ -88,7 +84,6 @@ class TestResPartner(common.SavepointCase):
     def test_write_with_duplicate_phone_other(self):
         self.partner_1.write({
             'phone_other': '(415) 222-3456',
-            'phone_other_extension': '331',
         })
         self.assertTrue(self.partner_2.duplicate_ids)
 
@@ -105,10 +100,7 @@ class TestResPartner(common.SavepointCase):
         ])
         self.assertEqual(len(duplicates), 1)
 
-        self.partner_2.write({
-            'phone': '4155552671',
-            'phone_extension': '333',
-        })
+        self.partner_2.phone = '4155552671'
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', partners.ids),
             ('partner_2_id', 'in', partners.ids),

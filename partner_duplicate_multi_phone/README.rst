@@ -21,9 +21,6 @@ Comparison of phone extensions
 Work and Other phones are indexed with the extension. If 2 contacts have the same
 number but with different extensions, they will not be reported as duplicates.
 
-If 2 partners have the same number and extension, they will be reported as duplicates
-no matter what their names are.
-
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)

@@ -15,10 +15,6 @@
                 <attribute name="attrs">{'required': [('phone_main', '=', 'work')]}</attribute>
             </field>
 
-            <field name="phone" position="after">
-                <field name="phone_extension" widget="phone_extension" placeholder="Ext."/>
-            </field>
-
             <field name="mobile" position="attributes">
                 <attribute name="attrs">{'required': [('phone_main', '=', 'mobile')]}</attribute>
             </field>
@@ -40,7 +36,6 @@
                 <div class="o_row">
                     <field name="phone_other" widget="phone"
                         attrs="{'required': [('phone_main', '=', 'other')]}"/>
-                    <field name="phone_other_extension" widget="phone_extension" placeholder="Ext."/>
                     <button
                         type="action"
                         name="%(sms.send_sms_form_action)d"
@@ -53,18 +48,12 @@
 
             <!-- Nested kanban cards inside the form view -->
             <xpath expr="//kanban/field[@name='phone']" position="after">
-                <field name="phone_extension"/>
                 <field name="phone_home"/>
                 <field name="phone_other"/>
-                <field name="phone_other_extension"/>
             </xpath>
             <div t-if="record.phone.raw_value" position="replace">
                 <div t-if="record.phone.raw_value">
                     Work: <field name="phone"/>
-                    <span t-if="record.phone_extension.raw_value">
-                        <span class="o_phone_extension__label">Ext: </span>
-                        <field name="phone_extension"/>
-                    </span>
                 </div>
             </div>
             <div t-if="record.mobile.raw_value" position="after">
@@ -73,10 +62,6 @@
                 </div>
                 <div t-if="record.phone_other.raw_value">
                     Other: <field name="phone_other"/>
-                    <span t-if="record.phone_other_extension.raw_value">
-                        <span class="o_phone_extension__label">Ext: </span>
-                        <field name="phone_other_extension"/>
-                    </span>
                 </div>
             </div>
 
@@ -95,7 +80,6 @@
                 <div class="o_row">
                     <field name="phone" widget="phone"
                         attrs="{'required': [('phone_main', '=', 'work')]}"/>
-                    <field name="phone_extension" widget="phone_extension" placeholder="Ext."/>
                 </div>
             </xpath>
 
@@ -106,14 +90,13 @@
             <xpath expr="//notebook//form//field[@name='mobile']" position="after">
                 <label for="phone_home"/>
                 <div class="o_row">
-                    <field name="phone_home" widget="phone"
+                    <field name="phone_home" widget="phone" 
                         attrs="{'required': [('phone_main', '=', 'home')]}"/>
                 </div>
                 <label for="phone_other"/>
                 <div class="o_row">
-                    <field name="phone_other" widget="phone"
+                    <field name="phone_other" widget="phone" 
                         attrs="{'required': [('phone_main', '=', 'other')]}"/>
-                    <field name="phone_other_extension" widget="phone_extension" placeholder="Ext."/>
                 </div>
             </xpath>
 

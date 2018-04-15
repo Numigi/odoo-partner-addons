@@ -7,10 +7,6 @@ Extra Phone Fields
 Two extra phone fields Home and Other are added.
 The Phone field is renamed Work.
 
-Extensions
-----------
-2 extension fields are added for the Work and Other phone numbers.
-
 Main Phone
 ----------
 The module adds a field `Main Phone`.
