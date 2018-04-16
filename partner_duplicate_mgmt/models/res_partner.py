@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017-2018 Savoir-faire Linux
+# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
@@ -10,6 +11,16 @@ from odoo.exceptions import UserError
 import unidecode
 
 _logger = logging.getLogger(__name__)
+
+
+UPDATE_DUPLICATES_FIELDS = {
+    'company_type',
+    'firstname',
+    'is_company',
+    'lastname',
+    'name',
+    'parent_id',
+}
 
 
 class ResPartner(models.Model):
@@ -42,38 +53,37 @@ class ResPartner(models.Model):
             rec.duplicate_count = len(rec.duplicate_ids)
 
     def _get_indexed_name(self):
-        if not self.name:
-            return ''
+        """Get the value for the field indexed_name.
 
-        indexed_name = self.name
-        terms = self.env['res.partner.duplicate.term'].search([])
-        spaces_begining = '(^|\s+)'
-        spaces_end = '($|\s+)'
+        This field is used to search partners with a similar name.
 
-        for term in terms:
-            expression = term.expression
-            if term.type != 'regex':
-                expression = (
-                    spaces_begining + re.escape(expression) + spaces_end)
+        The following operations are done on the name to obtain the value to index:
 
-            indexed_name = re.sub(
-                expression, ' ', indexed_name, flags=re.IGNORECASE)
+        * Accents are removed.
+        * All letters are lower case.
 
-        indexed_name = unidecode.unidecode(indexed_name)
-        return indexed_name.strip().lower()
+        :return: the value for the field indexed_name.
+        """
+        name_without_accents = unidecode.unidecode(self.name or '')
+        return name_without_accents.lower()
 
-    def _get_min_similarity(self, indexed_name):
-        if len(indexed_name) <= 9:
-            return self.env['ir.config_parameter'].get_param(
-                'partner_duplicate_mgmt.partner_name_similarity_1')
+    def _get_min_similarity(self, partner_name):
+        """Get the minimum similiratity level required for a given partner name.
 
-        if 10 <= len(indexed_name) <= 17:
-            return self.env['ir.config_parameter'].get_param(
-                'partner_duplicate_mgmt.partner_name_similarity_2')
+        :param partner_name: a partner name
+        :return: the minimum similarity level in a scale from 0 to 1.
+        """
+        if not partner_name:
+            partner_name = ''
 
-        if len(indexed_name) >= 18:
-            return self.env['ir.config_parameter'].get_param(
-                'partner_duplicate_mgmt.partner_name_similarity_3')
+        if len(partner_name) <= 9:
+            return self.env['res.partner.duplicate']._get_partner_name_similarity(1)
+
+        if 10 <= len(partner_name) <= 17:
+            return self.env['res.partner.duplicate']._get_partner_name_similarity(2)
+
+        if len(partner_name) >= 18:
+            return self.env['res.partner.duplicate']._get_partner_name_similarity(3)
 
     def _get_duplicates(self, indexed_name=None):
         if self._context.get('disable_duplicate_check'):
@@ -112,7 +122,7 @@ class ResPartner(models.Model):
         return cr.dictfetchall()
 
     @api.onchange('name', 'parent_id', 'company_type', 'is_company')
-    def onchange_name(self):
+    def _onchange_name_find_duplicates(self):
         indexed_name = self._get_indexed_name()
         if self.id or not indexed_name:
             return
@@ -135,7 +145,7 @@ class ResPartner(models.Model):
 
     def _update_indexed_name(self):
         for partner in self:
-            indexed_name = partner._get_indexed_name()
+            indexed_name = partner.sudo()._get_indexed_name()
             partner.write({'indexed_name': indexed_name})
 
     def _create_duplicates(self):
@@ -147,7 +157,6 @@ class ResPartner(models.Model):
                 'partner_2_id': max(self.id, partner['id']),
             })
             duplicates |= self.browse(partner['id'])
-
         return duplicates
 
     def _post_message_duplicates(self, duplicates):
@@ -163,20 +172,17 @@ class ResPartner(models.Model):
         res._update_indexed_name()
         duplicates = res._create_duplicates()
         res._post_message_duplicates(duplicates)
-
         return res
 
     @api.multi
     def write(self, vals):
+        updated_values = set(vals.keys())
         res = super(ResPartner, self).write(vals)
 
-        if (
-            'parent_id' in vals or 'name' in vals or
-            'lastname' in vals or 'firstname' in vals or
-            'company_type' in vals or 'is_company' in vals
-        ):
+        if 'name' in vals:
             self._update_indexed_name()
 
+        if any(f in updated_values for f in UPDATE_DUPLICATES_FIELDS):
             for record in self:
                 duplicates = record._create_duplicates()
                 record._post_message_duplicates(duplicates)
@@ -249,11 +255,8 @@ class ResPartner(models.Model):
 
     @api.multi
     def action_merge(self):
-        group = self.env.ref(
-            'partner_duplicate_mgmt.group_duplicate_partners_control')
-        if group not in self.env.user.groups_id:
-            raise UserError(_(
-                "You don't have access to merge partners."))
+        if not self.env.user.has_group('partner_duplicate_mgmt.group_duplicate_partners_control'):
+            raise UserError(_("You don't have access to merge partners."))
 
         if len(self) != 2:
             raise UserError(_("Please, select two partners to merge."))

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017-2018 Savoir-faire Linux
+# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, fields, models
@@ -262,11 +263,16 @@ class ResPartnerDuplicate(models.Model):
     def _get_partner_name_similarity(self, level):
         """Get the floor similarity for the given similarity level.
 
+        The sudo is required because since Odoo 11.0, config parameters are
+        only readable by the admin group.
+
         :param level: the similarity level from 1 to 3
         :return: the floor similarity limit
         """
-        return self.env['ir.config_parameter'].get_param(
-            'partner_duplicate_mgmt.partner_name_similarity_{level}'.format(level=level))
+        return (
+            self.env['ir.config_parameter'].sudo()
+            .get_param('partner_duplicate_mgmt.partner_name_similarity_{level}'.format(level=level))
+        )
 
     def create_duplicates(self):
         res = self._find_duplicate_partner_ids()

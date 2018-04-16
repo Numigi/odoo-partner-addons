@@ -17,9 +17,6 @@ class PartnerRelationCase(common.SavepointCase):
         cls.admin = cls.env.ref('base.user_root')
         cls.demo_user = cls.env.ref('base.user_demo')
 
-        # Run all tests with a non-admin user to prevent missing sudo() statements.
-        cls.env = Environment(cls.env.cr, cls.env.uid, {})
-
         cls.company_1 = cls.env['res.partner'].create({'name': 'Company 1', 'is_company': True})
         cls.company_2 = cls.env['res.partner'].create({'name': 'Company 2', 'is_company': True})
         cls.company_3 = cls.env['res.partner'].create({'name': 'Company 3', 'is_company': True})
@@ -57,6 +54,9 @@ class PartnerRelationCase(common.SavepointCase):
             'name': 'is the father of',
             'name_inverse': 'is the children of',
         })
+
+        # Run all tests with a non-admin user to prevent missing sudo() statements.
+        cls.env = Environment(cls.env.cr, cls.demo_user.id, {})
 
     def setUp(self):
         super().setUp()

@@ -17,7 +17,6 @@ msgstr ""
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_active
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_active
 msgid "Active"
 msgstr "Actif"
 
@@ -44,7 +43,6 @@ msgstr "Fusion de contacts avec écritures comptables"
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_create_uid
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_create_uid
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_create_uid
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_create_uid
 msgid "Created by"
 msgstr "Créé par"
@@ -57,7 +55,6 @@ msgstr "Créé en double par erreur"
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_create_date
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_create_date
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_create_date
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_create_date
 msgid "Created on"
 msgstr "Créé le"
@@ -65,7 +62,6 @@ msgstr "Créé le"
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_display_name
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_display_name
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_display_name
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_display_name
 msgid "Display Name"
 msgstr "Nom affiché"
@@ -117,11 +113,6 @@ msgid "Duplicates Line"
 msgstr "Ligne de doublons"
 
 #. module: partner_duplicate_mgmt
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_expression
-msgid "Expression"
-msgstr "Expression"
-
-#. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_duplicate_field_id
 msgid "Field"
 msgstr "Champ"
@@ -134,7 +125,6 @@ msgstr "Type de Champ"
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_id
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_id
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_id
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_id
 msgid "ID"
 msgstr "Identifiant"
@@ -168,14 +158,12 @@ msgstr "Poste occupé"
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate___last_update
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field___last_update
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term___last_update
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line___last_update
 msgid "Last Modified on"
 msgstr "Dernière modification le"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_write_uid
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_write_uid
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_write_uid
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_write_uid
 msgid "Last Updated by"
@@ -183,7 +171,6 @@ msgstr "Dernière mise à jour par"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_write_date
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_write_date
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_write_date
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_merge_line_write_date
 msgid "Last Updated on"
@@ -309,18 +296,6 @@ msgid "Partner Duplicate Fields"
 msgstr "Champs de ligne de doublons"
 
 #. module: partner_duplicate_mgmt
-#: model:ir.model,name:partner_duplicate_mgmt.model_res_partner_duplicate_term
-msgid "Partner Duplicate Term"
-msgstr "Terme exclu des doublons"
-
-#. module: partner_duplicate_mgmt
-#: model:ir.actions.act_window,name:partner_duplicate_mgmt.res_partner_duplicate_term_action
-#: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_res_partner_duplicate_term_action
-#: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_term_tree
-msgid "Partner Duplicate Terms"
-msgstr "Termes exclus des doublons"
-
-#. module: partner_duplicate_mgmt
 #: model:ir.actions.act_window,name:partner_duplicate_mgmt.res_partner_duplicate_action
 #: model:ir.ui.menu,name:partner_duplicate_mgmt.menu_res_partner_duplicate_action
 #: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_tree
@@ -370,11 +345,6 @@ msgid "Preserved"
 msgstr "Conservé"
 
 #. module: partner_duplicate_mgmt
-#: selection:res.partner.duplicate.term,type:0
-msgid "Regular Expression"
-msgstr "Expression régulière"
-
-#. module: partner_duplicate_mgmt
 #: model:ir.ui.view,arch_db:partner_duplicate_mgmt.res_partner_duplicate_form
 msgid "Set As Not Duplicate"
 msgstr "N'est pas un doublon"
@@ -401,11 +371,6 @@ msgid "State"
 msgstr "Statut"
 
 #. module: partner_duplicate_mgmt
-#: selection:res.partner.duplicate.term,type:0
-msgid "String"
-msgstr "Chaîne de caractères"
-
-#. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_field_technical_name
 msgid "Technical name"
 msgstr "Nom technique"
@@ -427,11 +392,6 @@ msgstr "Ce partenaire (%(new_partner)s) peut être considéré comme un doublon 
 #: selection:res.partner.duplicate,state:0
 msgid "To Validate"
 msgstr "À valider"
-
-#. module: partner_duplicate_mgmt
-#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner_duplicate_term_type
-msgid "Type"
-msgstr "Type"
 
 #. module: partner_duplicate_mgmt
 #: code:addons/partner_duplicate_mgmt/models/res_partner_duplicate_field.py:19

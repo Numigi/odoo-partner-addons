@@ -55,7 +55,7 @@ A new list view shows alls duplicates. The user can:
 
 Merging Partners
 ----------------
-It is possible to merge partners that are either both companies or both contacts
+It is possible to merge partners that are either both companies or both contacts.
 
 
 Merging Contacts with Account Moves
@@ -89,24 +89,6 @@ The level of similarity required so that 2 partners whose names length are less 
 are considered duplicates is 0.5 by default.
 These values may be changed in system parameters.
 
-
-Adding terms to exclude from the name comparison
-------------------------------------------------
-When comparing 2 partners, some terms must be excluded from the names.
-Such terms include Inc. If you have 2 partners Agrolait and Agrolait Inc, the similarity should be 100%.
-
-The list of terms to exclude is configurable from the menu
-Contacts -> Duplicate Management -> Partner Duplicate Terms.
-
-
-Contributors
-------------
-* Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)
-* David Dufresne (david.dufresne@savoirfairelinux.com)
-* Bruno Joliveau (bruno.joliveau@savoirfairelinux.com)
-* Julien Jezequel-Breard (julien.jezequel-breard@savoirfairelinux.com)
-
-
 Dependencies
 ------------
 The module uses trigrams to compare names of partners. The postgresql extension pg_trgm is required for this purpose.
@@ -117,11 +99,18 @@ In order to install the extension, you may log in to your database as superuser 
 
 > CREATE EXTENSION pg_trgm
 
-
 Roadmap
 -------
 This module is financed and answered to customer needs.
 
-It should be improved:
+* Add parameters in the user's interface to set the field wanted in comparison
 
-* add parameters in the user's interface to set the field wanted in comparison
+Contributors
+------------
+* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+* Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)
+
+More information
+----------------
+* Meet us at https://bit.ly/numigi-com
+

@@ -3,6 +3,7 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from odoo.api import Environment
 from odoo.tests import common
 
 
@@ -11,6 +12,9 @@ class TestResPartner(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestResPartner, cls).setUpClass()
+
+        # Test using the demo user to prevent bugs related with access rights.
+        cls.env = Environment(cls.env.cr, cls.env.ref('base.user_demo').id, {})
 
         cls.partner_1 = cls.env['res.partner'].create({
             'name': 'Hadi',
