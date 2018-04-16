@@ -4,4 +4,4 @@
   patches:
     - url: https://github.com/ddufresne/partner-contact
       branch: 11.0-mig-partner_multi_relation
-      commit: 9ea54c522d2404afb732cc9b55be12c0b0e835bd
+      commit: b184c8fdecbe2dc9f3acada74d398f8a2582d6d9
