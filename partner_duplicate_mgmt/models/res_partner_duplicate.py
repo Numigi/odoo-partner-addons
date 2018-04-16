@@ -269,10 +269,8 @@ class ResPartnerDuplicate(models.Model):
         :param level: the similarity level from 1 to 3
         :return: the floor similarity limit
         """
-        return (
-            self.env['ir.config_parameter'].sudo()
-            .get_param('partner_duplicate_mgmt.partner_name_similarity_{level}'.format(level=level))
-        )
+        parameter = 'partner_duplicate_mgmt.partner_name_similarity_{level}'.format(level=level)
+        return self.env['ir.config_parameter'].sudo().get_param(parameter)
 
     def create_duplicates(self):
         res = self._find_duplicate_partner_ids()

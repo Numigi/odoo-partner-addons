@@ -70,6 +70,17 @@ class ResPartner(models.Model):
     def _get_min_similarity(self, partner_name):
         """Get the minimum similiratity level required for a given partner name.
 
+        A different similarity level is used depending on the length of the partner name.
+
+        * level 1: 0 to 9 chars
+        * level 2: 10 to 17 chars
+        * level 3: 18 chars and more
+
+        These values having tested with a significant sample of partner names.
+
+        The reason for this complexity is that one letter of difference in a short
+        partner name has a lot of impact on the similarity based on trigrams.
+
         :param partner_name: a partner name
         :return: the minimum similarity level in a scale from 0 to 1.
         """
@@ -145,7 +156,7 @@ class ResPartner(models.Model):
 
     def _update_indexed_name(self):
         for partner in self:
-            indexed_name = partner.sudo()._get_indexed_name()
+            indexed_name = partner._get_indexed_name()
             partner.write({'indexed_name': indexed_name})
 
     def _create_duplicates(self):
