@@ -15,6 +15,7 @@
         'partner_change_parent',
         'partner_duplicate_mgmt',
         'partner_duplicate_multi_phone',
+        'partner_firstname_before_lastname',
         'partner_key_date',
         'partner_multi_phone',
         'partner_multi_relation_work',

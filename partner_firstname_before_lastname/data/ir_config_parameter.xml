@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="partner_names_order" model="ir.config_parameter">
+            <field name="key">partner_names_order</field>
+            <field name="value">first_last</field>
+        </record>
+
+    </data>
+</odoo>
