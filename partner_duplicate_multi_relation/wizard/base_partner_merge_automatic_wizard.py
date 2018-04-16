@@ -4,11 +4,6 @@
 
 from odoo import models
 
-_TABLES_TO_IGNORE = (
-    'res_partner_relation',
-    'res_partner_relation_all',
-)
-
 
 class MergePartnerAutomaticPreventPropagateRelations(models.TransientModel):
     """Prevent base.partner.merge from propagating relations."""
@@ -25,7 +20,4 @@ class MergePartnerAutomaticPreventPropagateRelations(models.TransientModel):
         method merge_partners of res.partner.duplicate.
         """
         foreign_keys = super()._get_fk_on(table)
-        return [
-            r for r in foreign_keys
-            if not any(t in r[0] for t in _TABLES_TO_IGNORE)
-        ]
+        return [r for r in foreign_keys if 'res_partner_relation' not in r[0]]
