@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 # © 2017-2018 Savoir-faire Linux
+# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests import common
+from odoo.api import Environment
 from odoo.exceptions import UserError
+from odoo.tests import common
+from odoo.tools import SUPERUSER_ID
 
 import random
 
@@ -14,11 +17,13 @@ class TestResPartnerDuplicate(common.SavepointCase):
     def setUpClass(cls):
         super(TestResPartnerDuplicate, cls).setUpClass()
 
+        # Test using the demo user to prevent bugs related with access rights.
+        cls.env = Environment(cls.env.cr, cls.env.ref('base.user_demo').id, {})
+
         cls.state_on = cls.env.ref('base.state_ca_on')
         cls.state_qc = cls.env.ref('base.state_ca_qc')
 
-        cls.cron = cls.env.ref(
-            'partner_duplicate_mgmt.ir_cron_create_duplicates')
+        cls.cron = cls.env.ref('partner_duplicate_mgmt.ir_cron_create_duplicates')
 
         cls.account_move_group = cls.env.ref(
             'partner_duplicate_mgmt.group_contacts_merge_account_moves')
@@ -29,22 +34,22 @@ class TestResPartnerDuplicate(common.SavepointCase):
             'partner_duplicate_mgmt.duplicate_field_state_id')
 
         cls.company_1 = cls.env['res.partner'].create({
-            'name': '123 Company inc.',
+            'name': 'Company 1',
             'is_company': True,
             'state_id': cls.state_on.id,
         })
         cls.company_2 = cls.env['res.partner'].create({
-            'name': '456 Coompany inc.',
+            'name': 'Coompany 1',
             'is_company': True,
         })
 
         cls.contact_1 = cls.env['res.partner'].create({
-            'name': '123 Partner inc.',
+            'name': 'Partner inc.',
             'email': 'contact_123@localhost',
             'parent_id': cls.company_1.id,
         })
         cls.contact_2 = cls.env['res.partner'].create({
-            'name': '456 Paartner inc.',
+            'name': 'Paartner inc.',
             'email': 'partners@localhost',
             'state_id': cls.state_qc.id,
         })
@@ -90,33 +95,33 @@ class TestResPartnerDuplicate(common.SavepointCase):
         cls.company_dup.open_partner_merge_wizard()
         cls.company_merge_lines = cls.company_dup.merge_line_ids
 
-    def test_01_cron_executed_twice_wont_create_2_duplicates(self):
-        self.cron.method_direct_trigger()
+    def test_cron_executed_twice_wont_create_2_duplicates(self):
+        self.cron.sudo().method_direct_trigger()
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', self.contacts),
             ('partner_2_id', 'in', self.contacts),
         ])
         self.assertEqual(len(duplicates), 1)
 
-    def test_02_duplicates_where_partner1_equals_partner2_are_ignored(self):
+    def test_duplicates_where_partner1_equals_partner2_are_ignored(self):
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', '=', self.contact_1.id),
             ('partner_2_id', '=', self.contact_1.id),
         ])
         self.assertEqual(len(duplicates), 0)
 
-    def test_03_reversed_and_normal_duplicate_of_duplicate_are_ignored(self):
+    def test_reversed_and_normal_duplicate_of_duplicate_are_ignored(self):
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', self.contacts),
             ('partner_2_id', 'in', self.contacts),
         ])
         self.assertEqual(len(duplicates), 1)
 
-    def test_04_create_new_duplicate_adds_message_to_chatter(self):
+    def test_create_new_duplicate_adds_message_to_chatter(self):
         self.assertEqual(len(self.contact_2.message_ids), 2)
         self.assertIn(self.contact_1.name, self.contact_2.message_ids[0].body)
 
-    def test_05_char_field_merge_line_created_correctly(self):
+    def test_char_field_merge_line_created_correctly(self):
         merge_lines = self.contact_merge_lines
         merge_line = merge_lines.filtered(
             lambda l: l.duplicate_field_id == self.duplicate_email)
@@ -125,7 +130,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(merge_line.partner_1_value, 'contact_123@localhost')
         self.assertEqual(merge_line.partner_2_value, 'partners@localhost')
 
-    def test_06_many2one_field_merge_line_created_correctly(self):
+    def test_many2one_field_merge_line_created_correctly(self):
         merge_line = self.contact_merge_lines.filtered(
             lambda l: l.duplicate_field_id == self.duplicate_state)
 
@@ -133,7 +138,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(merge_line.partner_1_value, 'Ontario')
         self.assertEqual(merge_line.partner_2_value, 'Quebec')
 
-    def test_07_merge_partners_update_char_field(self):
+    def test_merge_partners_update_char_field(self):
         self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
         self.contact_merge_lines.write({'partner_2_selected': True})
 
@@ -146,7 +151,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(self.contact_dup.state, 'merged')
         self.assertEqual(self.contact_2.email, 'contact_123@localhost')
 
-    def test_08_merge_partners_update_many2one_field(self):
+    def test_merge_partners_update_many2one_field(self):
         self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
         self.contact_merge_lines.write({'partner_2_selected': True})
 
@@ -158,7 +163,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         self.assertEqual(self.contact_2.state_id, self.state_on)
 
-    def test_09_partner_not_conserved_should_be_archived(self):
+    def test_partner_not_conserved_should_be_archived(self):
         self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
         self.contact_merge_lines.write({'partner_2_selected': True})
         self.contact_dup.merge_partners()
@@ -172,7 +177,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(len(self.contact_1.message_ids), 2)
         self.assertIn(self.contact_2.name, self.contact_1.message_ids[0].body)
 
-    def test_10_contact_merge_doesnt_affect_message_ids(self):
+    def test_contact_merge_doesnt_affect_message_ids(self):
         self.assertEqual(len(self.contact_1.message_ids), 1)
         self.assertEqual(len(self.contact_2.message_ids), 2)
 
@@ -187,7 +192,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertNotIn(
             self.contact_1.message_ids[1], self.contact_2.message_ids)
 
-    def test_11_contacts_merger_should_merge_one2many_field(self):
+    def test_contacts_merger_should_merge_one2many_field(self):
         self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
         self.contact_merge_lines.write({'partner_2_selected': True})
         self.contact_dup.merge_partners()
@@ -195,7 +200,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertIn(self.bank_1, self.contact_2.bank_ids)
         self.assertIn(self.bank_2, self.contact_2.bank_ids)
 
-    def test_12_companies_merger_shouldnt_merge_one2many_field(self):
+    def test_companies_merger_shouldnt_merge_one2many_field(self):
         self.bank_1.write({'partner_id': self.company_1.id})
         self.bank_2.write({'partner_id': self.company_2.id})
 
@@ -206,7 +211,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(self.bank_1.partner_id, self.company_1)
         self.assertEqual(self.bank_2.partner_id, self.company_2)
 
-    def test_13_contacts_merger_should_merge_attachments(self):
+    def test_contacts_merger_should_merge_attachments(self):
         self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
         self.contact_merge_lines.write({'partner_2_selected': True})
         self.contact_dup.merge_partners()
@@ -214,7 +219,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(self.attachment_1.res_id, self.contact_2.id)
         self.assertEqual(self.attachment_2.res_id, self.contact_2.id)
 
-    def test_14_companies_merger_shouldnt_merge_attachments(self):
+    def test_companies_merger_shouldnt_merge_attachments(self):
         self.attachment_1.write({'res_id': self.company_1.id})
         self.attachment_2.write({'res_id': self.company_2.id})
 
@@ -225,7 +230,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(self.attachment_1.res_id, self.company_1.id)
         self.assertEqual(self.attachment_2.res_id, self.company_2.id)
 
-    def test_15_merge_partners_doesnt_affect_null_values(self):
+    def test_merge_partners_doesnt_affect_null_values(self):
         self.contact_2.write({'phone': '4155552671'})
         self.assertFalse(self.contact_1.phone)
 
@@ -235,20 +240,20 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         self.assertFalse(self.contact_1.phone)
 
-    def test_16_action_resolve(self):
+    def test_action_resolve(self):
         dup = self.contact_dup
         self.assertEqual(dup.state, 'to_validate')
         dup.action_resolve()
         self.assertEqual(dup.state, 'resolved')
 
-    def test_17_companies_merger_makes_src_partner_child_of_dst_partner(self):
+    def test_companies_merger_makes_src_partner_child_of_dst_partner(self):
         self.company_dup.write({'partner_preserved_id': self.company_2.id})
         self.company_merge_lines.write({'partner_2_selected': True})
         self.company_dup.merge_partners()
 
         self.assertEqual(self.company_1.parent_id, self.company_2)
 
-    def test_18_companies_merger_moves_children_to_dst_partner(self):
+    def test_companies_merger_moves_children_to_dst_partner(self):
         self.company_dup.write({'partner_preserved_id': self.company_2.id})
         self.company_merge_lines.write({'partner_2_selected': True})
         self.company_dup.merge_partners()
@@ -257,51 +262,52 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertFalse(self.company_1.child_ids)
 
     def create_invoice(self, partner):
-        self.currency = self.env['res.currency'].search(
+        env = Environment(self.env.cr, SUPERUSER_ID, {})
+        currency = env['res.currency'].search(
             [('name', '=', 'EUR')]
         )
-        self.product = self.env['product.product'].create({
+        product = env['product.product'].create({
             'name': 'Product',
         })
-        self.account_1 = self.env['account.account'].create({
+        account_1 = env['account.account'].create({
             'code': random.randint(100, 999),
             'name': 'Payable Account',
             'reconcile': True,
-            'user_type_id': self.env.ref(
+            'user_type_id': env.ref(
                 'account.data_account_type_payable').id,
         })
-        self.account_2 = self.env['account.account'].create({
+        account_2 = env['account.account'].create({
             'code': random.randint(100, 999),
             'name': 'Expenses Account',
-            'user_type_id': self.env.ref(
+            'user_type_id': env.ref(
                 'account.data_account_type_expenses').id,
         })
         partner.write({
-            'property_account_payable_id': self.account_2.id,
+            'property_account_payable_id': account_2.id,
         })
-        self.journal = self.env['account.journal'].create({
+        journal = env['account.journal'].create({
             'name': 'Journal',
             'type': 'bank',
             'code': str(random.randint(100, 999)),
         })
-        self.account_invoice_line = self.env['account.invoice.line'].create({
+        account_invoice_line = env['account.invoice.line'].create({
             'name': 'My line 1',
-            'product_id': self.product.id,
-            'account_id': self.account_2.id,
+            'product_id': product.id,
+            'account_id': account_2.id,
             'price_unit': '20',
         })
-        self.account_invoice = self.env['account.invoice'].create({
+        account_invoice = env['account.invoice'].create({
             'partner_id': partner.id,
-            'account_id': self.account_1.id,
-            'journal_id': self.journal.id,
-            'currency_id': self.currency.id,
-            'invoice_line_ids': [(4, self.account_invoice_line.id)],
+            'account_id': account_1.id,
+            'journal_id': journal.id,
+            'currency_id': currency.id,
+            'invoice_line_ids': [(4, account_invoice_line.id)],
             'type': 'in_invoice',
         })
 
-        return self.account_invoice
+        return account_invoice
 
-    def test_19_cannot_merge_contact_with_account_moves(self):
+    def test_cannot_merge_contact_with_account_moves(self):
         invoice = self.create_invoice(self.contact_2)
         invoice.action_invoice_open()
 
@@ -313,7 +319,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         with self.assertRaises(UserError):
             self.contact_dup.merge_partners()
 
-    def test_20_special_group_can_merge_contacts_with_account_moves(self):
+    def test_special_group_can_merge_contacts_with_account_moves(self):
         self.env.user.write({'groups_id': [(4, self.account_move_group.id)]})
 
         invoice = self.create_invoice(self.contact_2)
@@ -325,7 +331,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.contact_dup.merge_partners()
         self.assertEqual(invoice.move_id.partner_id, self.contact_1)
 
-    def test_21_compute_warning_message_partner_1_with_account_moves(self):
+    def test_compute_warning_message_partner_1_with_account_moves(self):
         self.assertFalse(self.contact_dup.warning_message)
         self.env.user.write({'groups_id': [(4, self.account_move_group.id)]})
 
@@ -337,13 +343,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         self.assertIn(self.contact_2.name, self.contact_dup.warning_message)
 
-    def _get_current_duplicates(self, id_start):
-        return self.env['res.partner.duplicate'].search([
-            ('partner_1_id', '>=', id_start),
-            ('partner_2_id', '>=', id_start),
-        ])
-
-    def test_22_cron_executed_correctly(self):
+    def test_cron_executed_correctly(self):
         # Similarity of these 2 partners : 0.53
         first_partner = self.env['res.partner'].create({'name': 'Julienjez'})
         self.env['res.partner'].create({'name': 'Julyenjez'})
@@ -356,13 +356,20 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.env['res.partner'].create({'name': 'Julien Jezequel Breard'})
         self.env['res.partner'].create({'name': 'Julyen Jezequel Breard'})
 
-        self._get_current_duplicates(first_partner.id).unlink()
-        self.cron.method_direct_trigger()
+        # Remove any existing duplicates.
+        self.env['res.partner.duplicate'].search([]).sudo().unlink()
 
-        duplicates_generated_2 = self._get_current_duplicates(first_partner.id)
-        self.assertEqual(len(duplicates_generated_2), 3)
+        # Run the cron.
+        self.cron.sudo().method_direct_trigger()
 
-    def test_23_when_partner_is_archived_duplicates_left_are_resolved(self):
+        duplicates_generated = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', '>=', first_partner.id),
+            ('partner_2_id', '>=', first_partner.id),
+        ])
+
+        self.assertEqual(len(duplicates_generated), 3)
+
+    def test_when_partner_is_archived_duplicates_left_are_resolved(self):
         partner_1 = self.env['res.partner'].create({'name': 'Partner 1'})
         partner_2 = self.env['res.partner'].create({'name': 'Partner 2'})
         partner_3 = self.env['res.partner'].create({'name': 'Partner 3'})
