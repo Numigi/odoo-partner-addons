@@ -59,13 +59,6 @@
     </record>
 
     <menuitem
-        action="contacts.action_contacts"
-        id="menu_contacts_contacts"
-        name="Contacts"
-        parent="contacts.menu_contacts"
-        sequence="1"/>
-
-    <menuitem
         action="action_partner_date"
         id="menu_partner_date"
         name="Dates"
