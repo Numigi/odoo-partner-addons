@@ -5,7 +5,7 @@
         <field name="name">Is the same person as</field>
         <field name="name_inverse">Is the same person as</field>
         <field name="contact_type_left">p</field>
-        <field name="contact_type_right">c</field>
+        <field name="contact_type_right">p</field>
         <field name="is_symmetric">1</field>
     </record>
 
