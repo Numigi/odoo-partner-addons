@@ -8,11 +8,18 @@
         <field name="arch" type="xml">
             <sheet position="before">
                 <header>
+                    <!-- The button is only visible for contacts. -->
+                    <!-- It is not visible for companies and addresses. -->
                     <button type="action"
                         name="%(action_res_partner_change_parent)d"
                         string="Change Parent Entity"
                         class="oe_highlight"
-                        attrs="{'invisible': ['|', ('id', '=', False), ('is_company', '=', True)]}"
+                        attrs="{'invisible': [
+                            '|', '|',
+                            ('id', '=', False),
+                            ('is_company', '=', True),
+                            ('type', '!=', 'contact'),
+                        ]}"
                     />
                 </header>
             </sheet>
