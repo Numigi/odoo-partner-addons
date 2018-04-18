@@ -69,22 +69,37 @@ class ResPartnerParentChange(models.TransientModel):
         The email must be removed from the old contact because of the unique
         constraint on res_partner.email.
 
+        The address fields must be emptied.
+        In Odoo version 11.0, the address of a contact can not be edited.
+        It is automatically copied from the parent company. However, if the destination company
+        does not have an address, the old address will not be removed. This is why we empty
+        the address fields.
+
         The name of the contact must be rewritten after the copy to remove
         because Odoo automatically adds `(copy)`.
 
         :return: the new contact
         """
+        # Remove the old email
         email = self.contact_id.email
         self.contact_id.email = ''
-        new_contact = self.contact_id\
-            .with_context(mail_notrack=True)\
-            .copy(default={'parent_id': False})
 
-        new_contact.with_context(mail_notrack=True).write({
-            'name': self.contact_id.name,
-            'email': email,
-        })
+        # The parent partner is not propagated.
+        default_values = {'parent_id': False}
 
+        # The address fields must be emptied.
+        address_fields = self.env['res.partner']._address_fields()
+        default_values.update(((f, False) for f in address_fields))
+
+        new_contact = self.contact_id.with_context(mail_notrack=True).copy(default=default_values)
+
+        # Rename the new contact to remove `(copy)`.
+        new_contact.with_context(mail_notrack=True).write({'name': self.contact_id.name})
+
+        # Propagate the old email to the new contact.
+        new_contact.with_context(mail_notrack=True).write({'email': email})
+
+        # Set the new company on the new contact.
         new_contact.parent_id = self.new_company_id
         return new_contact
 

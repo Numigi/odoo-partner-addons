@@ -71,3 +71,22 @@ class TestResPartnerChangeParent(common.SavepointCase):
         })
         new_contact = self._run_partner_change_wizard(contact_with_no_company, self.company_1)
         self.assertEqual(new_contact.parent_id, self.company_1)
+
+    def test_destination_parent_with_address(self):
+        """Test that the address is changed when changing the parent company."""
+        self.company_1.city = 'New York'
+        self.contact_1.refresh()
+        self.assertEqual(self.contact_1.city, 'New York')
+
+        self.company_2.city = 'Los Angeles'
+        new_contact = self._run_partner_change_wizard(self.contact_1, self.company_2)
+        self.assertEqual(new_contact.city, 'Los Angeles')
+
+    def test_destination_parent_with_no_address(self):
+        """Test that the address is removed if the destination company has no address."""
+        self.company_1.city = 'New York'
+        self.contact_1.refresh()
+        self.assertEqual(self.contact_1.city, 'New York')
+
+        new_contact = self._run_partner_change_wizard(self.contact_1, self.company_2)
+        self.assertFalse(new_contact.city)
