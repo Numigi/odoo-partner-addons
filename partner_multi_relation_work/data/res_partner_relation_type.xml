@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo noupdate="1">
 
     <record id="relation_type_same" model="res.partner.relation.type">
         <field name="name">Is the same person as</field>
