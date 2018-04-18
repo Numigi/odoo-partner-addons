@@ -74,6 +74,7 @@ class TestResPartnerChangeParent(common.SavepointCase):
 
     def test_destination_parent_with_address(self):
         """Test that the address is changed when changing the parent company."""
+        self.assertFalse(self.contact_1.city)
         self.company_1.city = 'New York'
         self.contact_1.refresh()
         self.assertEqual(self.contact_1.city, 'New York')
@@ -84,6 +85,7 @@ class TestResPartnerChangeParent(common.SavepointCase):
 
     def test_destination_parent_with_no_address(self):
         """Test that the address is removed if the destination company has no address."""
+        self.assertFalse(self.contact_1.city)
         self.company_1.city = 'New York'
         self.contact_1.refresh()
         self.assertEqual(self.contact_1.city, 'New York')
