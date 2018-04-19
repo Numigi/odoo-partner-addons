@@ -392,7 +392,7 @@ var AddressWidget = AbstractField.extend({
      */
     _setInputValue(fieldName, value){
         var field = this._getFieldByName(fieldName);
-        field.$input.val(value).trigger("input");
+        field.$input.val(value).trigger("input").trigger("change");
     },
     /**
      * Get the value of a field from the form view.
