@@ -52,7 +52,8 @@ class ResPartnerWithPhoneSearch(models.Model):
 
         return super().search(args, offset=offset, limit=limit, order=order, count=count)
 
-    def _get_multi_phone_search_domain(self, phone_number):
+    @staticmethod
+    def _get_multi_phone_search_domain(phone_number):
         """Get a domain expression for searching a phone number from any phone field.
 
         The returned domain allows to search a phone given only a series of digits.
