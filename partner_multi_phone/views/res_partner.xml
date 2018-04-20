@@ -103,4 +103,15 @@
         </field>
     </record>
 
+   <record id="view_res_partner_search_with_phone" model="ir.ui.view">
+        <field name="name">Partner Search With Multi Phone</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="phone" context="{'search_partner_multi_phone': 1}"/>
+            </field>
+        </field>
+    </record>
+
 </odoo>
