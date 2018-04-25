@@ -21,6 +21,7 @@ COPY partner_duplicate_multi_relation /mnt/extra-addons/partner_duplicate_multi_
 COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_before_lastname
 COPY partner_key_date /mnt/extra-addons/partner_key_date
 COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
+COPY partner_multi_relation_strength /mnt/extra-addons/partner_multi_relation_strength
 COPY partner_multi_relation_work /mnt/extra-addons/partner_multi_relation_work
 COPY partner_name_no_shortcut /mnt/extra-addons/partner_name_no_shortcut
 COPY partner_unique_email /mnt/extra-addons/partner_unique_email
