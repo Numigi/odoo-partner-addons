@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_relation_all_list_with_strength" model="ir.ui.view">
+        <field name="name">Partner Relations List With strength</field>
+        <field name="model">res.partner.relation.all</field>
+        <field name="inherit_id" ref="partner_multi_relation.tree_res_partner_relation_all"/>
+        <field name="arch" type="xml">
+            <field name="other_partner_id" position="after">
+                <field name="strength_id" options="{'no_create': 1}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

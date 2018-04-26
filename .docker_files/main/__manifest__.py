@@ -19,6 +19,7 @@
         'partner_firstname_before_lastname',
         'partner_key_date',
         'partner_multi_phone',
+        'partner_multi_relation_strength',
         'partner_multi_relation_work',
         'partner_name_no_shortcut',
         'partner_unique_email',

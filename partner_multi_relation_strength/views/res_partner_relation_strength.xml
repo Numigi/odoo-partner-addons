@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_relation_strength_list" model="ir.ui.view">
+        <field name="name">Partner Relation Strength List</field>
+        <field name="model">res.partner.relation.strength</field>
+        <field name="arch" type="xml">
+            <tree string="Partner Relation Strengths" editable="top">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_res_partner_relation_strength" model="ir.actions.act_window">
+        <field name="name">Relation Strengths</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.relation.strength</field>
+        <field name="view_mode">tree</field>
+        <field name="view_type">form</field>
+    </record>
+
+    <menuitem
+        action="action_res_partner_relation_strength"
+        id="menu_res_partner_relation_strength_action"
+        parent="partner_multi_relation.menu_res_partner_relation"
+        groups="base.group_system"
+    />
+
+</odoo>
