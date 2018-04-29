@@ -9,7 +9,11 @@ from odoo import fields, models
 class ResPartnerDateType(models.Model):
 
     _name = 'res.partner.date.type'
+    _inherit = ['mail.thread']
     _description = 'Contact Key Date Type'
     _order = 'name'
 
     name = fields.Char(string='Name', required=True)
+    mail_template_id = fields.Many2one(
+        'mail.template', 'Mail Template', ondelete='restrict',
+        domain="[('model', '=', 'res.partner.date')]")
