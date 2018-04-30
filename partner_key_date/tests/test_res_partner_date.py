@@ -32,14 +32,19 @@ class TestResPartnerDate(common.SavepointCase):
             'email': 'partner_test@email',
         })
 
+        cls.template = cls.env.ref('partner_key_date.anniversary_email_template')
+
         cls.date_type_1 = cls.env['res.partner.date.type'].create({
             'name': 'Birthday',
+            'mail_template_id': cls.template.id,
         })
         cls.date_type_2 = cls.env['res.partner.date.type'].create({
             'name': 'Founding Date',
+            'mail_template_id': cls.template.id,
         })
         cls.date_type_3 = cls.env['res.partner.date.type'].create({
             'name': 'Opening Date',
+            'mail_template_id': cls.template.id,
         })
 
         cls.partner_date_1 = cls.env['res.partner.date'].create({
@@ -57,7 +62,6 @@ class TestResPartnerDate(common.SavepointCase):
             'partner_id': cls.partner.id,
             'date': _4_MONTHS_AGO,
         })
-        cls.template = cls.env.ref('partner_key_date.anniversary_email_template')
 
     def test_compute_age(self):
         self.assertAlmostEqual(self.partner_date_1.age, 2, 2)
@@ -71,23 +75,38 @@ class TestResPartnerDate(common.SavepointCase):
         self.assertAlmostEqual(self.partner_date_2.age, 2.5, 2)
         self.assertAlmostEqual(self.partner_date_3.age, 1.3, 2)
 
+    def _find_sent_email(self):
+        return self.env['mail.mail'].search([
+            ('email_to', '=', self.partner.email),
+            ('subject', '=', self.template.subject),
+        ])
+
     def test_send_anniversary_email(self):
         self.partner_date_1.write({
             'date': _2_YEARS_AGO.astimezone(pytz.timezone('Canada/Eastern')),
             'diffusion': True,
         })
         self.env['res.partner.date'].send_anniversary_emails()
-        mail = self.env['mail.mail'].search([
-            ('email_to', '=', self.partner.email),
-            ('subject', '=', self.template.subject),
-        ])
+        mail = self._find_sent_email()
+        self.assertTrue(mail)
         self.assertIn(self.partner.name, mail.body)
 
-    def test_send_anniversary_with_no_email(self):
+    def test_if_no_email_on_partner_then_no_mail_sent(self):
         self.partner.email = None
         self.partner_date_1.write({
             'date': _2_YEARS_AGO.astimezone(pytz.timezone('Canada/Eastern')),
             'diffusion': True,
         })
-        with self.assertRaises(UserError):
-            self.env['res.partner.date'].send_anniversary_emails()
+        self.env['res.partner.date'].send_anniversary_emails()
+        mail = self._find_sent_email()
+        self.assertFalse(mail)
+
+    def test_if_no_mail_template_defined_on_key_date_then_no_mail_sent(self):
+        self.partner_date_1.write({
+            'date': _2_YEARS_AGO.astimezone(pytz.timezone('Canada/Eastern')),
+            'diffusion': True,
+        })
+        self.date_type_1.mail_template_id = False
+        self.env['res.partner.date'].send_anniversary_emails()
+        mail = self._find_sent_email()
+        self.assertFalse(mail)

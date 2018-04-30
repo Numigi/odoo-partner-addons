@@ -155,6 +155,11 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type_mail_template_id
+msgid "Mail Template"
+msgstr "Modèle de courriel"
+
+#. module: partner_key_date
 #: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_month_and_day
 msgid "Month and Day"
 msgstr "Mois et jour"
@@ -181,6 +186,14 @@ msgstr "Partenaire"
 #: model:ir.cron,name:partner_key_date.ir_cron_send_anniversary_email
 msgid "Send Key Date Anniversary Emails"
 msgstr "Envoyer les courriels d'anniversaire de dates clés"
+
+#. module: partner_key_date
+#: code:addons/partner_key_date/models/res_partner_date.py:0
+#, python-format
+msgid "The diffusion may not be checked for this partner date ({date_type}), "
+"because there is no mail template defined on this date type."
+msgstr "La case diffusion ne peut pas être cochée sur cette date clé ({date_type}), "
+"car aucun modèle de courriel n'est défini sur ce type de date."
 
 #. module: partner_key_date
 #: code:addons/partner_key_date/models/res_partner_date.py:83

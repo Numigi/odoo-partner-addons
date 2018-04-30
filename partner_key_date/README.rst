@@ -4,7 +4,7 @@ This module adds key dates on partners.
 
 A key date is an important event in the timeline of a contact.
 
-Key dates can be accessed from Contacts > 
+Key dates can be accessed from Contacts / Dates.
 
 Anniversary Emails
 ------------------
