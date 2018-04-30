@@ -14,11 +14,11 @@ class ResPartnerRelationTypeSameRelation(models.Model):
     is_same_relation = fields.Boolean('Same Relation', compute='_compute_is_same_relation')
 
     def _compute_is_same_relation(self):
-        is_same_relation = self.env.ref(
+        same_relation = self.env.ref(
             'partner_multi_relation_work.relation_type_same', raise_if_not_found=False)
-        if is_same_relation is not None:
+        if same_relation is not None:
             for rec in self:
-                rec.is_same_relation = rec == is_same_relation
+                rec.is_same_relation = rec == same_relation
 
     @api.constrains('contact_type_left', 'contact_type_right')
     def _check_same_relation_from_individual_to_individual(self):
@@ -45,7 +45,7 @@ class ResPartnerRelationTypeSameRelation(models.Model):
         if same_relations_with_self:
             raise ValidationError(
                 _('Same-person relations are not possible between a partner and the same partner. '
-                  'This type of relation is reserved for 2 distincs partner rows in the database.'))
+                  'This type of relation is reserved for 2 distinct partner rows in the database.'))
 
     @api.constrains('handle_invalid_onchange')
     def _check_same_relation_does_not_allow_invalid_relations(self):
@@ -63,12 +63,12 @@ class ResPartnerRelationTypeWorkRelation(models.Model):
     is_work_relation = fields.Boolean('Work Relation', compute='_compute_is_work_relation')
 
     def _compute_is_work_relation(self):
-        is_work_relation = self.env.ref(
+        work_relation = self.env.ref(
             'partner_multi_relation_work.relation_type_work', raise_if_not_found=False)
 
-        if is_work_relation is not None:
+        if work_relation is not None:
             for rec in self:
-                rec.is_work_relation = rec == is_work_relation
+                rec.is_work_relation = rec == work_relation
 
     @api.constrains('contact_type_left', 'contact_type_right')
     def _check_work_relation_from_individual_to_company(self):

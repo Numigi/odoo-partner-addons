@@ -77,7 +77,7 @@ msgstr "Relation 'identique'"
 #, python-format
 msgid ""
 "Same-person relations are not possible between a partner and the same "
-"partner. This type of relation is reserved for 2 distincs partner rows in "
+"partner. This type of relation is reserved for 2 distinct partner rows in "
 "the database."
 msgstr ""
 "Une relation de type 'Est la même personne' n'est pas possible entre un "
