@@ -147,3 +147,15 @@ msgstr "Une relation de travail doit être symétrique."
 #: model:res.partner.relation.type,name:partner_multi_relation_work.relation_type_work
 msgid "Works for"
 msgstr "Travaille pour"
+
+#. module: partner_multi_relation_work
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:0
+#, python-format
+msgid "Invalid same-person relations must be restricted."
+msgstr "Une relation de type 'Est la même personne que' invalide ne doit pas être permise."
+
+#. module: partner_multi_relation_work
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:0
+#, python-format
+msgid "Invalid work relations must be restricted."
+msgstr "Une relation de travail invalide ne doit pas être permise."

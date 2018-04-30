@@ -7,6 +7,7 @@
         <field name="contact_type_left">p</field>
         <field name="contact_type_right">p</field>
         <field name="is_symmetric">1</field>
+        <field name="handle_invalid_onchange">restrict</field>
     </record>
 
     <record id="relation_type_work" model="res.partner.relation.type">
@@ -15,6 +16,7 @@
         <field name="contact_type_left">p</field>
         <field name="contact_type_right">c</field>
         <field name="is_work_relation">1</field>
+        <field name="handle_invalid_onchange">restrict</field>
     </record>
 
 </odoo>

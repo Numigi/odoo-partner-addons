@@ -31,20 +31,29 @@ class ResPartnerRelationTypeSameRelation(models.Model):
                       'and an individual (right).'))
 
     @api.constrains('is_symmetric')
-    def _check_work_relation_is_not_symmetric(self):
+    def _check_same_relation_is_not_symmetric(self):
         """Check that same-person relations are symetric."""
-        symetric_same_relations = self.filtered(lambda t: t.is_same_relation and t.is_symmetric)
-        if symetric_same_relations:
+        asymetric_same_relations = self.filtered(
+            lambda t: t.is_same_relation and not t.is_symmetric)
+        if asymetric_same_relations:
             raise ValidationError(_('Same-person relations must be symmetric.'))
 
     @api.constrains('allow_self')
-    def _check_work_relation_does_not_allow_self(self):
+    def _check_same_relation_does_not_allow_self(self):
         """Check that same-person relations are not allowed between a partner and himself."""
         same_relations_with_self = self.filtered(lambda t: t.is_same_relation and t.allow_self)
         if same_relations_with_self:
             raise ValidationError(
                 _('Same-person relations are not possible between a partner and the same partner. '
                   'This type of relation is reserved for 2 distincs partner rows in the database.'))
+
+    @api.constrains('handle_invalid_onchange')
+    def _check_same_relation_does_not_allow_invalid_relations(self):
+        """Check that invalid same-person relations are restricted."""
+        same_relations_without_restrict = self.filtered(
+            lambda t: t.is_same_relation and t.handle_invalid_onchange != 'restrict')
+        if same_relations_without_restrict:
+            raise ValidationError(_('Invalid same-person relations must be restricted.'))
 
 
 class ResPartnerRelationTypeWorkRelation(models.Model):
@@ -84,3 +93,11 @@ class ResPartnerRelationTypeWorkRelation(models.Model):
         if work_relations_with_self:
             raise ValidationError(
                 _('Work relations are not possible between a partner and himself.'))
+
+    @api.constrains('handle_invalid_onchange')
+    def _check_work_relation_does_not_allow_invalid_relations(self):
+        """Check that invalid work-person relations are restricted."""
+        work_relations_without_restrict = self.filtered(
+            lambda t: t.is_work_relation and t.handle_invalid_onchange != 'restrict')
+        if work_relations_without_restrict:
+            raise ValidationError(_('Invalid work relations must be restricted.'))
