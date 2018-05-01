@@ -6,3 +6,4 @@
 from . import test_res_partner
 from . import test_res_partner_change_parent
 from . import test_res_partner_relation
+from . import test_res_partner_relation_type

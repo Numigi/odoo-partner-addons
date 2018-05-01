@@ -3,10 +3,14 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import logging
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 from datetime import date
+
+_logger = logging.getLogger(__name__)
 
 
 class ResPartnerDate(models.Model):
@@ -75,25 +79,46 @@ class ResPartnerDateWithAnniversaryEmails(models.Model):
             key_date = fields.Date.from_string(record.date)
             record.month_and_day = key_date.strftime('%m-%d')
 
+    @api.constrains('diffusion', 'date_type_id')
+    def _check_mail_template_is_defined_on_date_type_if_diffusion_is_checked(self):
+        dates_with_diffusion_and_no_template = self.filtered(
+            lambda d: d.diffusion and not d.date_type_id.mail_template_id)
+        if dates_with_diffusion_and_no_template:
+            raise UserError(_(
+                'The diffusion may not be checked for this partner date ({date_type}), '
+                'because there is no mail template defined on this date type.'
+            ).format(date_type=dates_with_diffusion_and_no_template[0].date_type_id.display_name))
+
     @api.model
     def send_anniversary_emails(self):
         """Send anniversary emails."""
         for key_date in self._find_anniversary_dates():
             if not key_date.partner_id.email:
-                raise UserError(
-                    _('The email for the anniversary of {date_type} could not be sent '
-                      'to {partner} because this partner has no email.')
+                _logger.error(
+                    'The email for the anniversary of {date_type} could not be sent '
+                    'to {partner} because this partner has no email.'
                     .format(
                         date_type=key_date.date_type_id.display_name,
                         partner=key_date.partner_id.display_name,
                     ))
+                continue
 
-            email_template = self.env.ref('partner_key_date.anniversary_email_template')
-            email_template.write({
+            mail_template = key_date.date_type_id.mail_template_id
+            if not mail_template:
+                _logger.error(
+                    'The email for the anniversary of {date_type} could not be sent '
+                    'to {partner} because no mail template is defined on the date type.'
+                    .format(
+                        date_type=key_date.date_type_id.display_name,
+                        partner=key_date.partner_id.display_name,
+                    ))
+                continue
+
+            mail_template.write({
                 'email_from': self.env.user.email,
                 'email_to': key_date.partner_id.email,
             })
-            email_template.send_mail(key_date.id)
+            mail_template.send_mail(key_date.id)
 
         return True
 

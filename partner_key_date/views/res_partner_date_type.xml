@@ -16,8 +16,9 @@
         <field name="model">res.partner.date.type</field>
         <field name="arch" type="xml">
             <form string="Contact Key Date Type">
-                <group col="2">
+                <group>
                     <field name="name"/>
+                    <field name="mail_template_id"/>
                 </group>
             </form>
         </field>
