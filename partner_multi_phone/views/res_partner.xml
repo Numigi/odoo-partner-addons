@@ -20,30 +20,8 @@
             </field>
 
             <xpath expr="//field[@name='mobile']/.." position="after">
-                <label for="phone_home"/>
-                <div class="o_row">
-                    <field name="phone_home" widget="phone"
-                        attrs="{'required': [('phone_main', '=', 'home')]}"/>
-                    <button
-                        type="action"
-                        name="%(sms.send_sms_form_action)d"
-                        class="btn-xs btn-link mb4 fa fa-envelope-o"
-                        attrs="{'invisible':[('phone_home', '=', False)]}"
-                        context="{'field_name': 'phone_home'}"
-                        />
-                </div>
-                <label for="phone_other"/>
-                <div class="o_row">
-                    <field name="phone_other" widget="phone"
-                        attrs="{'required': [('phone_main', '=', 'other')]}"/>
-                    <button
-                        type="action"
-                        name="%(sms.send_sms_form_action)d"
-                        class="btn-xs btn-link mb4 fa fa-envelope-o"
-                        attrs="{'invisible':[('phone_other', '=', False)]}"
-                        context="{'field_name': 'phone_other'}"
-                        />
-                </div>
+                <field name="phone_home" widget="phone" attrs="{'required': [('phone_main', '=', 'home')]}"/>
+                <field name="phone_other" widget="phone" attrs="{'required': [('phone_main', '=', 'other')]}"/>
             </xpath>
 
             <!-- Nested kanban cards inside the form view -->
@@ -76,11 +54,7 @@
             </xpath>
 
             <xpath expr="//notebook//form//field[@name='phone']" position="replace">
-                <label for="phone"/>
-                <div class="o_row">
-                    <field name="phone" widget="phone"
-                        attrs="{'required': [('phone_main', '=', 'work')]}"/>
-                </div>
+                <field name="phone" widget="phone" attrs="{'required': [('phone_main', '=', 'work')]}"/>
             </xpath>
 
             <xpath expr="//notebook//form//field[@name='mobile']" position="attributes">
@@ -88,16 +62,8 @@
             </xpath>
 
             <xpath expr="//notebook//form//field[@name='mobile']" position="after">
-                <label for="phone_home"/>
-                <div class="o_row">
-                    <field name="phone_home" widget="phone" 
-                        attrs="{'required': [('phone_main', '=', 'home')]}"/>
-                </div>
-                <label for="phone_other"/>
-                <div class="o_row">
-                    <field name="phone_other" widget="phone" 
-                        attrs="{'required': [('phone_main', '=', 'other')]}"/>
-                </div>
+                <field name="phone_home" widget="phone" attrs="{'required': [('phone_main', '=', 'home')]}"/>
+                <field name="phone_other" widget="phone" attrs="{'required': [('phone_main', '=', 'other')]}"/>
             </xpath>
 
         </field>
