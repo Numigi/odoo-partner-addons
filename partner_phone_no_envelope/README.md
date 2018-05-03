@@ -1,5 +1,5 @@
-Partner Phone No Envelope
-=========================
+# Partner Phone No Envelope
+
 In Odoo, since version 11.0, an envelope appears beside the phone numbers on partner forms.
 The envelope only works if an In-App Purchase (IAP) account is enabled.
 
