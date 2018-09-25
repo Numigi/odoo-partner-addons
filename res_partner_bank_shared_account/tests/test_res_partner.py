@@ -2,9 +2,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import SavepointCase
-from odoo import fields, SUPERUSER_ID
-import time
-from odoo.exceptions import Warning
 
 
 class TestResPartnerBankSharedAccount(SavepointCase):
