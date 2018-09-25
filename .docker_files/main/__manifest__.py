@@ -26,6 +26,7 @@
         'partner_phone_no_envelope',
         'partner_unique_email',
         'partner_website_domain_only',
+        'res_partner_bank_shared_account',
     ],
     'installable': True,
 }
