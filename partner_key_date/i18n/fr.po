@@ -48,7 +48,7 @@ msgstr "Date clé"
 #: model:ir.model,name:partner_key_date.model_res_partner_date_type
 #: model:ir.ui.view,arch_db:partner_key_date.view_partner_date_type_form
 msgid "Contact Key Date Type"
-msgstr "Date clé de contact"
+msgstr "Type de date clé"
 
 #. module: partner_key_date
 #: model:ir.ui.menu,name:partner_key_date.menu_contacts_contacts
