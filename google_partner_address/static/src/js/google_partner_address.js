@@ -249,16 +249,22 @@ var PlaceBoundaryProxy = Class.extend({
      */
     setBoundaries(countryCode, zipCode) {
         if(zipCode){
+            // The same session token is reused by autocompleteService.getPlacePredictions
+            // and placesService.getDetails
+            var sessionToken = new google.maps.places.AutocompleteSessionToken();
+
             var request = {
                 input: zipCode,
                 types: ["geocode"],
                 componentRestrictions: {country: countryCode || []},
+                sessionToken: sessionToken,
             };
 
             var self = this;
+
             self._autocompleteService.getPlacePredictions(request, function(predictions) {
                 if (predictions) {
-                    self._setGeometryBoundaries(predictions[0]);
+                    self._setGeometryBoundaries(predictions[0], sessionToken);
                 }
             });
         }
@@ -273,9 +279,14 @@ var PlaceBoundaryProxy = Class.extend({
      *
      * @param {Object} place - the details of the place
      */
-    _setGeometryBoundaries(place){
+    _setGeometryBoundaries(place, sessionToken){
         var self = this;
-        var request = {placeId: place.place_id};
+        var request = {
+            placeId: place.place_id,
+            fields: ['geometry'],
+            sessionToken: sessionToken,
+        };
+
         this._placesService.getDetails(request, function(details) {
             if (details && details.geometry && details.geometry.viewport) {
                 self._autocomplete.setBounds(details.geometry.viewport);
@@ -290,7 +301,12 @@ var AddressWidget = AbstractField.extend({
     start() {
         this._super.apply(this, arguments);
         this.input = this.$el;
+
         this._autocomplete = new google.maps.places.Autocomplete(this.input[0]);
+
+        // Limit fields to address_components only to prevent additional billing per api call.
+        this._autocomplete.setFields(['address_components']);
+
         this._autocompleteService = new google.maps.places.AutocompleteService();
         this._placesService = new google.maps.places.PlacesService($("<div></div>")[0]);
 
