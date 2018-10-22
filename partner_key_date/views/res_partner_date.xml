@@ -41,8 +41,8 @@
                 <field name="partner_id" string="Partner"/>
                 <field name="age" filter_domain="[('age', '&gt;=', self)]" string="Age greater than..."/>
                 <group expand="0" string="Group By">
-                    <filter string="Date Type" context="{'group_by':'date_type_id'}"/>
-                    <filter string="Partner" context="{'group_by':'partner_id'}"/>
+                    <filter name="group_by_date_type_id" string="Date Type" context="{'group_by':'date_type_id'}"/>
+                    <filter name="group_by_partner_id" string="Partner" context="{'group_by':'partner_id'}"/>
                 </group>
             </search>
         </field>

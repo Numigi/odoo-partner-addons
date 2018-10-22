@@ -354,5 +354,7 @@ class ResPartnerDuplicateWithPartnerType(models.Model):
 
     _inherit = 'res.partner.duplicate'
 
-    partner_1_type = fields.Selection(related='partner_1_id.company_type')
-    partner_2_type = fields.Selection(related='partner_2_id.company_type')
+    partner_1_type = fields.Selection(
+        related='partner_1_id.company_type', string='Partner 1 Type')
+    partner_2_type = fields.Selection(
+        related='partner_2_id.company_type', string='Partner 2 Type')

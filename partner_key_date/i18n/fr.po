@@ -6,26 +6,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-05 18:00+0000\n"
-"PO-Revision-Date: 2018-04-05 14:25-0400\n"
+"POT-Creation-Date: 2018-10-22 19:21+0000\n"
+"PO-Revision-Date: 2018-10-22 15:27-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: fr\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_age
+#: model:mail.template,body_html:partner_key_date.anniversary_email_template
+msgid ""
+"\n"
+"<p>Hello ${object.partner_id.name},</p>\n"
+"<p>Occasion : ${object.date_type_id.name}</p>\n"
+"<p>\n"
+"    Anniversary message...\n"
+"</p>\n"
+"            "
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__age
 msgid "Age"
 msgstr "Âge"
 
 #. module: partner_key_date
-#: model:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
+#: model_terms:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
 msgid "Age greater than..."
 msgstr "Âge plus grand que..."
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: partner_key_date
+#: model:mail.template,subject:partner_key_date.anniversary_email_template
+msgid "Best Wishes"
+msgstr ""
 
 #. module: partner_key_date
 #: model:ir.actions.server,name:partner_key_date.ir_cron_compute_age_ir_actions_server
@@ -46,80 +73,117 @@ msgstr "Date clé"
 
 #. module: partner_key_date
 #: model:ir.model,name:partner_key_date.model_res_partner_date_type
-#: model:ir.ui.view,arch_db:partner_key_date.view_partner_date_type_form
+#: model_terms:ir.ui.view,arch_db:partner_key_date.view_partner_date_type_form
 msgid "Contact Key Date Type"
 msgstr "Type de date clé"
 
 #. module: partner_key_date
-#: model:ir.ui.menu,name:partner_key_date.menu_contacts_contacts
-msgid "Contacts"
-msgstr "Contacts"
-
-#. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_create_uid
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type_create_uid
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__create_uid
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_create_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type_create_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__create_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__create_date
 msgid "Created on"
 msgstr "Créé le"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__date
 msgid "Date"
 msgstr "Date"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_date_type_id
-#: model:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__date_type_id
+#: model_terms:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
 msgid "Date Type"
 msgstr "Type de date"
 
 #. module: partner_key_date
-#: model:ir.ui.view,arch_db:partner_key_date.view_partner_date_type_tree
+#: model_terms:ir.ui.view,arch_db:partner_key_date.view_partner_date_type_tree
 msgid "Date Types"
 msgstr "Types de date"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_key_date_ids
-#: model:ir.model.fields,field_description:partner_key_date.field_res_users_key_date_ids
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner__key_date_ids
 #: model:ir.ui.menu,name:partner_key_date.menu_partner_date
-#: model:ir.ui.view,arch_db:partner_key_date.view_partner_form_with_key_dates
+#: model_terms:ir.ui.view,arch_db:partner_key_date.view_partner_form_with_key_dates
 msgid "Dates"
 msgstr "Dates"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_diffusion
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__diffusion
 msgid "Diffusion"
 msgstr "Diffusion"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_display_name
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type_display_name
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__display_name
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__display_name
 msgid "Display Name"
 msgstr "Nom affiché"
 
 #. module: partner_key_date
-#: model:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: partner_key_date
+#: model_terms:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
 msgid "Group By"
 msgstr "Grouper par"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_id
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type_id
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__id
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__id
 msgid "ID"
 msgstr "ID"
 
 #. module: partner_key_date
-#: model:ir.model.fields,help:partner_key_date.field_res_partner_date_diffusion
-msgid "If the box is checked, an email will be sent at the anniversary of the this date."
-msgstr "Si la case est cochée, un courriel sera envoyé à chaque anniversaire de cette date."
+#: model:ir.model.fields,help:partner_key_date.field_res_partner_date_type__message_unread
+msgid "If checked new messages require your attention."
+msgstr ""
 
 #. module: partner_key_date
-#: model:ir.ui.view,arch_db:partner_key_date.view_partner_date_form
+#: model:ir.model.fields,help:partner_key_date.field_res_partner_date_type__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,help:partner_key_date.field_res_partner_date_type__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,help:partner_key_date.field_res_partner_date__diffusion
+#, fuzzy
+#| msgid ""
+#| "If the box is checked, an email will be sent at the anniversary of the "
+#| "this date."
+msgid ""
+"If the box is checked, an email will be sent to the contact at every "
+"anniversary of the this date."
+msgstr ""
+"Si la case est cochée, un courriel sera envoyé à chaque anniversaire de "
+"cette date."
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: partner_key_date
+#: model_terms:ir.ui.view,arch_db:partner_key_date.view_partner_date_form
 msgid "Key Date"
 msgstr "Date clé"
 
@@ -131,52 +195,92 @@ msgstr "Types de dates clés"
 
 #. module: partner_key_date
 #: model:ir.actions.act_window,name:partner_key_date.action_partner_date
-#: model:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
-#: model:ir.ui.view,arch_db:partner_key_date.view_partner_date_tree
+#: model_terms:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
+#: model_terms:ir.ui.view,arch_db:partner_key_date.view_partner_date_tree
 msgid "Key Dates"
 msgstr "Dates clés"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date___last_update
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type___last_update
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date____last_update
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type_write_uid
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_write_uid
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__write_uid
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type_write_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_write_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__write_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__write_date
 msgid "Last Updated on"
 msgstr ""
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type_mail_template_id
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__mail_template_id
 msgid "Mail Template"
 msgstr "Modèle de courriel"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_month_and_day
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__month_and_day
 msgid "Month and Day"
 msgstr "Mois et jour"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type_name
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__name
 msgid "Name"
 msgstr "Nom"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_note
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__note
 msgid "Note"
 msgstr "Note"
 
 #. module: partner_key_date
-#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_partner_id
-#: model:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_has_error_counter
+msgid "Number of error"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,help:partner_key_date.field_res_partner_date_type__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,help:partner_key_date.field_res_partner_date_type__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,help:partner_key_date.field_res_partner_date_type__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date__partner_id
+#: model_terms:ir.ui.view,arch_db:partner_key_date.action_partner_date_search_view
 msgid "Partner"
 msgstr "Partenaire"
 
@@ -188,15 +292,41 @@ msgid "Send Key Date Anniversary Emails"
 msgstr "Envoyer les courriels d'anniversaire de dates clés"
 
 #. module: partner_key_date
-#: code:addons/partner_key_date/models/res_partner_date.py:0
+#: code:addons/partner_key_date/models/res_partner_date.py:87
 #, python-format
-msgid "The diffusion may not be checked for this partner date ({date_type}), "
+msgid ""
+"The diffusion may not be checked for this partner date ({date_type}), "
 "because there is no mail template defined on this date type."
-msgstr "La case diffusion ne peut pas être cochée sur cette date clé ({date_type}), "
+msgstr ""
+"La case diffusion ne peut pas être cochée sur cette date clé ({date_type}), "
 "car aucun modèle de courriel n'est défini sur ce type de date."
 
 #. module: partner_key_date
-#: code:addons/partner_key_date/models/res_partner_date.py:83
-#, python-format
-msgid "The email for the anniversary of {date_type} could not be sent to {partner} because this partner has no email."
-msgstr "Le courriel pour l'anniversaire de {date_type} could not be sent to {partner} because this partner has no email."
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,field_description:partner_key_date.field_res_partner_date_type__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: partner_key_date
+#: model:ir.model.fields,help:partner_key_date.field_res_partner_date_type__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#~ msgid "Contacts"
+#~ msgstr "Contacts"
+
+#~ msgid ""
+#~ "The email for the anniversary of {date_type} could not be sent to "
+#~ "{partner} because this partner has no email."
+#~ msgstr ""
+#~ "Le courriel pour l'anniversaire de {date_type} could not be sent to "
+#~ "{partner} because this partner has no email."
