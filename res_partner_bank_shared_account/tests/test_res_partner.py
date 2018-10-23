@@ -12,14 +12,17 @@ class TestResPartnerBankSharedAccount(SavepointCase):
         When a second bank account is created with the same number 1234
         Then the both accounts have the same account number
         """
+        partners = self.env['res.partner'].search([], limit=2)
+
         account_number = "1234"
         account_a = self.env['res.partner.bank'].create({
-            "acc_number": account_number
+            "acc_number": account_number,
+            "partner_id": partners[0].id,
         })
 
         account_b = self.env['res.partner.bank'].create({
-            "acc_number": account_number
+            "acc_number": account_number,
+            "partner_id": partners[1].id,
         })
 
         self.assertEqual(account_a.acc_number, account_b.acc_number)
-

@@ -55,11 +55,11 @@ class TestResPartnerDuplicate(common.SavepointCase):
         })
 
         cls.bank_1 = cls.env['res.partner.bank'].create({
-            'acc_number': 1111,
+            'acc_number': '1111',
             'partner_id': cls.contact_1.id,
         })
         cls.bank_2 = cls.env['res.partner.bank'].create({
-            'acc_number': 2222,
+            'acc_number': '2222',
             'partner_id': cls.contact_2.id,
         })
 

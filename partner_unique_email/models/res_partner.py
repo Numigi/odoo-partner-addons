@@ -7,7 +7,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError, UserError
 
 
-PARTNER_WITH_SAME_EMAIL_MESSAGE = (
+PARTNER_WITH_SAME_EMAIL_MESSAGE = _(
     "The email ({email}) entered for {partner} is identical to the email "
     "of another partner ({other_partner})."
 )

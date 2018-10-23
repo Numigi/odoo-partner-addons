@@ -108,7 +108,7 @@ class ResPartner(models.Model):
         cr = self.env.cr
         cr.execute('SELECT set_limit(%s)', (min_similarity,))
         cr.execute("""
-            SELECT p.id, p.name
+            SELECT p.id
             FROM res_partner p
             WHERE p.id != %(id)s
             AND p.active = true
@@ -130,7 +130,7 @@ class ResPartner(models.Model):
             'parent': self.parent_id.id or None,
         })
 
-        return cr.dictfetchall()
+        return self.browse([r[0] for r in cr.fetchall()])
 
     @api.onchange('name', 'parent_id', 'company_type', 'is_company')
     def _onchange_name_find_duplicates(self):
@@ -138,10 +138,10 @@ class ResPartner(models.Model):
         if self.id or not indexed_name:
             return
 
-        duplicate_dict = self._get_duplicates(indexed_name)
+        duplicate_partners = self._get_duplicates(indexed_name)
 
-        if duplicate_dict:
-            duplicate_names = [d['name'] for d in duplicate_dict]
+        if duplicate_partners:
+            duplicate_names = duplicate_partners.mapped('display_name')
             partner_names = ", ".join(duplicate_names)
             return {
                 'warning': {
@@ -164,8 +164,8 @@ class ResPartner(models.Model):
         duplicates = self.env['res.partner']
         for partner in partners:
             self.env['res.partner.duplicate'].create({
-                'partner_1_id': min(self.id, partner['id']),
-                'partner_2_id': max(self.id, partner['id']),
+                'partner_1_id': min(self.id, partner.id),
+                'partner_2_id': max(self.id, partner.id),
             })
             duplicates |= self.browse(partner['id'])
         return duplicates
@@ -215,7 +215,7 @@ class ResPartner(models.Model):
             'views': [(action.view_id.id, 'tree'), (False, 'form')],
             'search_view_id': action.search_view_id.id,
             'context': action.context,
-            'target': 'new',
+            'target': 'current',
             'domain': [
                 ('id', 'in', partners.ids),
             ],
