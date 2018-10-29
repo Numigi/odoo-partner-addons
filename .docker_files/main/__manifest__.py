@@ -24,6 +24,7 @@
         # 'partner_multi_relation_work',
         'partner_name_no_shortcut',
         'partner_phone_no_envelope',
+        'partner_phone_validation',
         'partner_reference',
         'partner_unique_email',
         'partner_website_domain_only',
