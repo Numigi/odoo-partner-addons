@@ -26,6 +26,7 @@ COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
 # COPY partner_multi_relation_work /mnt/extra-addons/partner_multi_relation_work
 COPY partner_name_no_shortcut /mnt/extra-addons/partner_name_no_shortcut
 COPY partner_phone_no_envelope /mnt/extra-addons/partner_phone_no_envelope
+COPY partner_phone_validation /mnt/extra-addons/partner_phone_validation
 COPY partner_reference /mnt/extra-addons/partner_reference
 COPY partner_unique_email /mnt/extra-addons/partner_unique_email
 COPY partner_website_domain_only /mnt/extra-addons/partner_website_domain_only
