@@ -1,0 +1,112 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_multi_relation_strength
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-14 19:46+0000\n"
+"PO-Revision-Date: 2018-11-14 14:48-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: partner_multi_relation_strength
+#: model:ir.model,name:partner_multi_relation_strength.model_res_partner_relation_all
+msgid "All (non-inverse + inverse) relations between partners"
+msgstr ""
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_strength__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_strength__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_strength__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_strength__id
+msgid "ID"
+msgstr ""
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_strength____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_strength__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_strength__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_strength__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: partner_multi_relation_strength
+#: model:res.partner.relation.strength,name:partner_multi_relation_strength.strength_normal
+msgid "Normal"
+msgstr "Normal"
+
+#. module: partner_multi_relation_strength
+#: model:ir.model,name:partner_multi_relation_strength.model_res_partner_relation_strength
+msgid "Partner Relation Strength"
+msgstr "Force de relation de partenaire"
+
+#. module: partner_multi_relation_strength
+#: model_terms:ir.ui.view,arch_db:partner_multi_relation_strength.res_partner_relation_strength_list
+msgid "Partner Relation Strengths"
+msgstr "Forces de relations de partenaires"
+
+#. module: partner_multi_relation_strength
+#: model:ir.model,name:partner_multi_relation_strength.model_res_partner_relation
+#, fuzzy
+#| msgid "Partner Relation Strength"
+msgid "Partner relation"
+msgstr "Force de relation de partenaire"
+
+#. module: partner_multi_relation_strength
+#: model:ir.actions.act_window,name:partner_multi_relation_strength.action_res_partner_relation_strength
+#: model:ir.ui.menu,name:partner_multi_relation_strength.menu_res_partner_relation_strength_action
+msgid "Relation Strengths"
+msgstr "Forces de relations"
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_strength__sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: partner_multi_relation_strength
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation__strength_id
+#: model:ir.model.fields,field_description:partner_multi_relation_strength.field_res_partner_relation_all__strength_id
+msgid "Strength"
+msgstr "Force"
+
+#. module: partner_multi_relation_strength
+#: model:res.partner.relation.strength,name:partner_multi_relation_strength.strength_strong
+msgid "Strong"
+msgstr "Forte"
+
+#. module: partner_multi_relation_strength
+#: model:res.partner.relation.strength,name:partner_multi_relation_strength.strength_weak
+msgid "Weak"
+msgstr "Faible"

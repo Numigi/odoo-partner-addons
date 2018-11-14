@@ -1,6 +1,10 @@
 - url: https://github.com/OCA/partner-contact
   branch: "12.0"
   commit: 22154185d1bf52f44b528fa355543f42145517ef
+  patches:
+  - url: https://github.com/numigi/odoo-partner-contact
+    branch: 12.0-mig-partner_multi_relation
+    commit: 3d2cb511c2c36bc0ff49b31a1f405b4ecef6347f
   includes:
-    # - partner_firstname  # Unported
-    # - partner_multi_relation  # Unported
+  # - partner_firstname  # Unported
+  - partner_multi_relation

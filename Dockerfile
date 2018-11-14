@@ -17,13 +17,13 @@ COPY google_partner_address /mnt/extra-addons/google_partner_address
 COPY partner_change_parent /mnt/extra-addons/partner_change_parent
 COPY partner_duplicate_mgmt /mnt/extra-addons/partner_duplicate_mgmt
 COPY partner_duplicate_multi_phone /mnt/extra-addons/partner_duplicate_multi_phone
-# COPY partner_duplicate_multi_relation /mnt/extra-addons/partner_duplicate_multi_relation
+COPY partner_duplicate_multi_relation /mnt/extra-addons/partner_duplicate_multi_relation
 # COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_before_lastname
 COPY partner_key_date /mnt/extra-addons/partner_key_date
 COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
-# COPY partner_multi_relation_note /mnt/extra-addons/partner_multi_relation_note
-# COPY partner_multi_relation_strength /mnt/extra-addons/partner_multi_relation_strength
-# COPY partner_multi_relation_work /mnt/extra-addons/partner_multi_relation_work
+COPY partner_multi_relation_note /mnt/extra-addons/partner_multi_relation_note
+COPY partner_multi_relation_strength /mnt/extra-addons/partner_multi_relation_strength
+COPY partner_multi_relation_work /mnt/extra-addons/partner_multi_relation_work
 COPY partner_name_no_shortcut /mnt/extra-addons/partner_name_no_shortcut
 COPY partner_phone_no_envelope /mnt/extra-addons/partner_phone_no_envelope
 COPY partner_phone_validation /mnt/extra-addons/partner_phone_validation
