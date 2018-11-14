@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-27 18:03-0400\n"
-"PO-Revision-Date: 2018-03-27 18:11-0400\n"
+"POT-Creation-Date: 2018-11-14 19:46+0000\n"
+"PO-Revision-Date: 2018-11-14 14:48-0500\n"
 "Last-Translator: Agathe Mollé <agathe.molle@savoirfairelinux.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #. module: partner_multi_relation_work
 #: model:ir.model,name:partner_multi_relation_work.model_res_partner
@@ -28,13 +28,27 @@ msgid "Has employee"
 msgstr "A pour employé"
 
 #. module: partner_multi_relation_work
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:56
+#, python-format
+msgid "Invalid same-person relations must be restricted."
+msgstr ""
+"Une relation de type 'Est la même personne que' invalide ne doit pas être "
+"permise."
+
+#. module: partner_multi_relation_work
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:103
+#, python-format
+msgid "Invalid work relations must be restricted."
+msgstr "Une relation de travail invalide ne doit pas être permise."
+
+#. module: partner_multi_relation_work
 #: model:res.partner.relation.type,name:partner_multi_relation_work.relation_type_same
 #: model:res.partner.relation.type,name_inverse:partner_multi_relation_work.relation_type_same
 msgid "Is the same person as"
 msgstr "Est la même personne que"
 
 #. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_all.py:82
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_all.py:45
 #, python-format
 msgid ""
 "Only the system administrator can create, delete or modify a same-person "
@@ -42,15 +56,6 @@ msgid ""
 msgstr ""
 "Seulement l'administrateur du système peut créer, modifier ou supprimer une "
 "relation de type 'Est la même personne'."
-
-#. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_all.py:36
-#, python-format
-msgid ""
-"Only the system administrator can create, delete or modify a work relation."
-msgstr ""
-"Seulement l'administrateur du système peut créer, modifier ou supprimer une "
-"relation de travail."
 
 #. module: partner_multi_relation_work
 #: model:ir.model,name:partner_multi_relation_work.model_res_partner_change_parent
@@ -68,12 +73,12 @@ msgid "Partner relation"
 msgstr "Relation de partenaire"
 
 #. module: partner_multi_relation_work
-#: model:ir.model.fields,field_description:partner_multi_relation_work.field_res_partner_relation_type_is_same_relation
+#: model:ir.model.fields,field_description:partner_multi_relation_work.field_res_partner_relation_type__is_same_relation
 msgid "Same Relation"
-msgstr "Relation 'identique'"
+msgstr "Relation identique"
 
 #. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:46
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:47
 #, python-format
 msgid ""
 "Same-person relations are not possible between a partner and the same "
@@ -85,10 +90,9 @@ msgstr ""
 "distincts dans la base de données."
 
 #. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_all.py:92
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_all.py:55
 #, python-format
-msgid ""
-"Same-person relations cannot be created/updated manually."
+msgid "Same-person relations cannot be created/updated manually."
 msgstr ""
 "Une relation de type 'Est la même personne que' ne peut pas être modifiée/"
 "mise à jour manuellement."
@@ -104,32 +108,31 @@ msgstr ""
 "un individu (gauche) et un autre individu (droite)."
 
 #. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:38
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:39
 #, python-format
 msgid "Same-person relations must be symmetric."
 msgstr "Une relation de type 'Est la même personne que' doit être symétrique."
 
 #. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_all.py:44
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_all.py:91
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_all.py:54
 #, python-format
 msgid "Warning"
 msgstr "Attention"
 
 #. module: partner_multi_relation_work
-#: model:ir.model.fields,field_description:partner_multi_relation_work.field_res_partner_relation_type_is_work_relation
+#: model:ir.model.fields,field_description:partner_multi_relation_work.field_res_partner_relation_type__is_work_relation
 msgid "Work Relation"
 msgstr "Relation d'emploi"
 
 #. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:86
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:95
 #, python-format
 msgid "Work relations are not possible between a partner and himself."
 msgstr ""
 "Une relation de travail n'est pas possible entre un contact et lui-même."
 
 #. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:71
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:80
 #, python-format
 msgid ""
 "Work relations must be between an individual (left) and a company (right)."
@@ -138,7 +141,7 @@ msgstr ""
 "une société (droite)."
 
 #. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:78
+#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:87
 #, python-format
 msgid "Work relations must be symmetric."
 msgstr "Une relation de travail doit être symétrique."
@@ -148,14 +151,9 @@ msgstr "Une relation de travail doit être symétrique."
 msgid "Works for"
 msgstr "Travaille pour"
 
-#. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:0
-#, python-format
-msgid "Invalid same-person relations must be restricted."
-msgstr "Une relation de type 'Est la même personne que' invalide ne doit pas être permise."
-
-#. module: partner_multi_relation_work
-#: code:addons/partner_multi_relation_work/models/res_partner_relation_type.py:0
-#, python-format
-msgid "Invalid work relations must be restricted."
-msgstr "Une relation de travail invalide ne doit pas être permise."
+#~ msgid ""
+#~ "Only the system administrator can create, delete or modify a work "
+#~ "relation."
+#~ msgstr ""
+#~ "Seulement l'administrateur du système peut créer, modifier ou supprimer "
+#~ "une relation de travail."
