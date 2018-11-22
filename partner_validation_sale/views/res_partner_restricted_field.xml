@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_restricted_field_tree_sale" model="ir.ui.view">
+        <field name="name">res.partner.restricted.field.tree.sale</field>
+        <field name="model">res.partner.restricted.field</field>
+        <field name="inherit_id" ref="partner_validation.res_partner_restricted_field_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='field_id']" position="after">
+                <field name="apply_on_sales"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

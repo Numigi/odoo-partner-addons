@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_form_view_validation_purchase" model="ir.ui.view">
+        <field name="name">res.partner.form.validation.purchase</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='purchase']/field[@name='supplier']" position="after">
+                <field name="supplier_state"
+                       attrs="{'invisible': [('supplier','=', False)]}"/>
+                <div></div>
+                <div>
+                 <button name="reject_supplier"
+                        type="object"
+                        string="Reject"
+                        style="width: 49%"
+                        attrs="{'invisible': ['|', ('supplier', '=', False), ('supplier_state','=', 'new')]}"
+                        groups="partner_validation_purchase.group_partner_restricted_field_purchases">
+                </button>
+                <button name="approve_supplier"
+                        type="object"
+                        string="Approve"
+                        class="oe_highlight"
+                        style="width: 49%"
+                        attrs="{'invisible': ['|', ('supplier', '=', False), ('supplier_state','in', ('new', 'approved'))]}"
+                        groups="partner_validation_purchase.group_partner_restricted_field_purchases">
+                </button>
+                <button name="confirm_supplier"
+                        type="object"
+                        string="Confirm"
+                        style="width: 49%"
+                        class="oe_highlight"
+                        attrs="{'invisible': ['|', ('supplier', '=', False), ('supplier_state','!=', 'new')]}"
+                        groups="partner_validation_purchase.group_partner_restricted_field_purchases">
+                </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
