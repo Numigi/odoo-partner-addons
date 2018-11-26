@@ -30,5 +30,6 @@ COPY partner_unique_email /mnt/extra-addons/partner_unique_email
 COPY partner_website_domain_only /mnt/extra-addons/partner_website_domain_only
 COPY res_partner_bank_shared_account /mnt/extra-addons/res_partner_bank_shared_account
 
+
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
