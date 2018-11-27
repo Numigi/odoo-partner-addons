@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2018 Akretion
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
@@ -6,7 +5,7 @@
 
 from odoo.tests import SavepointCase
 from odoo import fields
-from odoo.exceptions import Warning
+from odoo.exceptions import Warning as WarningOdoo
 
 
 class TestPurchaseOrder(SavepointCase):
@@ -41,6 +40,7 @@ class TestPurchaseOrder(SavepointCase):
 
         cls.partner = cls.env['res.partner'].create({
             'name': 'Partner Test',
+            'is_company': True,
             'phone': '000-111-222',
             'email': 'partnertest@test.com',
             'supplier': True,
@@ -49,28 +49,40 @@ class TestPurchaseOrder(SavepointCase):
 
         cls.purchase_order = cls._create_purchase_order(cls, cls.partner)
 
-    def test_01_confirm_purchase_with_new_partner(self):
-        with self.assertRaises(Warning):
+    def test_01_confirm_purchase_of_new_partner_with_normal_user(self):
+        with self.assertRaises(WarningOdoo):
             self.purchase_order.sudo(self.normal_user).button_confirm()
         self.assertEqual(self.purchase_order.state, 'draft')
-        with self.assertRaises(Warning):
+
+    def test_02_confirm_purchase_of_new_partner_with_approval_user(self):
+        with self.assertRaises(WarningOdoo):
             self.purchase_order.sudo(self.supplier_approval_user).button_confirm()
         self.assertEqual(self.purchase_order.state, 'draft')
 
-    def test_02_confirm_purchase_with_confirmed_partner(self):
+    def test_03_confirm_purchase_of_confirmed_partner_with_normal_user(self):
         self.partner.sudo(self.supplier_approval_user).confirm_supplier()
         self.assertEqual(self.partner.supplier_state, 'confirmed')
-        with self.assertRaises(Warning):
+        with self.assertRaises(WarningOdoo):
             self.purchase_order.sudo(self.normal_user).button_confirm()
         self.assertEqual(self.purchase_order.state, 'draft')
-        with self.assertRaises(Warning):
+
+    def test_04_confirm_purchase_of_confirmed_partner_with_approval_user(self):
+        self.partner.sudo(self.supplier_approval_user).confirm_supplier()
+        self.assertEqual(self.partner.supplier_state, 'confirmed')
+        with self.assertRaises(WarningOdoo):
             self.purchase_order.sudo(self.supplier_approval_user).button_confirm()
         self.assertEqual(self.purchase_order.state, 'draft')
 
-    def test_03_confirm_purchase_with_approved_partner(self):
+    def test_05_confirm_purchase_of_approved_partner_with_normal_user(self):
         self.partner.sudo(self.supplier_approval_user).approve_supplier()
         self.assertEqual(self.partner.supplier_state, 'approved')
         self.purchase_order.sudo(self.normal_user).button_confirm()
+        self.assertEqual(self.purchase_order.state, 'purchase')
+
+    def test_06_confirm_purchase_of_approved_partner_with_approval_user(self):
+        self.partner.sudo(self.supplier_approval_user).approve_supplier()
+        self.assertEqual(self.partner.supplier_state, 'approved')
+        self.purchase_order.sudo(self.supplier_approval_user).button_confirm()
         self.assertEqual(self.purchase_order.state, 'purchase')
 
     def _create_purchase_order(self, partner):

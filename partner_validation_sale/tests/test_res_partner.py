@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # © 2018 Akretion
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
 from odoo.tests import SavepointCase
-from odoo.exceptions import Warning
+from odoo.exceptions import Warning as WarningOdoo
 
 
 class TestResPartner(SavepointCase):
@@ -40,6 +39,7 @@ class TestResPartner(SavepointCase):
 
         cls.partner = cls.env['res.partner'].create({
             'name': 'Partner Test',
+            'is_company': True,
             'phone': '000-111-222',
             'email': 'partnertest@test.com',
             'customer': True,
@@ -60,57 +60,63 @@ class TestResPartner(SavepointCase):
         }
         cls.env['res.partner.restricted.field'].create(email_vals)
 
-    def test_01_change_customer_state_with_normal_user(self):
-        with self.assertRaises(Warning):
-            self.partner.sudo(self.normal_user).write({'customer_state': 'confirmed'})
-        with self.assertRaises(Warning):
-            self.partner.sudo(self.normal_user).confirm_customer()
-        with self.assertRaises(Warning):
-            self.partner.sudo(self.normal_user).approve_customer()
-        with self.assertRaises(Warning):
-            self.partner.sudo(self.normal_user).reject_customer()
-
-    def test_02_change_customer_state_with_approval_user(self):
-        self.partner.sudo(self.customer_approval_user).write({'customer_state': 'confirmed'})
+    def test_01_confirm_customer_with_normal_user(self):
+        self.partner.sudo(self.normal_user).confirm_customer()
         self.assertEqual(self.partner.customer_state, 'confirmed')
 
+    def test_02_approve_customer_with_normal_user(self):
+        self.partner.sudo(self.normal_user).confirm_customer()
+        with self.assertRaises(WarningOdoo):
+            self.partner.sudo(self.normal_user).approve_customer()
+
+    def test_03_reject_customer_with_normal_user(self):
+        self.partner.sudo(self.customer_approval_user).approve_customer()
+        self.assertEqual(self.partner.customer_state, 'approved')
+        self.partner.sudo(self.normal_user).reject_customer()
+        self.assertEqual(self.partner.customer_state, 'new')
+
+    def test_04_confirm_customer_with_approval_user(self):
+        self.partner.sudo(self.customer_approval_user).confirm_customer()
+        self.assertEqual(self.partner.customer_state, 'confirmed')
+
+    def test_05_approve_customer_with_approval_user(self):
         self.partner.sudo(self.customer_approval_user).approve_customer()
         self.assertEqual(self.partner.customer_state, 'approved')
 
+    def test_06_reject_customer_with_approval_user(self):
+        self.partner.sudo(self.customer_approval_user).approve_customer()
+        self.assertEqual(self.partner.customer_state, 'approved')
         self.partner.sudo(self.customer_approval_user).reject_customer()
         self.assertEqual(self.partner.customer_state, 'new')
 
-        self.partner.sudo(self.customer_approval_user).confirm_customer()
-        self.assertEqual(self.partner.customer_state, 'confirmed')
-
-    def test_03_write_rescricted_field_with_normal_user(self):
-        self.partner.sudo(self.customer_approval_user).confirm_customer()
-        self.assertEqual(self.partner.customer_state, 'confirmed')
-        with self.assertRaises(Warning):
+    def test_07_write_rescricted_field_with_normal_user(self):
+        self.partner.sudo(self.customer_approval_user).approve_customer()
+        self.assertEqual(self.partner.customer_state, 'approved')
+        with self.assertRaises(WarningOdoo):
             self.partner.sudo(self.normal_user).write({
                 'phone': '555-666-777',
             })
         self.assertEqual(self.partner.phone, '000-111-222')
 
-    def test_04_write_no_rescricted_field_with_normal_user(self):
-        self.partner.sudo(self.customer_approval_user).confirm_customer()
-        self.assertEqual(self.partner.customer_state, 'confirmed')
+    def test_08_write_no_rescricted_field_with_normal_user(self):
+        self.partner.sudo(self.customer_approval_user).approve_customer()
+        self.assertEqual(self.partner.customer_state, 'approved')
         self.partner.sudo(self.normal_user).write({
             'email': 'changedpartnertest@test.com',
         })
         self.assertEqual(self.partner.email, 'changedpartnertest@test.com')
 
-    def test_05_write_rescricted_field_with_approval_user(self):
-        self.partner.sudo(self.customer_approval_user).confirm_customer()
-        self.assertEqual(self.partner.customer_state, 'confirmed')
+    def test_09_write_rescricted_field_with_approval_user(self):
+        self.partner.sudo(self.customer_approval_user).approve_customer()
+        self.assertEqual(self.partner.customer_state, 'approved')
         self.partner.sudo(self.customer_approval_user).write({
             'phone': '555-666-777'
         })
         self.assertEqual(self.partner.phone, '555-666-777')
 
-    def test_06_write_no_rescricted_field_with_approval_user(self):
-        self.partner.sudo(self.customer_approval_user).confirm_customer()
-        self.assertEqual(self.partner.customer_state, 'confirmed')
+    def test_10_write_no_rescricted_field_with_approval_user(self):
+        self.partner.sudo(self.customer_approval_user).approve_customer()
+        self.assertEqual(self.partner.customer_state, 'approved')
         self.partner.sudo(self.customer_approval_user).write({
             'email': 'changedpartnertest@test.com',
         })

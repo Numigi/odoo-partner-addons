@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # © 2018 Akretion
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
 from odoo.tests import SavepointCase
-from odoo.exceptions import Warning
+from odoo.exceptions import Warning as WarningOdoo
 
 
 class TestSaleOrder(SavepointCase):
@@ -40,6 +39,7 @@ class TestSaleOrder(SavepointCase):
 
         cls.partner = cls.env['res.partner'].create({
             'name': 'Partner Test',
+            'is_company': True,
             'customer': True,
             'customer_state': 'new'
         })
@@ -48,53 +48,57 @@ class TestSaleOrder(SavepointCase):
         cls.internal_picking = cls._create_picking(cls, cls.partner, 'internal')
         cls.incoming_picking = cls._create_picking(cls, cls.partner, 'incoming')
 
-    def test_01_validate_outgoing_picking_with_new_partner(self):
-        with self.assertRaises(Warning):
+    def test_01_validate_outgoing_picking_of_new_partner_with_normal_user(self):
+        with self.assertRaises(WarningOdoo):
             self.outgoing_picking.sudo(self.normal_user).button_validate()
-        with self.assertRaises(Warning):
+
+    def test_02_validate_outgoing_picking_of_new_partner_with_approval_user(self):
+        with self.assertRaises(WarningOdoo):
             self.outgoing_picking.sudo(self.customer_approval_user).button_validate()
 
-    def test_02_validate_outgoing_picking_with_confirmed_partner(self):
+    def test_03_validate_outgoing_picking_of_confirmed_partner_with_normal_user(self):
         self.partner.sudo(self.customer_approval_user).confirm_customer()
         self.assertEqual(self.partner.customer_state, 'confirmed')
-        with self.assertRaises(Warning):
+        with self.assertRaises(WarningOdoo):
             self.outgoing_picking.sudo(self.normal_user).button_validate()
-        with self.assertRaises(Warning):
+
+    def test_04_validate_outgoing_picking_of_confirmed_partner_with_approval_user(self):
+        self.partner.sudo(self.customer_approval_user).confirm_customer()
+        self.assertEqual(self.partner.customer_state, 'confirmed')
+        with self.assertRaises(WarningOdoo):
             self.outgoing_picking.sudo(self.customer_approval_user).button_validate()
 
-    def test_03_validate_outgoing_picking_with_approved_partner(self):
+    def test_05_validate_outgoing_picking_of_approved_partner_with_normal_user(self):
         self.partner.sudo(self.customer_approval_user).approve_customer()
         self.assertEqual(self.partner.customer_state, 'approved')
-        try:
-            self.outgoing_picking.sudo(self.normal_user).button_validate()
-        except:
-            self.fail("button_validate() raised ExceptionType unexpectedly!")
-        try:
-            self.outgoing_picking.sudo(self.customer_approval_user).button_validate()
-        except:
-            self.fail("button_validate() raised ExceptionType unexpectedly!")
+        res = self.outgoing_picking.sudo(self.normal_user).button_validate()
+        self.assertIsNone(res)
 
-    def test_04_validate_internal_picking_with_new_partner(self):
-        self.assertEqual(self.partner.customer_state, 'new')
-        try:
-            self.internal_picking.sudo(self.normal_user).button_validate()
-        except:
-            self.fail("button_validate() raised ExceptionType unexpectedly!")
-        try:
-            self.internal_picking.sudo(self.customer_approval_user).button_validate()
-        except:
-            self.fail("button_validate() raised ExceptionType unexpectedly!")
+    def test_06_validate_outgoing_picking_of_approved_partner_with_approval_user(self):
+        self.partner.sudo(self.customer_approval_user).approve_customer()
+        self.assertEqual(self.partner.customer_state, 'approved')
+        res = self.outgoing_picking.sudo(self.customer_approval_user).button_validate()
+        self.assertIsNone(res)
 
-    def test_05_validate_incoming_picking_with_new_partner(self):
+    def test_07_validate_internal_picking_of_new_partner_with_normal_user(self):
         self.assertEqual(self.partner.customer_state, 'new')
-        try:
-            self.incoming_picking.sudo(self.normal_user).button_validate()
-        except:
-            self.fail("button_validate() raised ExceptionType unexpectedly!")
-        try:
-            self.incoming_picking.sudo(self.customer_approval_user).button_validate()
-        except:
-            self.fail("button_validate() raised ExceptionType unexpectedly!")
+        res = self.internal_picking.sudo(self.normal_user).button_validate()
+        self.assertIsNone(res)
+
+    def test_08_validate_internal_picking_of_new_partner_with_approval_user(self):
+        self.assertEqual(self.partner.customer_state, 'new')
+        res = self.internal_picking.sudo(self.customer_approval_user).button_validate()
+        self.assertIsNone(res)
+
+    def test_09_validate_incoming_picking_of_new_partner_with_normal_user(self):
+        self.assertEqual(self.partner.customer_state, 'new')
+        res = self.incoming_picking.sudo(self.normal_user).button_validate()
+        self.assertIsNone(res)
+
+    def test_10_validate_incoming_picking_of_new_partner_with_approval_user(self):
+        self.assertEqual(self.partner.customer_state, 'new')
+        res = self.incoming_picking.sudo(self.customer_approval_user).button_validate()
+        self.assertIsNone(res)
 
     def _create_picking(self, partner, picking_type='outgoing'):
         src_location = self.env.ref('stock.stock_location_stock')

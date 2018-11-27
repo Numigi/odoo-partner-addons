@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-22 15:29+0000\n"
-"PO-Revision-Date: 2018-11-22 15:29+0000\n"
+"POT-Creation-Date: 2018-11-27 13:26+0000\n"
+"PO-Revision-Date: 2018-11-27 13:26+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgstr "Dernière mise à jour le"
 #. module: partner_validation
 #: model:res.groups,name:partner_validation.group_partner_restricted_field
 msgid "Manage partner restricted fields"
-msgstr "Gérer les champs restreints des partenaires"
+msgstr "Manage partner restricted fields"
 
 #. module: partner_validation
 #: model:ir.model,name:partner_validation.model_res_partner_restricted_field
@@ -88,3 +88,4 @@ msgstr "Champs restreints"
 #: sql_constraint:res.partner.restricted.field:0
 msgid "This field is already restricted"
 msgstr "Ce champ est déjà restreint"
+

@@ -8,9 +8,10 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='purchase']/field[@name='supplier']" position="after">
                 <field name="supplier_state"
-                       attrs="{'invisible': [('supplier','=', False)]}"/>
-                <div></div>
-                <div>
+                       attrs="{'invisible': ['|', '|', ('supplier','=', False), ('is_company','=', False), ('parent_id', '=', True)]}"/>
+                <div attrs="{'invisible': ['|', '|', ('supplier','=', False), ('is_company','=', False), ('parent_id', '=', True)]}">
+                </div>
+                <div attrs="{'invisible': ['|', '|', ('supplier','=', False), ('is_company','=', False), ('parent_id', '=', True)]}">
                  <button name="reject_supplier"
                         type="object"
                         string="Reject"

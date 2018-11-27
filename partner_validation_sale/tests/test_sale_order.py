@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # © 2018 Akretion
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
 from odoo.tests import SavepointCase
-from odoo.exceptions import Warning
+from odoo.exceptions import Warning as WarningOdoo
 
 
 class TestSaleOrder(SavepointCase):
@@ -40,34 +39,47 @@ class TestSaleOrder(SavepointCase):
 
         cls.partner = cls.env['res.partner'].create({
             'name': 'Partner Test',
+            'is_company': True,
             'customer': True,
             'customer_state': 'new'
         })
 
         cls.sale_order = cls._create_sale_order(cls, cls.partner)
 
-    def test_01_confirm_sale_with_new_partner(self):
-        with self.assertRaises(Warning):
+    def test_01_confirm_sale_of_new_partner_with_normal_user(self):
+        with self.assertRaises(WarningOdoo):
             self.sale_order.sudo(self.normal_user).action_confirm()
         self.assertEqual(self.sale_order.state, 'draft')
-        with self.assertRaises(Warning):
+
+    def test_02_confirm_sale_of_new_partner_with_approval_user(self):
+        with self.assertRaises(WarningOdoo):
             self.sale_order.sudo(self.customer_approval_user).action_confirm()
         self.assertEqual(self.sale_order.state, 'draft')
 
-    def test_02_confirm_sale_with_confirmed_partner(self):
+    def test_03_confirm_sale_of_confirmed_partner_with_normal_user(self):
         self.partner.sudo(self.customer_approval_user).confirm_customer()
         self.assertEqual(self.partner.customer_state, 'confirmed')
-        with self.assertRaises(Warning):
+        with self.assertRaises(WarningOdoo):
             self.sale_order.sudo(self.normal_user).action_confirm()
         self.assertEqual(self.sale_order.state, 'draft')
-        with self.assertRaises(Warning):
+
+    def test_04_confirm_sale_of_confirmed_partner_with_approval_user(self):
+        self.partner.sudo(self.customer_approval_user).confirm_customer()
+        self.assertEqual(self.partner.customer_state, 'confirmed')
+        with self.assertRaises(WarningOdoo):
             self.sale_order.sudo(self.customer_approval_user).action_confirm()
         self.assertEqual(self.sale_order.state, 'draft')
 
-    def test_03_confirm_sale_with_approved_partner(self):
+    def test_05_confirm_sale_of_approved_partner_with_normal_user(self):
         self.partner.sudo(self.customer_approval_user).approve_customer()
         self.assertEqual(self.partner.customer_state, 'approved')
         self.sale_order.sudo(self.normal_user).action_confirm()
+        self.assertEqual(self.sale_order.state, 'sale')
+
+    def test_06_confirm_sale_of_approved_partner_with_approval_user(self):
+        self.partner.sudo(self.customer_approval_user).approve_customer()
+        self.assertEqual(self.partner.customer_state, 'approved')
+        self.sale_order.sudo(self.customer_approval_user).action_confirm()
         self.assertEqual(self.sale_order.state, 'sale')
 
     def _create_sale_order(self, partner):
