@@ -117,10 +117,6 @@ class TestResPartnerDuplicate(common.SavepointCase):
         ])
         self.assertEqual(len(duplicates), 1)
 
-    def test_create_new_duplicate_adds_message_to_chatter(self):
-        self.assertEqual(len(self.contact_2.message_ids), 2)
-        self.assertIn(self.contact_1.name, self.contact_2.message_ids[0].body)
-
     def test_char_field_merge_line_created_correctly(self):
         merge_lines = self.contact_merge_lines
         merge_line = merge_lines.filtered(
@@ -173,24 +169,6 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         self.assertFalse(self.contact_1.active)
         self.assertTrue(self.contact_2.active)
-
-        self.assertEqual(len(self.contact_1.message_ids), 2)
-        self.assertIn(self.contact_2.name, self.contact_1.message_ids[0].body)
-
-    def test_contact_merge_doesnt_affect_message_ids(self):
-        self.assertEqual(len(self.contact_1.message_ids), 1)
-        self.assertEqual(len(self.contact_2.message_ids), 2)
-
-        self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
-        self.contact_merge_lines.write({'partner_2_selected': True})
-        self.contact_dup.merge_partners()
-
-        self.assertEqual(len(self.contact_1.message_ids), 2)
-        self.assertEqual(len(self.contact_2.message_ids), 3)
-        self.assertNotIn(
-            self.contact_1.message_ids[0], self.contact_2.message_ids)
-        self.assertNotIn(
-            self.contact_1.message_ids[1], self.contact_2.message_ids)
 
     def test_contacts_merger_should_merge_one2many_field(self):
         self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
