@@ -10,12 +10,12 @@
                 <field name="supplier_state"
                        attrs="{'invisible': ['|', '|', ('supplier','=', False), ('is_company','=', False), ('parent_id', '=', True)]}"/>
                 <div attrs="{'invisible': ['|', '|', ('supplier','=', False), ('is_company','=', False), ('parent_id', '=', True)]}">
+                    <!-- Empty div to put buttons on the right-->
                 </div>
-                <div attrs="{'invisible': ['|', '|', ('supplier','=', False), ('is_company','=', False), ('parent_id', '=', True)]}">
+                <div class="custom_div_button_purchase" attrs="{'invisible': ['|', '|', ('supplier','=', False), ('is_company','=', False), ('parent_id', '=', True)]}">
                  <button name="reject_supplier"
                         type="object"
                         string="Reject"
-                        style="width: 49%"
                         attrs="{'invisible': ['|', ('supplier', '=', False), ('supplier_state','=', 'new')]}"
                         groups="partner_validation_purchase.group_partner_restricted_field_purchases">
                 </button>
@@ -23,14 +23,12 @@
                         type="object"
                         string="Approve"
                         class="oe_highlight"
-                        style="width: 49%"
                         attrs="{'invisible': ['|', ('supplier', '=', False), ('supplier_state','in', ('new', 'approved'))]}"
                         groups="partner_validation_purchase.group_partner_restricted_field_purchases">
                 </button>
                 <button name="confirm_supplier"
                         type="object"
                         string="Confirm"
-                        style="width: 49%"
                         class="oe_highlight"
                         attrs="{'invisible': ['|', ('supplier', '=', False), ('supplier_state','!=', 'new')]}"
                         groups="partner_validation_purchase.group_partner_restricted_field_purchases">
@@ -39,5 +37,11 @@
             </xpath>
         </field>
     </record>
+
+    <template id="assets_backend" name="partner_validation_purchase_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/partner_validation_purchase/static/src/css/custom_button_purchase.css"/>
+        </xpath>
+    </template>
 
 </odoo>
