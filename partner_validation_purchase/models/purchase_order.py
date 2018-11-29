@@ -17,5 +17,5 @@ class PurchaseOrder(models.Model):
             mapped('display_name')
         if restricted_partners:
             raise WarningOdoo(_("The supplier ​%s has to be approved"
-                                " in order to confirm this purchase order." % (",".join(restricted_partners,))))
+                                " in order to confirm this purchase order.") % (",".join(restricted_partners,)))
         return super().button_confirm()

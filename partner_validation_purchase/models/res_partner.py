@@ -48,6 +48,6 @@ class ResPartner(models.Model):
                                                  and (p.is_company or not p.parent_id))
             if final_restricted_fields and restricted_suppliers:
                 raise WarningOdoo(_("You are not authorized to modify the following fields: %s"
-                                    " when the partner’s status is approved." % str(final_restricted_fields)))
+                                    " when the partner’s status is approved.") % str(final_restricted_fields))
 
         return super(ResPartner, self).write(vals)

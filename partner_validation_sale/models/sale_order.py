@@ -17,5 +17,5 @@ class SaleOrder(models.Model):
             mapped('display_name')
         if restricted_partners:
             raise WarningOdoo(_("The client ​%s has to be approved"
-                                " in order to confirm this sale order." % (",".join(restricted_partners))))
+                                " in order to confirm this sale order.") % (",".join(restricted_partners)))
         return super().action_confirm()

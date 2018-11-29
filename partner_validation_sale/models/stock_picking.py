@@ -20,5 +20,5 @@ class StockPicking(models.Model):
 
             if restricted_partners:
                 raise WarningOdoo(_("The partner %s has to be approved in order"
-                                    " to confirm this stock move." % (",".join(restricted_partners),)))
+                                    " to confirm this stock move.") % (",".join(restricted_partners)))
         return super().button_validate()
