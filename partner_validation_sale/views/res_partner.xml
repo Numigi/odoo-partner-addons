@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_form_view_validation_sale" model="ir.ui.view">
+        <field name="name">res.partner.form.validation.sale</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='sale']/field[@name='customer']" position="after">
+                <field name="customer_state"
+                       attrs="{'invisible': ['|',('customer','=', False), '&amp;', ('is_company', '=', False), ('parent_id', '!=', False)]}"/>
+                <div attrs="{'invisible': ['|',('customer','=', False), '&amp;', ('is_company', '=', False), ('parent_id', '!=', False)]}">
+                    <!-- Empty div to put buttons on the right-->
+                </div>
+                <div class="custom_div_button_sale" attrs="{'invisible': ['|',('customer','=', False), '&amp;', ('is_company', '=', False), ('parent_id', '!=', False)]}">
+                 <button name="reject_customer"
+                        type="object"
+                        string="Reject"
+                        attrs="{'invisible': [('customer_state','=', 'new')]}">
+                </button>
+                <button name="approve_customer"
+                        type="object"
+                        string="Approve"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('customer_state','in', ('new', 'approved'))]}"
+                        groups="partner_validation_sale.group_partner_restricted_field_sales">
+                </button>
+                <button name="confirm_customer"
+                        type="object"
+                        string="Confirm"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('customer_state','!=', 'new')]}">
+                </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="assets_backend" name="partner_validation_sale_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/partner_validation_sale/static/src/css/custom_button_sale.css"/>
+        </xpath>
+    </template>
+
+</odoo>

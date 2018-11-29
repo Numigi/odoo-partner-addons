@@ -1,0 +1,107 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_validation_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-29 09:17+0000\n"
+"PO-Revision-Date: 2018-11-29 09:17+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_validation_sale
+#: model:ir.model.fields,field_description:partner_validation_sale.field_res_partner_restricted_field_apply_on_sales
+msgid "Apply on sales"
+msgstr "Applicable sur ventes"
+
+#. module: partner_validation_sale
+#: model:ir.ui.view,arch_db:partner_validation_sale.res_partner_form_view_validation_sale
+msgid "Approve"
+msgstr "Approuver"
+
+#. module: partner_validation_sale
+#: selection:res.partner,customer_state:0
+msgid "Approved"
+msgstr "Approuvé"
+
+#. module: partner_validation_sale
+#: model:ir.ui.view,arch_db:partner_validation_sale.res_partner_form_view_validation_sale
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: partner_validation_sale
+#: selection:res.partner,customer_state:0
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#. module: partner_validation_sale
+#: model:ir.model,name:partner_validation_sale.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: partner_validation_sale
+#: model:res.groups,name:partner_validation_sale.group_partner_restricted_field_sales
+msgid "Customer Approval"
+msgstr "Approbation Client"
+
+#. module: partner_validation_sale
+#: model:ir.model.fields,field_description:partner_validation_sale.field_res_partner_customer_state
+#: model:ir.model.fields,field_description:partner_validation_sale.field_res_users_customer_state
+msgid "Customer State"
+msgstr "Statut du client"
+
+#. module: partner_validation_sale
+#: selection:res.partner,customer_state:0
+msgid "New"
+msgstr "Nouveau"
+
+#. module: partner_validation_sale
+#: model:ir.model,name:partner_validation_sale.model_res_partner_restricted_field
+msgid "Partner Restricted Field"
+msgstr "Champ restreint"
+
+#. module: partner_validation_sale
+#: code:addons/partner_validation_sale/models/res_partner.py:19
+#, python-format
+msgid "Permission to change the state of the partner denied."
+msgstr "Permission de changer l'état du partenaire refusée."
+
+#. module: partner_validation_sale
+#: model:ir.model,name:partner_validation_sale.model_sale_order
+msgid "Quotation"
+msgstr "Devis"
+
+#. module: partner_validation_sale
+#: model:ir.ui.view,arch_db:partner_validation_sale.res_partner_form_view_validation_sale
+msgid "Reject"
+msgstr "Rejeter"
+
+#. module: partner_validation_sale
+#: code:addons/partner_validation_sale/models/sale_order.py:20
+#, python-format
+msgid "The client ​%s has to be approved in order to confirm this sale order."
+msgstr "Le client ​%s doit être Approuvé pour permettre la confirmation du bon de vente."
+
+#. module: partner_validation_sale
+#: code:addons/partner_validation_sale/models/stock_picking.py:23
+#, python-format
+msgid "The partner %s has to be approved in order to confirm this stock move."
+msgstr "Le partenaire %s doit être Approuvé pour permettre ce mouvement d’inventaire."
+
+#. module: partner_validation_sale
+#: model:ir.model,name:partner_validation_sale.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: partner_validation_sale
+#: code:addons/partner_validation_sale/models/res_partner.py:51
+#, python-format
+msgid "You are not authorized to modify the following fields: %s when the partner’s status is approved."
+msgstr "Vous n’êtes pas autorisés à modifier les champs suivants: %s lorsque le partenaire est au statut Approuvé."
+
