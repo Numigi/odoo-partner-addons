@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # © 2018 Akretion
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
@@ -19,5 +20,5 @@ class StockPicking(models.Model):
 
             if restricted_partners:
                 raise WarningOdoo(_("The partner %s has to be approved in order"
-                                    " to confirm this stock move." % (",".join(restricted_partners))))
+                                    " to confirm this stock move." % (",".join(restricted_partners),)))
         return super().button_validate()

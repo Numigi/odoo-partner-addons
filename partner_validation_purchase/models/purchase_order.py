@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # © 2018 Akretion
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
@@ -16,5 +17,5 @@ class PurchaseOrder(models.Model):
             mapped('display_name')
         if restricted_partners:
             raise WarningOdoo(_("The supplier ​%s has to be approved"
-                                " in order to confirm this purchase order." % (",".join(restricted_partners))))
+                                " in order to confirm this purchase order." % (",".join(restricted_partners,))))
         return super().button_confirm()

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # © 2018 Akretion
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
@@ -47,6 +48,6 @@ class ResPartner(models.Model):
                                                  and (p.is_company or not p.parent_id))
             if final_restricted_fields and restricted_suppliers:
                 raise WarningOdoo(_("You are not authorized to modify the following fields: %s"
-                                    " when the partner’s status is approved" % str(final_restricted_fields)))
+                                    " when the partner’s status is approved." % str(final_restricted_fields)))
 
         return super(ResPartner, self).write(vals)
