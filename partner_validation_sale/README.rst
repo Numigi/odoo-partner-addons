@@ -78,8 +78,31 @@ as a customer, a blocking message is shown to the user.
 
 .. image:: static/description/delivery_form_error_message.png
 
-The customer must be approved by a member of the `Customer Approval` Group before
+The customer must be approved by a member of the `Customer Approval` group before
 validating the delivery order.
+
+Restricted Fields
+-----------------
+The restricted fields are documented with the module `partner_validation` https://github.com/Numigi/odoo-partner-addons/tree/11.0/partner_validation.
+
+When editing the value of a restricted field on an approved customer, it shows a blocking message,
+if the user is not member of the group `Customer Approval`.
+
+Suppose we have the following restricted fields for sales.
+
+.. image:: static/description/restricted_fields.png
+
+As a user with no extra privileges, go to the form view of an approved customer.
+
+.. image:: static/description/approved_partner_form.png
+
+Change the value of one restricted field.
+
+.. image:: static/description/approved_partner_form_edit.png
+
+The blocking message is shown.
+
+.. image:: static/description/approved_partner_form_error_message.png
 
 Contributors
 ------------
