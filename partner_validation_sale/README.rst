@@ -1,9 +1,10 @@
 Partner Validation Sale
 =======================
-This module add contrainsts on Contacts / Sale Orders / Stock Pickings (outgoing).
+This module adds a customer validation workflow.
+A customer needs to be approved before any sale order or delivery order is confirmed.
 
 Customer Approval Group
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 A new group `Customer Approval` is added.
 
 .. image:: static/description/customer_approval_group.png
