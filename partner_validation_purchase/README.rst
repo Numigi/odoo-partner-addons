@@ -66,8 +66,31 @@ as a supplier, a blocking message is shown to the user.
 
 .. image:: static/description/rfq_form_error_message.png
 
-The supplier must be approved by a member of the `Supplier Approval` Group before
+The supplier must be approved by a member of the `Supplier Approval` group before
 confirming the purchase order.
+
+Restricted Fields
+-----------------
+The restricted fields are documented with the module `partner_validation`: https://github.com/Numigi/odoo-partner-addons/tree/11.0/partner_validation.
+
+When editing the value of a restricted field on an approved supplier, it shows a blocking message,
+if the user is not member of the group `Supplier Approval`.
+
+Suppose we have the following restricted fields for purchases.
+
+.. image:: static/description/restricted_fields.png
+
+As a user with no extra privileges, go to the form view of an approved supplier.
+
+.. image:: static/description/approved_partner_form.png
+
+Change the value of one restricted field.
+
+.. image:: static/description/approved_partner_form_edit.png
+
+The blocking message is shown.
+
+.. image:: static/description/approved_partner_form_error_message.png
 
 Contributors
 ------------
