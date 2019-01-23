@@ -329,6 +329,7 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.contact_merge_lines.write({'partner_1_selected': True})
 
         self.contact_dup.merge_partners()
+        invoice.move_id.refresh()
         self.assertEqual(invoice.move_id.partner_id, self.contact_1)
 
     def test_compute_warning_message_partner_1_with_account_moves(self):
