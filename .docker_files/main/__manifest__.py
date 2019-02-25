@@ -16,7 +16,7 @@
         'partner_duplicate_mgmt',
         'partner_duplicate_multi_phone',
         'partner_duplicate_multi_relation',
-        # 'partner_firstname_before_lastname',
+        'partner_firstname_before_lastname',
         'partner_key_date',
         'partner_multi_phone',
         'partner_multi_relation_note',
