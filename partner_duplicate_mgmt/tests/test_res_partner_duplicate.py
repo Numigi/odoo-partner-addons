@@ -135,8 +135,8 @@ class TestResPartnerDuplicate(common.SavepointCase):
             lambda l: l.duplicate_field_id == self.duplicate_state)
 
         self.assertTrue(merge_line)
-        self.assertEqual(merge_line.partner_1_value, 'Ontario')
-        self.assertEqual(merge_line.partner_2_value, 'Quebec')
+        self.assertEqual(merge_line.partner_1_value, self.state_on.display_name)
+        self.assertEqual(merge_line.partner_2_value, self.state_qc.display_name)
 
     def test_merge_partners_update_char_field(self):
         self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
