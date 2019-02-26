@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Partner Duplicate with Phone Numbers',
+    'name': 'Partner Duplicate Multi Relation',
     'version': '1.0.1',
     'author': 'Numigi',
     'maintainer': 'Numigi',
