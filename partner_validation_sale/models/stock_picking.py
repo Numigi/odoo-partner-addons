@@ -12,7 +12,9 @@ class StockPicking(models.Model):
 
     @api.multi
     def button_validate(self):
-        outgoings = self.filtered(lambda sp: sp.picking_type_code == 'outgoing')
+        outgoings = self.filtered(
+            lambda sp: (sp.picking_type_code == 'outgoing' and
+                        sp.location_dest_id.usage == 'customer'))
         if outgoings:
             restricted_partners = self.mapped('partner_id.commercial_partner_id'). \
                 filtered(lambda p: p.customer_state != 'approved'). \
