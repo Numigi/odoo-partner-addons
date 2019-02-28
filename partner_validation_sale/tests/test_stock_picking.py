@@ -44,9 +44,57 @@ class TestSaleOrder(SavepointCase):
             'customer_state': 'new'
         })
 
-        cls.outgoing_picking = cls._create_picking(cls, cls.partner, 'outgoing')
-        cls.internal_picking = cls._create_picking(cls, cls.partner, 'internal')
-        cls.incoming_picking = cls._create_picking(cls, cls.partner, 'incoming')
+        cls.outgoing_picking = cls._create_picking(cls.partner, 'outgoing')
+        cls.internal_picking = cls._create_picking(cls.partner, 'internal')
+        cls.incoming_picking = cls._create_picking(cls.partner, 'incoming')
+
+    @classmethod
+    def _create_picking(cls, partner, picking_type='outgoing'):
+        if picking_type == 'internal':
+            src_location = cls.env.ref('stock.stock_location_stock')
+            dest_location = cls.env.ref('stock.stock_location_stock')
+            p_type = cls.env.ref('stock.picking_type_internal')
+
+        elif picking_type == 'incoming':
+            src_location = cls.env.ref('stock.stock_location_suppliers')
+            dest_location = cls.env.ref('stock.stock_location_stock')
+            p_type = cls.env.ref('stock.picking_type_in')
+
+        elif picking_type == 'purchase_return':
+            src_location = cls.env.ref('stock.stock_location_stock')
+            dest_location = cls.env.ref('stock.stock_location_suppliers')
+            p_type = cls.env.ref('stock.picking_type_out')
+
+        else:
+            src_location = cls.env.ref('stock.stock_location_stock')
+            dest_location = cls.env.ref('stock.stock_location_customers')
+            p_type = cls.env.ref('stock.picking_type_out')
+
+        picking = cls.env['stock.picking'].create({
+            'partner_id': partner.id,
+            'picking_type_id': p_type.id,
+            'location_id': src_location.id,
+            'location_dest_id': dest_location.id,
+        })
+
+        product_values = {'name': 'Test product',
+                          'list_price': 5,
+                          'type': 'product'}
+        product = cls.env['product.product'].create(product_values)
+
+        cls.env['stock.move'].create({
+            'name': '/',
+            'picking_id': picking.id,
+            'product_id': product.id,
+            'product_uom_qty': 1,
+            'quantity_done': 1,
+            'product_uom': product.uom_id.id,
+            'location_id': src_location.id,
+            'location_dest_id': dest_location.id,
+        })
+        picking.action_confirm()
+        picking.force_assign()
+        return picking
 
     def test_01_validate_outgoing_picking_of_new_partner_with_normal_user(self):
         with self.assertRaises(WarningOdoo):
@@ -100,42 +148,8 @@ class TestSaleOrder(SavepointCase):
         res = self.incoming_picking.sudo(self.customer_approval_user).button_validate()
         self.assertIsNone(res)
 
-    def _create_picking(self, partner, picking_type='outgoing'):
-        src_location = self.env.ref('stock.stock_location_stock')
-        dest_location = self.env.ref('stock.stock_location_customers')
-        p_type = self.env.ref('stock.picking_type_out')
-
-        if picking_type == 'internal':
-            src_location = self.env.ref('stock.stock_location_stock')
-            dest_location = self.env.ref('stock.stock_location_stock')
-            p_type = self.env.ref('stock.picking_type_internal')
-        if picking_type == 'incoming':
-            src_location = self.env.ref('stock.stock_location_suppliers')
-            dest_location = self.env.ref('stock.stock_location_stock')
-            p_type = self.env.ref('stock.picking_type_in')
-
-        picking = self.env['stock.picking'].create({
-            'partner_id': partner.id,
-            'picking_type_id': p_type.id,
-            'location_id': src_location.id,
-            'location_dest_id': dest_location.id,
-        })
-
-        product_values = {'name': 'Test product',
-                          'list_price': 5,
-                          'type': 'product'}
-        product = self.env['product.product'].create(product_values)
-
-        self.env['stock.move'].create({
-            'name': '/',
-            'picking_id': picking.id,
-            'product_id': product.id,
-            'product_uom_qty': 1,
-            'quantity_done': 1,
-            'product_uom': product.uom_id.id,
-            'location_id': src_location.id,
-            'location_dest_id': dest_location.id,
-        })
-        picking.action_confirm()
-        picking.force_assign()
-        return picking
+    def test_on_purchase_return__constraints_are_not_triggered(self):
+        return_picking = self._create_picking(self.partner, 'purchase_return')
+        self.assertEqual(self.partner.customer_state, 'new')
+        res = return_picking.sudo(self.normal_user).button_validate()
+        self.assertIsNone(res)
