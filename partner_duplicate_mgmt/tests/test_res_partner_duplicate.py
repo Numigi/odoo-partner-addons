@@ -3,19 +3,22 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import pytest
+from ddt import ddt, data, unpack
+from itertools import permutations
 from odoo.api import Environment
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import common
 from odoo.tools import SUPERUSER_ID
 
 import random
 
 
-class TestResPartnerDuplicate(common.SavepointCase):
+class PartnerDuplicateCase(common.SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestResPartnerDuplicate, cls).setUpClass()
+        super().setUpClass()
 
         # Test using the demo user to prevent bugs related with access rights.
         cls.env = Environment(cls.env.cr, cls.env.ref('base.user_demo').id, {})
@@ -94,6 +97,9 @@ class TestResPartnerDuplicate(common.SavepointCase):
 
         cls.company_dup.open_partner_merge_wizard()
         cls.company_merge_lines = cls.company_dup.merge_line_ids
+
+
+class TestResPartnerDuplicate(PartnerDuplicateCase):
 
     def test_cron_executed_twice_wont_create_2_duplicates(self):
         self.cron.sudo().method_direct_trigger()
@@ -400,3 +406,50 @@ class TestResPartnerDuplicate(common.SavepointCase):
         self.assertEqual(dup1.state, 'merged')
         self.assertEqual(dup2.state, 'resolved')
         self.assertEqual(dup3.state, 'to_validate')
+
+
+@ddt
+class TestMergeChildWithParent(PartnerDuplicateCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.partner_1 = cls.env['res.partner'].create({'name': 'Partner 1'})
+        cls.partner_2 = cls.env['res.partner'].create({
+            'name': 'Partner 2',
+            'parent_id': cls.partner_1.id,
+        })
+        cls.partner_3 = cls.env['res.partner'].create({
+            'name': 'Partner 3',
+            'parent_id': cls.partner_2.id,
+        })
+
+    def merge_partners(self, preserved_partner, archived_partner):
+        duplicate_row = self.env['res.partner.duplicate'].create({
+            'partner_1_id': preserved_partner.id,
+            'partner_2_id': archived_partner.id,
+            'partner_preserved_id': preserved_partner.id,
+        })
+        duplicate_row.merge_partners()
+
+    @data(*permutations(['partner_1', 'partner_2', 'partner_3'], 2))
+    @unpack
+    def test_can_not_merge_partner_with_parent(self, key_1, key_2):
+        preserved_partner = getattr(self, key_1)
+        archived_partner = getattr(self, key_2)
+        with pytest.raises(ValidationError):
+            self.merge_partners(preserved_partner, archived_partner)
+
+    def test_can_merge_partners_with_no_relation(self):
+        self.partner_2.parent_id = False
+        preserved_partner = self.partner_1
+        archived_partner = self.partner_2
+        self.merge_partners(preserved_partner, archived_partner)
+        assert self.partner_2.active is False
+
+    def test_can_merge_sibling_partners(self):
+        self.partner_3.parent_id = self.partner_1
+        preserved_partner = self.partner_2
+        archived_partner = self.partner_3
+        self.merge_partners(preserved_partner, archived_partner)
+        assert self.partner_3.active is False
