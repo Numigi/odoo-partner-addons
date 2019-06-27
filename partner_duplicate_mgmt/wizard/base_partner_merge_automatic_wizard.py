@@ -1,13 +1,30 @@
-# -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
+# © 2019 Numigi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from itertools import permutations
 from odoo import _, api, models, SUPERUSER_ID
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 import logging
 
 _logger = logging.getLogger('base.partner.merge')
+
+
+def is_child_partner_of(partner_1, partner_2) -> bool:
+    """Evaluate whether a given partner is a child of another partner.
+
+    This function works recursively.
+    It will return True if partner_1 is the grandchild of partner_2
+    and so on.
+
+    :param partner_1: the possible child partner
+    :param partner_1: the possible parent partner
+    """
+    children = partner_1.with_context(active_test=False).search([
+        ('parent_id', 'child_of', partner_2.id),
+    ])
+    return partner_1 in children
 
 
 class MergePartnerAutomatic(models.TransientModel):
@@ -52,12 +69,21 @@ class MergePartnerAutomatic(models.TransientModel):
             'parent_id': dst_partner.id,
         })
 
+    def _check_partner_not_merged_with_parent(self, partners):
+        for partner_1, partner_2 in permutations(partners, 2):
+            if is_child_partner_of(partner_1, partner_2):
+                raise ValidationError(_(
+                    "You may not merge a partner ({child}) with its parent ({parent})."
+                ).format(child=partner_1.display_name, parent=partner_2.display_name))
+
     def _merge(self, partner_ids, dst_partner):
         """
         Override completely the original function to remove useless code.
         """
         Partner = self.env['res.partner']
         partner_ids = Partner.browse(partner_ids).exists()
+
+        self._check_partner_not_merged_with_parent(partner_ids)
 
         # remove dst_partner from partners to merge
         if dst_partner and dst_partner in partner_ids:

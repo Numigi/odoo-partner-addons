@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-22 19:18+0000\n"
-"PO-Revision-Date: 2018-10-22 15:28-0400\n"
+"POT-Creation-Date: 2019-06-27 16:11+0000\n"
+"PO-Revision-Date: 2019-06-27 12:12-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -54,6 +54,7 @@ msgstr ""
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner__company_type
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users__company_type
 msgid "Company Type"
 msgstr ""
 
@@ -113,21 +114,25 @@ msgstr "Doublon"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner__duplicate_1_ids
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users__duplicate_1_ids
 msgid "Duplicate 1"
 msgstr "Doublon 1"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner__duplicate_2_ids
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users__duplicate_2_ids
 msgid "Duplicate 2"
 msgstr "Doublon 2"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner__duplicate_count
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users__duplicate_count
 msgid "Duplicate Count"
 msgstr "Nombre de doublons"
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner__duplicate_ids
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users__duplicate_ids
 #: model_terms:ir.ui.view,arch_db:partner_duplicate_mgmt.view_partner_form
 msgid "Duplicate Partners"
 msgstr "Partenaires en double"
@@ -221,6 +226,7 @@ msgstr ""
 
 #. module: partner_duplicate_mgmt
 #: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_partner__indexed_name
+#: model:ir.model.fields,field_description:partner_duplicate_mgmt.field_res_users__indexed_name
 msgid "Indexed Name"
 msgstr "Nom indexé"
 
@@ -629,7 +635,7 @@ msgid "You can not merge a line which is not to validate."
 msgstr "Vous ne pouvez pas fusionner une ligne qui n'est pas à valider."
 
 #. module: partner_duplicate_mgmt
-#: code:addons/partner_duplicate_mgmt/wizard/base_partner_merge_automatic_wizard.py:81
+#: code:addons/partner_duplicate_mgmt/wizard/base_partner_merge_automatic_wizard.py:107
 #, python-format
 msgid ""
 "You can not merge the contact %(contact)s because it is linked to journal "
@@ -654,6 +660,14 @@ msgstr ""
 #, python-format
 msgid "You don't have access to merge partners."
 msgstr "Vous n'avez pas accès à la fusion de partenaires."
+
+#. module: partner_duplicate_mgmt
+#: code:addons/partner_duplicate_mgmt/wizard/base_partner_merge_automatic_wizard.py:75
+#, python-format
+msgid "You may not merge a partner ({child}) with its parent ({parent})."
+msgstr ""
+"Vous ne pouvez pas fusionner un partenaire ({child}) avec son parent "
+"({parent})."
 
 #. module: partner_duplicate_mgmt
 #: model:res.partner.duplicate.field,name:partner_duplicate_mgmt.duplicate_field_zip
