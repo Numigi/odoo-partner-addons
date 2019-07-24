@@ -12,9 +12,9 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
     _inherit = 'res.partner.change.parent'
 
     @api.multi
-    def validate(self):
+    def _duplicate_contact_and_change_parent(self):
         """Add/update relations on between partners."""
-        res = super().validate()
+        res = super()._duplicate_contact_and_change_parent()
         self._copy_same_relations()
         self._transfer_non_work_non_same_relations()
         self._add_same_relation_with_old_contact()
