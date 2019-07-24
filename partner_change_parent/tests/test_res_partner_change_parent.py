@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.api import Environment
+from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import common
 
 
@@ -13,8 +13,16 @@ class TestResPartnerChangeParent(common.SavepointCase):
     def setUpClass(cls):
         super(TestResPartnerChangeParent, cls).setUpClass()
 
+        cls.user = cls.env.ref('base.user_demo')
+
+        cls.internal_user = cls.env['res.users'].create({
+            'name': 'Test User',
+            'login': 'test.user@example.com',
+            'email': 'test.user@example.com',
+        })
+
         # Test using the demo user to prevent bugs related with access rights.
-        cls.env = Environment(cls.env.cr, cls.env.ref('base.user_demo').id, {})
+        cls.env = Environment(cls.env.cr, cls.user.id, {})
 
         cls.company_1 = cls.env['res.partner'].create({'name': 'Company 1', 'is_company': True})
         cls.company_2 = cls.env['res.partner'].create({'name': 'Company 2', 'is_company': True})
@@ -92,3 +100,26 @@ class TestResPartnerChangeParent(common.SavepointCase):
 
         new_contact = self._run_partner_change_wizard(self.contact_1, self.company_2)
         self.assertFalse(new_contact.city)
+
+    def test_if_partner_is_internal_user__parent_entity_is_set_directly(self):
+        self.user.groups_id |= self.env.ref('base.group_erp_manager')
+
+        old_contact = self.internal_user.partner_id
+        new_contact = self._run_partner_change_wizard(old_contact, self.company_2)
+        self.assertFalse(new_contact)
+        self.assertEqual(old_contact.parent_id, self.company_2)
+
+    def test_user_not_admin__change_company_of_internal_user_raises_access_error(self):
+        with self.assertRaises(AccessError):
+            self._run_partner_change_wizard(self.internal_user.partner_id, self.company_2)
+
+    def test_if_user_bound_to_portal_user__raise_validation_error(self):
+        contact = self.env.ref('base.partner_demo_portal')
+        with self.assertRaises(ValidationError):
+            self._run_partner_change_wizard(contact, self.company_2)
+
+    def test_if_portal_user_archived__parent_company_changed(self):
+        contact = self.env.ref('base.partner_demo_portal')
+        contact.user_ids.sudo().active = False
+        new_contact = self._run_partner_change_wizard(contact, self.company_2)
+        self.assertEqual(new_contact.parent_id, self.company_2)
