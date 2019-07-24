@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-22 19:19+0000\n"
-"PO-Revision-Date: 2018-10-22 15:29-0400\n"
+"POT-Creation-Date: 2019-07-24 15:23+0000\n"
+"PO-Revision-Date: 2019-07-24 11:25-0400\n"
 "Last-Translator: Agathe Mollé <agathe.molle@savoirfairelinux.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -76,7 +76,7 @@ msgid "New Company"
 msgstr "Nouvelle société"
 
 #. module: partner_change_parent
-#: code:addons/partner_change_parent/wizard/res_partner_change_parent.py:57
+#: code:addons/partner_change_parent/wizard/res_partner_change_parent.py:99
 #, python-format
 msgid "New Contact"
 msgstr "Nouveau Contact"
@@ -85,6 +85,16 @@ msgstr "Nouveau Contact"
 #: model:ir.model,name:partner_change_parent.model_res_partner_change_parent
 msgid "Partner Parent Change Wizard"
 msgstr "Assistant de changement de société parente"
+
+#. module: partner_change_parent
+#: code:addons/partner_change_parent/wizard/res_partner_change_parent.py:131
+#, python-format
+msgid ""
+"The contact {contact} is bound to an active portal user. Before changing the "
+"parent entity, you must archive this user."
+msgstr ""
+"Le contact ({contact}) est lié à un utilisateur du portail actif. Avant de "
+"changer la société parente, vous devez archiver cet utilisateur."
 
 #. module: partner_change_parent
 #: model_terms:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent

@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class ResPartnerParentChange(models.TransientModel):
@@ -34,34 +34,9 @@ class ResPartnerParentChange(models.TransientModel):
         domain=[('is_company', '=', True)],
     )
 
-    @api.multi
-    def validate(self):
-        """Reassign the contact to a new parent entity.
-
-        * The old contact is copied.
-        * The copy is placed under the destination entity.
-        * Relations are created/updated between the involved partners.
-        * The old contact is archived.
-
-        This complex process for reassigning a contact to a new entity is
-        required because otherwise, all objects previously related to the contact
-        would follow the contact under the new entity.
-
-        For example, we don't want invoices to follow the contact under the
-        new entity. The commercial entity on an invoice must not be changed.
-        """
-        self.ensure_one()
-        self.new_contact_id = self._copy_old_contact()
-        self._archive_old_contact()
-        return {
-            'name': _('New Contact'),
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'res.partner',
-            'res_id': self.new_contact_id.id,
-            'context': self._context,
-            'type': 'ir.actions.act_window',
-        }
+    def _archive_old_contact(self):
+        """Archive the old contact."""
+        self.contact_id.active = False
 
     def _copy_old_contact(self):
         """Copy the old contact.
@@ -103,9 +78,63 @@ class ResPartnerParentChange(models.TransientModel):
         new_contact.parent_id = self.new_company_id
         return new_contact
 
-    def _archive_old_contact(self):
-        """Archive the old contact."""
-        self.contact_id.active = False
+    def _duplicate_contact_and_change_parent(self):
+        """Duplicate the contact and change the parent.
+
+        * The old contact is copied.
+        * The copy is placed under the destination entity.
+        * Relations are created/updated between the involved partners.
+        * The old contact is archived.
+
+        This complex process for reassigning a contact to a new entity is
+        required because otherwise, all objects previously related to the contact
+        would follow the contact under the new entity.
+
+        For example, we don't want invoices to follow the contact under the
+        new entity. The commercial entity on an invoice must not be changed.
+        """
+        self.new_contact_id = self._copy_old_contact()
+        self._archive_old_contact()
+        return {
+            'name': _('New Contact'),
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'res.partner',
+            'res_id': self.new_contact_id.id,
+            'context': self._context,
+            'type': 'ir.actions.act_window',
+        }
+
+    def _change_parent_directly(self):
+        """Change the parent entity without any other change to the contact."""
+        self.contact_id.parent_id = self.new_company_id
+        return True
+
+    @api.multi
+    def validate(self):
+        """Reassign the contact to a new parent entity.
+
+        In case of an internal user, the parent partner is changed directly.
+
+        In case of a share partner, the current partner is archived.
+        A copy of the partner is created with the new company.
+        """
+        self.ensure_one()
+
+        is_internal_user = not self.contact_id.partner_share
+        is_bound_to_user = self.contact_id.user_ids
+
+        if is_internal_user:
+            return self._change_parent_directly()
+
+        elif is_bound_to_user:
+            raise ValidationError(_(
+                "The contact {contact} is bound to an active portal user. "
+                "Before changing the parent entity, you must archive this user."
+            ).format(contact=self.contact_id.display_name))
+
+        else:
+            return self._duplicate_contact_and_change_parent()
 
 
 class ResPartnerParentChangeNoDuplicateCheck(models.TransientModel):
