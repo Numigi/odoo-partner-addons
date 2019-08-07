@@ -16,16 +16,22 @@ class TestResPartner(common.SavepointCase):
         # Test using the demo user to prevent bugs related with access rights.
         cls.env = Environment(cls.env.cr, cls.env.ref('base.user_demo').id, {})
 
+        cls.partner_1_phone = '(415) 555-2671'
+        cls.partner_1_mobile = '+1 (415) 678-4529'
+
         cls.partner_1 = cls.env['res.partner'].create({
             'name': 'Hadi',
-            'phone': '(415) 555-2671',
-            'mobile': '+1 (415) 678-4529',
+            'phone': cls.partner_1_phone,
+            'mobile': cls.partner_1_mobile,
         })
+
+        cls.partner_2_phone_other = '415-222-3456'
+        cls.partner_2_phone_home = '581-999-5555'
 
         cls.partner_2 = cls.env['res.partner'].create({
             'name': 'Cohen',
-            'phone_other': '415-222-3456',
-            'phone_home': '581-999-5555',
+            'phone_other': cls.partner_2_phone_other,
+            'phone_home': cls.partner_2_phone_home,
         })
 
     def test_compute_phone_indexed(self):
@@ -87,7 +93,7 @@ class TestResPartner(common.SavepointCase):
 
     def test_write_with_duplicate_phone_other(self):
         self.partner_1.write({
-            'phone_other': '(415) 222-3456',
+            'phone_other': self.partner_2_phone_other,
         })
         self.assertTrue(self.partner_2.duplicate_ids)
 
@@ -110,3 +116,19 @@ class TestResPartner(common.SavepointCase):
             ('partner_2_id', 'in', partners.ids),
         ])
         self.assertEqual(len(duplicates), 1)
+
+    def test_partner_is_not_dupplicate_with_its_parent(self):
+        self.partner_1.write({
+            'parent_id': self.partner_2.id,
+            'phone_other': self.partner_2_phone_other,
+        })
+        self.assertFalse(self.partner_2.duplicate_ids)
+
+    def test_on_duplicate_create_cron__parent_partners_with_same_phone_excluded(self):
+        self.partner_1.write({
+            'parent_id': self.partner_2.id,
+            'phone_other': self.partner_2_phone_other,
+        })
+        cron = self.env.ref('partner_duplicate_mgmt.ir_cron_create_duplicates')
+        cron.sudo().method_direct_trigger()
+        self.assertFalse(self.partner_2.duplicate_ids)

@@ -34,6 +34,8 @@ class ResPartnerDuplicateWithPhoneComparisons(models.Model):
             SELECT p1.id, p2.id
             FROM res_partner p1, res_partner p2
             WHERE p1.id != p2.id
+            AND p1.parent_id != p2.id
+            AND p2.parent_id != p1.id
             AND p1.active = true
             AND p2.active = true
             AND (

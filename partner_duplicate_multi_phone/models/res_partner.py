@@ -179,7 +179,9 @@ class ResPartnerWithIndexedPhones(models.Model):
             'phone': phone,
         })
 
-        return self.env['res.partner'].browse([r[0] for r in cr.fetchall()])
+        duplicate_partners = self.env['res.partner'].browse([r[0] for r in cr.fetchall()])
+        exclude_parents_and_children = (lambda p: p.parent_id != self and self.parent_id != p)
+        return duplicate_partners.filtered(exclude_parents_and_children)
 
 
 def generate_phone_indexed_value(phone):
