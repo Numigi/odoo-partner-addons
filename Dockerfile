@@ -15,6 +15,7 @@ USER odoo
 
 COPY google_partner_address /mnt/extra-addons/google_partner_address
 COPY partner_change_parent /mnt/extra-addons/partner_change_parent
+COPY partner_change_parent_affiliate /mnt/extra-addons/partner_change_parent_affiliate
 COPY partner_duplicate_mgmt /mnt/extra-addons/partner_duplicate_mgmt
 COPY partner_duplicate_multi_phone /mnt/extra-addons/partner_duplicate_multi_phone
 COPY partner_duplicate_multi_relation /mnt/extra-addons/partner_duplicate_multi_relation
