@@ -18,7 +18,9 @@ class ResPartner(models.Model):
         create a work relation between the company and the contact.
         """
         res = super().create(vals)
-        if res.parent_id.is_company:
+
+        requires_work_relation = not res.is_company and res.parent_id.is_company
+        if requires_work_relation:
             self.env['res.partner.relation'].create({
                 'left_partner_id': res.id,
                 'right_partner_id': res.parent_id.id,
