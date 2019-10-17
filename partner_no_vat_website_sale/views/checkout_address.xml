@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="checkout_address_with_vat_hidden" name="Checkout Address With VAT Hidden" inherit_id="website_sale.address_b2b">
+        <xpath expr="//input[@name='vat']/.." position="attributes">
+            <attribute name="t-attf-class">d-none</attribute>
+        </xpath>
+    </template>
+
+</odoo>
