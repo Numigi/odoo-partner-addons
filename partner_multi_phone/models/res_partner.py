@@ -34,6 +34,10 @@ class ResPartnerWithExtraPhones(models.Model):
         if self.phone_other:
             self.phone_other = self.phone_format(self.phone_other)
 
+    @api.model
+    def _get_phone_fields(self):
+        return super()._get_phone_fields() + ['phone_home', 'phone_other']
+
 
 class ResPartnerWithPhoneSearch(models.Model):
 
