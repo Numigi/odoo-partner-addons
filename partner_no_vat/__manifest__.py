@@ -10,7 +10,7 @@
     'category': 'Other',
     'summary': 'Hide VAT on partners',
     'depends': [
-        'base',
+        'portal',
     ],
     'data': [
         'views/portal.xml',
