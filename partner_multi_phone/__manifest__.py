@@ -12,7 +12,7 @@
     'license': 'LGPL-3',
     'category': 'Partner Management',
     'depends': [
-        'phone_validation',
+        'partner_phone_validation',
         'sms',
     ],
     'data': [
