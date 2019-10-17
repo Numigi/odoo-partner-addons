@@ -25,6 +25,8 @@
         'partner_multi_relation_strength',
         'partner_multi_relation_work',
         'partner_name_no_shortcut',
+        'partner_no_vat',
+        'partner_no_vat_website_sale',
         'partner_phone_no_envelope',
         'partner_phone_validation',
         'partner_reference',
