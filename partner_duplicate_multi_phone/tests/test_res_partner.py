@@ -16,79 +16,84 @@ class TestResPartner(common.SavepointCase):
         # Test using the demo user to prevent bugs related with access rights.
         cls.env = Environment(cls.env.cr, cls.env.ref('base.user_demo').id, {})
 
-        cls.partner_1_phone = '(415) 555-2671'
-        cls.partner_1_mobile = '+1 (415) 678-4529'
+        cls.partner_1_phone = '+1 (450) 555-2671'
+        cls.partner_1_mobile = '+1 (450) 678-4529'
 
         cls.partner_1 = cls.env['res.partner'].create({
             'name': 'Hadi',
+            'country_id': cls.env.ref('base.ca').id,
             'phone': cls.partner_1_phone,
             'mobile': cls.partner_1_mobile,
         })
 
-        cls.partner_2_phone_other = '415-222-3456'
+        cls.partner_2_phone_other = '450-222-3456'
         cls.partner_2_phone_home = '581-999-5555'
 
         cls.partner_2 = cls.env['res.partner'].create({
             'name': 'Cohen',
+            'country_id': cls.env.ref('base.ca').id,
             'phone_other': cls.partner_2_phone_other,
             'phone_home': cls.partner_2_phone_home,
         })
 
     def test_compute_phone_indexed(self):
-        self.assertEqual('4155552671', self.partner_1.phone_indexed)
+        self.assertEqual('14505552671', self.partner_1.phone_indexed)
 
     def test_compute_mobile_indexed(self):
-        self.assertEqual('14156784529', self.partner_1.mobile_indexed)
+        self.assertEqual('14506784529', self.partner_1.mobile_indexed)
 
     def test_compute_phone_other_indexed(self):
-        self.assertEqual('4152223456', self.partner_2.phone_other_indexed)
+        self.assertEqual('14502223456', self.partner_2.phone_other_indexed)
 
     def test_compute_phone_home_indexed(self):
-        self.assertEqual('5819995555', self.partner_2.phone_home_indexed)
+        self.assertEqual('15819995555', self.partner_2.phone_home_indexed)
 
     def test_create_partner_with_duplicate_phone_home(self):
         self.partner_3 = self.env['res.partner'].create({
             'name': 'Partner XYZ',
-            'phone_home': '14156784529',
+            'country_id': self.env.ref('base.ca').id,
+            'phone_home': '14506784529',
         })
         self.assertEqual(len(self.partner_3.duplicate_ids), 1)
 
     def test_create_partner_with_duplicate_mobile(self):
         self.partner_3 = self.env['res.partner'].create({
             'name': 'Partner XYZ',
-            'mobile': '14156784529'
+            'country_id': self.env.ref('base.ca').id,
+            'mobile': '14506784529'
         })
         self.assertEqual(len(self.partner_3.duplicate_ids), 1)
 
     def test_create_partner_with_duplicate_phone(self):
         self.partner_3 = self.env['res.partner'].create({
             'name': 'Partner XYZ',
-            'phone': '4152223456',
+            'phone': '14502223456',
         })
         self.assertEqual(len(self.partner_3.duplicate_ids), 1)
 
     def test_create_partner_with_duplicate_phone_other(self):
         self.partner_3 = self.env['res.partner'].create({
             'name': 'Partner XYZ',
-            'phone_other': '4152223456',
+            'phone_other': '14502223456',
         })
         self.assertEqual(len(self.partner_3.duplicate_ids), 1)
 
     def test_create_partner_with_duplicate_phone_numbers(self):
         self.partner_3 = self.env['res.partner'].create({
             'name': 'Partner XYZ',
-            'phone_other': '4152223456',
-            'phone_home': '14156784529',
+            'country_id': self.env.ref('base.ca').id,
+            'phone_other': '14502223456',
+            'phone_home': '14506784529',
         })
         self.assertTrue(self.partner_3.duplicate_ids)
         self.assertEqual(len(self.partner_3.duplicate_ids), 2)
 
     def test_write_with_duplicate_phone(self):
-        self.partner_2.write({'phone_home': '14156784529'})
+        self.partner_2.write({'phone_home': '14506784529'})
         self.assertTrue(self.partner_2.duplicate_ids)
 
     def test_write_with_duplicate_mobile(self):
-        self.partner_2.write({'mobile': '14156784529'})
+        self.partner_2.write({'mobile': '14506784529'})
         self.assertTrue(self.partner_2.duplicate_ids)
 
     def test_write_with_duplicate_phone_other(self):
@@ -103,14 +108,14 @@ class TestResPartner(common.SavepointCase):
 
     def test_duplicate_can_not_be_created_twice(self):
         partners = self.partner_1 | self.partner_2
-        self.partner_2.write({'mobile': '14156784529'})
+        self.partner_2.write({'mobile': '14506784529'})
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', partners.ids),
             ('partner_2_id', 'in', partners.ids),
         ])
         self.assertEqual(len(duplicates), 1)
 
-        self.partner_2.phone = '4155552671'
+        self.partner_2.phone = '4505552671'
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', partners.ids),
             ('partner_2_id', 'in', partners.ids),
