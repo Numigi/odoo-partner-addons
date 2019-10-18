@@ -7,7 +7,7 @@ from odoo.tests import common
 from odoo.addons.partner_phone_validation.tests.test_phone_format_on_save import PHONE_NUMBERS
 
 PHONE_FIELDS = ('phone_home', 'phone_other')
-PHONE_CASES = product(PHONE_NUMBERS, PHONE_FIELDS)
+PHONE_CASES = list(product(PHONE_NUMBERS, PHONE_FIELDS))
 
 
 @ddt
