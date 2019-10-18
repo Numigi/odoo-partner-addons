@@ -15,7 +15,7 @@ PHONE_NUMBERS = [
 
 PHONE_FIELDS = ('phone', 'mobile')
 
-PHONE_CASES = product(PHONE_NUMBERS, PHONE_FIELDS)
+PHONE_CASES = list(product(PHONE_NUMBERS, PHONE_FIELDS))
 
 
 @ddt
@@ -42,4 +42,5 @@ class TestPhoneFormatOnSave(common.SavepointCase):
     def test_on_create__phone_formatted(self, phones, field):
         given_phone, expected_phone = phones
         new_partner = self.partner.copy({field: given_phone})
+        new_partner.refresh()
         assert new_partner[field] == expected_phone
