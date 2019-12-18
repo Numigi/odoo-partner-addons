@@ -22,6 +22,7 @@ COPY partner_duplicate_multi_phone /mnt/extra-addons/partner_duplicate_multi_pho
 COPY partner_duplicate_multi_relation /mnt/extra-addons/partner_duplicate_multi_relation
 COPY partner_edit_group /mnt/extra-addons/partner_edit_group
 COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_before_lastname
+COPY partner_gst_qst /mnt/extra-addons/partner_gst_qst
 COPY partner_key_date /mnt/extra-addons/partner_key_date
 COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
 COPY partner_multi_relation_note /mnt/extra-addons/partner_multi_relation_note
