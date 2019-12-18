@@ -11,7 +11,6 @@
     'category': 'Other',
     'summary': 'Install all addons required for testing.',
     'depends': [
-        'contact_birth_city',
         'google_partner_address',
         'partner_change_parent',
         'partner_change_parent_affiliate',
