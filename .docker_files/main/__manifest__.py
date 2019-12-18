@@ -20,6 +20,7 @@
         'partner_duplicate_multi_relation',
         'partner_edit_group',
         'partner_firstname_before_lastname',
+        'partner_gst_qst',
         'partner_key_date',
         'partner_multi_phone',
         'partner_multi_relation_note',
