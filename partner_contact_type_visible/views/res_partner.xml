@@ -11,7 +11,7 @@
             </field>
             <field name="type" position="attributes">
                 <attribute name="attrs">{
-                    'invisible': ['|', ('is_company', '=', True), ('parent_id', '=', False)],
+                    'invisible': ['|', ('is_company', '=', True),
                     'required': ['&amp;', ('is_company', '=', False), ('parent_id', '!=', False)],
                 }</attribute>
             </field>
