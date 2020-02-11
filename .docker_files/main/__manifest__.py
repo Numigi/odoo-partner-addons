@@ -11,6 +11,7 @@
     'category': 'Other',
     'summary': 'Install all addons required for testing.',
     'depends': [
+        'contacts_config_menu_moved_right',
         'contacts_config_sale_manager',
         'google_partner_address',
         'partner_change_parent',
