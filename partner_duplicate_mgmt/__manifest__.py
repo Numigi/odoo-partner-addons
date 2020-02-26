@@ -13,10 +13,11 @@
     'category': 'Partner Management',
     'summary': 'Manage Partner Duplicates',
     'depends': [
+        'account',
+        'base_view_inheritance_extension',
         'contacts',
         'crm',
         'mail',
-        'account',
     ],
     'data': [
         'data/ir_config_parameter.xml',

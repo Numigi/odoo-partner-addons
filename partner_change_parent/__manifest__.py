@@ -10,7 +10,9 @@
     "complexity": "normal",
     "category": "Customer Relationship Management",
     "license": "LGPL-3",
-    "depends": ['base'],
+    "depends": [
+        'base_view_inheritance_extension',
+    ],
     "data": [
         'wizard/res_partner_change_parent.xml',
         'views/res_partner.xml',

@@ -12,6 +12,7 @@
     'license': 'LGPL-3',
     'category': 'Partner Management',
     'depends': [
+        'base_view_inheritance_extension',
         'partner_phone_validation',
         'sms',
     ],

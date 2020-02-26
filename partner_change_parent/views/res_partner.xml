@@ -35,14 +35,9 @@
                 <field name="id" invisible="1"/>
             </field>
             <field name="parent_id" position="attributes">
-                <attribute name="attrs">{
-                    'invisible': [
-                        '|', '&amp;',
-                        ('is_company','=', True), ('parent_id', '=', False),
-                        ('company_name', '!=', False), ('company_name', '!=', '')
-                    ],
-                    'readonly': [('id', '!=', False)],
-                }</attribute>
+                <attribute name="attrs" operation="python_dict" key="readonly">
+                    [('id', '!=', False)]
+                </attribute>
             </field>
         </field>
     </record>
@@ -56,10 +51,9 @@
                 <field name="id" invisible="1"/>
             </field>
             <field name="parent_id" position="attributes">
-                <attribute name="attrs">{
-                    'invisible': [('is_company','=', True)],
-                    'readonly': [('id', '!=', False)],
-                }</attribute>
+                <attribute name="attrs" operation="python_dict" key="readonly">
+                    [('id', '!=', False)]
+                </attribute>
             </field>
         </field>
     </record>
@@ -73,10 +67,9 @@
                 <field name="id" invisible="1"/>
             </field>
             <field name="parent_id" position="attributes">
-                <attribute name="attrs">{
-                    'invisible': [('is_company','=', True)],
-                    'readonly': [('id', '!=', False)],
-                }</attribute>
+                <attribute name="attrs" operation="python_dict" key="readonly">
+                    [('id', '!=', False)]
+                </attribute>
             </field>
         </field>
     </record>

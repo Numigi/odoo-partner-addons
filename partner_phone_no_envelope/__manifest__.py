@@ -9,7 +9,10 @@
     'website': 'https://www.numigi.com',
     'license': 'LGPL-3',
     'category': 'Partner Management',
-    'depends': ['sms'],
+    'depends': [
+        'base_view_inheritance_extension',
+        'sms',
+    ],
     'data': [
         'views/res_partner.xml',
     ],

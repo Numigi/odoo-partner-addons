@@ -12,11 +12,15 @@
 
             <field name="phone" position="attributes">
                 <attribute name="string">Work</attribute>
-                <attribute name="attrs">{'required': [('phone_main', '=', 'work')]}</attribute>
+                <attribute name="attrs" operation="python_dict" key="required">
+                    [('phone_main', '=', 'work')]
+                </attribute>
             </field>
 
             <field name="mobile" position="attributes">
-                <attribute name="attrs">{'required': [('phone_main', '=', 'mobile')]}</attribute>
+                <attribute name="attrs" operation="python_dict" key="required">
+                    [('phone_main', '=', 'mobile')]
+                </attribute>
             </field>
 
             <xpath expr="//field[@name='mobile']/.." position="after">
@@ -50,7 +54,9 @@
 
             <xpath expr="//notebook//form//field[@name='phone']" position="attributes">
                 <attribute name="string">Work</attribute>
-                <attribute name="attrs">{'required': [('phone_main', '=', 'work')]}</attribute>
+                <attribute name="attrs" operation="python_dict" key="required">
+                    [('phone_main', '=', 'work')]
+                </attribute>
             </xpath>
 
             <xpath expr="//notebook//form//field[@name='phone']" position="replace">
@@ -58,7 +64,9 @@
             </xpath>
 
             <xpath expr="//notebook//form//field[@name='mobile']" position="attributes">
-                <attribute name="attrs">{'required': [('phone_main', '=', 'mobile')]}</attribute>
+                <attribute name="attrs" operation="python_dict" key="required">
+                    [('phone_main', '=', 'mobile')]
+                </attribute>
             </xpath>
 
             <xpath expr="//notebook//form//field[@name='mobile']" position="after">

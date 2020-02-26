@@ -10,7 +10,7 @@
     'license': 'LGPL-3',
     'category': 'Partner Management',
     'depends': [
-        'base',
+        'base_view_inheritance_extension',
     ],
     'data': [
         'views/res_partner.xml',
