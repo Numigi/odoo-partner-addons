@@ -91,11 +91,9 @@
                 <field name="partner_2_type" invisible="1"/>
             </field>
             <field name="merger_reason_id" position="attributes">
-                <attribute name="attrs">{
-                    'required': [
-                        ('partner_1_type','=','company'),
-                        ('partner_2_type','=','company')]
-                }</attribute>
+                <attribute name="attrs" operation="python_dict" key="required">
+                    [('partner_1_type','=','company'), ('partner_2_type','=','company')]
+                </attribute>
             </field>
         </field>
     </record>

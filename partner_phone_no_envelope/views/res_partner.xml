@@ -10,10 +10,14 @@
                 <field name="phone_envelope_hidden" invisible="1"/>
             </form>
             <xpath expr="//field[@name='phone']/../button" position="attributes">
-                <attribute name="attrs">{'invisible':['|', ('phone', '=', False), ('phone_envelope_hidden', '=', True)]}</attribute>
+                <attribute name="attrs" operation="python_dict" key="invisible">
+                    ['|', ('phone', '=', False), ('phone_envelope_hidden', '=', True)]
+                </attribute>
             </xpath>
             <xpath expr="//field[@name='mobile']/../button" position="attributes">
-                <attribute name="attrs">{'invisible':['|', ('mobile', '=', False), ('phone_envelope_hidden', '=', True)]}</attribute>
+                <attribute name="attrs" operation="python_dict" key="invisible">
+                    ['|', ('mobile', '=', False), ('phone_envelope_hidden', '=', True)]
+                </attribute>
             </xpath>
         </field>
     </record>
