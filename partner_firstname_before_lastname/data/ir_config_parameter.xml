@@ -6,7 +6,7 @@
         <function
                 model="ir.config_parameter"
                 name="set_param"
-                eval="('partner_names_order.invitation_scope', 'first_last')"
+                eval="('partner_names_order', 'first_last')"
         />
 
     </data>
