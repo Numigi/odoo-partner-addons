@@ -2,10 +2,12 @@
 <odoo>
     <data noupdate="1">
 
-        <record id="partner_names_order" model="ir.config_parameter">
-            <field name="key">partner_names_order</field>
-            <field name="value">first_last</field>
-        </record>
+        <!-- avoid error as the parameter is already introduced by partner_firstname -->
+        <function
+                model="ir.config_parameter"
+                name="set_param"
+                eval="('partner_names_order.invitation_scope', 'first_last')"
+        />
 
     </data>
 </odoo>
