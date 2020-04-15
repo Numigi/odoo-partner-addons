@@ -50,6 +50,7 @@ class TestResPartnerAutocompleteSync(common.TransactionCase):
     def setUp(self):
         super().setUp()
         self.partner = self.env.ref("base.res_partner_1")
+        self.partner.vat = "XX123456789"
         self.autocomplete_sync = self.env["res.partner.autocomplete.sync"].create({
             "partner_id": self.partner.id,
             "synched": False
@@ -58,9 +59,18 @@ class TestResPartnerAutocompleteSync(common.TransactionCase):
     def test_whenStartSync_thenPatchedMethodIsCalled(self):
         """ make sure the targeted method is called during the process
         """
-        with mock.patch.object(self.partner, "_rpc_remote_api") as mocked:
-            self.autocomplete_sync.start_sync()
-            assert mocked.call_count == 1
+        module_memory_address = (
+            "odoo.addons.partner_autocomplete_disable.res_partner.ResPartnerAutocompleteDisable"
+        )
+        with mock.patch(".".join([module_memory_address, "_rpc_remote_api"])) as mocked:
+            autocomplete_module_memory_address = (
+                "odoo.addons.partner_autocomplete.models.res_partner.ResPartner"
+            )
+            mocked.return_value = {}, False
+            with mock.patch(".".join([autocomplete_module_memory_address, "_is_vat_syncable"])) as sync:
+                sync.return_value = True
+                self.autocomplete_sync.start_sync()
+                assert mocked.call_count == 1
 
     def test_whenStartSync_noDataAreSent(self):
         with mock.patch("odoo.addons.iap.jsonrpc") as mocked:
