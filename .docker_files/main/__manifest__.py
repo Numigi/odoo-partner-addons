@@ -14,6 +14,7 @@
         'contacts_config_menu_moved_right',
         'contacts_config_sale_manager',
         'google_partner_address',
+        'partner_autocomplete_disable',
         'partner_change_parent',
         'partner_change_parent_affiliate',
         'partner_contact_type_visible',
