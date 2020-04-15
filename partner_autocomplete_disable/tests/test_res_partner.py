@@ -1,7 +1,7 @@
 # © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from ddt import ddt, unpack, data
+from ddt import ddt, data
 from unittest import mock
 from odoo.tests import common
 
