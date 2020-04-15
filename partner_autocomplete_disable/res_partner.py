@@ -8,5 +8,5 @@ class ResPartnerAutocompleteDisable(models.Model):
     _inherit = "res.partner"
 
     @api.model
-    def autocomplete(self, query):
-        return []
+    def _rpc_remote_api(self, *args, **kwargs):
+        return {}, False
