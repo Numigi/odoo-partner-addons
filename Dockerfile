@@ -16,6 +16,7 @@ USER odoo
 COPY contacts_config_menu_moved_right /mnt/extra-addons/contacts_config_menu_moved_right
 COPY contacts_config_sale_manager /mnt/extra-addons/contacts_config_sale_manager
 COPY google_partner_address /mnt/extra-addons/google_partner_address
+COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
 COPY partner_change_parent /mnt/extra-addons/partner_change_parent
 COPY partner_change_parent_affiliate /mnt/extra-addons/partner_change_parent_affiliate
 COPY partner_contact_type_visible /mnt/extra-addons/partner_contact_type_visible
