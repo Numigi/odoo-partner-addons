@@ -5,7 +5,7 @@
   - partner_multi_relation
   - partner_affiliate
 
-- url: https://github.com/numigi/web-addons
+- url: https://github.com/numigi/odoo-web-addons
   branch: "12.0"
   includes:
   - web_list_column_width
