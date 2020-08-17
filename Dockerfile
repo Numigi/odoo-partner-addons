@@ -15,6 +15,7 @@ USER odoo
 
 COPY contacts_config_menu_moved_right /mnt/extra-addons/contacts_config_menu_moved_right
 COPY contacts_config_sale_manager /mnt/extra-addons/contacts_config_sale_manager
+COPY forward_sorting_area /mnt/extra-addons/forward_sorting_area
 COPY google_partner_address /mnt/extra-addons/google_partner_address
 COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
 COPY partner_change_parent /mnt/extra-addons/partner_change_parent

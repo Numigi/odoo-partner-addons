@@ -1,0 +1,139 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* forward_sorting_area
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-28 19:43+0000\n"
+"PO-Revision-Date: 2019-01-28 14:44-0500\n"
+"Last-Translator: Agathe Mollé <agathe.molle@savoirfairelinux.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__active
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__color
+msgid "Color Index"
+msgstr "Couleur"
+
+#. module: forward_sorting_area
+#: model:ir.model,name:forward_sorting_area.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__create_uid
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__create_date
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__display_name
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: forward_sorting_area
+#: model:ir.actions.act_window,name:forward_sorting_area.forward_sortation_area_action
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_partner__fsa_id
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__fsa_ids
+#: model:ir.ui.menu,name:forward_sorting_area.menu_forward_sortation_area_action
+#: model_terms:ir.ui.view,arch_db:forward_sorting_area.forward_sortation_area_tree
+msgid "FSA"
+msgstr "RTA"
+
+#. module: forward_sorting_area
+#: model:ir.model,name:forward_sorting_area.model_forward_sortation_area
+msgid "Forward Sorting Area"
+msgstr ""
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__id
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__id
+msgid "ID"
+msgstr "ID"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area____last_update
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory____last_update
+msgid "Last Modified on"
+msgstr "Dernière Modification le"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__write_uid
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__write_date
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__latitude
+msgid "Latitude"
+msgstr "Latitude"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__longitude
+msgid "Longitude"
+msgstr "Longitude"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__name
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__partner_ids
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_territory__partner_ids
+msgid "Partners"
+msgstr "Partenaires"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__province
+msgid "Province"
+msgstr "Province"
+
+#. module: forward_sorting_area
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__sector
+msgid "Sector"
+msgstr "Secteur"
+
+#. module: forward_sorting_area
+#: model:ir.actions.act_window,name:forward_sorting_area.res_territory_action
+#: model:ir.model.fields,field_description:forward_sorting_area.field_forward_sortation_area__territory_ids
+#: model:ir.model.fields,field_description:forward_sorting_area.field_res_partner__territory_ids
+#: model:ir.ui.menu,name:forward_sorting_area.menu_res_territory_action
+#: model_terms:ir.ui.view,arch_db:forward_sorting_area.res_territory_tree
+msgid "Territories"
+msgstr "Territoires"
+
+#. module: forward_sorting_area
+#: model:ir.model,name:forward_sorting_area.model_res_territory
+msgid "Territory"
+msgstr "Territoire"
+
+#~ msgid "Partner"
+#~ msgstr "Partenaire"
