@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_forward_sortation_area_user,access_forward_sortation_area_user,model_forward_sortation_area,,1,0,0,0
+access_forward_sortation_area_manager,access_forward_sortation_area_manager,model_forward_sortation_area,base.user_root,1,1,1,1
+access_res_territory_user,access_res_territory_user,model_res_territory,,1,0,0,0
+access_res_territory_manager,access_res_territory_manager,model_res_territory,base.user_root,1,1,1,1
