@@ -3,7 +3,7 @@
 
 {
     'name': 'Partner No VAT',
-    'version': '1.0.1',
+    'version': '1.0.2',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'license': 'LGPL-3',
@@ -14,7 +14,6 @@
     ],
     'data': [
         'views/portal.xml',
-        'views/res_company.xml',
         'views/res_partner.xml',
     ],
     'installable': True,
