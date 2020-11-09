@@ -1,5 +1,5 @@
-Partner Validation Sale
-=======================
+Partner Validation Purchase
+===========================
 This module adds a supplier validation workflow.
 A supplier needs to be approved before any purchase order is confirmed.
 
