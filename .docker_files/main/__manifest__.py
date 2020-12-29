@@ -36,6 +36,7 @@
         'partner_no_vat_website_sale',
         'partner_phone_no_envelope',
         'partner_phone_validation',
+        'partner_portal_access_group',
         'partner_reference',
         'partner_unique_email',
         'partner_website_domain_only',
