@@ -23,6 +23,7 @@
         'partner_duplicate_multi_phone',
         'partner_duplicate_multi_relation',
         'partner_edit_group',
+        'partner_filters_simplified',
         'partner_firstname_before_lastname',
         'partner_gst_qst',
         'partner_key_date',
