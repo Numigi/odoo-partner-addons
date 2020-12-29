@@ -9,7 +9,7 @@
     'website': 'https://www.numigi.com',
     'license': 'LGPL-3',
     'category': 'Partner Management',
-    'summary': 'Add a group to manage the access to the portal'
+    'summary': 'Add a group to manage the access to the portal',
     'depends': [
         'portal',
     ],
