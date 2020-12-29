@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="portal.partner_wizard_action" model="ir.action.act_window">
+		<field name="groups_id" eval="[(6, 0, [ref('group_portal_access')])]"/>
+	</record>
+
+</odoo>
