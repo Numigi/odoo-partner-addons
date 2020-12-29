@@ -1,58 +1,28 @@
-Partner Edit Group
-==================
+Partner Portal Access Group
+===========================
 
 .. contents:: Table of Contents
 
 Context
 -------
-In vanilla Odoo, there is a group `Extra Rights / Contact Creation`.
+In vanilla Odoo, users with ``Contact Creation`` access are allowed to invite partners to the portal.
 
-.. image:: static/description/user_form_without_module.png
+.. image:: static/description/user_contact_creation_group.png
 
-This group allows to create / edit / delete partners.
+.. image:: static/description/grant_portal_access_action.png
 
-It is only visible in debug mode.
+.. image:: static/description/grant_portal_access_wizard.png
 
-When creating a new user, the group is automatically checked.
-This is inconvenient if you do not wish to give all your users access to create new partners.
+This module separates this feature in another user group.
+Therefore, a user may grant portal access to the customers without having access to modify the partner records.
 
-Contact Edition Group
----------------------
-This module adds a group `Contact Edition`.
+Usage
+-----
+After installing this module, a new group ``Manage Portal Access`` is available.
 
-.. image:: static/description/user_form_with_module.png
+.. image:: static/description/user_portal_access_group.png
 
-This group is allowed to edit existing partners without creating new ones.
-
-Bank Accounts
-~~~~~~~~~~~~~
-The `Contact Edition` group is allowed to add new bank accounts to partners.
-
-However, it is not allowed to edit or create banks.
-
-Contact Edition Group
----------------------
-The module moves the group `Contact Creation` to the section `Other`.
-
-.. image:: static/description/contact_creation_group_moved.png
-
-This makes the checkbox visible without debug mode.
-
-Default Groups
---------------
-You may change the groups checked by default.
-
-To do so, go to `Settings / Users` and select the `Inactive Users` filter. Then, click on `Default User Template`.
-
-.. image:: static/description/inactive_user_list.png
-
-In the form view of the default user, you may uncheck `Contact Creation` and check `Contact Edition`.
-
-.. image:: static/description/default_user_template_form.png
-
-When creating a new user, these values will be used by default.
-
-.. image:: static/description/new_user_form.png
+Only members of this group are allowed to invite partners to the portal.
 
 Contributors
 ------------
@@ -61,4 +31,3 @@ Contributors
 More information
 ----------------
 * Meet us at https://bit.ly/numigi-com
-

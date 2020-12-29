@@ -1,0 +1,32 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_portal_access_group
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-29 16:07+0000\n"
+"PO-Revision-Date: 2020-12-29 16:07+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_portal_access_group
+#: model:ir.model,name:partner_portal_access_group.model_portal_wizard
+msgid "Grant Portal Access"
+msgstr ""
+
+#. module: partner_portal_access_group
+#: model:res.groups,name:partner_portal_access_group.group_portal_access
+msgid "Manage Portal Access"
+msgstr "Gestion de l'accès au portail"
+
+#. module: partner_portal_access_group
+#: code:addons/partner_portal_access_group/wizard/portal_wizard.py:17
+#, python-format
+msgid "Only members of the group `Manage Portal Access` are allowed to invite partners to the portal."
+msgstr "Seuls les membres du groupe `Gestion de l'accès au portail` sont autorisés à gérer l'accès au portail."
