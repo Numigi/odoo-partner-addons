@@ -7,10 +7,10 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./.log:/var/log/odoo
-      - ./partner_autocomplete_disable:/mnt/extra-addons/partner_autocomplete_disable
+      - ./partner_filters_simplified:/mnt/extra-addons/partner_filters_simplified
     ports:
-      - "8069:8069"
-      - "8071:8071"
+      - "8070:8069"
+      - "8072:8071"
     depends_on:
       - db
     command: odoo
