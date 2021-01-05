@@ -91,7 +91,7 @@ class TestPurchaseOrder(SavepointCase):
                           'list_price': 5,
                           'type': 'product'}
         product = self.env['product.product'].create(product_values)
-        product_uom_unit = self.env.ref('product.product_uom_unit')
+        product_uom_unit = self.env.ref('uom.product_uom_unit')
         now = fields.Datetime.now()
         values = {
             'partner_id': partner.id,

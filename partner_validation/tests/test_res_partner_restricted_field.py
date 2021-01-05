@@ -16,7 +16,7 @@ class TestResPartnerRestrictedField(SavepointCase):
         """
         Test the case of creating two restricted fields on the same partner field.
         """
-        partner_phone_field_id = self.env.ref('base.field_res_partner_phone').id
+        partner_phone_field_id = self.env.ref('base.field_res_partner__phone').id
 
         vals = {
             'field_id': partner_phone_field_id

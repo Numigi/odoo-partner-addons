@@ -93,7 +93,6 @@ class TestSaleOrder(SavepointCase):
             'location_dest_id': dest_location.id,
         })
         picking.action_confirm()
-        picking.force_assign()
         return picking
 
     def test_01_validate_outgoing_picking_of_new_partner_with_normal_user(self):

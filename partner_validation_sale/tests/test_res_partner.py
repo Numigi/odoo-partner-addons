@@ -46,14 +46,14 @@ class TestResPartner(SavepointCase):
             'customer_state': 'new'
         })
 
-        partner_phone_field_id = cls.env.ref('base.field_res_partner_phone').id
+        partner_phone_field_id = cls.env.ref('base.field_res_partner__phone').id
         phone_vals = {
             'field_id': partner_phone_field_id,
             'apply_on_sales': True,
         }
         cls.env['res.partner.restricted.field'].create(phone_vals)
 
-        partner_email_field_id = cls.env.ref('base.field_res_partner_email').id
+        partner_email_field_id = cls.env.ref('base.field_res_partner__email').id
         email_vals = {
             'field_id': partner_email_field_id,
             'apply_on_sales': False
