@@ -1,0 +1,92 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_validation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-05 18:02+0000\n"
+"PO-Revision-Date: 2021-01-05 13:03-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: partner_validation
+#: model:ir.model.fields,field_description:partner_validation.field_res_partner_restricted_field__active
+msgid "Active"
+msgstr "Actif/ve"
+
+#. module: partner_validation
+#: model_terms:ir.ui.view,arch_db:partner_validation.res_partner_restricted_field_search
+msgid "Archived"
+msgstr "Archivé/s"
+
+#. module: partner_validation
+#: model:ir.model.fields,field_description:partner_validation.field_res_partner_restricted_field__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: partner_validation
+#: model:ir.model.fields,field_description:partner_validation.field_res_partner_restricted_field__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: partner_validation
+#: model:ir.model.fields,field_description:partner_validation.field_res_partner_restricted_field__display_name
+msgid "Display Name"
+msgstr "Nom à afficher"
+
+#. module: partner_validation
+#: model:ir.model.fields,field_description:partner_validation.field_res_partner_restricted_field__field_id
+#: model_terms:ir.ui.view,arch_db:partner_validation.res_partner_restricted_field_search
+msgid "Field"
+msgstr "Champ"
+
+#. module: partner_validation
+#: model:ir.model.fields,field_description:partner_validation.field_res_partner_restricted_field__id
+msgid "ID"
+msgstr "ID"
+
+#. module: partner_validation
+#: model:ir.model.fields,field_description:partner_validation.field_res_partner_restricted_field____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: partner_validation
+#: model:ir.model.fields,field_description:partner_validation.field_res_partner_restricted_field__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: partner_validation
+#: model:ir.model.fields,field_description:partner_validation.field_res_partner_restricted_field__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: partner_validation
+#: model:res.groups,name:partner_validation.group_partner_restricted_field
+msgid "Manage Partner Restricted Fields"
+msgstr "Manage partner restricted fields"
+
+#. module: partner_validation
+#: model:ir.model,name:partner_validation.model_res_partner_restricted_field
+msgid "Partner Restricted Field"
+msgstr "Champ restreint"
+
+#. module: partner_validation
+#: model:ir.actions.act_window,name:partner_validation.action_res_partner_restricted_field
+#: model:ir.ui.menu,name:partner_validation.menu_res_partner_restricted_field
+#: model_terms:ir.ui.view,arch_db:partner_validation.res_partner_restricted_field_search
+#: model_terms:ir.ui.view,arch_db:partner_validation.res_partner_restricted_field_tree
+msgid "Restricted Fields"
+msgstr "Champs restreints"
+
+#. module: partner_validation
+#: sql_constraint:res.partner.restricted.field:0
+msgid "This field is already restricted"
+msgstr "Ce champ est déjà restreint"

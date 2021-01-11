@@ -124,8 +124,9 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
         self.assertEqual(len(duplicates), 1)
 
     def test_create_new_duplicate_adds_message_to_chatter(self):
-        self.assertEqual(len(self.contact_2.message_ids), 2)
-        self.assertIn(self.contact_1.name, self.contact_2.message_ids[0].body)
+        message = self._get_duplicate_partner_message(self.contact_2)
+        self.assertEqual(len(message), 1)
+        self.assertIn(self.contact_1.name, message.body)
 
     def test_char_field_merge_line_created_correctly(self):
         merge_lines = self.contact_merge_lines
@@ -180,23 +181,23 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
         self.assertFalse(self.contact_1.active)
         self.assertTrue(self.contact_2.active)
 
-        self.assertEqual(len(self.contact_1.message_ids), 2)
-        self.assertIn(self.contact_2.name, self.contact_1.message_ids[0].body)
+        message = self._get_archived_partner_message(self.contact_1)
+        self.assertEqual(len(message), 1)
+        self.assertIn(self.contact_2.name, message.body)
 
     def test_contact_merge_doesnt_affect_message_ids(self):
-        self.assertEqual(len(self.contact_1.message_ids), 1)
-        self.assertEqual(len(self.contact_2.message_ids), 2)
-
         self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
         self.contact_merge_lines.write({'partner_2_selected': True})
         self.contact_dup.merge_partners()
 
-        self.assertEqual(len(self.contact_1.message_ids), 2)
-        self.assertEqual(len(self.contact_2.message_ids), 3)
-        self.assertNotIn(
-            self.contact_1.message_ids[0], self.contact_2.message_ids)
-        self.assertNotIn(
-            self.contact_1.message_ids[1], self.contact_2.message_ids)
+        archived_message = self._get_archived_partner_message(self.contact_1)
+        preserved_message = self._get_preserved_partner_message(self.contact_2)
+
+        self.assertEqual(len(archived_message), 1)
+        self.assertEqual(len(preserved_message), 1)
+
+        assert archived_message not in self.contact_2.message_ids
+        assert preserved_message not in self.contact_1.message_ids
 
     def test_contacts_merger_should_merge_one2many_field(self):
         self.contact_dup.write({'partner_preserved_id': self.contact_2.id})
@@ -406,6 +407,21 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
         self.assertEqual(dup1.state, 'merged')
         self.assertEqual(dup2.state, 'resolved')
         self.assertEqual(dup3.state, 'to_validate')
+
+    def _get_archived_partner_message(self, partner):
+        return partner.message_ids.filtered(
+            lambda m: "Merged into" in (m.body or "")
+        )
+
+    def _get_preserved_partner_message(self, partner):
+        return partner.message_ids.filtered(
+            lambda m: "Merged with" in (m.body or "")
+        )
+
+    def _get_duplicate_partner_message(self, partner):
+        return partner.message_ids.filtered(
+            lambda m: "Duplicate" in (m.body or "")
+        )
 
 
 @ddt

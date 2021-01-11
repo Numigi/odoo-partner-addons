@@ -41,6 +41,9 @@ COPY partner_phone_validation /mnt/extra-addons/partner_phone_validation
 COPY partner_portal_access_group /mnt/extra-addons/partner_portal_access_group
 COPY partner_reference /mnt/extra-addons/partner_reference
 COPY partner_unique_email /mnt/extra-addons/partner_unique_email
+COPY partner_validation /mnt/extra-addons/partner_validation
+COPY partner_validation_purchase /mnt/extra-addons/partner_validation_purchase
+COPY partner_validation_sale /mnt/extra-addons/partner_validation_sale
 COPY partner_website_domain_only /mnt/extra-addons/partner_website_domain_only
 COPY res_partner_bank_shared_account /mnt/extra-addons/res_partner_bank_shared_account
 
