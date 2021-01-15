@@ -11,7 +11,9 @@ class TestResPartner(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestResPartner, cls).setUpClass()
+        super().setUpClass()
+
+        cls.env = cls.env(context={"testing_partner_validation": True})
 
         cls.group_purchase_manager = cls.env.ref(
             'purchase.group_purchase_manager')
