@@ -11,7 +11,9 @@ class TestSaleOrder(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestSaleOrder, cls).setUpClass()
+        super().setUpClass()
+
+        cls.env = cls.env(context={"testing_partner_validation": True})
 
         cls.group_sale_manager = cls.env.ref(
             'sales_team.group_sale_manager')
