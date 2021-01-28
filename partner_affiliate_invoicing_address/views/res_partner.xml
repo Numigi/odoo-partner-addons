@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="res_partner_form" model="ir.ui.view">
+        <field name="name">Partner Form: add use_parent_invoice_address</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="child_ids" position="before">
+                <group>
+                    <group>
+                        <field name="use_parent_invoice_address"
+                            attrs="{'invisible': [('parent_id', '=', False)]}"
+                            />
+                    </group>
+                </group>
+                <newline/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
