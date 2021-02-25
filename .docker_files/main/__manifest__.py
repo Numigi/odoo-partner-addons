@@ -40,6 +40,7 @@
         "partner_portal_access_group",
         "partner_reference",
         "partner_unique_email",
+        "partner_user_auto_assign",
         "partner_validation",
         "partner_validation_purchase",
         "partner_validation_sale",
