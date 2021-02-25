@@ -1,34 +1,36 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* partner_unique_email
+#	* partner_user_auto_assign
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0+e\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-22 19:22+0000\n"
-"PO-Revision-Date: 2018-10-22 15:23-0400\n"
+"POT-Creation-Date: 2021-02-25 13:24+0000\n"
+"PO-Revision-Date: 2021-02-25 13:24+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 2.0.6\n"
 
-#. module: partner_unique_email
-#: model:ir.model,name:partner_unique_email.model_res_partner
-msgid "Contact"
-msgstr ""
-
-#. module: partner_unique_email
-#: model:ir.model.fields,field_description:partner_unique_email.field_res_partner__email
-msgid "Email"
-msgstr ""
-
-#. module: partner_unique_email
-#: code:addons/partner_unique_email/models/res_partner.py:10
+#. module: partner_user_auto_assign
+#: code:addons/partner_user_auto_assign/models/res_users.py:24
 #, python-format
-msgid "The email ({email}) entered for {partner} is identical to the email of another partner ({other_partner})."
-msgstr "L'adresse courriel saisie ({email}) pour {partner} est identique à l'adresse courriel d'un autre partenaire ({other_partner})."
+msgid "Could not create a user with the email {}. The email is linked to an archived partner."
+msgstr "Un compte utilisateur n'a pas pu être créé avec l'adresse courriel {}. "
+"Cette adresse est liée à un partenaire archivé."
+
+#. module: partner_user_auto_assign
+#: code:addons/partner_user_auto_assign/models/res_users.py:30
+#, python-format
+msgid "Could not create a user with the email {}. The email is linked to an existing partner. This partner is already linked to a user account."
+msgstr "Un compte utilisateur n'a pas pu être créé avec l'adresse courriel {}. "
+"Cette adresse est liée à un partenaire existant. Ce partenaire est déjà lié à un compte utilisateur."
+
+#. module: partner_user_auto_assign
+#: model:ir.model,name:partner_user_auto_assign.model_res_users
+msgid "Users"
+msgstr ""
+
