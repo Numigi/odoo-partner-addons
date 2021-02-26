@@ -11,29 +11,40 @@ class ResUsers(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get("email") and not vals.get("partner_id"):
-            self._assign_partner_id_from_email(vals)
+        email = vals.get("email")
+
+        if email and not vals.get("partner_id"):
+            partner = self._find_partner_matching_email(email)
+
+            if partner:
+                vals = self._get_vals_with_partner_id(vals, partner)
+
         return super().create(vals)
 
     @api.model
-    def _assign_partner_id_from_email(self, vals):
-        email = vals["email"]
-        partner = self._find_partner_matching_email(email)
-
+    def _get_vals_with_partner_id(self, vals, partner):
         if partner and not partner.active:
-            raise ValidationError(_(
-                "Could not create a user with the email {}. "
-                "The email is linked to an archived partner."
-            ).format(email))
+            raise ValidationError(
+                _(
+                    "Could not create a user with the email {}. "
+                    "The email is linked to an archived partner."
+                ).format(partner.email)
+            )
 
         if partner.user_ids:
-            raise ValidationError(_(
-                "Could not create a user with the email {}. "
-                "The email is linked to an existing partner. "
-                "This partner is already linked to a user account."
-            ).format(email))
+            raise ValidationError(
+                _(
+                    "Could not create a user with the email {}. "
+                    "The email is linked to an existing partner. "
+                    "This partner is already linked to a user account."
+                ).format(partner.email)
+            )
 
-        vals["partner_id"] = partner.id
+        partner_vals = partner.read()[0]
+        return dict(
+            ((k, v) for k, v in vals.items() if k not in partner_vals),
+            partner_id=partner.id,
+        )
 
     @api.model
     def _find_partner_matching_email(self, email):
