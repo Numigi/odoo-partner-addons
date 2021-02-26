@@ -11,13 +11,27 @@ class TestResPartner(common.SavepointCase):
     def setUpClass(cls):
         super(TestResPartner, cls).setUpClass()
         cls.email = "some.email@localhost"
+
+        cls.parent_partner = cls.env["res.partner"].create(
+            {"name": "Parent Partner", "is_company": True}
+        )
         cls.partner = cls.env["res.partner"].create(
-            {"name": "Partner", "email": cls.email,}
+            {
+                "name": "Partner",
+                "type": "contact",
+                "email": cls.email,
+                "parent_id": cls.parent_partner.id,
+            }
         )
 
     def test_create_user_with_same_email(self):
         user = self._create_user(self.email)
         assert user.partner_id == self.partner
+
+    def test_partner_fields_not_overriden(self):
+        user = self._create_user(self.email, parent_id=False)
+        assert user.partner_id == self.partner
+        assert user.partner_id.parent_id == self.parent_partner
 
     def test_create_user_with_different_email(self):
         user = self._create_user("other.email@localhost")
@@ -33,7 +47,7 @@ class TestResPartner(common.SavepointCase):
         with pytest.raises(ValidationError):
             self._create_user(self.email)
 
-    def _create_user(self, email):
+    def _create_user(self, email, **kwargs):
         return self.env["res.users"].create(
-            {"email": email, "name": email, "login": email,}
+            {"email": email, "name": email, "login": email, **kwargs}
         )
