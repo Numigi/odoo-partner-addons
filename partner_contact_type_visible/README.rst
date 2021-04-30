@@ -21,11 +21,6 @@ The contact type is also visible if the contact has no parent.
 
 This allows to define the contact as a ``Private Address``.
 
-However, if you select ``Invoice``, ``Shipping`` or ``Other Address``, an error is raised
-when saving if the contact has no parent.
-
-.. image:: static/description/partner_form_no_parent_error.png
-
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
