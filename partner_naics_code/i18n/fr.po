@@ -1,0 +1,94 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_naics_code
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-02 21:03+0000\n"
+"PO-Revision-Date: 2021-06-02 17:07-0400\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.3\n"
+"Last-Translator: \n"
+"Language: fr\n"
+
+#. module: partner_naics_code
+#: model_terms:ir.actions.act_window,help:partner_naics_code.partner_naics_code_action
+msgid "Add NAICS Codes Here."
+msgstr "Créer des codes SCIAN ici."
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__class_title
+msgid "Class Title"
+msgstr "Titre de classe"
+
+#. module: partner_naics_code
+#: model:ir.model,name:partner_naics_code.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__id
+msgid "ID"
+msgstr "ID"
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code____last_update
+msgid "Last Modified on"
+msgstr "Modifié la dernière fois le"
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour la dernière fois par"
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__write_date
+msgid "Last Updated on"
+msgstr "Mis à jour la dernière fois le"
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_res_partner__naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_res_users__naics_code
+msgid "NAICS Code"
+msgstr "Code SCIAN"
+
+#. module: partner_naics_code
+#: model:ir.actions.act_window,name:partner_naics_code.partner_naics_code_action
+#: model:ir.ui.menu,name:partner_naics_code.partner_naics_code
+#: model_terms:ir.ui.view,arch_db:partner_naics_code.partner_naics_code_form
+#: model_terms:ir.ui.view,arch_db:partner_naics_code.partner_naics_code_tree
+msgid "NAICS Codes"
+msgstr "Codes SCIAN"
+
+#. module: partner_naics_code
+#: model:ir.model,name:partner_naics_code.model_partner_naics_code
+msgid "Partner NAICS Code"
+msgstr "Code SCIAN de partenaire"
+
+#. module: partner_naics_code
+#: code:addons/partner_naics_code/models/partner_naics_code.py:19
+#, python-format
+msgid "Please enter a positive value."
+msgstr "Veuillez entrer une valeur positive."

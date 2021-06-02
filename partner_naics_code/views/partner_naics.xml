@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="partner_naics_code_tree" model="ir.ui.view">
+        <field name="name">partner.naics.code.tree</field>
+        <field name="model">partner.naics.code</field>
+        <field name="arch" type="xml">
+            <tree string="NAICS Codes">
+                <field name="naics_code"/>
+                <field name="class_title"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="partner_naics_code_form" model="ir.ui.view">
+        <field name="name">partner.naics.code.form</field>
+        <field name="model">partner.naics.code</field>
+        <field name="arch" type="xml">
+            <form string="NAICS Codes">
+                <group>
+                    <field name="naics_code"/>
+                </group>
+                <group>
+                    <field name="class_title"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="partner_naics_code_action" model="ir.actions.act_window">
+        <field name="name">NAICS Codes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.naics.code</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add NAICS Codes Here.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="partner_naics_code" name="NAICS Codes" parent="contacts.res_partner_menu_config" sequence="2" action="partner_naics_code_action"/>
+
+</odoo>
