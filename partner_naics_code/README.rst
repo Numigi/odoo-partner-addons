@@ -1,5 +1,5 @@
 Partner NAICS Code
-===========================
+==================
 This module adds a NAICS code creation menu in the contacts menu, while also allowing NAICS code selection during partner creation.
 
 .. contents:: Table of Contents
