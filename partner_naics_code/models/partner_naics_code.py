@@ -20,7 +20,4 @@ class PartnerNaicsCode(models.Model):
 
     @api.multi
     def name_get(self):
-        res = []
-        for rec in self:
-            res.append((rec.id, "%s - %s" % (rec.naics_code, rec.class_title)))
-        return res
+        return [(rec.id, "%s - %s" % (rec.naics_code, rec.class_title)) for rec in self]
