@@ -10,7 +10,7 @@ There is now a NAICS code creation menu in the configuration dropdown menu of th
 
 .. image:: static/description/config.png
 
-Users with the manager role can create an NAICS code.
+Users with the Contact Creation group can create an NAICS code.
 
 .. image:: static/description/naics.png
 
