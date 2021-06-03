@@ -6,7 +6,7 @@
         <field name="model">partner.naics.code</field>
         <field name="arch" type="xml">
             <tree string="NAICS Codes">
-                <field name="naics_code"/>
+                <field name="code"/>
                 <field name="class_title"/>
             </tree>
         </field>
@@ -18,7 +18,7 @@
         <field name="arch" type="xml">
             <form string="NAICS Codes">
                 <group>
-                    <field name="naics_code"/>
+                    <field name="code"/>
                 </group>
                 <group>
                     <field name="class_title"/>

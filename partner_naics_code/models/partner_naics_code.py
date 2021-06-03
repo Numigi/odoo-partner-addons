@@ -9,6 +9,7 @@ class PartnerNaicsCode(models.Model):
     _name = "partner.naics.code"
     _description = "Partner NAICS Code"
 
+    name = fields.Char(invisible=True, compute="_compute_name", store=True)
     code = fields.Integer(string="NAICS Code", required=True)
     class_title = fields.Char(string="Class Title", required=True)
 
@@ -18,6 +19,7 @@ class PartnerNaicsCode(models.Model):
         if self.code < 0:
             raise ValidationError(_("Please enter a positive value."))
 
-    @api.multi
-    def name_get(self):
-        return [(rec.id, "%s - %s" % (rec.code, rec.class_title)) for rec in self]
+    @api.depends('code','class_title')   
+    def _compute_name(self):
+        for rec in self:
+            rec.name = "{} - {}".format(rec.code, rec.class_title)
