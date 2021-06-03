@@ -7,4 +7,4 @@ from odoo import models, fields
 class Partner(models.Model):
     _inherit = "res.partner"
 
-    naics_code = fields.Many2one("partner.naics.code", string="NAICS Code")
+    code = fields.Many2one("partner.naics.code", string="NAICS Code")
