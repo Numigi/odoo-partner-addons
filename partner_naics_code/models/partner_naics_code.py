@@ -13,7 +13,6 @@ class PartnerNaicsCode(models.Model):
     code = fields.Integer(string="NAICS Code", required=True)
     class_title = fields.Char(string="Class Title", required=True)
 
-    @api.one
     @api.constrains("code")
     def _check_value(self):
         if self.code < 0:
