@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-02 21:03+0000\n"
-"PO-Revision-Date: 2021-06-02 17:07-0400\n"
+"POT-Creation-Date: 2021-06-21 20:49+0000\n"
+"PO-Revision-Date: 2021-06-21 16:49-0400\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.3\n"
-"Last-Translator: \n"
-"Language: fr\n"
 
 #. module: partner_naics_code
 #: model_terms:ir.actions.act_window,help:partner_naics_code.partner_naics_code_action
@@ -68,9 +68,9 @@ msgid "Last Updated on"
 msgstr "Mis à jour la dernière fois le"
 
 #. module: partner_naics_code
-#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__naics_code
-#: model:ir.model.fields,field_description:partner_naics_code.field_res_partner__naics_code
-#: model:ir.model.fields,field_description:partner_naics_code.field_res_users__naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__code
+#: model:ir.model.fields,field_description:partner_naics_code.field_res_partner__naics_code_id
+#: model:ir.model.fields,field_description:partner_naics_code.field_res_users__naics_code_id
 msgid "NAICS Code"
 msgstr "Code SCIAN"
 
@@ -81,6 +81,11 @@ msgstr "Code SCIAN"
 #: model_terms:ir.ui.view,arch_db:partner_naics_code.partner_naics_code_tree
 msgid "NAICS Codes"
 msgstr "Codes SCIAN"
+
+#. module: partner_naics_code
+#: model:ir.model.fields,field_description:partner_naics_code.field_partner_naics_code__name
+msgid "Name"
+msgstr "Nom"
 
 #. module: partner_naics_code
 #: model:ir.model,name:partner_naics_code.model_partner_naics_code
