@@ -2,12 +2,12 @@
 <odoo>
 
     <record id="view_partner_form" model="ir.ui.view">
-        <field name="name">res.partner.inherit</field>
+        <field name="name">Partner: add NAICS code</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <field name="category_id" position="after">
-                <field name="code"/>
+                <field name="naics_code_id"/>
             </field>
         </field>
     </record>
