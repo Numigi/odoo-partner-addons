@@ -6,9 +6,10 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <field name="user_id" position="after">
-                <field name="account_manager_id"/>
-            </field>
+            <xpath expr="//page[@name='sales_purchases']//field[@name='user_id']" position="after">
+                <field name="account_manager_id"
+                    attrs="{'readonly': [('is_company', '=', False), ('parent_id', '!=', False)]}"/>
+            </xpath>
         </field>
     </record>
 
