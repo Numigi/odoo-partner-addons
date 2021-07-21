@@ -29,7 +29,7 @@ COPY partner_edit_group /mnt/extra-addons/partner_edit_group
 COPY partner_filters_simplified /mnt/extra-addons/partner_filters_simplified
 COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_before_lastname
 COPY partner_gst_qst /mnt/extra-addons/partner_gst_qst
-COPY partner_city_tree_view /mnt/extra-addons/partner_industry_tree_view
+COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
 COPY partner_key_date /mnt/extra-addons/partner_key_date
 COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
 COPY partner_multi_relation_note /mnt/extra-addons/partner_multi_relation_note
