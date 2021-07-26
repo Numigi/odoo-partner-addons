@@ -27,6 +27,7 @@
         "partner_filters_simplified",
         "partner_firstname_before_lastname",
         "partner_gst_qst",
+        "partner_city_tree_view",
         "partner_key_date",
         "partner_multi_phone",
         "partner_multi_relation_note",
