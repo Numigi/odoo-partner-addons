@@ -1,6 +1,6 @@
-Partner Industry Tree View
+Partner City Tree View
 ==========================
-This module adds the industry sector field to the partner tree view.
+This module adds the city field to the partner tree view.
 
 .. contents:: Table of Contents
 

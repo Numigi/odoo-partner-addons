@@ -2,14 +2,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Partner Industry Tree View",
+    "name": "Partner City Tree View",
     "version": "1.0.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://www.numigi.com",
     "license": "AGPL-3",
     "category": "Partner Management",
-    "summary": "Adds the industry sector to the partner tree view.",
+    "summary": "Adds the city to the partner tree view.",
     "depends": [
         "base",
     ],
