@@ -5,6 +5,7 @@
         <field name="name">Partner Form With Contact Type Visible</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="priority" eval="99"/>
         <field name="arch" type="xml">
             <field name="type" position="attributes">
                 <attribute name="groups"></attribute>
