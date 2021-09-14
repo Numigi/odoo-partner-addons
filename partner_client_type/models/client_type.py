@@ -7,6 +7,7 @@ from odoo import fields, models
 class ClientType(models.Model):
     _name = "client.type"
     _description = "Client Type"
+    _order = "name"
 
     name = fields.Text(translate=True)
     active = fields.Boolean(default=True)
