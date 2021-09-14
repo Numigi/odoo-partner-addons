@@ -4,5 +4,6 @@
         name="Client Type"
         action="action_res_partner_client_type_form"
         parent="contacts.res_partner_menu_config"
+        sequence="2"
         />
 </odoo>
