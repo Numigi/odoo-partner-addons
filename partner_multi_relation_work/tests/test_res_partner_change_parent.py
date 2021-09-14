@@ -15,6 +15,7 @@ class TestResPartnerChangeParent(PartnerRelationCase):
             'active_model': 'res.partner',
         }).create({
             'new_company_id': destination_company.id if destination_company else None,
+            'is_correction': False,
         })
         wizard.validate()
         return wizard.new_contact_id
