@@ -4,9 +4,9 @@
 from odoo import fields, models
 
 
-class ClienteleType(models.Model):
-    _name = "clientele.type"
-    _description = "Clientele Type"
+class ClientType(models.Model):
+    _name = "client.type"
+    _description = "Client Type"
 
     name = fields.Text()
     active = fields.Boolean()

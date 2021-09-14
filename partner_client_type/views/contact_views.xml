@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_action_res_partner_client_type"
+        name="Client Type"
+        action="action_res_partner_client_type_form"
+        parent="contacts.res_partner_menu_config"
+        />
+</odoo>

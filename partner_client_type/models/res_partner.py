@@ -7,4 +7,4 @@ from odoo import fields, models
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    clientele_type = fields.Many2one("clientele.type")
+    client_type_ids = fields.Many2many('client.type', 'res_partner_client_rel', 'partner_id', 'client_id')
