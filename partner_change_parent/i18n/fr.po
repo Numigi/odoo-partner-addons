@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-24 15:23+0000\n"
-"PO-Revision-Date: 2019-07-24 11:25-0400\n"
+"POT-Creation-Date: 2021-09-14 16:12+0000\n"
+"PO-Revision-Date: 2021-09-14 12:15-0400\n"
 "Last-Translator: Agathe Mollé <agathe.molle@savoirfairelinux.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 
 #. module: partner_change_parent
 #: model_terms:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
@@ -34,6 +34,11 @@ msgstr "Changer la société parente"
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent__new_contact_id
 msgid "Contact"
 msgstr "Contact"
+
+#. module: partner_change_parent
+#: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent__is_correction
+msgid "Correction Of The Parent Company"
+msgstr "Correction de la société parente"
 
 #. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent__create_uid
@@ -56,6 +61,17 @@ msgid "ID"
 msgstr ""
 
 #. module: partner_change_parent
+#: model:ir.model.fields,help:partner_change_parent.field_res_partner_change_parent__is_correction
+msgid ""
+"If checked, this action will directly modify the value of the field Parent "
+"Company on the existing contact. If not checked, the existing contact will "
+"be archived and a new contact will be created under the selected company."
+msgstr ""
+"Si cochée, cette action modifiera la valeur du champ Société parente sur le "
+"contact existant. Si non-cochée, le contact existant sera archivé et un "
+"nouveau contact sera créé sous la société sélectionnée."
+
+#. module: partner_change_parent
 #: model:ir.model.fields,field_description:partner_change_parent.field_res_partner_change_parent____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -76,7 +92,7 @@ msgid "New Company"
 msgstr "Nouvelle société"
 
 #. module: partner_change_parent
-#: code:addons/partner_change_parent/wizard/res_partner_change_parent.py:99
+#: code:addons/partner_change_parent/wizard/res_partner_change_parent.py:97
 #, python-format
 msgid "New Contact"
 msgstr "Nouveau Contact"
@@ -87,7 +103,7 @@ msgid "Partner Parent Change Wizard"
 msgstr "Assistant de changement de société parente"
 
 #. module: partner_change_parent
-#: code:addons/partner_change_parent/wizard/res_partner_change_parent.py:131
+#: code:addons/partner_change_parent/wizard/res_partner_change_parent.py:62
 #, python-format
 msgid ""
 "The contact {contact} is bound to an active portal user. Before changing the "
@@ -100,6 +116,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
 msgid "Validate"
 msgstr "Valider"
+
+#. module: partner_change_parent
+#: model_terms:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent
+msgid ""
+"Warning! This action will cause the current contact to be archived\n"
+"                            and the creation of a new contact under the "
+"selected company."
+msgstr ""
+"Avertissement! Cette action provoquera l'archivage du contact et la création "
+"d'un nouveau contact sous la société sélectionnée."
 
 #. module: partner_change_parent
 #: model_terms:ir.ui.view,arch_db:partner_change_parent.form_res_partner_change_parent

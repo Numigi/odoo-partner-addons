@@ -9,6 +9,15 @@
                 <group>
                     <field name="contact_id"/>
                     <field name="new_company_id"/>
+                    <field name="is_correction"/>
+                    <div class="alert alert-warning"
+                         role="alert"
+                         attrs="{'invisible': [('is_correction', '=', True)]}"
+                         colspan="2"
+                         >
+                            Warning! This action will cause the current contact to be archived
+                            and the creation of a new contact under the selected company.
+                    </div>
                 </group>
                 <footer>
                     <button class="oe_highlight" name="validate" string="Validate" type="object"/>
