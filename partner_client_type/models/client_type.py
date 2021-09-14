@@ -9,4 +9,4 @@ class ClientType(models.Model):
     _description = "Client Type"
 
     name = fields.Text()
-    active = fields.Boolean()
+    active = fields.Boolean(default=True)
