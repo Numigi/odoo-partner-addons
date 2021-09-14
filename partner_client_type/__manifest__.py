@@ -10,6 +10,10 @@
     "license": "LGPL-3",
     "category": "Partner Management",
     "depends": ["mail", "contacts", "base"],
-    "data": ["views/res_partner_views.xml", "views/contact_views.xml", "security/ir.model.access.csv"],
+    "data": [
+        "views/res_partner_views.xml",
+        "views/contact_views.xml",
+        "security/ir.model.access.csv",
+    ],
     "installable": True,
 }
