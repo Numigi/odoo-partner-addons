@@ -12,8 +12,8 @@
     "depends": ["mail", "contacts", "base", "sales_team"],
     "data": [
         "views/client_type.xml",
-        "views/res_partner_views.xml",
-        "views/contact_views.xml",
+        "views/res_partner.xml",
+        "views/menu.xml",
         "security/ir.model.access.csv",
     ],
     "installable": True,
