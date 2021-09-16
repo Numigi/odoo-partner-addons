@@ -9,7 +9,7 @@
     "website": "https://bit.ly/numigi-com",
     "license": "LGPL-3",
     "category": "Partner Management",
-    "depends": ["mail", "contacts", "base"],
+    "depends": ["mail", "contacts", "base", "sales_team"],
     "data": [
         "views/client_type.xml",
         "views/res_partner_views.xml",
