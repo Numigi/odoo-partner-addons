@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="client_type_form" model="ir.ui.view">
+        <field name="name">Client Type Form</field>
+        <field name="model">client.type</field>
+        <field name="arch" type="xml">
+            <form string="Client Type">
+                <sheet>
+                    <field name="name"/>
+                    <field name="active"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="client_type_list" model="ir.ui.view">
+        <field name="name">Client Type List</field>
+        <field name="model">client.type</field>
+        <field name="arch" type="xml">
+            <tree string="Client Types">
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="client_type_search" model="ir.ui.view">
+        <field name="name">Client Type Search</field>
+        <field name="model">client.type</field>
+        <field name="arch" type="xml">
+            <search string="Search Client Types">
+                <field name="name"/>
+                <field name="active"/>
+                <separator/>
+                <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+           </search>
+        </field>
+    </record>
+
     <record id="action_res_partner_client_type_form" model="ir.actions.act_window">
         <field name="name">Client Type</field>
         <field name="res_model">client.type</field>
