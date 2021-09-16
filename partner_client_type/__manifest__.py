@@ -11,6 +11,7 @@
     "category": "Partner Management",
     "depends": ["mail", "contacts", "base"],
     "data": [
+        "views/client_type.xml",
         "views/res_partner_views.xml",
         "views/contact_views.xml",
         "security/ir.model.access.csv",
