@@ -51,7 +51,6 @@
         <field name="arch" type="xml">
             <search string="Search Client Types">
                 <field name="name"/>
-                <field name="active"/>
                 <separator/>
                 <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
            </search>
