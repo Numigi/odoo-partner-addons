@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-14 19:47+0000\n"
-"PO-Revision-Date: 2021-09-14 15:49-0400\n"
+"POT-Creation-Date: 2021-09-20 17:21+0000\n"
+"PO-Revision-Date: 2021-09-20 13:21-0400\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.3\n"
-"Last-Translator: \n"
-"Language: fr\n"
 
 #. module: partner_client_type
 #: model:ir.model.fields,field_description:partner_client_type.field_client_type__active
@@ -27,9 +27,15 @@ msgstr "Actif"
 #: model:ir.model,name:partner_client_type.model_client_type
 #: model:ir.model.fields,field_description:partner_client_type.field_res_partner__client_type_ids
 #: model:ir.model.fields,field_description:partner_client_type.field_res_users__client_type_ids
-#: model:ir.ui.menu,name:partner_client_type.menu_action_res_partner_client_type
+#: model_terms:ir.ui.view,arch_db:partner_client_type.client_type_form
 msgid "Client Type"
 msgstr "Type de clientèle"
+
+#. module: partner_client_type
+#: model:ir.ui.menu,name:partner_client_type.menu_action_res_partner_client_type
+#: model_terms:ir.ui.view,arch_db:partner_client_type.client_type_list
+msgid "Client Types"
+msgstr "Types de clientèle"
 
 #. module: partner_client_type
 #: model:ir.model,name:partner_client_type.model_res_partner
@@ -62,6 +68,11 @@ msgid "ID"
 msgstr "ID"
 
 #. module: partner_client_type
+#: model_terms:ir.ui.view,arch_db:partner_client_type.client_type_search
+msgid "Inactive"
+msgstr "Inactif"
+
+#. module: partner_client_type
 #: model:ir.model.fields,field_description:partner_client_type.field_client_type____last_update
 msgid "Last Modified on"
 msgstr "Modifié la dernière fois le"
@@ -80,3 +91,8 @@ msgstr "Mis à jour pour la dernière fois le"
 #: model:ir.model.fields,field_description:partner_client_type.field_client_type__name
 msgid "Name"
 msgstr "Nom"
+
+#. module: partner_client_type
+#: model_terms:ir.ui.view,arch_db:partner_client_type.client_type_search
+msgid "Search Client Types"
+msgstr "Chercher des types de clientèle"
