@@ -1,0 +1,98 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_client_type
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-20 17:21+0000\n"
+"PO-Revision-Date: 2021-09-20 13:21-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: partner_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_client_type__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: partner_client_type
+#: model:ir.actions.act_window,name:partner_client_type.action_res_partner_client_type_form
+#: model:ir.model,name:partner_client_type.model_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_res_partner__client_type_ids
+#: model:ir.model.fields,field_description:partner_client_type.field_res_users__client_type_ids
+#: model_terms:ir.ui.view,arch_db:partner_client_type.client_type_form
+msgid "Client Type"
+msgstr "Type de clientèle"
+
+#. module: partner_client_type
+#: model:ir.ui.menu,name:partner_client_type.menu_action_res_partner_client_type
+#: model_terms:ir.ui.view,arch_db:partner_client_type.client_type_list
+msgid "Client Types"
+msgstr "Types de clientèle"
+
+#. module: partner_client_type
+#: model:ir.model,name:partner_client_type.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: partner_client_type
+#: model_terms:ir.actions.act_window,help:partner_client_type.action_res_partner_client_type_form
+msgid "Create a client type"
+msgstr "Créer un type de clientèle"
+
+#. module: partner_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_client_type__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: partner_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_client_type__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: partner_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_client_type__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: partner_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_client_type__id
+msgid "ID"
+msgstr "ID"
+
+#. module: partner_client_type
+#: model_terms:ir.ui.view,arch_db:partner_client_type.client_type_search
+msgid "Inactive"
+msgstr "Inactif"
+
+#. module: partner_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_client_type____last_update
+msgid "Last Modified on"
+msgstr "Modifié la dernière fois le"
+
+#. module: partner_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_client_type__write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour la dernière fois par"
+
+#. module: partner_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_client_type__write_date
+msgid "Last Updated on"
+msgstr "Mis à jour pour la dernière fois le"
+
+#. module: partner_client_type
+#: model:ir.model.fields,field_description:partner_client_type.field_client_type__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: partner_client_type
+#: model_terms:ir.ui.view,arch_db:partner_client_type.client_type_search
+msgid "Search Client Types"
+msgstr "Chercher des types de clientèle"
