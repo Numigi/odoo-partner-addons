@@ -14,7 +14,11 @@ You can then create a client type.
 
 .. image:: static/description/creation.png
 
-You can link that client type to an existing contact.
+You can link that client type to a commercial partner.
+
+.. image:: static/description/commercial_partner.png
+
+The client type is automatically propagated to the contacts of this partner.
 
 .. image:: static/description/contact.png
 

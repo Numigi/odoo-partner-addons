@@ -9,7 +9,8 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <field name="industry_id" position="after">
-                    <field name="client_type_ids" widget="many2many_tags"/>
+                    <field name="client_type_ids" widget="many2many_tags"
+                        attrs="{'readonly': [('is_company', '=', False), ('parent_id', '!=', False)]}"/>
                 </field>
             </field>
         </record>
