@@ -19,8 +19,10 @@ COPY forward_sorting_area /mnt/extra-addons/forward_sorting_area
 COPY google_partner_address /mnt/extra-addons/google_partner_address
 COPY partner_affiliate_invoicing_address /mnt/extra-addons/partner_affiliate_invoicing_address
 COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
+COPY partner_category_type /mnt/extra-addons/partner_category_type
 COPY partner_change_parent /mnt/extra-addons/partner_change_parent
 COPY partner_change_parent_affiliate /mnt/extra-addons/partner_change_parent_affiliate
+COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
 COPY partner_client_type /mnt/extra-addons/partner_client_type
 COPY partner_contact_type_visible /mnt/extra-addons/partner_contact_type_visible
 COPY partner_duplicate_mgmt /mnt/extra-addons/partner_duplicate_mgmt
@@ -30,7 +32,6 @@ COPY partner_edit_group /mnt/extra-addons/partner_edit_group
 COPY partner_filters_simplified /mnt/extra-addons/partner_filters_simplified
 COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_before_lastname
 COPY partner_gst_qst /mnt/extra-addons/partner_gst_qst
-COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
 COPY partner_key_date /mnt/extra-addons/partner_key_date
 COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
 COPY partner_multi_relation_note /mnt/extra-addons/partner_multi_relation_note
