@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="partner_full_text_trgm_index" model="trgm.index">
+        <field name="field_id" ref="field_res_partner__full_text"/>
+        <field name="index_name">res_partner_full_text_trgm_index</field>
+        <field name="index_type">gin</field>
+    </record>
+
+</odoo>
