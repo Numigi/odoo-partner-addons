@@ -48,12 +48,14 @@ class TestPartner(common.SavepointCase):
 
     @data(
         ("418 555-6666", "4185556666"),
-        ("+1 (418) 555-6666", "4185556666"),
-        ("+1 (418) 555-6666", "+1 (418) 555-6666"),
+        ("+1 418-555-6666", "4185556666"),
+        ("+1 418-555-6666", "+1 418-555-6666"),
     )
     @unpack
     def test_search_by_phone_number(self, partner_phone, text):
         self.partner_1.phone = partner_phone
+        self.partner_1.refresh()
+        print(self.partner_1.phone)
         res = self._search(text)
         assert self.partner_1 in res
 
