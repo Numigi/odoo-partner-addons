@@ -10,6 +10,11 @@
   includes:
   - base_search_fuzzy
 
+- url: https://github.com/OCA/social
+  branch: "12.0"
+  includes:
+  - mail_improved_tracking_value
+
 - url: https://github.com/numigi/odoo-web-addons
   branch: "12.0"
   includes:
