@@ -132,7 +132,7 @@ class ResPartner(models.Model):
 
         return self.browse([r[0] for r in cr.fetchall()])
 
-    @api.onchange('name', 'parent_id', 'company_type', 'is_company')
+    @api.onchange(*UPDATE_DUPLICATES_FIELDS)
     def _onchange_name_find_duplicates(self):
         indexed_name = self._get_indexed_name()
         if self.id or not indexed_name:

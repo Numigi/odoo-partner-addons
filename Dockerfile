@@ -26,6 +26,7 @@ COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
 COPY partner_client_type /mnt/extra-addons/partner_client_type
 COPY partner_contact_type_visible /mnt/extra-addons/partner_contact_type_visible
 COPY partner_duplicate_mgmt /mnt/extra-addons/partner_duplicate_mgmt
+COPY partner_duplicate_mgmt_firstname /mnt/extra-addons/partner_duplicate_mgmt_firstname
 COPY partner_duplicate_multi_phone /mnt/extra-addons/partner_duplicate_multi_phone
 COPY partner_duplicate_multi_relation /mnt/extra-addons/partner_duplicate_multi_relation
 COPY partner_edit_group /mnt/extra-addons/partner_edit_group
