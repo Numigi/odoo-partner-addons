@@ -38,6 +38,7 @@
         "partner_multi_relation_work",
         "partner_naics_code",
         "partner_name_no_shortcut",
+        "partner_no_simplified_form",
         "partner_no_vat",
         "partner_no_vat_website_sale",
         "partner_phone_no_envelope",
