@@ -2,8 +2,13 @@
   branch: "12.0"
   includes:
   - partner_firstname
-  - partner_multi_relation
   - partner_affiliate
+
+- url: https://github.com/OCA/partner-contact
+  branch: "12.0"
+  commit: 290b9bed27c8f9e2027def9791aa1683b39bfbdc
+  includes:
+    - partner_multi_relation
 
 - url: https://github.com/OCA/server-tools
   branch: "12.0"

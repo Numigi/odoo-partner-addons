@@ -24,6 +24,7 @@
         "partner_client_type",
         "partner_contact_type_visible",
         "partner_duplicate_mgmt",
+        "partner_duplicate_mgmt_firstname",
         "partner_duplicate_multi_phone",
         "partner_duplicate_multi_relation",
         "partner_edit_group",
