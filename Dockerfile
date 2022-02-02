@@ -41,6 +41,7 @@ COPY partner_multi_relation_strength /mnt/extra-addons/partner_multi_relation_st
 COPY partner_multi_relation_work /mnt/extra-addons/partner_multi_relation_work
 COPY partner_naics_code /mnt/extra-addons/partner_naics_code
 COPY partner_name_no_shortcut /mnt/extra-addons/partner_name_no_shortcut
+COPY partner_no_simplified_form /mnt/extra-addons/partner_no_simplified_form
 COPY partner_no_vat /mnt/extra-addons/partner_no_vat
 COPY partner_no_vat_website_sale /mnt/extra-addons/partner_no_vat_website_sale
 COPY partner_phone_no_envelope /mnt/extra-addons/partner_phone_no_envelope
