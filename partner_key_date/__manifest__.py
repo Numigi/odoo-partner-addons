@@ -5,7 +5,7 @@
 
 {
     'name': 'Partner Key Dates',
-    'version': '1.1.0',
+    'version': '1.2.0',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
