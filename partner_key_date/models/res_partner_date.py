@@ -26,6 +26,13 @@ class ResPartnerDate(models.Model):
     note = fields.Char('Note')
     age = fields.Float('Age', digits=(16, 1), index=True)
 
+    month_and_day = fields.Char(
+        'Month and Day', compute='_compute_month_and_day', index=True, store=True)
+    diffusion = fields.Boolean(
+        'Diffusion',
+        help='If the box is checked, an email will be sent to the contact at '
+             'every anniversary of the this date.')
+
     def compute_age_for_all_dates(self):
         """Compute the age of all partner dates.
 
@@ -46,33 +53,6 @@ class ResPartnerDate(models.Model):
         today = date.today()
         self.age = round((today - key_date).days / 365.25, 1)
 
-    @api.model
-    def create(self, vals):
-        res = super().create(vals)
-        res._compute_age()
-        return res
-
-    @api.multi
-    def write(self, vals):
-        super().write(vals)
-        if 'date' in vals:
-            for record in self:
-                record._compute_age()
-        return True
-
-
-class ResPartnerDateWithAnniversaryEmails(models.Model):
-    """Allow sending emails at the anniversary of a key date."""
-
-    _inherit = 'res.partner.date'
-
-    month_and_day = fields.Char(
-        'Month and Day', compute='_compute_month_and_day', index=True, store=True)
-    diffusion = fields.Boolean(
-        'Diffusion',
-        help='If the box is checked, an email will be sent to the contact at '
-             'every anniversary of the this date.')
-
     @api.depends('date')
     def _compute_month_and_day(self):
         for record in self:
@@ -90,59 +70,59 @@ class ResPartnerDateWithAnniversaryEmails(models.Model):
             ).format(date_type=dates_with_diffusion_and_no_template[0].date_type_id.display_name))
 
     @api.model
-    def send_anniversary_emails(self):
-        """Send anniversary emails."""
-        for key_date in self._find_anniversary_dates():
-            if not key_date.partner_id.email:
-                _logger.error(
-                    'The email for the anniversary of {date_type} could not be sent '
-                    'to {partner} because this partner has no email.'
-                    .format(
-                        date_type=key_date.date_type_id.display_name,
-                        partner=key_date.partner_id.display_name,
-                    ))
-                continue
+    def create(self, vals):
+        res = super().create(vals)
+        res._compute_age()
+        return res
 
-            mail_template = key_date.date_type_id.mail_template_id
-            if not mail_template:
-                _logger.error(
-                    'The email for the anniversary of {date_type} could not be sent '
-                    'to {partner} because no mail template is defined on the date type.'
-                    .format(
-                        date_type=key_date.date_type_id.display_name,
-                        partner=key_date.partner_id.display_name,
-                    ))
-                continue
-
-            mail_template.write({
-                'email_from': self.env.user.email,
-                'email_to': key_date.partner_id.email,
-            })
-            mail_template.send_mail(key_date.id)
-
+    @api.multi
+    def write(self, vals):
+        super().write(vals)
+        if 'date' in vals:
+            for record in self:
+                record._compute_age()
         return True
 
     @api.model
+    def send_anniversary_emails(self):
+        for key_date in self._find_anniversary_dates():
+            key_date._send_anniversary_emails()
+        return True
+
+    def _send_anniversary_emails(self):
+        if not self.partner_id.email:
+            _logger.error(
+                'The email for the anniversary of {date_type} could not be sent '
+                'to {partner} because this partner has no email.'
+                .format(
+                    date_type=self.date_type_id.display_name,
+                    partner=self.partner_id.display_name,
+                ))
+            return
+
+        mail_template = self.date_type_id.mail_template_id
+        if not mail_template:
+            _logger.error(
+                'The email for the anniversary of {date_type} could not be sent '
+                'to {partner} because no mail template is defined on the date type.'
+                .format(
+                    date_type=self.date_type_id.display_name,
+                    partner=self.partner_id.display_name,
+                ))
+            return
+
+        mail_template.write({
+            'email_from': self.env.user.email,
+            'email_to': self.partner_id.email,
+        })
+        mail_template.send_mail(self.id)
+
+    @api.model
     def _find_anniversary_dates(self):
-        """Find anniversary dates.
+        res = self.browse([])
 
-        This method is used to find dates for which the anniversary is today.
+        date_types = self.env["res.partner.date.type"].search([])
+        for type_ in date_types:
+            res |= type_._find_anniversary_dates()
 
-        The time zone of the user is used to select dates.
-        Otherwise, if the function is called at 20h00 in Canada, and the system timezone is UTC,
-        the system will select key dates that appear to have their anniversary the next day.
-
-        :return: the res.partner.date records
-        """
-        today = fields.Date.context_today(self)
-        month_and_day = fields.Date.from_string(today).strftime('%m-%d')
-
-        self.env.cr.execute("""
-            SELECT d.id
-            FROM res_partner_date d
-            WHERE d.month_and_day = %s
-            AND d.diffusion = true
-            """, (month_and_day, ))
-
-        key_date_ids = [r[0] for r in self.env.cr.fetchall()]
-        return self.browse(key_date_ids)
+        return res
