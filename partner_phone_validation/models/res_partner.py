@@ -37,7 +37,6 @@ class ResPartner(models.Model):
         if phones_to_update:
             self.with_context(no_partner_format_phones=True).write(phones_to_update)
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
 
