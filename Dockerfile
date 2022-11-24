@@ -48,7 +48,7 @@ COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
 #COPY partner_reference /mnt/extra-addons/partner_reference
 #COPY partner_unique_email /mnt/extra-addons/partner_unique_email
 #COPY partner_user_auto_assign /mnt/extra-addons/partner_user_auto_assign
-#COPY partner_validation /mnt/extra-addons/partner_validation
+COPY partner_validation /mnt/extra-addons/partner_validation
 #COPY partner_validation_purchase /mnt/extra-addons/partner_validation_purchase
 #COPY partner_validation_sale /mnt/extra-addons/partner_validation_sale
 #COPY partner_website_domain_only /mnt/extra-addons/partner_website_domain_only

@@ -46,7 +46,7 @@
         # "partner_reference",
         # "partner_unique_email",
         # "partner_user_auto_assign",
-        # "partner_validation",
+        "partner_validation",
         # "partner_validation_purchase",
         # "partner_validation_sale",
         # "partner_website_domain_only",
