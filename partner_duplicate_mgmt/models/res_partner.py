@@ -229,7 +229,6 @@ class ResPartner(models.Model):
 
         return res
 
-    @api.model_cr_context
     def _auto_init(self):
         res = super(ResPartner, self)._auto_init()
         cr = self._cr
