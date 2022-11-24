@@ -34,7 +34,7 @@ COPY google_partner_address /mnt/extra-addons/google_partner_address
 #COPY partner_full_text_search /mnt/extra-addons/partner_full_text_search
 #COPY partner_gst_qst /mnt/extra-addons/partner_gst_qst
 #COPY partner_key_date /mnt/extra-addons/partner_key_date
-COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
+#COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
 #COPY partner_multi_relation_note /mnt/extra-addons/partner_multi_relation_note
 #COPY partner_multi_relation_strength /mnt/extra-addons/partner_multi_relation_strength
 #COPY partner_multi_relation_work /mnt/extra-addons/partner_multi_relation_work
@@ -43,7 +43,7 @@ COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
 #COPY partner_no_vat /mnt/extra-addons/partner_no_vat
 #COPY partner_no_vat_website_sale /mnt/extra-addons/partner_no_vat_website_sale
 #COPY partner_phone_no_envelope /mnt/extra-addons/partner_phone_no_envelope
-COPY partner_phone_validation /mnt/extra-addons/partner_phone_validation
+#COPY partner_phone_validation /mnt/extra-addons/partner_phone_validation
 #COPY partner_portal_access_group /mnt/extra-addons/partner_portal_access_group
 #COPY partner_reference /mnt/extra-addons/partner_reference
 #COPY partner_unique_email /mnt/extra-addons/partner_unique_email
