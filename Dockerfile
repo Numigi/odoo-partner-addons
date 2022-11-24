@@ -1,4 +1,4 @@
-FROM quay.io/numigi/odoo-public:14.0
+FROM quay.io/numigi/odoo-public:14.8
 MAINTAINER numigi <contact@numigi.com>
 
 USER root
