@@ -43,7 +43,6 @@ class ResPartnerParentChange(models.TransientModel):
         domain=[('is_company', '=', True)],
     )
 
-    @api.multi
     def validate(self):
         """Reassign the contact to a new parent entity.
 
@@ -154,7 +153,7 @@ class ResPartnerParentChangeNoDuplicateCheck(models.TransientModel):
 
     _inherit = 'res.partner.change.parent'
 
-    @api.multi
+    
     def _copy_old_contact(self):
         return super(ResPartnerParentChangeNoDuplicateCheck,
                      self.with_context(disable_duplicate_check=True))._copy_old_contact()

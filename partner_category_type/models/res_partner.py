@@ -41,7 +41,6 @@ class ResPartner(models.Model):
         res._update_category_ids_from_extra_caetgory_fields()
         return res
 
-    @api.multi
     def write(self, vals):
         super().write(vals)
         if any(f in vals for f in CUSTOM_CATEGORY_FIELDS):

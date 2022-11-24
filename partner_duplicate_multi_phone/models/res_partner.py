@@ -82,7 +82,6 @@ class ResPartnerWithIndexedPhones(models.Model):
                 }
             }
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
         for record in self:

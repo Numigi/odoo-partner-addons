@@ -9,7 +9,6 @@ from odoo.exceptions import Warning as WarningOdoo
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    @api.multi
     def button_confirm(self):
         if self.env["res.partner"]._should_check_partner_validation():
             self._check_supplier_approved_state()

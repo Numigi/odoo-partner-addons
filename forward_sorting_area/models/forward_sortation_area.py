@@ -24,7 +24,6 @@ class ForwardSortationAera(models.Model):
 
     partner_ids = fields.One2many('res.partner', 'fsa_id', string='Partners')
 
-    @api.multi
     def write(self, vals):
         res = super(ForwardSortationAera, self).write(vals)
         if 'name' in vals:

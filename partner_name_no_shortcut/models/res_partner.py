@@ -14,7 +14,7 @@ class ResPartner(models.Model):
 
     _inherit = 'res.partner'
 
-    @api.multi
+    
     def write(self, vals):
         super().write(vals)
         if any(f in vals for f in PARTNER_NAME_FIELDS):

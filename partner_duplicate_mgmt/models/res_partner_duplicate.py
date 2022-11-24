@@ -280,7 +280,6 @@ class ResPartnerDuplicate(models.Model):
         for dup in duplicates:
             self.create({'partner_1_id': dup[0], 'partner_2_id': dup[1]})
 
-    @api.multi
     def action_resolve(self):
         self.filtered(lambda x: x.state == 'to_validate').write({'state': 'resolved'})
 
@@ -292,11 +291,9 @@ class ResPartnerDuplicate(models.Model):
             record.partner_1_id.message_post(body=message)
             record.partner_2_id.message_post(body=message)
 
-    @api.multi
     def set_to_draft(self):
         self.write({'state': 'to_validate'})
 
-    @api.multi
     def open_partner_merge_wizard(self):
         if len(self) > 1:
             raise UserError(_("Please, select only one duplicate."))

@@ -10,7 +10,6 @@ from odoo.exceptions import Warning as WarningOdoo
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.multi
     def action_confirm(self):
         if self.env["res.partner"]._should_check_partner_validation():
             self._check_customer_approved_state()

@@ -9,7 +9,6 @@ class IrModelFields(models.Model):
 
     _inherit = 'ir.model.fields'
 
-    @api.multi
     def name_get(self):
         if not self._context.get('no_display_model_name'):
             return super(IrModelFields, self).name_get()

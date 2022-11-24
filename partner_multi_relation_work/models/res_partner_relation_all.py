@@ -27,14 +27,12 @@ class ResPartnerRelationPreventModifySamePersonRelations(models.Model):
         res._prevent_modifying_same_person_relations()
         return res
 
-    @api.multi
     def write(self, vals):
         self._prevent_modifying_same_person_relations()
         super().write(vals)
         self._prevent_modifying_same_person_relations()
         return True
 
-    @api.multi
     def unlink(self):
         self._prevent_modifying_same_person_relations()
         return super().unlink()

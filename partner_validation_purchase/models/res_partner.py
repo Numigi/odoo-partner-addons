@@ -18,22 +18,18 @@ class ResPartner(models.Model):
         track_visibility="onchange",
     )
 
-    @api.multi
     def confirm_supplier(self):
         for supplier in self:
             supplier.supplier_state = "confirmed"
 
-    @api.multi
     def approve_supplier(self):
         for supplier in self:
             supplier.supplier_state = "approved"
 
-    @api.multi
     def reject_supplier(self):
         for supplier in self:
             supplier.supplier_state = "new"
 
-    @api.multi
     def write(self, vals):
         if vals.get("supplier_state") == "approved" and self.filtered(
             lambda p: p.supplier and (p.is_company or not p.parent_id)

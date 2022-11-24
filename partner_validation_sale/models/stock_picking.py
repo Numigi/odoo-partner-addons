@@ -9,7 +9,6 @@ from odoo.exceptions import Warning as WarningOdoo
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.multi
     def button_validate(self):
         if self.env["res.partner"]._should_check_partner_validation():
             self._check_customer_approved_state()

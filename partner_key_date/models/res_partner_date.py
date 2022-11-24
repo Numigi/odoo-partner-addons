@@ -52,7 +52,6 @@ class ResPartnerDate(models.Model):
         res._compute_age()
         return res
 
-    @api.multi
     def write(self, vals):
         super().write(vals)
         if 'date' in vals:
