@@ -17,11 +17,11 @@ COPY contacts_config_menu_moved_right /mnt/extra-addons/contacts_config_menu_mov
 COPY contacts_config_sale_manager /mnt/extra-addons/contacts_config_sale_manager
 # COPY forward_sorting_area /mnt/extra-addons/forward_sorting_area
 COPY google_partner_address /mnt/extra-addons/google_partner_address
-COPY partner_affiliate_invoicing_address /mnt/extra-addons/partner_affiliate_invoicing_address
-COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
-COPY partner_category_type /mnt/extra-addons/partner_category_type
-COPY partner_change_parent /mnt/extra-addons/partner_change_parent
-COPY partner_change_parent_affiliate /mnt/extra-addons/partner_change_parent_affiliate
+# COPY partner_affiliate_invoicing_address /mnt/extra-addons/partner_affiliate_invoicing_address
+# COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
+# COPY partner_category_type /mnt/extra-addons/partner_category_type
+# COPY partner_change_parent /mnt/extra-addons/partner_change_parent
+# COPY partner_change_parent_affiliate /mnt/extra-addons/partner_change_parent_affiliate
 COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
 COPY partner_client_type /mnt/extra-addons/partner_client_type
 COPY partner_contact_type_visible /mnt/extra-addons/partner_contact_type_visible
