@@ -22,7 +22,7 @@ COPY google_partner_address /mnt/extra-addons/google_partner_address
 # COPY partner_category_type /mnt/extra-addons/partner_category_type
 # COPY partner_change_parent /mnt/extra-addons/partner_change_parent
 # COPY partner_change_parent_affiliate /mnt/extra-addons/partner_change_parent_affiliate
-#COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
+COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
 #COPY partner_client_type /mnt/extra-addons/partner_client_type
 #COPY partner_contact_type_visible /mnt/extra-addons/partner_contact_type_visible
 #COPY partner_duplicate_mgmt /mnt/extra-addons/partner_duplicate_mgmt
