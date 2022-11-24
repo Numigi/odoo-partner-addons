@@ -9,7 +9,7 @@ from itertools import permutations
 from odoo.api import Environment
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import common
-from odoo.tools import SUPERUSER_ID
+from odoo import SUPERUSER_ID
 
 import random
 
