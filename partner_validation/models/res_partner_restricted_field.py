@@ -10,7 +10,7 @@ class ResPartnerRestrictedField(models.Model):
     _description = 'Partner Restricted Field'
 
     field_id = fields.Many2one(
-        'ir.model.fields', string='Field',
+        'ir.model.fields', string='Field', ondelete='cascade',
         domain="[('model_id.model', '=', 'res.partner')]", required=True)
     active = fields.Boolean('Active', default=True)
 
