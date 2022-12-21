@@ -132,7 +132,7 @@ class TestResPartnerChangeParent(common.SavepointCase):
                     "active_model": "res.partner",
                 }
             )
-            .create(
+            .sudo().create(
                 {
                     "new_company_id": destination_company.id
                     if destination_company

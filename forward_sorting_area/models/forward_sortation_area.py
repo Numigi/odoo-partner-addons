@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
@@ -24,7 +24,6 @@ class ForwardSortationAera(models.Model):
 
     partner_ids = fields.One2many('res.partner', 'fsa_id', string='Partners')
 
-    @api.multi
     def write(self, vals):
         res = super(ForwardSortationAera, self).write(vals)
         if 'name' in vals:

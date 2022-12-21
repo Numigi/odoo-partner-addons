@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017-2018 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
@@ -185,7 +185,6 @@ class ResPartner(models.Model):
         res._post_message_duplicates(duplicates)
         return res
 
-    @api.multi
     def write(self, vals):
         updated_values = set(vals.keys())
         res = super(ResPartner, self).write(vals)
@@ -200,7 +199,6 @@ class ResPartner(models.Model):
 
         return res
 
-    @api.multi
     def action_view_duplicates(self):
         self.ensure_one()
         action = self.env.ref('contacts.action_contacts')
@@ -230,7 +228,6 @@ class ResPartner(models.Model):
 
         return res
 
-    @api.model_cr_context
     def _auto_init(self):
         res = super(ResPartner, self)._auto_init()
         cr = self._cr
@@ -264,7 +261,6 @@ class ResPartner(models.Model):
                 """)
         return res
 
-    @api.multi
     def action_merge(self):
         if not self.env.user.has_group('partner_duplicate_mgmt.group_duplicate_partners_control'):
             raise UserError(_("You don't have access to merge partners."))

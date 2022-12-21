@@ -17,18 +17,6 @@
         </field>
     </record>
 
-    <record id="view_partner_short_form_with_place_autocomplete" model="ir.ui.view">
-        <field name="name">Partner Short Form With Place Aucomplete</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_short_form"/>
-        <field name="arch" type="xml">
-            <field name="street" position="before">
-                <field name="place" widget="google_partner_address"
-                    attrs="{'invisible': [('type', '=', 'contact'), ('parent_id', '!=', False)]}"/>
-            </field>
-        </field>
-    </record>
-
     <record id="view_partner_address_form_with_place_autocomplete" model="ir.ui.view">
         <field name="name">Partner Address Form With Place Aucomplete</field>
         <field name="model">res.partner</field>

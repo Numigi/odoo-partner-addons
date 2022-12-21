@@ -20,9 +20,9 @@
     <record id="view_partner_short_form_with_territories" model="ir.ui.view">
         <field name="name">Partner Short Form With Territories</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_short_form"/>
+        <field name="inherit_id" ref="base.view_partner_simple_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='street']/.." position="after">
+            <xpath expr="//field[@name='parent_id']" position="after">
                 <field name="territory_ids" widget="many2many_tags"/>
             </xpath>
         </field>

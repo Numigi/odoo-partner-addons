@@ -31,7 +31,6 @@
     <record model="ir.actions.act_window" id="action_res_partner_change_parent">
         <field name="name">Change Parent Entity</field>
         <field name="res_model">res.partner.change.parent</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="view_id" ref="form_res_partner_change_parent"/>
         <field name="target">new</field>

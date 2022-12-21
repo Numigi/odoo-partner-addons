@@ -61,7 +61,7 @@
     <record id="view_partner_short_form_company_not_editable" model="ir.ui.view">
         <field name="name">Partner Short Form With Parent Company Not Editable</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_short_form"/>
+        <field name="inherit_id" ref="base.view_partner_address_form"/>
         <field name="arch" type="xml">
             <field name="name" position="before">
                 <field name="id" invisible="1"/>
