@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2017-2018 Savoir-faire Linux
 # © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
@@ -20,7 +19,7 @@ class ResPartnerDuplicate(models.Model):
         'res.partner', string='Partner 2', readonly=True)
     partner_preserved_id = fields.Many2one(
         'res.partner', string='Preserved Partner',
-        track_visibility='onchange')
+        tracking=True)
     partner_archived_id = fields.Many2one(
         'res.partner', string='Archived Partner',
         compute='_compute_partner_archived_id')
@@ -40,7 +39,7 @@ class ResPartnerDuplicate(models.Model):
             ('resolved', 'Resolved (Not Duplicate)'),
             ('merged', 'Merged'),
         ], default='to_validate',
-        track_visibility='onchange',
+        tracking=True,
     )
 
     @api.depends('partner_1_id', 'partner_2_id', 'partner_preserved_id')
