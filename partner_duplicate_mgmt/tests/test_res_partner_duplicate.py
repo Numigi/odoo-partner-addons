@@ -8,7 +8,7 @@ from itertools import permutations
 from odoo.api import Environment
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import common
-from odoo.tools import SUPERUSER_ID
+from odoo import SUPERUSER_ID
 
 import random
 
@@ -17,7 +17,7 @@ class PartnerDuplicateCase(common.SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(PartnerDuplicateCase, cls).setUpClass()
 
         # Test using the demo user to prevent bugs related with access rights.
         cls.env = Environment(cls.env.cr, cls.env.ref('base.user_demo').id, {})
@@ -98,15 +98,15 @@ class PartnerDuplicateCase(common.SavepointCase):
         cls.company_merge_lines = cls.company_dup.merge_line_ids
 
 
-# class TestResPartnerDuplicate(PartnerDuplicateCase):
-#
-#     def test_cron_executed_twice_wont_create_2_duplicates(self):
-#         self.cron.sudo().method_direct_trigger()
-#         duplicates = self.env['res.partner.duplicate'].search([
-#             ('partner_1_id', 'in', self.contacts),
-#             ('partner_2_id', 'in', self.contacts),
-#         ])
-#         self.assertEqual(len(duplicates), 1)
+class TestResPartnerDuplicate(PartnerDuplicateCase):
+
+    def test_cron_executed_twice_wont_create_2_duplicates(self):
+        self.cron.sudo().method_direct_trigger()
+        duplicates = self.env['res.partner.duplicate'].search([
+            ('partner_1_id', 'in', self.contacts),
+            ('partner_2_id', 'in', self.contacts),
+        ])
+        self.assertEqual(len(duplicates), 1)
 #
 #     def test_duplicates_where_partner1_equals_partner2_are_ignored(self):
 #         duplicates = self.env['res.partner.duplicate'].search([
