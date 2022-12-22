@@ -207,7 +207,6 @@ class ResPartner(models.Model):
             'name': action.name,
             'type': action.type,
             'res_model': action.res_model,
-            'view_type': action.view_type,
             'view_mode': 'tree,form',
             'views': [(action.view_id.id, 'tree'), (False, 'form')],
             'search_view_id': action.search_view_id.id,
@@ -285,7 +284,6 @@ class ResPartner(models.Model):
             return {
                 'type': 'ir.actions.act_window',
                 'res_model': 'res.partner.duplicate',
-                'view_type': 'form',
                 'view_mode': 'form',
                 'views': [(view.id, 'form')],
                 'res_id': duplicate.id,

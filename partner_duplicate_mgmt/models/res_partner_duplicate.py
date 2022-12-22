@@ -307,7 +307,6 @@ class ResPartnerDuplicate(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'res_model': self._name,
-            'view_type': 'form',
             'view_mode': 'form',
             'views': [(view.id, 'form')],
             'target': 'new',

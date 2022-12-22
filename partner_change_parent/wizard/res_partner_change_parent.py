@@ -94,7 +94,6 @@ class ResPartnerParentChange(models.TransientModel):
         self._archive_old_contact()
         return {
             'name': _('New Contact'),
-            'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'res.partner',
             'res_id': self.new_contact_id.id,
