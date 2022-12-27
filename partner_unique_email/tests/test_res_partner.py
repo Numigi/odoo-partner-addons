@@ -26,9 +26,6 @@ class TestResPartner(common.SavepointCase):
 
     def test_partner_with_same_email_onchange(self):
         partner = self.env['res.partner'].create({'name': 'Other Partner'})
-
-        with self.env.do_in_onchange():
+        with self.assertRaises(UserError):
             partner.email = self.email
 
-            with self.assertRaises(UserError):
-                partner._onchange_email_check_partners_with_same_email()
