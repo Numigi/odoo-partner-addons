@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_reference_type_tree" model="ir.ui.view">
+        <field name="name">res.partner.reference.type.tree</field>
+        <field name="model">res.partner.reference.type</field>
+        <field name="arch" type="xml">
+            <tree string="Partner Reference Types" editable="bottom">
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+   <record id="action_partner_reference_type" model="ir.actions.act_window">
+        <field name="name">Partner Reference Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.reference.type</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem 
+        id="menu_partner_reference_type"
+        name="Partner Reference Types"
+        action="partner_reference.action_partner_reference_type"
+        parent="contacts.res_partner_menu_config"
+        sequence="2"/>
+
+</odoo>
