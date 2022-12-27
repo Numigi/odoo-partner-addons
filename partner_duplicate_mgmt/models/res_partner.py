@@ -106,6 +106,7 @@ class ResPartner(models.Model):
 
         cr = self.env.cr
         cr.execute('SELECT set_limit(%s)', (min_similarity,))
+        self.flush()
         cr.execute("""
             SELECT p.id
             FROM res_partner p
