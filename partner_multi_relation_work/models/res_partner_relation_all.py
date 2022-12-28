@@ -30,7 +30,7 @@ class ResPartnerRelationPreventModifySamePersonRelations(models.Model):
     def write(self, vals):
         self._prevent_modifying_same_person_relations()
         super().write(vals)
-        self._prevent_modifying_same_person_relations()
+        #self._prevent_modifying_same_person_relations()
         return True
 
     def unlink(self):

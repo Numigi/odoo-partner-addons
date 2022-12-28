@@ -1,18 +1,18 @@
 # © 2017 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.api import Environment
 from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import common
-
+from odoo.tests.common import  users
 
 class TestResPartnerChangeParent(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestResPartnerChangeParent, cls).setUpClass()
 
-        cls.user = cls.env.ref("base.user_demo")
+        cls.user = cls.env.ref("base.user_root")
 
         cls.internal_user = cls.env["res.users"].create(
             {
@@ -80,7 +80,7 @@ class TestResPartnerChangeParent(common.SavepointCase):
             contact_with_no_company, self.company_1
         )
         assert new_contact.parent_id, self.company_1
-
+    @users('admin')
     def test_destination_parent_with_address(self):
         """Test that the address is changed when changing the parent company."""
         assert not self.contact_1.city
