@@ -81,7 +81,7 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
             'left_partner_id': self.contact_id.id,
             'right_partner_id': self.new_contact_id.id,
             'type_id': relation_type_same.id,
-            'is_automatic': True,
+           # 'is_automatic': True,
         })
 
     def _terminate_old_work_relations(self):

@@ -14,6 +14,7 @@
         'base_view_inheritance_extension',
     ],
     "data": [
+        'security/ir.model.access.csv',
         'wizard/res_partner_change_parent.xml',
         'views/res_partner.xml',
     ],
