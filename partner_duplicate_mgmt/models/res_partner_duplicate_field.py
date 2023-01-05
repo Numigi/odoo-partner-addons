@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # © 2017-2018 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, fields, models
@@ -18,7 +17,7 @@ class ResPartnerDuplicateField(models.Model):
             ('ttype', 'not in', ('many2many', 'one2many')),
             ('related', '=', False),
             ('readonly', '=', False),
-        ], help=_(
+        ], ondelete='cascade', help=_(
             'You can only select fields which are not many2many, '
             'one2many, related and computed.')
     )

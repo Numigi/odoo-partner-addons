@@ -4,7 +4,7 @@
     <record id="partner_form_with_envelope_hidden" model="ir.ui.view">
         <field name="name">res.partner.form</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="sms.partner_form_send_sms_form_view"/>
+        <field name="inherit_id" ref="sms.res_partner_view_form"/>
         <field name="arch" type="xml">
             <form position="inside">
                 <field name="phone_envelope_hidden" invisible="1"/>

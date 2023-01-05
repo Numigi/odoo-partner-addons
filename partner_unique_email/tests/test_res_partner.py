@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # © 2016 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
@@ -27,9 +26,6 @@ class TestResPartner(common.SavepointCase):
 
     def test_partner_with_same_email_onchange(self):
         partner = self.env['res.partner'].create({'name': 'Other Partner'})
-
-        with self.env.do_in_onchange():
+        with self.assertRaises(UserError):
             partner.email = self.email
 
-            with self.assertRaises(UserError):
-                partner._onchange_email_check_partners_with_same_email()

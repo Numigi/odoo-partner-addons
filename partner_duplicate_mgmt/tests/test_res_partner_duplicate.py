@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # © 2017-2018 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
@@ -9,8 +8,7 @@ from itertools import permutations
 from odoo.api import Environment
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import common
-from odoo.tools import SUPERUSER_ID
-
+from odoo import SUPERUSER_ID
 import random
 
 
@@ -18,7 +16,7 @@ class PartnerDuplicateCase(common.SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(PartnerDuplicateCase, cls).setUpClass()
 
         # Test using the demo user to prevent bugs related with access rights.
         cls.env = Environment(cls.env.cr, cls.env.ref('base.user_demo').id, {})
@@ -294,29 +292,35 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
         })
         journal = env['account.journal'].create({
             'name': 'Journal',
-            'type': 'bank',
+            'type': 'purchase',
             'code': str(random.randint(100, 999)),
         })
-        account_invoice_line = env['account.invoice.line'].create({
-            'name': 'My line 1',
-            'product_id': product.id,
-            'account_id': account_2.id,
-            'price_unit': '20',
-        })
-        account_invoice = env['account.invoice'].create({
+
+        account_invoice = env['account.move'].create({
             'partner_id': partner.id,
-            'account_id': account_1.id,
+            #'account_id': account_1.id,
             'journal_id': journal.id,
             'currency_id': currency.id,
-            'invoice_line_ids': [(4, account_invoice_line.id)],
-            'type': 'in_invoice',
+            'move_type': 'in_invoice',
+            'invoice_line_ids': [
+                    (0, None, {
+                        'name': 'My line 1',
+                        'product_id': product.id,
+                        'account_id': account_2.id,
+                        'price_unit': '20',
+                        'quantity': 1,
+
+                    })],
+
         })
+
+
 
         return account_invoice
 
     def test_cannot_merge_contact_with_account_moves(self):
         invoice = self.create_invoice(self.contact_2)
-        invoice.action_invoice_open()
+        invoice.action_invoice_sent()
 
         self.contact_dup.write({'partner_preserved_id': self.contact_1.id})
         self.contact_merge_lines.write({'partner_1_selected': True})
@@ -330,7 +334,7 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
         self.env.user.write({'groups_id': [(4, self.account_move_group.id)]})
 
         invoice = self.create_invoice(self.contact_2)
-        invoice.action_invoice_open()
+        invoice.action_invoice_sent()
 
         self.contact_dup.write({'partner_preserved_id': self.contact_1.id})
         self.contact_merge_lines.write({'partner_1_selected': True})
@@ -339,16 +343,16 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
 
         # The move is updated using a direct sql query.
         # Need to reload it before checking the new partner.
-        invoice.move_id.refresh()
+        invoice.refresh()
 
-        self.assertEqual(invoice.move_id.partner_id, self.contact_1)
+        self.assertEqual(invoice.partner_id, self.contact_1)
 
     def test_compute_warning_message_partner_1_with_account_moves(self):
         self.assertFalse(self.contact_dup.warning_message)
         self.env.user.write({'groups_id': [(4, self.account_move_group.id)]})
 
         invoice = self.create_invoice(self.contact_2)
-        invoice.action_invoice_open()
+        invoice.action_invoice_sent()
 
         self.contact_dup.write({'partner_preserved_id': self.contact_1.id})
         self.contact_dup._onchange_check_contacts_with_journal_entries()

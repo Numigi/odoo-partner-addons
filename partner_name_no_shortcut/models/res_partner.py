@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import re
@@ -14,7 +14,6 @@ class ResPartner(models.Model):
 
     _inherit = 'res.partner'
 
-    @api.multi
     def write(self, vals):
         super().write(vals)
         if any(f in vals for f in PARTNER_NAME_FIELDS):

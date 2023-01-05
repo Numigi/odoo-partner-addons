@@ -1,4 +1,4 @@
-# © 2019 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, models
@@ -37,7 +37,6 @@ class ResPartner(models.Model):
         if phones_to_update:
             self.with_context(no_partner_format_phones=True).write(phones_to_update)
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
 

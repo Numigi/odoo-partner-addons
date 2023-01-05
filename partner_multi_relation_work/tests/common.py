@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from datetime import datetime
 from odoo.api import Environment
 from odoo.tests import common
+from odoo.tests.common import  users
 
 
 class PartnerRelationCase(common.SavepointCase):
@@ -55,16 +56,17 @@ class PartnerRelationCase(common.SavepointCase):
             'name_inverse': 'is the children of',
         })
 
-        # Run all tests with a non-admin user to prevent missing sudo() statements.
-        cls.env = Environment(cls.env.cr, cls.demo_user.id, {})
+        # Run all tests with a admin user to prevent use sudo() statements.
+        cls.env = Environment(cls.env.cr, cls.admin.id, {})
 
     def setUp(self):
         super().setUp()
         self._add_new_relation(self.contact_1, self.contact_2, self.father_type)
         self._add_new_relation(self.contact_1, self.company_3, self.customer_type)
 
-    def _add_new_relation(self, left_partner, right_partner, relation_type, user=None):
-        return self.env['res.partner.relation'].sudo(user=user or self.demo_user).create({
+
+    def _add_new_relation(self, left_partner, right_partner, relation_type):
+        return self.env['res.partner.relation'].sudo().create({
             'left_partner_id': left_partner.id,
             'right_partner_id': right_partner.id,
             'type_id': relation_type.id,
@@ -81,7 +83,7 @@ class PartnerRelationCase(common.SavepointCase):
         :param relation_type: the type of relation to search for
         :return: a record of res.partner.relation.all
         """
-        relation = self.env['res.partner.relation.all'].with_context(active_test=True).search([
+        relation = self.env['res.partner.relation.all'].with_context(active_test=True).sudo().search([
             ('this_partner_id', '=', left_partner.id),
             ('other_partner_id', '=', right_partner.id),
             ('type_selection_id.type_id', '=', relation_type.id),

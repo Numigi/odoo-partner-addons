@@ -1,24 +1,38 @@
 # -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
-class ResPartnerRelationTypeSameRelation(models.Model):
+class ResPartnerRelationType(models.Model):
 
     _inherit = 'res.partner.relation.type'
 
     is_same_relation = fields.Boolean('Same Relation', compute='_compute_is_same_relation')
+    is_work_relation = fields.Boolean('Work Relation', compute='_compute_is_work_relation')
+
 
     def _compute_is_same_relation(self):
         same_relation = self.env.ref(
             'partner_multi_relation_work.relation_type_same', raise_if_not_found=False)
-        if same_relation is not None:
-            for rec in self:
+        for rec in self:
+            if same_relation is not None:
                 rec.is_same_relation = rec == same_relation
+            else:
+                rec.is_same_relation = False
+
+
+    def _compute_is_work_relation(self):
+        work_relation = self.env.ref(
+            'partner_multi_relation_work.relation_type_work', raise_if_not_found=False)
+        for rec in self:
+            if work_relation is not None:
+                rec.is_work_relation = rec == work_relation
+            else:
+                rec.is_work_relation = False
 
     @api.constrains('contact_type_left', 'contact_type_right')
     def _check_same_relation_from_individual_to_individual(self):
@@ -50,25 +64,22 @@ class ResPartnerRelationTypeSameRelation(models.Model):
     @api.constrains('handle_invalid_onchange')
     def _check_same_relation_does_not_allow_invalid_relations(self):
         """Check that invalid same-person relations are restricted."""
-        same_relations_without_restrict = self.filtered(
-            lambda t: t.is_same_relation and t.handle_invalid_onchange != 'restrict')
-        if same_relations_without_restrict:
-            raise ValidationError(_('Invalid same-person relations must be restricted.'))
+        for rec in self:
+            same_relations_without_restrict = rec.filtered(
+                lambda t: t.is_same_relation and t.handle_invalid_onchange != 'restrict')
+            if same_relations_without_restrict:
+                raise ValidationError(_('Invalid same-person relations must be restricted.'))
+
+    @api.constrains('handle_invalid_onchange')
+    def _check_work_relation_does_not_allow_invalid_relations(self):
+        """Check that invalid work-person relations are restricted."""
+        for rec in self:
+            work_relations_without_restrict = rec.filtered(
+                lambda t: t.is_work_relation and t.handle_invalid_onchange != 'restrict')
+            if work_relations_without_restrict:
+                raise ValidationError(_('Invalid work relations must be restricted.'))
 
 
-class ResPartnerRelationTypeWorkRelation(models.Model):
-
-    _inherit = 'res.partner.relation.type'
-
-    is_work_relation = fields.Boolean('Work Relation', compute='_compute_is_work_relation')
-
-    def _compute_is_work_relation(self):
-        work_relation = self.env.ref(
-            'partner_multi_relation_work.relation_type_work', raise_if_not_found=False)
-
-        if work_relation is not None:
-            for rec in self:
-                rec.is_work_relation = rec == work_relation
 
     @api.constrains('contact_type_left', 'contact_type_right')
     def _check_work_relation_from_individual_to_company(self):
@@ -94,10 +105,7 @@ class ResPartnerRelationTypeWorkRelation(models.Model):
             raise ValidationError(
                 _('Work relations are not possible between a partner and himself.'))
 
-    @api.constrains('handle_invalid_onchange')
-    def _check_work_relation_does_not_allow_invalid_relations(self):
-        """Check that invalid work-person relations are restricted."""
-        work_relations_without_restrict = self.filtered(
-            lambda t: t.is_work_relation and t.handle_invalid_onchange != 'restrict')
-        if work_relations_without_restrict:
-            raise ValidationError(_('Invalid work relations must be restricted.'))
+
+
+
+

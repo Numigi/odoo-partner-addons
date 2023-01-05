@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
 # © 2017-2018 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.api import Environment
 from odoo.tests import common
-from openerp.exceptions import UserError
+from odoo.exceptions import UserError
+from odoo.tests.common import tagged, users
 
 
 class TestResPartner(common.SavepointCase):
@@ -25,49 +25,63 @@ class TestResPartner(common.SavepointCase):
             'name': 'My Partner',
             'is_company': True,
         })
-        cls.partner_3 = cls.env['res.partner'].create({
-            'name': 'Big Partner',
-            'is_company': True,
-        })
+        cls.partner_4 = cls.env['res.partner'].create({'name': 'Julienjez'})
+        cls.partner_5 = cls.env['res.partner'].create({'name': 'Julyenjezequel'})
+        cls.partner_6 = cls.env['res.partner'].create({'name': 'Julien Jézequel'})
+
 
     def test_partner_indexed_name_is_lower_case(self):
         self.assertEqual(self.partner_1.indexed_name, 'big partner')
 
+    @users("admin")
     def test_partner_indexed_name_with_accent(self):
-        partner_4 = self.env['res.partner'].create({
-            'name': 'Julien Jézequel',
-        })
+
         partner_5 = self.env['res.partner'].create({
             'name': 'Julien Jezequel',
         })
 
-        self.assertEqual(partner_4.indexed_name, 'julien jezequel')
+        self.assertEqual(self.partner_6.indexed_name, 'julien jezequel')
         self.assertEqual(partner_5.indexed_name, 'julien jezequel')
-        self.assertIn(partner_4, partner_5.duplicate_ids)
+        self.assertIn(self.partner_6, partner_5.duplicate_ids)
 
     def test_create_new_partner_compute_duplicates(self):
-        self.assertTrue(self.partner_3.duplicate_ids)
-        self.assertEqual(self.partner_3.duplicate_count, 1)
-        self.assertIn(self.partner_1, self.partner_3.duplicate_ids)
-
-        self.assertIn(self.partner_1.name, self.partner_3.message_ids[0].body)
+        partner_3 = self.env['res.partner'].create({
+            'name': 'Big Partner',
+            'is_company': True,
+        })
+        self.assertTrue(partner_3.duplicate_ids)
+        self.assertEqual(partner_3.duplicate_count, 1)
+        self.assertIn(self.partner_1, partner_3.duplicate_ids)
+        self.assertIn(self.partner_1.name, partner_3.message_ids[0].body)
 
     def test_edit_partner_compute_duplicates(self):
+        partner_3 = self.env['res.partner'].create({
+            'name': 'Big Partner',
+            'is_company': True,
+        })
         self.assertEqual(self.partner_2.duplicate_count, 0)
 
         self.partner_2.write({'name': 'Bigg Partner'})
         self.assertTrue(self.partner_2.duplicate_ids)
         self.assertEqual(self.partner_2.duplicate_count, 2)
         self.assertIn(self.partner_1, self.partner_2.duplicate_ids)
-        self.assertIn(self.partner_3, self.partner_2.duplicate_ids)
+        self.assertIn(partner_3, self.partner_2.duplicate_ids)
 
     def test_should_not_select_more_than_2_partners_to_merge(self):
-        partners = self.partner_1 | self.partner_2 | self.partner_3
+        partner_3 = self.env['res.partner'].create({
+            'name': 'Big Partner',
+            'is_company': True,
+        })
+        partners = self.partner_1 | self.partner_2 | partner_3
         with self.assertRaises(UserError):
             partners.action_merge()
 
     def test_should_not_create_new_duplicate_line(self):
-        partners = self.partner_1 | self.partner_3
+        partner_3 = self.env['res.partner'].create({
+            'name': 'Big Partner',
+            'is_company': True,
+        })
+        partners = self.partner_1 | partner_3
         partners.action_merge()
         duplicates = self.env['res.partner.duplicate'].search([
             ('partner_1_id', 'in', partners.ids),
@@ -75,6 +89,7 @@ class TestResPartner(common.SavepointCase):
         ])
         self.assertEqual(len(duplicates), 1)
 
+    @users('admin')
     def test_merge_selected_contacts_action_is_unlinked(self):
         action = self.env['ir.actions.act_window'].search([
             ('name', '=', 'Merge Selected Contacts')])
@@ -91,21 +106,19 @@ class TestResPartner(common.SavepointCase):
 
     def test_merge_partners_similarity_1(self):
         # Similarity of these 2 partners : 0.53
-        partner_4 = self.env['res.partner'].create({'name': 'Julienjez'})
-        partner_5 = self.env['res.partner'].create({'name': 'Julyenjez'})
 
+        partner_5 = self.env['res.partner'].create({'name': 'Julyenjez'})
+        self.assertIn(self.partner_4, partner_5.duplicate_ids)
         similarity = self.env['res.partner']._get_min_similarity('Julienjez')
         self.assertEqual(similarity, '0.5')
-        self.assertIn(partner_4, partner_5.duplicate_ids)
+
 
     def test_merge_partners_similarity_2(self):
         # Similarity of these 2 partners : 0.67
-        partner_4 = self.env['res.partner'].create({'name': 'Julienjezequel'})
-        partner_5 = self.env['res.partner'].create({'name': 'Julyenjezequel'})
-
+        partner = self.env['res.partner'].create({'name': 'Julienjezequel'})
         similarity = self.env['res.partner']._get_min_similarity('Julienjezequel')
         self.assertEqual(similarity, '0.6')
-        self.assertIn(partner_4, partner_5.duplicate_ids)
+        self.assertIn(partner, self.partner_5.duplicate_ids)
 
     def test_merge_partners_similarity_3(self):
         # Similarity of these 2 partners : 0.63
@@ -133,10 +146,10 @@ class TestResPartner(common.SavepointCase):
 
     def test_should_not_merge_contacts_with_different_parents(self):
         self.partner_1.write({
-            'child_ids': [(0, 0, {'name': 'Julien'})]
+            'child_ids': [(0, 0, {'name': 'Abdel'})]
         })
         self.partner_2.write({
-            'child_ids': [(0, 0, {'name': 'Julien'})]
+            'child_ids': [(0, 0, {'name': 'Abdel'})]
         })
         self.assertFalse(self.partner_2.child_ids.duplicate_ids)
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2016 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
@@ -45,8 +45,10 @@ class TestResPartner(common.SavepointCase):
         self.assertEqual(self.person.name, 'John Doe')
 
     def test_remove_translated_title(self):
+        self.env['res.lang']._activate_lang('fr_CA')
         self.translation_mr = self.env['ir.translation'].create({
             'lang': 'fr_CA',
+            'type': 'model',
             'name': 'res.partner.title,shortcut',
             'type': 'model',
             'src': 'Mr.',
@@ -79,6 +81,7 @@ class TestResPartner(common.SavepointCase):
         self.assertEqual(self.company.name, 'Toyota')
 
     def test_remove_translated_business_type(self):
+        self.env['res.lang']._activate_lang('fr_CA')
         self.translation_inc = self.env['ir.translation'].create({
             'lang': 'fr_CA',
             'name': 'res.partner.business.type,shortcut',

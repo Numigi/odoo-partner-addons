@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models
@@ -11,7 +11,6 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
 
     _inherit = 'res.partner.change.parent'
 
-    @api.multi
     def _duplicate_contact_and_change_parent(self):
         """Add/update relations on between partners."""
         res = super()._duplicate_contact_and_change_parent()
@@ -82,7 +81,7 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
             'left_partner_id': self.contact_id.id,
             'right_partner_id': self.new_contact_id.id,
             'type_id': relation_type_same.id,
-            'is_automatic': True,
+           # 'is_automatic': True,
         })
 
     def _terminate_old_work_relations(self):

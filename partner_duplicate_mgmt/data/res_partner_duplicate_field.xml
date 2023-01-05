@@ -12,15 +12,15 @@
             <field name="sequence" eval="2"/>
         </record>
 
-        <record id="duplicate_field_customer" model="res.partner.duplicate.field">
-            <field name="field_id" eval="ref('base.field_res_partner__customer')"/>
-            <field name="sequence" eval="3"/>
-        </record>
+<!--        <record id="duplicate_field_customer" model="res.partner.duplicate.field">-->
+<!--            <field name="field_id" eval="ref('base.field_res_partner__customer')"/>-->
+<!--            <field name="sequence" eval="3"/>-->
+<!--        </record>-->
 
-        <record id="duplicate_field_supplier" model="res.partner.duplicate.field">
-            <field name="field_id" eval="ref('base.field_res_partner__supplier')"/>
-            <field name="sequence" eval="4"/>
-        </record>
+<!--        <record id="duplicate_field_supplier" model="res.partner.duplicate.field">-->
+<!--            <field name="field_id" eval="ref('base.field_res_partner__supplier')"/>-->
+<!--            <field name="sequence" eval="4"/>-->
+<!--        </record>-->
 
         <record id="duplicate_field_city" model="res.partner.duplicate.field">
             <field name="field_id" eval="ref('base.field_res_partner__city')"/>
