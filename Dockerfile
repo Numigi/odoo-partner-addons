@@ -16,7 +16,7 @@ USER odoo
 COPY contacts_config_menu_moved_right /mnt/extra-addons/contacts_config_menu_moved_right
 COPY contacts_config_sale_manager /mnt/extra-addons/contacts_config_sale_manager
 COPY forward_sorting_area /mnt/extra-addons/forward_sorting_area
-COPY google_partner_address /mnt/extra-addons/google_partner_address
+# COPY google_partner_address /mnt/extra-addons/google_partner_address
 # COPY partner_affiliate_invoicing_address /mnt/extra-addons/partner_affiliate_invoicing_address
 # COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
 # COPY partner_category_type /mnt/extra-addons/partner_category_type
@@ -48,7 +48,7 @@ COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
 #COPY partner_reference /mnt/extra-addons/partner_reference
 #COPY partner_unique_email /mnt/extra-addons/partner_unique_email
 #COPY partner_user_auto_assign /mnt/extra-addons/partner_user_auto_assign
-# COPY partner_validation /mnt/extra-addons/partner_validation
+#COPY partner_validation /mnt/extra-addons/partner_validation
 #COPY partner_validation_purchase /mnt/extra-addons/partner_validation_purchase
 #COPY partner_validation_sale /mnt/extra-addons/partner_validation_sale
 #COPY partner_website_domain_only /mnt/extra-addons/partner_website_domain_only
