@@ -13,7 +13,7 @@
     "depends": [
         "contacts_config_menu_moved_right",
         "contacts_config_sale_manager",
-        # "forward_sorting_area",
+        "forward_sorting_area",
         "google_partner_address",
         # "partner_affiliate_invoicing_address",
         # "partner_autocomplete_disable",
@@ -46,11 +46,11 @@
         # "partner_reference",
         # "partner_unique_email",
         # "partner_user_auto_assign",
-        "partner_validation",
+        # "partner_validation",
         # "partner_validation_purchase",
         # "partner_validation_sale",
         # "partner_website_domain_only",
         # "res_partner_bank_shared_account",
     ],
-    "installable": False,
+    "installable": True,
 }

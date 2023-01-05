@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_territory_tree" model="ir.ui.view">
+        <field name="name">res.territory.tree</field>
+        <field name="model">res.territory</field>
+        <field name="arch" type="xml">
+            <tree string="Territories" editable="top">
+                <field name="name" width="300px"/>
+                <field name="fsa_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                <field name="active"/>
+            </tree>
+      </field>
+    </record>
+
+    <record id="res_territory_action" model="ir.actions.act_window">
+        <field name="name">Territories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.territory</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem
+        action="res_territory_action"
+        id="menu_res_territory_action"
+        parent="contacts.menu_localisation"
+        sequence="7"
+    />
+
+</odoo>
