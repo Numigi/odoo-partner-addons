@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, models
@@ -27,14 +27,12 @@ class ResPartnerRelationPreventModifySamePersonRelations(models.Model):
         res._prevent_modifying_same_person_relations()
         return res
 
-    @api.multi
     def write(self, vals):
         self._prevent_modifying_same_person_relations()
         super().write(vals)
-        self._prevent_modifying_same_person_relations()
+        #self._prevent_modifying_same_person_relations()
         return True
 
-    @api.multi
     def unlink(self):
         self._prevent_modifying_same_person_relations()
         return super().unlink()

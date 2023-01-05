@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
-# © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 from odoo import _, api, fields, models
 
 
@@ -82,7 +82,6 @@ class ResPartnerWithIndexedPhones(models.Model):
                 }
             }
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
         for record in self:
