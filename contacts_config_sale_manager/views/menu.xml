@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
- 
-    <record id="contacts.res_partner_menu_config" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
-    </record>
-
-</odoo>
