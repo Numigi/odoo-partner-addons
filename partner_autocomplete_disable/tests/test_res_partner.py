@@ -1,4 +1,4 @@
-# © 2020 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2022 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from ddt import ddt, data
@@ -60,7 +60,7 @@ class TestResPartnerAutocompleteSync(common.TransactionCase):
         """ make sure the targeted method is called during the process
         """
         module_memory_address = (
-            "odoo.addons.partner_autocomplete_disable.res_partner.ResPartnerAutocompleteDisable"
+            "odoo.addons.partner_autocomplete_disable.models.res_partner.ResPartnerAutocompleteDisable"
         )
         with mock.patch(".".join([module_memory_address, "_rpc_remote_api"])) as mocked:
             autocomplete_module_memory_address = (
