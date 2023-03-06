@@ -1,17 +1,10 @@
-Forward Sortation Area
-======================
-This module adds territories and forward sorting areas (FSA).
-
-In Canada, an FSA code is the first 3 digits of a postal code.
-Each FSA may belong to one or more territory.
-
-When setting the postal code on a partner, the forward sorting area is automatically filled.
+Forward Sortation Area Multi company
+====================================
+This module allows to manage territories and forward sorting areas (FSA) in multi company mode.
 
 Contributors
 ------------
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
-* Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)
-* Istvan Szalai (istvan.szalai@savoirfairelinux.com)
 
 More information
 ----------------

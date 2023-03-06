@@ -1,8 +1,6 @@
 # © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-# from odoo.addons.forward_sorting_area.tests.test_forward_sorting_area import \
-#     TestResPartner
 from odoo.addons.test_mail.tests.common import mail_new_test_user
 
 from odoo.exceptions import UserError, AccessError, ValidationError
@@ -12,7 +10,6 @@ from psycopg2 import IntegrityError
 
 
 class TestFSAMultiCo(common.TransactionCase):
-
     def setUp(self):
         super(TestFSAMultiCo, self).setUp()
         self.company_1 = self.env["res.company"].create(
@@ -27,13 +24,15 @@ class TestFSAMultiCo(common.TransactionCase):
         )
 
         self.user_1 = mail_new_test_user(
-            self.env, login="user_1",
-            groups="base.group_user,base.group_partner_manager"
+            self.env,
+            login="user_1",
+            groups="base.group_user,base.group_partner_manager",
         )
 
         self.user_2 = mail_new_test_user(
-            self.env, login="user_2",
-            groups="base.group_user,base.group_partner_manager"
+            self.env,
+            login="user_2",
+            groups="base.group_user,base.group_partner_manager",
         )
 
         self.user_1.write(
@@ -49,35 +48,60 @@ class TestFSAMultiCo(common.TransactionCase):
             }
         )
         # user_1 create Territory 1
-        self.territory_1 = self.env['res.territory'].sudo(
-            self.user_1.id).create({
-            'name': 'Territory 1',
-        })
+        self.territory_1 = (
+            self.env["res.territory"]
+            .sudo(self.user_1.id)
+            .create(
+                {
+                    "name": "Territory 1",
+                }
+            )
+        )
 
         # user_2 create Territory 2
-        self.territory_2 = self.env['res.territory'].sudo(
-            self.user_2.id).create({
-            'name': 'Territory 2',
-        })
+        self.territory_2 = (
+            self.env["res.territory"]
+            .sudo(self.user_2.id)
+            .create(
+                {
+                    "name": "Territory 2",
+                }
+            )
+        )
 
         # user_1 create FSA 1
-        self.fsa_1 = self.env['forward.sortation.area'].sudo(
-            self.user_1.id).create({
-            'name': 'A1A',
-            'territory_ids': [(6, 0, [
-                self.territory_1.id])],
-        })
+        self.fsa_1 = (
+            self.env["forward.sortation.area"]
+            .sudo(self.user_1.id)
+            .create(
+                {
+                    "name": "A1A",
+                    "territory_ids": [(6, 0, [self.territory_1.id])],
+                }
+            )
+        )
 
         # user_2 create FSA 2
-        self.fsa_2 = self.env['forward.sortation.area'].sudo(
-            self.user_2.id).create({
-            'name': 'A1B',
-        })
+        self.fsa_2 = (
+            self.env["forward.sortation.area"]
+            .sudo(self.user_2.id)
+            .create(
+                {
+                    "name": "A1B",
+                }
+            )
+        )
         # user_1 create partner 1
-        self.partner_1 = self.env['res.partner'].sudo(self.user_1.id).create({
-            'name': 'Partner',
-            'zip': 'A1AB2B',
-        })
+        self.partner_1 = (
+            self.env["res.partner"]
+            .sudo(self.user_1.id)
+            .create(
+                {
+                    "name": "Partner",
+                    "zip": "A1AB2B",
+                }
+            )
+        )
 
     def test_check_territory_company(self):
         assert self.territory_1.company_id == self.company_1
@@ -109,22 +133,28 @@ class TestFSAMultiCo(common.TransactionCase):
     def test_fsa_partner_1_by_company2(self):
         self.assertFalse(self.partner_1.sudo(self.user_2.id).fsa_id)
 
-    @mute_logger('odoo.sql_db')
+    @mute_logger("odoo.sql_db")
     def test_check_unique_FSAname_per_company(self):
         with self.assertRaises(IntegrityError):
-            self.env['forward.sortation.area'].sudo(
-                self.user_2.id).create({
-                'name': 'A1B',
-            })
+            self.env["forward.sortation.area"].sudo(self.user_2.id).create(
+                {
+                    "name": "A1B",
+                }
+            )
 
-    @mute_logger('odoo.sql_db')
+    @mute_logger("odoo.sql_db")
     def test_check_unique_Territory_name_per_company(self):
         with self.assertRaises(IntegrityError):
-            self.env['res.territory'].sudo(self.user_1.id).create(
+            self.env["res.territory"].sudo(self.user_1.id).create(
                 {
-                    'name': 'Territory 1',
-                })
+                    "name": "Territory 1",
+                }
+            )
 
     def test_check_territory_ids(self):
         with self.assertRaises(ValidationError):
-            self.fsa_1.write({'territory_ids': [(4, self.territory_2.id)]})
+            self.territory_2.write({"company_id": self.company_1.id})
+
+    def test_check_fsa_ids(self):
+        with self.assertRaises(ValidationError):
+            self.fsa_1.write({"company_id": self.company_2.id})

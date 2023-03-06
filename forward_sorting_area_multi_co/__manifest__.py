@@ -17,7 +17,6 @@
         "security/fsa_multico_security.xml",
         "views/forward_sortation_area.xml",
         "views/res_territory.xml",
-
     ],
     "installable": True,
 }
