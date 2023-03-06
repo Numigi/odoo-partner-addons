@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_territory_multi_company_form" model="ir.ui.view">
+        <field name="name">Territory multi company Form</field>
+        <field name="model">res.territory</field>
+        <field name="inherit_id" ref="forward_sorting_area.res_territory_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_2']" position="inside">
+                <field name="company_id" readonly="1" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_territory_multi_company_tree" model="ir.ui.view">
+        <field name="name">Territory multi company List</field>
+        <field name="model">res.territory</field>
+        <field name="inherit_id" ref="forward_sorting_area.res_territory_tree"/>
+        <field name="arch" type="xml">
+            <field name="active" position="before">
+                <field name="company_id" readonly="1" invisible="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>
