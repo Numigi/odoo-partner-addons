@@ -6,11 +6,11 @@ from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
+
     _inherit = "res.partner"
 
     fsa_id = fields.Many2one(
-        "forward.sortation.area", string="FSA", compute="_compute_fsa_id",
-        store=True,
+        "forward.sortation.area", string="FSA", compute="_compute_fsa_id", store=True
     )
 
     territory_ids = fields.Many2many(
@@ -23,12 +23,10 @@ class ResPartner(models.Model):
     @api.depends("zip")
     def _compute_fsa_id(self):
         areas = {
-            a.name.lower(): a for a in
-            self.env["forward.sortation.area"].search([])
+            a.name.lower(): a for a in self.env["forward.sortation.area"].search([])
         }
         for record in self:
             if record.zip:
                 record.fsa_id = areas.get(record.zip[0:3].lower(), None)
             else:
                 record.fsa_id = None
-

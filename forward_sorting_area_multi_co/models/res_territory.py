@@ -1,4 +1,4 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import fields, models, api, _
@@ -25,6 +25,7 @@ class ResTerritory(models.Model):
     def _check_fsa_ids(self):
         if any(t.company_id != self.company_id for t in self.fsa_ids):
             raise ValidationError(
-                _("The FSA and Territory must belong to the same company (%s).")
+                _("The FSA and Territory must belong to the same company (%s)."
+                  )
                 % self.company_id.name
             )

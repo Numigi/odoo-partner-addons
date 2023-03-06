@@ -1,4 +1,4 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import logging
 from odoo import api, fields, models, _
@@ -27,6 +27,7 @@ class ForwardSortationAera(models.Model):
     def _check_territory_ids(self):
         if any(f.company_id != self.company_id for f in self.territory_ids):
             raise ValidationError(
-                _("The FSA and Territory must belong to the same company (%s).")
+                _("The FSA and Territory must belong to the same company (%s)."
+                  )
                 % self.company_id.name
             )

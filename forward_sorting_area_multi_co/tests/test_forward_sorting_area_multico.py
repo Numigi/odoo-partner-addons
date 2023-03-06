@@ -1,9 +1,9 @@
-# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.addons.test_mail.tests.common import mail_new_test_user
 
-from odoo.exceptions import UserError, AccessError, ValidationError
+from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import common
 from odoo.tools import mute_logger
 from psycopg2 import IntegrityError
@@ -140,7 +140,7 @@ class TestFSAMultiCo(common.TransactionCase):
         with self.assertRaises(IntegrityError):
             self.env["forward.sortation.area"].sudo(self.user_2.id).create(
                 {
-                    "name": "A1B",
+                    "name": "A1Z",
                 }
             )
 
