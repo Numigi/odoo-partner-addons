@@ -26,12 +26,14 @@ class TestFSAMultiCo(common.TransactionCase):
         self.user_1 = mail_new_test_user(
             self.env,
             login="user_test_1",
+            email="user_test_1@example.com",
             groups="base.group_user,base.group_partner_manager",
         )
 
         self.user_2 = mail_new_test_user(
             self.env,
             login="user_test_2",
+            email="user_test_2@example.com",
             groups="base.group_user,base.group_partner_manager",
         )
 
@@ -75,7 +77,7 @@ class TestFSAMultiCo(common.TransactionCase):
             .sudo(self.user_1.id)
             .create(
                 {
-                    "name": "A1A",
+                    "name": "A1N",
                     "territory_ids": [(6, 0, [self.territory_1.id])],
                 }
             )
@@ -87,7 +89,7 @@ class TestFSAMultiCo(common.TransactionCase):
             .sudo(self.user_2.id)
             .create(
                 {
-                    "name": "A1B",
+                    "name": "A1Z",
                 }
             )
         )
@@ -98,7 +100,7 @@ class TestFSAMultiCo(common.TransactionCase):
             .create(
                 {
                     "name": "Partner",
-                    "zip": "A1AB2B",
+                    "zip": "A1NB2B",
                 }
             )
         )
