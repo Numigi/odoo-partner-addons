@@ -25,13 +25,13 @@ class TestFSAMultiCo(common.TransactionCase):
 
         self.user_1 = mail_new_test_user(
             self.env,
-            login="user_1",
+            login="user_test_1",
             groups="base.group_user,base.group_partner_manager",
         )
 
         self.user_2 = mail_new_test_user(
             self.env,
-            login="user_2",
+            login="user_test_2",
             groups="base.group_user,base.group_partner_manager",
         )
 
