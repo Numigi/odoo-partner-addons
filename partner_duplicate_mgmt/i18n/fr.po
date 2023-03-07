@@ -674,6 +674,11 @@ msgstr ""
 msgid "Zip"
 msgstr ""
 
+#. module: partner_duplicate_mgmt
+#: model:res.groups,name:partner_duplicate_mgmt.group_contacts_restricted_access
+msgid "Restricted accessibility"
+msgstr "Accessibilité restreinte"
+
 #~ msgid ""
 #~ "You can not merge the partner %(partner)s because it is linked to journal "
 #~ "entries. Please contact your administrator."

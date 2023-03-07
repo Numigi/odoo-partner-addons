@@ -14,6 +14,7 @@
 
         <record id="group_contacts_restricted_access" model="res.groups">
             <field name="name">Restricted accessibility</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
         </record>
 
     </data>
