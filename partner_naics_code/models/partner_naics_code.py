@@ -1,4 +1,4 @@
-# © 2021 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2023 - today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
@@ -18,7 +18,7 @@ class PartnerNaicsCode(models.Model):
         if self.code < 0:
             raise ValidationError(_("Please enter a positive value."))
 
-    @api.depends('code','class_title')   
+    @api.depends('code', 'class_title')
     def _compute_name(self):
         for rec in self:
             rec.name = "{} - {}".format(rec.code, rec.class_title)
