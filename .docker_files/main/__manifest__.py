@@ -14,6 +14,7 @@
         "contacts_config_menu_moved_right",
         "contacts_config_sale_manager",
         "forward_sorting_area",
+        "forward_sorting_area_multi_co",
         "google_partner_address",
         "partner_affiliate_invoicing_address",
         "partner_autocomplete_disable",
