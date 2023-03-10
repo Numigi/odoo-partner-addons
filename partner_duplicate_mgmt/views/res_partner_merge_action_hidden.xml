@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="base.action_partner_merge" model="ir.actions.act_window">
-        <field name="groups_id" eval="[(4,ref('group_contacts_restricted_access'))]"/>
+        <field name="groups_id" eval="[(4,ref('group_contacts_native_partner_merge'))]"/>
     </record>
 
 </odoo>

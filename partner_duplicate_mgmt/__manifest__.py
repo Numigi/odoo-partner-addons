@@ -5,7 +5,7 @@
 
 {
     'name': 'Partner Duplicate Management',
-    'version': '1.0.0',
+    'version': '1.1.0',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Numigi',
     'website': 'https://www.numigi.com',
