@@ -1,5 +1,5 @@
 FROM quay.io/numigi/odoo-public:14.latest
-MAINTAINER numigi <contact@numigi.com>
+LABEL maintainer="numigi <contact@numigi.com>"
 
 USER root
 
@@ -22,8 +22,8 @@ COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
 COPY partner_category_type /mnt/extra-addons/partner_category_type
 COPY partner_change_parent /mnt/extra-addons/partner_change_parent
 COPY partner_change_parent_affiliate /mnt/extra-addons/partner_change_parent_affiliate
-#COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
-#COPY partner_client_type /mnt/extra-addons/partner_client_type
+COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view
+COPY partner_client_type /mnt/extra-addons/partner_client_type
 COPY partner_contact_type_visible /mnt/extra-addons/partner_contact_type_visible
 COPY partner_duplicate_mgmt /mnt/extra-addons/partner_duplicate_mgmt
 COPY partner_duplicate_multi_phone /mnt/extra-addons/partner_duplicate_multi_phone
@@ -48,7 +48,7 @@ COPY partner_portal_access_group /mnt/extra-addons/partner_portal_access_group
 COPY partner_reference /mnt/extra-addons/partner_reference
 COPY partner_unique_email /mnt/extra-addons/partner_unique_email
 COPY partner_user_auto_assign /mnt/extra-addons/partner_user_auto_assign
-#COPY partner_validation /mnt/extra-addons/partner_validation
+COPY partner_validation /mnt/extra-addons/partner_validation
 #COPY partner_validation_purchase /mnt/extra-addons/partner_validation_purchase
 #COPY partner_validation_sale /mnt/extra-addons/partner_validation_sale
 COPY partner_website_domain_only /mnt/extra-addons/partner_website_domain_only
