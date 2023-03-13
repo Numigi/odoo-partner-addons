@@ -17,6 +17,7 @@ COPY contacts_config_menu_moved_right /mnt/extra-addons/contacts_config_menu_mov
 COPY contacts_config_sale_manager /mnt/extra-addons/contacts_config_sale_manager
 COPY forward_sorting_area /mnt/extra-addons/forward_sorting_area
 COPY google_partner_address /mnt/extra-addons/google_partner_address
+COPY partner_account_manager /mnt/extra-addons/partner_account_manager
 COPY partner_affiliate_invoicing_address /mnt/extra-addons/partner_affiliate_invoicing_address
 COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
 COPY partner_category_type /mnt/extra-addons/partner_category_type
@@ -31,7 +32,7 @@ COPY partner_duplicate_multi_relation /mnt/extra-addons/partner_duplicate_multi_
 COPY partner_edit_group /mnt/extra-addons/partner_edit_group
 COPY partner_filters_simplified /mnt/extra-addons/partner_filters_simplified
 COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_before_lastname
-#COPY partner_full_text_search /mnt/extra-addons/partner_full_text_search
+COPY partner_full_text_search /mnt/extra-addons/partner_full_text_search
 COPY partner_gst_qst /mnt/extra-addons/partner_gst_qst
 COPY partner_key_date /mnt/extra-addons/partner_key_date
 COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
@@ -49,8 +50,8 @@ COPY partner_reference /mnt/extra-addons/partner_reference
 COPY partner_unique_email /mnt/extra-addons/partner_unique_email
 COPY partner_user_auto_assign /mnt/extra-addons/partner_user_auto_assign
 COPY partner_validation /mnt/extra-addons/partner_validation
-#COPY partner_validation_purchase /mnt/extra-addons/partner_validation_purchase
-#COPY partner_validation_sale /mnt/extra-addons/partner_validation_sale
+COPY partner_validation_purchase /mnt/extra-addons/partner_validation_purchase
+COPY partner_validation_sale /mnt/extra-addons/partner_validation_sale
 COPY partner_website_domain_only /mnt/extra-addons/partner_website_domain_only
 COPY res_partner_bank_shared_account /mnt/extra-addons/res_partner_bank_shared_account
 
