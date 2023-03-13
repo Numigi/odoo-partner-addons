@@ -5,7 +5,7 @@
 
 {
     'name': 'Partner Duplicate Management',
-    'version': '1.0.0',
+    'version': '1.1.0',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Numigi',
     'website': 'https://www.numigi.com',
@@ -31,6 +31,7 @@
         'views/res_partner_duplicate.xml',
         'views/res_partner_duplicate_field.xml',
         'views/merger_reason.xml',
+        'views/res_partner_merge_action_hidden.xml',
     ],
     'demo': [
         'demo/res_users.xml',

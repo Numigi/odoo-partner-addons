@@ -46,6 +46,9 @@ Then, you must click on the button Merge Partners. The behavior will be the foll
 * User's actions are registred in the chatter
 * The source partner will be set to inactive (instead of deleted).
 
+Note that this module will hide the standard action ``Merge Contacts`` after selecting multiple contacts:
+
+.. image:: static/description/merge_contact_standard_action.png
 
 A new list view shows alls duplicates. The user can:
 

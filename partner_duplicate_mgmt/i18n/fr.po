@@ -674,6 +674,11 @@ msgstr ""
 msgid "Zip"
 msgstr ""
 
+#. module: partner_duplicate_mgmt
+#: model:res.groups,name:partner_duplicate_mgmt.group_contacts_native_partner_merge
+msgid "Show native partner merge action"
+msgstr "Afficher la fusion de contact native"
+
 #~ msgid ""
 #~ "You can not merge the partner %(partner)s because it is linked to journal "
 #~ "entries. Please contact your administrator."
