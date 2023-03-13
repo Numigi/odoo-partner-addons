@@ -21,4 +21,4 @@ class TestResPartner(SavepointCase):
 
     def test_manager_propagated_to_contact(self):
         self.parent.account_manager_id = self.user
-        assert self.contact.account_manager_id == self.user
+        self.assertEqual(self.contact.account_manager_id, self.user)
