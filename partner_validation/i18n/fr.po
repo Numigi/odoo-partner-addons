@@ -71,7 +71,7 @@ msgstr "Dernière mise à jour le"
 #. module: partner_validation
 #: model:res.groups,name:partner_validation.group_partner_restricted_field
 msgid "Manage Partner Restricted Fields"
-msgstr "Manage partner restricted fields"
+msgstr "Gérer les champs réservés aux partenaires"
 
 #. module: partner_validation
 #: model:ir.model,name:partner_validation.model_res_partner_restricted_field
