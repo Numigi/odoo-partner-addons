@@ -3,16 +3,16 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import random
+from itertools import permutations
+
 import pytest
 from ddt import ddt, data, unpack
-from itertools import permutations
+from odoo.addons.test_mail.tests.common import mail_new_test_user
 from odoo.api import Environment
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import common
 from odoo.tools import SUPERUSER_ID
-
-import random
-from odoo.addons.test_mail.tests.common import mail_new_test_user
 
 
 class PartnerDuplicateCase(common.SavepointCase):
