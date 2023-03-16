@@ -339,7 +339,7 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
         assert not self.user_1.has_group(
             'partner_duplicate_mgmt.group_contacts_merge_account_moves')
 
-    def test_cannot_merge_companies_with_account_moves_bu_user1(self):
+    def test_cannot_merge_companies_with_account_moves_by_user1(self):
         invoice1 = self.create_invoice(self.company_1)
         invoice1.action_invoice_open()
 
