@@ -97,7 +97,6 @@ class MergePartnerAutomatic(models.TransientModel):
         # for contacts, check only users with enough rights can merge
         # contact with account moves
         if (
-            not src_partners.is_company and not dst_partner.is_company and
             not self.env.user.has_group(
                 'partner_duplicate_mgmt.group_contacts_merge_account_moves') and
             self.env['account.move'].sudo().search([

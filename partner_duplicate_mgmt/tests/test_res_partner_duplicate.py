@@ -3,15 +3,16 @@
 # © 2018 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import random
+from itertools import permutations
+
 import pytest
 from ddt import ddt, data, unpack
-from itertools import permutations
+from odoo.addons.test_mail.tests.common import mail_new_test_user
 from odoo.api import Environment
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import common
 from odoo.tools import SUPERUSER_ID
-
-import random
 
 
 class PartnerDuplicateCase(common.SavepointCase):
@@ -21,12 +22,20 @@ class PartnerDuplicateCase(common.SavepointCase):
         super().setUpClass()
 
         # Test using the demo user to prevent bugs related with access rights.
+        cls.user_1 = mail_new_test_user(
+            cls.env,
+            login="user_test_1",
+            email="user_test_1@example.com",
+            groups="base.group_user,base.group_partner_manager,"
+                   "partner_duplicate_mgmt.group_duplicate_partners_control",
+        )
         cls.env = Environment(cls.env.cr, cls.env.ref('base.user_demo').id, {})
 
         cls.state_on = cls.env.ref('base.state_ca_on')
         cls.state_qc = cls.env.ref('base.state_ca_qc')
 
-        cls.cron = cls.env.ref('partner_duplicate_mgmt.ir_cron_create_duplicates')
+        cls.cron = cls.env.ref(
+            'partner_duplicate_mgmt.ir_cron_create_duplicates')
 
         cls.account_move_group = cls.env.ref(
             'partner_duplicate_mgmt.group_contacts_merge_account_moves')
@@ -325,6 +334,24 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
 
         with self.assertRaises(UserError):
             self.contact_dup.merge_partners()
+
+    def test_user_1_not_in_group_contacts_merge_account_moves(self):
+        assert not self.user_1.has_group(
+            'partner_duplicate_mgmt.group_contacts_merge_account_moves')
+
+    def test_cannot_merge_companies_with_account_moves_by_user1(self):
+        invoice1 = self.create_invoice(self.company_1)
+        invoice1.action_invoice_open()
+
+        invoice2 = self.create_invoice(self.company_2)
+        invoice2.action_invoice_open()
+
+        self.company_dup.sudo(self.user_1.id).write(
+            {'partner_preserved_id': self.company_1.id})
+        self.company_dup.merge_line_ids.write({'partner_1_selected': True})
+
+        with self.assertRaises(UserError):
+            self.company_dup.sudo(self.user_1.id).merge_partners()
 
     def test_special_group_can_merge_contacts_with_account_moves(self):
         self.env.user.write({'groups_id': [(4, self.account_move_group.id)]})
