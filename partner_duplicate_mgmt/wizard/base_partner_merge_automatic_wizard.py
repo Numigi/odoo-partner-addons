@@ -76,7 +76,7 @@ class MergePartnerAutomatic(models.TransientModel):
                     "You may not merge a partner ({child}) with its parent ({parent})."
                 ).format(child=partner_1.display_name, parent=partner_2.display_name))
 
-    def _merge(self, partner_ids, dst_partner):
+    def _merge(self, partner_ids, dst_partner, extra_checks=True):
         """
         Override completely the original function to remove useless code.
         """
