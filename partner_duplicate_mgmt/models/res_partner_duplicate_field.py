@@ -13,7 +13,9 @@ class ResPartnerDuplicateField(models.Model):
     _order = 'sequence'
 
     field_id = fields.Many2one(
-        'ir.model.fields', string='Partner Field', required=True, domain=[
+        'ir.model.fields', string='Partner Field', 
+        required=True, ondelete='cascade',
+        domain=[
             ('model', '=', 'res.partner'),
             ('ttype', 'not in', ('many2many', 'one2many')),
             ('related', '=', False),
