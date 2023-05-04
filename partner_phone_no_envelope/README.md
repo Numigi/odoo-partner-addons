@@ -17,6 +17,7 @@ which defaults to True.
 To render the envelope visible:
 
 * Go to Configuration / Technical / Parameters / System Parameters.
+* Add a new parameter called `partner_phone_no_envelope.hide_envelope`
 * Set the value of `partner_phone_no_envelope.hide_envelope` to False.
 
 Contributors
