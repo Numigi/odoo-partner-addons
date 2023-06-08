@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="base.view_res_partner_filter"/>
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='inactive']" position="before">
-                <filter name="Customer" domain="[('customer_rank','&gt;',0)]"/>
-                <filter name="Supplier" domain="[('supplier_rank','&gt;',0)]"/>
+                <filter name="Customer" string="Customer" domain="[('customer_rank','&gt;',0)]"/>
+                <filter name="Supplier" string="Supplier" domain="[('supplier_rank','&gt;',0)]"/>
             </xpath>
         </field>
     </record>
