@@ -36,6 +36,7 @@ COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_befor
 COPY partner_full_text_search /mnt/extra-addons/partner_full_text_search
 COPY partner_gst_qst /mnt/extra-addons/partner_gst_qst
 COPY partner_key_date /mnt/extra-addons/partner_key_date
+COPY partner_list_view_specific /mnt/extra-addons/partner_list_view_specific
 COPY partner_multi_phone /mnt/extra-addons/partner_multi_phone
 COPY partner_multi_relation_note /mnt/extra-addons/partner_multi_relation_note
 COPY partner_multi_relation_strength /mnt/extra-addons/partner_multi_relation_strength
