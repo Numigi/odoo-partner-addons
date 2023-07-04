@@ -13,7 +13,6 @@
     'depends': ['partner_affiliate'],
     'data': [
         'views/res_partner.xml',
-        'data/ir_cron.xml',
     ],
     'installable': True,
 }

@@ -32,32 +32,24 @@ class ResPartner(models.Model):
     def _get_is_company_parent(self):
         """compute if contact is a parent company or not"""
         for rec in self:
+            is_company_parent = False
             if rec.company_type == "company" and \
                     rec.affiliate_ids and not rec.parent_id:
-                rec.is_company_parent = True
-            else:
-                rec.is_company_parent = False
+                is_company_parent = True
+            rec.is_company_parent = is_company_parent
+
+    def find_top_parent(self, partner):
+        self.ensure_one()
+        if not partner.parent_id:
+            return partner.id
+        else:
+            parent = partner.parent_id
+            return self.find_top_parent(parent)
 
     @api.depends("parent_id", "child_ids")
     def _get_highest_parent_id(self):
         for rec in self:
             if rec.parent_id:
-                res = rec.get_parent_id_level_zero(rec=rec)
-                if res:
-                    rec.highest_parent_id = res[-1]
-
-    def get_parent_id_level_zero(self, rec=False, res=[]):
-        if rec.parent_id:
-            res.append(rec.parent_id.id)
-            self.get_parent_id_level_zero(rec=rec.parent_id, res=res)
-        return res
-
-    def cron_compute_highest_parent_id(self):
-        partner_ids = self.search([('is_company_parent', '=', False),
-                                   ('parent_id', '!=', False)])
-        for partner in partner_ids:
-            res = partner.get_parent_id_level_zero(rec=partner)
-            partner.highest_parent_id = res[-1]
-
-
-
+                rec.highest_parent_id = rec.find_top_parent(rec)
+            else:
+                rec.highest_parent_id = False

@@ -1,10 +1,10 @@
 Partner Fax
 ===========
-Add the parent company filter and group by  to the partner search view.
+Add the parent company filter and group by to the partner search view.
 
-.. image:: static/description/filter_on_parent_comany.png
+.. image:: static/description/filter_on_parent_company.png
 
-.. image:: static/description/goup_by_parent_compay.png
+.. image:: static/description/goup_by_parent_company.png
 
 Contributors
 ------------
