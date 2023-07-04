@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_affiliate_extended
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-26 10:56+0000\n"
+"PO-Revision-Date: 2023-06-26 10:56+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_affiliate_extended
+#: model:ir.model.fields,help:partner_affiliate_extended.field_res_partner__is_company_parent
+#: model:ir.model.fields,help:partner_affiliate_extended.field_res_users__is_company_parent
+msgid "A parent company is a “Company” type contact for which at least one “Affiliate” is defined and for which no related company is defined"
+msgstr "Une société parente est un contact de type “société” pour lequel au moins un contact affilié est défini et pour lequel aucune société liée n’est définie"
+
+
+#. module: partner_affiliate_extended
+#: model:ir.model.fields,field_description:partner_affiliate_extended.field_res_partner__is_company_parent
+#: model:ir.model.fields,field_description:partner_affiliate_extended.field_res_users__is_company_parent
+msgid "Is a Parent Company"
+msgstr "Est une société parente"
+
+#. module: partner_affiliate_extended
+#: model:ir.model.fields,field_description:partner_affiliate_extended.field_res_partner__highest_parent_id
+#: model:ir.model.fields,field_description:partner_affiliate_extended.field_res_users__highest_parent_id
+msgid "Highest parent"
+msgstr "Sociéte mére"
+
+#. module: partner_affiliate_extended
+#: model_terms:ir.ui.view,arch_db:partner_affiliate_extended.view_partner_search
+msgid "Parent Company"
+msgstr "Société parente"

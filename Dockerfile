@@ -18,6 +18,7 @@ COPY contacts_config_sale_manager /mnt/extra-addons/contacts_config_sale_manager
 COPY forward_sorting_area /mnt/extra-addons/forward_sorting_area
 COPY forward_sorting_area_multi_co /mnt/extra-addons/forward_sorting_area_multi_co
 COPY google_partner_address /mnt/extra-addons/google_partner_address
+COPY partner_affiliate_extended /mnt/extra-addons/partner_affiliate_extended
 COPY partner_affiliate_invoicing_address /mnt/extra-addons/partner_affiliate_invoicing_address
 COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
 COPY partner_category_type /mnt/extra-addons/partner_category_type
