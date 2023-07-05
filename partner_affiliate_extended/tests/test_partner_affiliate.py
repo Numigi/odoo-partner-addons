@@ -41,7 +41,7 @@ class TestPartnerAffiliate(SavepointCase):
 
     def test_change_affiliate_parent_id(self):
         self.affiliate.parent_id = self.company2.id
-        self.env['res.partner'].sudo(user=self.admin).compute_top_parent_id()
+        self.env['res.partner'].sudo(user=self.admin).compute_all_top_parent_id()
         assert self.affiliate_contact.highest_parent_id.id == self.company2.id
 
 
