@@ -16,6 +16,7 @@
         "forward_sorting_area",
         "forward_sorting_area_multi_co",
         "google_partner_address",
+        "partner_affiliate_extended",
         "partner_affiliate_invoicing_address",
         "partner_autocomplete_disable",
         "partner_category_type",
