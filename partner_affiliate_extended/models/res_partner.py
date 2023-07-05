@@ -51,11 +51,20 @@ class ResPartner(models.Model):
                 if res:
                     rec.highest_parent_id = res[-1]
 
-    def compute_top_parent_id(self):
+    def compute_all_top_parent_id(self):
+        _logger.info("CRON COMPUTE ALL TOP PARENT")
         partner_ids = self.search([('is_company_parent', '=', False), ('parent_id', '!=', False)])
         for partner in partner_ids:
             res = partner.compute_partner_parent_ids(rec=partner)
             partner.highest_parent_id = res[-1]
+
+    @api.multi
+    def write(self, vals):
+        super().write(vals)
+        if 'parent_id' in vals:
+            for record in self:
+                record.compute_all_top_parent_id()
+        return True
 
 
 

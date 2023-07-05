@@ -6,7 +6,7 @@
             <field name="model_id" ref="model_res_partner"/>
              <field name="state">code</field>
              <field name="user_id" ref="base.user_root"/>
-            <field name="code">model.compute_top_parent_id()</field>
+            <field name="code">model.compute_all_top_parent_id()</field>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
             <field name="doall" eval="False"/>
