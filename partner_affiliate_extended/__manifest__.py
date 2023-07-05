@@ -10,9 +10,11 @@
     'license': 'LGPL-3',
     'category': 'Partner Management',
     'summary': 'Add the field is a parent company to the partner object',
-    'depends': ['partner_affiliate'],
+    'depends': ['partner_affiliate', 'mail'],
     'data': [
         'views/res_partner.xml',
+        'data/ir_cron.xml',
     ],
     'installable': True,
+    "post_init_hook": "post_init_hook",
 }

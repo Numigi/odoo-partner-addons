@@ -1,5 +1,5 @@
-Partner Fax
-===========
+Partner Affiliate Extended
+==========================
 Add the parent company filter and group by to the partner search view.
 
 .. image:: static/description/filter_on_parent_company.png
