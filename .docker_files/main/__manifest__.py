@@ -16,6 +16,7 @@
         "forward_sorting_area",
         "google_partner_address",
         "partner_account_manager",
+        "partner_affiliate_extended",
         "partner_affiliate_invoicing_address",
         "partner_autocomplete_disable",
         "partner_category_type",
