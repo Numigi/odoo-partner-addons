@@ -19,8 +19,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_res_partner_filter"/>
             <field name="arch" type="xml">
-                <xpath expr="//filter[@name='supplier']" position="after">
-                      <separator/>
+                <xpath expr="//filter[@name='type_company']" position="after">
                     <filter string="Parent Company" name="is_company_parent"
                             domain="[('is_company_parent','=',True)]"/>
                       <separator/>
