@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">Is a Company Parent Partner Form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="is_company_parent" invisible="1" />
+                 <field name="highest_parent_id" invisible="1" />
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_search" model="ir.ui.view">
+        <field name="name">Is a Company Parent Partner Search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='type_company']" position="after">
+                    <filter string="Parent Company" name="is_company_parent"
+                            domain="[('is_company_parent','=',True)]"/>
+                      <separator/>
+                </xpath>
+                 <xpath expr="//filter[@name='group_country']" position="after">
+                   <filter name="group_parent_company" string="Parent Company"
+                    context="{'group_by': 'highest_parent_id'}"/>
+                </xpath>
+
+            </field>
+    </record>
+
+
+</odoo>
