@@ -21,6 +21,7 @@ COPY google_partner_address /mnt/extra-addons/google_partner_address
 COPY partner_affiliate_extended /mnt/extra-addons/partner_affiliate_extended
 COPY partner_affiliate_invoicing_address /mnt/extra-addons/partner_affiliate_invoicing_address
 COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
+COPY partner_autocomplete_disable_sync_cron /mnt/extra-addons/partner_autocomplete_disable_sync_cron
 COPY partner_category_type /mnt/extra-addons/partner_category_type
 COPY partner_change_parent /mnt/extra-addons/partner_change_parent
 COPY partner_change_parent_affiliate /mnt/extra-addons/partner_change_parent_affiliate
