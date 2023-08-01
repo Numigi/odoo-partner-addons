@@ -50,6 +50,8 @@ class ResPartner(models.Model):
                 res = rec.compute_partner_parent_ids(rec=rec)
                 if res:
                     rec.highest_parent_id = res[-1]
+            if rec.is_company_parent:
+                rec.highest_parent_id = rec.id
 
     def compute_all_top_parent_id(self):
         partner_ids = self.search([('is_company_parent', '=', False), ('parent_id', '!=', False)])
@@ -57,13 +59,17 @@ class ResPartner(models.Model):
             res = partner.compute_partner_parent_ids(rec=partner)
             if res:
                 partner.highest_parent_id = res[-1]
+        parent_ids = self.search([('is_company_parent', '=', True), ('highest_parent_id', '=', False)])
+        for partner in parent_ids:
+            partner.highest_parent_id = partner.id
 
     def write(self, vals):
-        super().write(vals)
+        res = super().write(vals)
         if 'parent_id' in vals:
             for record in self:
                 record.compute_all_top_parent_id()
-        return True
+        return res
+
 
 
 
