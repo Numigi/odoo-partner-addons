@@ -23,6 +23,7 @@ COPY partner_affiliate_invoicing_address /mnt/extra-addons/partner_affiliate_inv
 COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
 COPY partner_autocomplete_disable_sync_cron /mnt/extra-addons/partner_autocomplete_disable_sync_cron
 COPY partner_category_type /mnt/extra-addons/partner_category_type
+COPY partner_category_type_enhanced /mnt/extra-addons/partner_category_type_enhanced
 COPY partner_change_parent /mnt/extra-addons/partner_change_parent
 COPY partner_change_parent_affiliate /mnt/extra-addons/partner_change_parent_affiliate
 COPY partner_city_tree_view /mnt/extra-addons/partner_city_tree_view

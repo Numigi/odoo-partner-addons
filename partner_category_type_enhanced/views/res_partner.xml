@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_show_function" model="ir.ui.view">
+        <field name="name">Partner Form : restoring showing function field</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="partner_category_type.view_partner_form_with_custom_category_fields"/>
+        <field name="arch" type="xml">
+            <field name="function" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
