@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <field name="function" position="attributes">
                 <attribute name="invisible">0</attribute>
+                <attribute name="attrs">{'invisible': [('is_company','=', True)]}</attribute>
             </field>
         </field>
     </record>
