@@ -13,6 +13,13 @@
                             attrs="{'invisible': [('parent_id', '=', False)]}"
                             />
                     </group>
+                    <group>
+                        <field name="invoice_address_to_use_id"
+                            attrs="{
+                                'invisible': [('use_parent_invoice_address', '=', False)],
+                                'required': [('use_parent_invoice_address', '=', True)]}"
+                            />
+                    </group>
                 </group>
                 <newline/>
             </field>
