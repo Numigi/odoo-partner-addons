@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="checkout_billing" name="Other Invoice Billing Address" inherit_id="website_sale.checkout">
+        <!-- hide original when using another invoice address -->
+        <xpath expr="//div[hasclass('one_kanban')]" position="attributes">
+            <attribute name="t-att-style">'display: none!important' if order.partner_id.use_parent_invoice_address or order.partner_id.parent_id.use_parent_invoice_address else ''</attribute>
+        </xpath>
+        <!-- ... then show it -->
+        <xpath expr="//div[hasclass('one_kanban')]" position="after">
+            <div class="col-lg-6 one_kanban" t-att-style="'' if order.partner_id.use_parent_invoice_address or order.partner_id.parent_id.use_parent_invoice_address else 'display: none!important'">
+                <t t-call="website_sale.address_kanban">
+                    <t t-set="contact" t-value="order.partner_invoice_id"/>
+                    <t t-set="selected" t-value="1"/>
+                    <t t-set="readonly" t-value="1"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
