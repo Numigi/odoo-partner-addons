@@ -13,7 +13,7 @@ class ResPartner(models.Model):
 
     highest_parent_id = fields.Many2one(
         "res.partner",
-        compute="_get_highest_parent_id",
+        compute="_compute_highest_parent_id",
         store="True",
         string="Highest parent"
     )
@@ -29,7 +29,7 @@ class ResPartner(models.Model):
 
     @api.depends("company_type", "affiliate_ids", "parent_id")
     def _get_is_company_parent(self):
-        """compute if contact is a parent company or not"""
+        _logger.info("compute if contact is a parent company or not %s" % self.ids)
         for rec in self:
             is_company_parent = False
             if rec.company_type == "company" and \
@@ -44,12 +44,14 @@ class ResPartner(models.Model):
         return res
 
     @api.depends("parent_id", "child_ids")
-    def _get_highest_parent_id(self):
+    def _compute_highest_parent_id(self):
         for rec in self:
             if rec.parent_id:
                 res = rec.compute_partner_parent_ids(rec=rec)
                 if res:
                     rec.highest_parent_id = res[-1]
+            else:
+                rec.highest_parent_id = rec.id
             if rec.is_company_parent:
                 rec.highest_parent_id = rec.id
 
@@ -63,11 +65,19 @@ class ResPartner(models.Model):
         for partner in parent_ids:
             partner.highest_parent_id = partner.id
 
+    def update_all_child_ids(self, parent_id):
+        _logger.info("update_all_child_ids %s" % self.ids)
+        all_partners = self.with_context(active_test=False).search([('id', 'child_of', self.id)])
+        for rec in all_partners:
+            if rec.is_company_parent:
+                rec.highest_parent_id = self.id
+            rec._compute_highest_parent_id()
+
     def write(self, vals):
-        res = super().write(vals)
+        res = super(ResPartner, self).write(vals)
         if 'parent_id' in vals:
             for record in self:
-                record.compute_all_top_parent_id()
+                self.update_all_child_ids(vals['parent_id'])
         return res
 
 
