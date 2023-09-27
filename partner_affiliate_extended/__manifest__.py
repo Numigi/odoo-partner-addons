@@ -3,7 +3,7 @@
 
 {
     'name': 'Partner Affiliate Extended',
-    'version': '1.0.1',
+    'version': '1.0.2',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
@@ -16,5 +16,5 @@
         'data/ir_cron.xml',
     ],
     'installable': True,
-    "post_init_hook": "post_init_hook",
+   # "post_init_hook": "post_init_hook",
 }
