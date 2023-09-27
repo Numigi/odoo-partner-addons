@@ -38,7 +38,6 @@ class ResPartner(models.Model):
             rec.is_company_parent = is_company_parent
 
     def compute_partner_parent_ids(self, rec=False, res=[]):
-        _logger.info("compute_partner_parent_ids %s" % self.ids)
         if rec.parent_id:
             res.append(rec.parent_id.id)
             self.compute_partner_parent_ids(rec=rec.parent_id, res=res)
@@ -46,7 +45,6 @@ class ResPartner(models.Model):
 
     @api.depends("parent_id", "child_ids")
     def _compute_highest_parent_id(self):
-        _logger.info("_compute_highest_parent_id %s" % self.ids)
         for rec in self:
             if rec.parent_id:
                 res = rec.compute_partner_parent_ids(rec=rec)
@@ -58,15 +56,14 @@ class ResPartner(models.Model):
                 rec.highest_parent_id = rec.id
 
     def compute_all_top_parent_id(self):
-        _logger.info("compute_all_top_parent_id %s" % self.ids)
-        # partner_ids = self.search([('is_company_parent', '=', False), ('parent_id', '!=', False)])
-        # for partner in partner_ids:
-        #     res = partner.compute_partner_parent_ids(rec=partner)
-        #     if res:
-        #         partner.highest_parent_id = res[-1]
-        # parent_ids = self.search([('is_company_parent', '=', True), ('highest_parent_id', '=', False)])
-        # for partner in parent_ids:
-        #     partner.highest_parent_id = partner.id
+        partner_ids = self.search([('is_company_parent', '=', False), ('parent_id', '!=', False)])
+        for partner in partner_ids:
+            res = partner.compute_partner_parent_ids(rec=partner)
+            if res:
+                partner.highest_parent_id = res[-1]
+        parent_ids = self.search([('is_company_parent', '=', True), ('highest_parent_id', '=', False)])
+        for partner in parent_ids:
+            partner.highest_parent_id = partner.id
 
     def update_all_child_ids(self, parent_id):
         _logger.info("update_all_child_ids %s" % self.ids)
