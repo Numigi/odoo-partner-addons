@@ -8,7 +8,7 @@
              <field name="user_id" ref="base.user_root"/>
             <field name="code">model.compute_all_top_parent_id()</field>
             <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
+            <field name="interval_type">weeks</field>
             <field name="doall" eval="False"/>
             <field name="numbercall" eval="1"/>
         </record>

@@ -61,7 +61,7 @@ class ResPartner(models.Model):
             res = partner.compute_partner_parent_ids(rec=partner)
             if res:
                 partner.highest_parent_id = res[-1]
-        parent_ids = self.search([('is_company_parent', '=', True), ('highest_parent_id', '=', False)])
+        parent_ids = self.search([('is_company_parent', '=', True)])
         for partner in parent_ids:
             partner.highest_parent_id = partner.id
 
