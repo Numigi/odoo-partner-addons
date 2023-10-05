@@ -3,7 +3,7 @@
 
 {
     'name': 'Partner Affiliate Extended',
-    'version': '1.0.1',
+    'version': '1.0.3',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
