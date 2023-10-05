@@ -56,6 +56,7 @@ COPY partner_validation_purchase /mnt/extra-addons/partner_validation_purchase
 COPY partner_validation_sale /mnt/extra-addons/partner_validation_sale
 COPY partner_website_domain_only /mnt/extra-addons/partner_website_domain_only
 COPY res_partner_bank_shared_account /mnt/extra-addons/res_partner_bank_shared_account
+COPY website_sale_partner_affiliate_invoice_address /mnt/extra-addons/website_sale_partner_affiliate_invoice_address
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
