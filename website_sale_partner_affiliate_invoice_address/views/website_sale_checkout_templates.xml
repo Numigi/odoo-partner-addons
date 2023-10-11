@@ -18,4 +18,11 @@
         </xpath>
     </template>
 
+    <template id="readonly_address_kanban" name="Readonly Kanban for Other Invoice Billing Address" inherit_id="website_sale.address_kanban">
+        <!-- Hide edit button on kanban tile when using parent address -->
+        <xpath expr="//div[hasclass('card-body')]/a" position="attributes">
+            <attribute name="t-att-style">'display: none!important' if order.partner_id.use_parent_invoice_address or order.partner_id.parent_id.use_parent_invoice_address else ''</attribute>
+        </xpath>
+    </template>
+
 </odoo>
