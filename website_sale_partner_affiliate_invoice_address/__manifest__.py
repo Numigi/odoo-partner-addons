@@ -3,7 +3,7 @@
 
 {
     "name": "Website Sale Partner Affiliate Invoice Address",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "AGPL-3",
@@ -15,7 +15,7 @@
     ],
     "data": [
         "views/website_sale_payment_templates.xml",
-        "views/website_sale_checkout_templates.xml"
+        "views/website_sale_checkout_templates.xml",
     ],
     "installable": True,
 }
