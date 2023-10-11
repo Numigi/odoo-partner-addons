@@ -10,8 +10,9 @@ The module, with the module `partner_affiliate_invoicing_address` as dependency,
 Usage
 -----
 As an `Azure Montreal` portal user or one of its children like `Mitchel Admin`, I go to the website and see that the billing address used is the billing address defined as the billing address to use.
+Also, I see that I can not edit the contact. The edit button is invisible.
 
-.. image:: static/description/user_contact_invoice_address.png.png
+.. image:: static/description/user_contact_invoice_address.png
 
 .. image:: static/description/billing_page_info.png
 
