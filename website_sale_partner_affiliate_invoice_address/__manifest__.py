@@ -3,7 +3,7 @@
 
 {
     "name": "Website Sale Partner Affiliate Invoice Address",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "AGPL-3",
