@@ -29,7 +29,6 @@ class ResPartner(models.Model):
 
     @api.depends("company_type", "affiliate_ids", "parent_id")
     def _get_is_company_parent(self):
-        _logger.info("compute if contact is a parent company or not %s" % self.ids)
         for rec in self:
             is_company_parent = False
             if rec.company_type == "company" and \
