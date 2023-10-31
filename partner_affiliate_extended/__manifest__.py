@@ -3,18 +3,16 @@
 
 {
     'name': 'Partner Affiliate Extended',
-    'version': '1.0.3',
+    'version': '1.0.4',
     'author': 'Numigi',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
     'category': 'Partner Management',
     'summary': 'Add the field is a parent company to the partner object',
-    'depends': ['partner_affiliate', 'mail'],
+    'depends': ['partner_affiliate', 'contacts'],
     'data': [
         'views/res_partner.xml',
-        'data/ir_cron.xml',
     ],
     'installable': True,
-    "post_init_hook": "post_init_hook",
 }
