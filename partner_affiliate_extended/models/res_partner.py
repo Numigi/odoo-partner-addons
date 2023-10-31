@@ -62,9 +62,15 @@ class ResPartner(models.Model):
         for sub_affiliate in affiliates.affiliate_ids:
             self.compute_affiliates_highest_parent_id(sub_affiliate)
 
+    def compute_childs_highest_parent_id(self, childs):
+        childs._compute_highest_parent_id()
+        for sub_childs in childs.affiliate_ids:
+            self.compute_affiliates_highest_parent_id(sub_childs)
+
     def write(self, vals):
         res = super(ResPartner, self).write(vals)
         if 'parent_id' in vals:
             for record in self:
                 self.compute_affiliates_highest_parent_id(record.affiliate_ids)
+                self.compute_childs_highest_parent_id(record.child_ids)
         return res
