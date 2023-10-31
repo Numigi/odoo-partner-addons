@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vat']" position="after">
-                <field name="is_company_parent" invisible="0" />
-                <field name="highest_parent_id" invisible="0" />
+                <field name="is_company_parent" invisible="1"/>
+                <field name="highest_parent_id" invisible="1"/>
 
             </xpath>
         </field>

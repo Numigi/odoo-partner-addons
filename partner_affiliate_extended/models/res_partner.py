@@ -18,6 +18,12 @@ class ResPartner(models.Model):
         string="Highest parent"
     )
 
+    all_child_ids = fields.One2many(
+        string='All Children of the highest parent company',
+        comodel_name='res.partner',
+        inverse_name='highest_parent_id',
+    )
+
     is_company_parent = fields.Boolean(
         compute="_compute_is_company_parent",
         store="True",
@@ -30,15 +36,11 @@ class ResPartner(models.Model):
     def _get_highest_parent(self, partner):
         while partner.parent_id:
             partner = partner.parent_id
-        _logger.info("2222")
-        _logger.info(partner.name)
         return partner
 
-    @api.depends("parent_id", "child_ids")
+    @api.depends("company_type", "affiliate_ids", "parent_id", "child_ids", )
     def _compute_highest_parent_id(self):
         for rec in self:
-            _logger.info("1111")
-            _logger.info(rec.name)
             if rec.parent_id:
                 rec.highest_parent_id = self._get_highest_parent(rec)
             elif not rec.parent_id and rec.company_type == "company":
@@ -46,7 +48,7 @@ class ResPartner(models.Model):
             else:
                 rec.highest_parent_id = False
 
-    @api.depends("company_type", "affiliate_ids", "parent_id")
+    @api.depends("company_type", "affiliate_ids", "parent_id", "child_ids")
     def _compute_is_company_parent(self):
         for rec in self:
             is_company_parent = False
@@ -54,3 +56,15 @@ class ResPartner(models.Model):
                     rec.affiliate_ids and not rec.parent_id:
                 is_company_parent = True
             rec.is_company_parent = is_company_parent
+
+    def compute_affiliates_highest_parent_id(self, affiliates):
+        affiliates._compute_highest_parent_id()
+        for sub_affiliate in affiliates.affiliate_ids:
+            self.compute_affiliates_highest_parent_id(sub_affiliate)
+
+    def write(self, vals):
+        res = super(ResPartner, self).write(vals)
+        if 'parent_id' in vals:
+            for record in self:
+                self.compute_affiliates_highest_parent_id(record.affiliate_ids)
+        return res
