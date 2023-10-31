@@ -17,13 +17,15 @@ class TestPartnerAffiliate(SavepointCase):
             {"name": "Parent2", "is_company": True}
         )
         cls.affiliate = cls.env["res.partner"].create(
-            {"name": "Affiliate", "is_company": True, 
+            {"name": "Affiliate", "is_company": True,
              "parent_id": cls.company.id}
         )
+        cls.company.affiliate_ids = [(4, cls.affiliate.id)]
         cls.affiliate_contact = cls.env["res.partner"].create(
-            {"name": "Contact", "type": "contact", 
+            {"name": "Contact", "type": "contact",
              "parent_id": cls.affiliate.id}
         )
+        cls.affiliate.affiliate_ids = [(4, cls.affiliate_contact.id)]
         cls.env = Environment(cls.env.cr, cls.admin.id, {})
 
     def test_company_is_company_parent(self):
