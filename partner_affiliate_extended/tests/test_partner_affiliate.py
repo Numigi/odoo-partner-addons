@@ -42,5 +42,3 @@ class TestPartnerAffiliate(SavepointCase):
     def test_change_affiliate_parent_id(self):
         self.affiliate.parent_id = self.company2.id
         assert self.affiliate_contact.highest_parent_id.id == self.company2.id
-
-

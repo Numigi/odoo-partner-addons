@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vat']" position="after">
-                <field name="is_company_parent" invisible="1" />
-                 <field name="highest_parent_id" invisible="1" />
+                <field name="is_company_parent" invisible="0" />
+                <field name="highest_parent_id" invisible="0" />
 
             </xpath>
         </field>
@@ -24,13 +24,12 @@
                             domain="[('is_company_parent','=',True)]"/>
                       <separator/>
                 </xpath>
-                 <xpath expr="//filter[@name='group_country']" position="after">
+                <xpath expr="//filter[@name='group_country']" position="after">
                    <filter name="group_parent_company" string="Parent Company"
                     context="{'group_by': 'highest_parent_id'}"/>
                 </xpath>
 
             </field>
     </record>
-
 
 </odoo>
