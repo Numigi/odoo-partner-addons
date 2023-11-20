@@ -3,16 +3,16 @@
 
 {
     "name": "Partner Account Manager Extended",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "website": "https://bit.ly/numigi-com",
     "license": "AGPL-3",
     "category": "Other",
-    "depends": ["partner_account_manager", "sale"],
+    "depends": ["partner_account_manager", "sale_management"],
     "summary": "Adds the account manager field available on some view and options.",
     "data": [
-        "views/res_partner_views.xml",
+        "report/sale_report_views.xml",
         "views/sale_order_views.xml",
     ],
     "installable": True,

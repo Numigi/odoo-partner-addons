@@ -3,7 +3,7 @@
 
 {
     "name": "Partner Account Manager",
-    "version": "14.0.1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "LGPL-3",

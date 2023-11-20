@@ -4,18 +4,6 @@ This module adds the account manager field available on some view and options.
 
 Usage
 =====
-* CONTACTS
-As a user with access to the contact, I see that the column in the list view is titled “Manager” :
-
-.. image:: static/description/manager_on_contact_list.png
-
-In “Group by” I am able to quickly group by manager :
-
-.. image:: static/description/contact_group_by_manager.png
-
-And filter in the quick search :
-
-.. image:: static/description/contact_filter_on_manager.png
 
 * SALES
 Once the Manager is set to the contact, then it will propagate read-only to Sales.
@@ -30,6 +18,11 @@ On the sales list view, I will be able to quickly group and search by manager
 
 .. image:: static/description/sale_filter_on_manager.png
 
+From Sales > Reporting > Sales > pivot view, I can see the field Manager and I can filter by Manager
+
+.. image:: static/description/sale_report_manager.png
+
+.. image:: static/description/sale_report_manager_filter.png
 
 Contributors
 ------------

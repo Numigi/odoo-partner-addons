@@ -1,31 +1,56 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* partner_account_manager_extended
+# 	* partner_account_manager_extended
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-29 13:08+0000\n"
-"PO-Revision-Date: 2023-06-29 13:08+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2023-11-20 20:14+0000\n"
+"PO-Revision-Date: 2023-11-20 20:14+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: partner_account_manager
-#: model:ir.model.fields,field_description:partner_account_manager.field_res_partner__account_manager_id
-#: model:ir.model.fields,field_description:partner_account_manager.field_res_users__account_manager_id
+#. module: partner_account_manager_extended
+#: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_report__account_manager_id
 msgid "Account Manager"
-msgstr "Responsable"
+msgstr "Manager"
+
+#. module: partner_account_manager_extended
+#: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_order__display_name
+#: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_report__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: partner_account_manager_extended
+#: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_order__id
+#: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_report__id
+msgid "ID"
+msgstr ""
+
+#. module: partner_account_manager_extended
+#: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_order____last_update
+#: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_report____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
 
 #. module: partner_account_manager_extended
 #: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_order__account_manager_id
-#: model_terms:ir.ui.view,arch_db:partner_account_manager_extended.res_partner_view_search_inherit_account_manager
-#: model_terms:ir.ui.view,arch_db:partner_account_manager_extended.res_partner_view_tree_inherit_account_manager
 #: model_terms:ir.ui.view,arch_db:partner_account_manager_extended.sale_order_view_search_inherit_account_manager
 #: model_terms:ir.ui.view,arch_db:partner_account_manager_extended.view_order_form_inherit_account_manager
 msgid "Manager"
 msgstr "Responsable"
+
+#. module: partner_account_manager_extended
+#: model:ir.model,name:partner_account_manager_extended.model_sale_report
+msgid "Sales Analysis Report"
+msgstr "Rapport d'analyse des ventes"
+
+#. module: partner_account_manager_extended
+#: model:ir.model,name:partner_account_manager_extended.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
