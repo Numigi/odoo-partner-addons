@@ -9,7 +9,7 @@ class SaleReport(models.Model):
 
     account_manager_id = fields.Many2one(
         "res.users",
-        "Account Manager",
+        "Responsible",
         readonly=True
     )
 
