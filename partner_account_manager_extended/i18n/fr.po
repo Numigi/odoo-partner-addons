@@ -17,8 +17,8 @@ msgstr ""
 
 #. module: partner_account_manager_extended
 #: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_report__account_manager_id
-msgid "Account Manager"
-msgstr "Manager"
+msgid "Responsible"
+msgstr "Responsable"
 
 #. module: partner_account_manager_extended
 #: model:ir.model.fields,field_description:partner_account_manager_extended.field_sale_order__display_name
