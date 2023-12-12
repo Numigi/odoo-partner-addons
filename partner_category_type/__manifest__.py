@@ -4,17 +4,18 @@
 
 {
     'name': 'Partner Category Type',
-    'version': '1.0.0',
+    'version': '1.0.1',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',
     'license': 'LGPL-3',
     'category': 'Partner Management',
     'summary': 'Seperate the partner tags into 4 different fields.',
-    'depends': ['base'],
+    'depends': ['base', 'mail'],
     'data': [
         'views/res_partner.xml',
         'views/res_partner_category.xml',
+        'data/ir_cron.xml',
     ],
     'installable': True,
 }

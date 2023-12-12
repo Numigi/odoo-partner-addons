@@ -10,6 +10,8 @@ CUSTOM_CATEGORY_FIELDS = (
     'personality_ids',
     'job_position_id',
 )
+import logging
+logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
@@ -52,10 +54,34 @@ class ResPartner(models.Model):
     def _update_category_ids_from_extra_caetgory_fields(self):
         """Update the partner tags from the custom category fields."""
         new_categories = (
-            self.organization_type_ids |
-            self.profile_ids |
-            self.personality_ids |
-            self.job_position_id
+                self.organization_type_ids |
+                self.profile_ids |
+                self.personality_ids |
+                self.job_position_id
         )
         if new_categories != self.category_id:
             self.category_id = new_categories
+
+    def cron_fill_contact_tags(self):
+        """
+        Fill empty contact tags using the category_id
+        :return:
+        """
+        domain = [
+            ('organization_type_ids', '=', False),
+            ('profile_ids', '=', False),
+            ('personality_ids', '=', False),
+            ('job_position_id', '=', False),
+            ('category_id', '!=', False),
+                  ]
+        partner_ids = self.sudo().search(domain)
+        for partner in partner_ids:
+            for categ_id in partner.category_id:
+                if categ_id.type == 'organization_type':
+                    partner.organization_type_ids = [(4, categ_id.id)]
+                if categ_id.type == 'profile':
+                    partner.profile_ids = [(4, categ_id.id)]
+                if categ_id.type == 'personality':
+                    partner.personality_ids = [(4, categ_id.id)]
+                if categ_id.type == 'job_position':
+                    partner.job_position_id = categ_id.id
