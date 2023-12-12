@@ -10,8 +10,6 @@ CUSTOM_CATEGORY_FIELDS = (
     'personality_ids',
     'job_position_id',
 )
-import logging
-logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
