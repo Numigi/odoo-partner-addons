@@ -57,5 +57,4 @@ class ResPartner(models.Model):
             self.personality_ids |
             self.job_position_id
         )
-        if new_categories != self.category_id:
-            self.category_id = new_categories
+        self.category_id |= new_categories
