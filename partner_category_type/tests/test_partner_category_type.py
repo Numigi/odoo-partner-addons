@@ -20,7 +20,11 @@ class TestResPartner(common.SavepointCase):
             'type': 'profile',
         })
         cls.personality = cls.env['res.partner.category'].create({
-            'name': 'friendly',
+            'name': 'Friendly',
+            'type': 'personality',
+        })
+        cls.personality_2 = cls.env['res.partner.category'].create({
+            'name': 'Professional',
             'type': 'personality',
         })
         cls.job_position = cls.env['res.partner.category'].create({
@@ -68,3 +72,12 @@ class TestResPartner(common.SavepointCase):
         self.assertEqual(
             partner.category_id,
             self.organization_type | self.profile | self.personality | self.job_position)
+
+    def test_delete_typed_tags(self):
+        self.partner.personality_ids = [
+            (6, 0, [self.personality.id, self.personality_a.id])
+        ]
+        self.partner.refresh()
+        self.partner.personality_ids = [(3, self.personality_a.id)]
+        self.partner.refresh()
+        self.assertEqual(self.partner.category_id, self.personality)
