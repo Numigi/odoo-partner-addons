@@ -77,6 +77,5 @@ class TestResPartner(common.SavepointCase):
         self.partner.personality_ids = [
             (6, 0, [self.personality.id, self.personality_a.id])
         ]
-        self.partner.write({'personality_ids': [(3, self.personality_a.id)]})
-        self.partner.refresh()
+        self.partner.update({'personality_ids': [(3, self.personality_a.id)]})
         self.assertEqual(self.partner.category_id, self.personality)
