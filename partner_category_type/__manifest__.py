@@ -4,7 +4,7 @@
 
 {
     'name': 'Partner Category Type',
-    'version': '1.0.1',
+    'version': '1.0.2',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Numigi',
     'website': 'https://bit.ly/numigi-com',

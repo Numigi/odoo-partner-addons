@@ -11,6 +11,13 @@ CUSTOM_CATEGORY_FIELDS = (
     'job_position_id',
 )
 
+CATEGORY_TYPE = (
+    'organization_type',
+    'profile',
+    'personality_id',
+    'job_position',
+)
+
 
 class ResPartner(models.Model):
 
@@ -58,3 +65,9 @@ class ResPartner(models.Model):
             self.job_position_id
         )
         self.category_id |= new_categories
+
+        """ Delete tags from category_id if deleted from the typed categories
+        without removing old tags in categery_id wich haven't type """
+        tags_to_delete = self.category_id.filtered(
+            lambda c: c.type in CATEGORY_TYPE) - new_categories
+        self.category_id -= tags_to_delete
