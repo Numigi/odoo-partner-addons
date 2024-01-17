@@ -23,7 +23,7 @@ class TestResPartner(common.SavepointCase):
             'name': 'Friendly',
             'type': 'personality',
         })
-        cls.personality_2 = cls.env['res.partner.category'].create({
+        cls.personality_a = cls.env['res.partner.category'].create({
             'name': 'Professional',
             'type': 'personality',
         })
