@@ -13,4 +13,17 @@
         </field>
     </record>
 
+    <record id="view_partner_form_with_custom_category_fields" model="ir.ui.view">
+        <field name="name">Partner Form With Custom Category Fields</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='child_ids']/form//field[@name='function']" position="attributes">
+                <attribute name="invisible">0</attribute>
+                <!-- If not changed, this will make confusion with job_position_id in partner_category_type (Job Position) -->
+                <attribute name="string">Role</attribute>
+                <attribute name="attrs">{'invisible': [('type','!=', 'contact')]}</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
