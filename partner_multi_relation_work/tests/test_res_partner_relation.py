@@ -5,7 +5,8 @@
 
 from odoo.exceptions import AccessError
 from .common import PartnerRelationCase
-from odoo.tests.common import  users
+from odoo.tests.common import users
+
 
 class TestResPartnerRelationTypeSameRelation(PartnerRelationCase):
 

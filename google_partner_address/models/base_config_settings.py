@@ -2,7 +2,7 @@
 # © 2022 Numigi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class BaseConfigSettingsWithGoogleMapsAPI(models.TransientModel):
@@ -28,4 +28,6 @@ class BaseConfigSettingsWithGoogleMapsAPI(models.TransientModel):
 
     def set_values(self):
         super().set_values()
-        self.env['ir.config_parameter'].set_param('google_maps_api_key', self.google_maps_api_key)
+        self.env['ir.config_parameter'].set_param(
+            'google_maps_api_key', self.google_maps_api_key
+        )

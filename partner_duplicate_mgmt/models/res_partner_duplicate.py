@@ -62,7 +62,8 @@ class ResPartnerDuplicate(models.Model):
 
         The left partner (partner_1_id) must be the partner with the lower id.
         """
-        duplicates_in_wrong_order = (d for d in self if d.partner_1_id.id > d.partner_2_id.id)
+        duplicates_in_wrong_order = (
+            d for d in self if d.partner_1_id.id > d.partner_2_id.id)
         for duplicate in duplicates_in_wrong_order:
             duplicate.write({
                 'partner_1_id': duplicate.partner_2_id.id,
@@ -94,10 +95,9 @@ class ResPartnerDuplicate(models.Model):
         is not reversible.
         """
         both_partners_are_contacts = (
-            self.partner_preserved_id and
-            self.partner_archived_id and
-            not self.partner_preserved_id.is_company and
-            not self.partner_archived_id.is_company
+            self.partner_preserved_id and self.partner_archived_id and not (
+                self.partner_preserved_id.is_company) and not (
+                    self.partner_archived_id.is_company)
         )
 
         def partner_has_journal_entries(partner):
@@ -110,11 +110,13 @@ class ResPartnerDuplicate(models.Model):
             return self.env['account.move'].sudo().search(
                 [('partner_id', '=', partner.id)], count=True)
 
-        if both_partners_are_contacts and partner_has_journal_entries(self.partner_archived_id):
+        if both_partners_are_contacts and partner_has_journal_entries(
+                self.partner_archived_id):
             self.warning_message = _(
                 "Please note that the contact {archived_partner} is linked to journal "
                 "entries. By merging it with {preserved_partner}, all the accounting "
-                "history of {archived_partner} will be moved under {preserved_partner}.").format(
+                "history of {archived_partner} will be moved under"
+                " {preserved_partner}.").format(
                 archived_partner=self.partner_archived_id.name,
                 preserved_partner=self.partner_preserved_id.name,
             )
@@ -200,15 +202,18 @@ class ResPartnerDuplicate(models.Model):
 
     def _log_archived_partner_message(self):
         """Log the message in the mail thread of the archived partner."""
-        message = _('Merged into {partner}.').format(partner=self.partner_preserved_id.display_name)
+        message = _('Merged into {partner}.').format(
+            partner=self.partner_preserved_id.display_name)
         self.partner_archived_id.message_post(body=message)
 
     def _log_preserved_partner_message(self):
         """Log the message in the mail thread of the preserved partner."""
-        message = _('Merged with {partner}.').format(partner=self.partner_archived_id.display_name)
+        message = _('Merged with {partner}.').format(
+            partner=self.partner_archived_id.display_name)
 
         if self.merger_reason_id:
-            reason = _("The merger reason is: {reason}.").format(reason=self.merger_reason_id.name)
+            reason = _("The merger reason is: {reason}.").format(
+                reason=self.merger_reason_id.name)
             message = '{message}\n\n{reason}'.format(message=message, reason=reason)
 
         self.partner_preserved_id.message_post(body=message)
@@ -268,7 +273,8 @@ class ResPartnerDuplicate(models.Model):
         :param level: the similarity level from 1 to 3
         :return: the floor similarity limit
         """
-        parameter = 'partner_duplicate_mgmt.partner_name_similarity_{level}'.format(level=level)
+        parameter = 'partner_duplicate_mgmt.partner_name_similarity_{level}'.format(
+            level=level)
         return self.env['ir.config_parameter'].sudo().get_param(parameter)
 
     def create_duplicates(self):
@@ -283,7 +289,8 @@ class ResPartnerDuplicate(models.Model):
         self.filtered(lambda x: x.state == 'to_validate').write({'state': 'resolved'})
 
         for record in self:
-            message = _('The duplicate line ({partner_1}, {partner_2}) is resolved.').format(
+            message = _('The duplicate line ({partner_1}, {partner_2}) is resolved.'
+                        ).format(
                 partner_1=record.partner_1_id.display_name,
                 partner_2=record.partner_2_id.display_name,
             )
