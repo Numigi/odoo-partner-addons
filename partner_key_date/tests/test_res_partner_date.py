@@ -10,7 +10,6 @@ from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 
 from odoo.tests import common
-from odoo.exceptions import UserError
 
 _NOW = datetime.now(pytz.utc)
 _2_YEARS_AGO = _NOW - relativedelta(years=2)

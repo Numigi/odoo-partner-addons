@@ -60,14 +60,17 @@ class TestResPartnerAutocompleteSync(common.TransactionCase):
         """ make sure the targeted method is called during the process
         """
         module_memory_address = (
-            "odoo.addons.partner_autocomplete_disable.models.res_partner.ResPartnerAutocompleteDisable"
+            "odoo.addons.partner_autocomplete_disable"
+            ".models.res_partner.ResPartnerAutocompleteDisable"
         )
         with mock.patch(".".join([module_memory_address, "_rpc_remote_api"])) as mocked:
             autocomplete_module_memory_address = (
                 "odoo.addons.partner_autocomplete.models.res_partner.ResPartner"
             )
             mocked.return_value = {}, False
-            with mock.patch(".".join([autocomplete_module_memory_address, "_is_vat_syncable"])) as sync:
+            with mock.patch(".".join(
+                    [autocomplete_module_memory_address, "_is_vat_syncable"]
+            )) as sync:
                 sync.return_value = True
                 self.autocomplete_sync.start_sync()
                 assert mocked.call_count == 1

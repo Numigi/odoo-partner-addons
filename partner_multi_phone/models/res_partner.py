@@ -3,8 +3,7 @@
 # © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models
 
 PHONE_FIELDS = ('phone', 'mobile', 'phone_home', 'phone_other')
 
@@ -47,8 +46,8 @@ class ResPartnerWithPhoneSearch(models.Model):
     def search(self, args, offset=0, limit=None, order=None, count=False):
         """Allow searching partners from a phone number."""
         is_phone_search = (
-            self._context.get('search_partner_multi_phone') and
-            args and isinstance(args[0], (list, tuple)) and args[0][0] == 'phone'
+            self._context.get('search_partner_multi_phone') and args and isinstance(
+                args[0], (list, tuple)) and args[0][0] == 'phone'
         )
         if is_phone_search:
             phone_number = args[0][2]

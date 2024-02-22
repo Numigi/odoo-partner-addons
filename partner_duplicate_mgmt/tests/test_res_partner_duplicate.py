@@ -274,13 +274,13 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
         product = env['product.product'].create({
             'name': 'Product',
         })
-        account_1 = env['account.account'].create({
-            'code': random.randint(100, 999),
-            'name': 'Payable Account',
-            'reconcile': True,
-            'user_type_id': env.ref(
-                'account.data_account_type_payable').id,
-        })
+        # account_1 = env['account.account'].create({
+        #     'code': random.randint(100, 999),
+        #     'name': 'Payable Account',
+        #     'reconcile': True,
+        #     'user_type_id': env.ref(
+        #         'account.data_account_type_payable').id,
+        # })
         account_2 = env['account.account'].create({
             'code': random.randint(100, 999),
             'name': 'Expenses Account',
@@ -298,24 +298,20 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
 
         account_invoice = env['account.move'].create({
             'partner_id': partner.id,
-            #'account_id': account_1.id,
+            # 'account_id': account_1.id,
             'journal_id': journal.id,
             'currency_id': currency.id,
             'move_type': 'in_invoice',
             'invoice_line_ids': [
-                    (0, None, {
-                        'name': 'My line 1',
-                        'product_id': product.id,
-                        'account_id': account_2.id,
-                        'price_unit': '20',
-                        'quantity': 1,
-
-                    })],
-
+                (0, None, {
+                    'name': 'My line 1',
+                    'product_id': product.id,
+                    'account_id': account_2.id,
+                    'price_unit': '20',
+                    'quantity': 1,
+                })
+            ],
         })
-
-
-
         return account_invoice
 
     def test_cannot_merge_contact_with_account_moves(self):

@@ -62,9 +62,8 @@ class Partner(models.Model):
 
         def _iter_leaves(leaf):
             is_full_text_leaf = (
-                isinstance(leaf, (tuple, list)) and
-                len(leaf) == 3 and
-                leaf[0] == "full_text"
+                isinstance(leaf, (tuple, list)) and len(
+                    leaf) == 3 and leaf[0] == "full_text"
             )
             if is_full_text_leaf:
                 text = _normalize_text(leaf[2])

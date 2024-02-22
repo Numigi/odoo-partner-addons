@@ -9,7 +9,8 @@
     'website': 'http://www.numgi.com',
     'license': 'LGPL-3',
     'category': 'Partner Management',
-    'summary': 'Remove the unique constrain on bank account so couple can have the same bank account number',
+    'summary': """Remove the unique constrain on bank account so couple
+    can have the same bank account number""",
     'depends': [
         'base',
     ],

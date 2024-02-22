@@ -6,7 +6,6 @@
 from datetime import datetime
 from odoo.api import Environment
 from odoo.tests import common
-from odoo.tests.common import  users
 
 
 class PartnerRelationCase(common.SavepointCase):
@@ -18,9 +17,18 @@ class PartnerRelationCase(common.SavepointCase):
         cls.admin = cls.env.ref('base.user_root')
         cls.demo_user = cls.env.ref('base.user_demo')
 
-        cls.company_1 = cls.env['res.partner'].create({'name': 'Company 1', 'is_company': True})
-        cls.company_2 = cls.env['res.partner'].create({'name': 'Company 2', 'is_company': True})
-        cls.company_3 = cls.env['res.partner'].create({'name': 'Company 3', 'is_company': True})
+        cls.company_1 = cls.env['res.partner'].create({
+            'name': 'Company 1',
+            'is_company': True
+        })
+        cls.company_2 = cls.env['res.partner'].create({
+            'name': 'Company 2',
+            'is_company': True
+        })
+        cls.company_3 = cls.env['res.partner'].create({
+            'name': 'Company 3',
+            'is_company': True
+        })
 
         cls.contact_1 = cls.env['res.partner'].create({
             'name': 'Contact 1',
@@ -43,8 +51,10 @@ class PartnerRelationCase(common.SavepointCase):
             'parent_id': cls.company_3.id,
         })
 
-        cls.relation_type_work = cls.env.ref('partner_multi_relation_work.relation_type_work')
-        cls.relation_type_same = cls.env.ref('partner_multi_relation_work.relation_type_same')
+        cls.relation_type_work = cls.env.ref(
+            'partner_multi_relation_work.relation_type_work')
+        cls.relation_type_same = cls.env.ref(
+            'partner_multi_relation_work.relation_type_same')
 
         cls.customer_type = cls.env['res.partner.relation.type'].create({
             'name': 'is customer of',
@@ -64,7 +74,6 @@ class PartnerRelationCase(common.SavepointCase):
         self._add_new_relation(self.contact_1, self.contact_2, self.father_type)
         self._add_new_relation(self.contact_1, self.company_3, self.customer_type)
 
-
     def _add_new_relation(self, left_partner, right_partner, relation_type):
         return self.env['res.partner.relation'].sudo().create({
             'left_partner_id': left_partner.id,
@@ -73,7 +82,8 @@ class PartnerRelationCase(common.SavepointCase):
             'date_start': datetime.now(),
         })
 
-    def _find_and_verify_single_relation(self, left_partner, right_partner, relation_type):
+    def _find_and_verify_single_relation(self, left_partner, right_partner,
+                                         relation_type):
         """Find a single relation of a given type between 2 partners.
 
         Verify that there is one and only one relation for the given parameters.
@@ -83,11 +93,12 @@ class PartnerRelationCase(common.SavepointCase):
         :param relation_type: the type of relation to search for
         :return: a record of res.partner.relation.all
         """
-        relation = self.env['res.partner.relation.all'].with_context(active_test=True).sudo().search([
-            ('this_partner_id', '=', left_partner.id),
-            ('other_partner_id', '=', right_partner.id),
-            ('type_selection_id.type_id', '=', relation_type.id),
-        ])
+        relation = self.env['res.partner.relation.all'].with_context(
+            active_test=True).sudo().search([
+                ('this_partner_id', '=', left_partner.id),
+                ('other_partner_id', '=', right_partner.id),
+                ('type_selection_id.type_id', '=', relation_type.id),
+            ])
         self.assertEqual(
             len(relation), 1,
             'Expected one relation of type {relation_type} between '

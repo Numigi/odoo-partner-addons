@@ -3,7 +3,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
-import re
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -239,7 +238,7 @@ class ResPartner(models.Model):
         if not cr.fetchone():
             try:
                 cr.execute('CREATE EXTENSION pg_trgm')
-            except:
+            except Exception:
                 message = (
                     "Could not create the pg_trgm postgresql EXTENSION. "
                     "You must log to your database as superuser and type "
@@ -261,7 +260,8 @@ class ResPartner(models.Model):
         return res
 
     def action_merge(self):
-        if not self.env.user.has_group('partner_duplicate_mgmt.group_duplicate_partners_control'):
+        if not self.env.user.has_group(
+                'partner_duplicate_mgmt.group_duplicate_partners_control'):
             raise UserError(_("You don't have access to merge partners."))
 
         if len(self) != 2:

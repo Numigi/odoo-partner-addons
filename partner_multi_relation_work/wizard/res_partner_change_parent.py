@@ -3,7 +3,7 @@
 # © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ResPartnerParentChangeWithRelations(models.TransientModel):
@@ -48,7 +48,8 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
             })
 
     def _transfer_non_work_non_same_relations(self):
-        """Transfer old relations that are not work or same-person relations to the new contact."""
+        """Transfer old relations that are not work or same-person
+        relations to the new contact."""
         relation_type_same = self._get_same_relation_type()
         work_relation_type = self._get_work_relation_type()
         previous_relations = self.env['res.partner.relation.all'].\
@@ -81,7 +82,6 @@ class ResPartnerParentChangeWithRelations(models.TransientModel):
             'left_partner_id': self.contact_id.id,
             'right_partner_id': self.new_contact_id.id,
             'type_id': relation_type_same.id,
-           # 'is_automatic': True,
         })
 
     def _terminate_old_work_relations(self):
