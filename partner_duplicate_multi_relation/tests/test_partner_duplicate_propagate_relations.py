@@ -57,7 +57,8 @@ class TestPartnerDuplicatePropagateRelations(common.SavepointCase):
         cls.duplicate_line._onchange_auto_select_preserved_partner()
 
     def test_relations_are_propagated_if_not_exist_on_preserved_partner(self):
-        """Test that the relations are propagated if they do not exist on the preserved partner."""
+        """Test that the relations are propagated if they do
+        not exist on the preserved partner."""
         self.duplicate_line.merge_partners()
 
         self.father_relation.refresh()

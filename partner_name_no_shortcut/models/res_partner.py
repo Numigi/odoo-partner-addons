@@ -90,7 +90,8 @@ class PartnerNameCleaner:
         terms_to_exclude = [re.escape(t) for t in terms_to_exclude]
 
         return [
-            re.compile('^\s*{term}\\.?\s+|\s+{term}\\.?\s*$'.format(term=t), re.IGNORECASE)
+            re.compile(
+                '^\\s*{term}\\.?\\s+|\\s+{term}\\.?\\s*$'.format(term=t), re.IGNORECASE)
             for t in terms_to_exclude
         ]
 

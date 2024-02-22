@@ -50,11 +50,7 @@ class ResPartner(models.Model):
 
     def _update_category_ids_from_extra_caetgory_fields(self):
         """Update the partner tags from the custom category fields."""
-        new_categories = (
-            self.organization_type_ids |
-            self.profile_ids |
-            self.personality_ids |
-            self.job_position_id
-        )
+        new_categories = (self.organization_type_ids | self.profile_ids | (
+            self.personality_ids | self.job_position_id))
         if new_categories != self.category_id:
             self.category_id = new_categories

@@ -1,7 +1,7 @@
 # © 2017 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, models
+from odoo import models
 
 
 class IrModelFields(models.Model):

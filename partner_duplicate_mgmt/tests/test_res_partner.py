@@ -5,7 +5,7 @@
 from odoo.api import Environment
 from odoo.tests import common
 from odoo.exceptions import UserError
-from odoo.tests.common import tagged, users
+from odoo.tests.common import users
 
 
 class TestResPartner(common.SavepointCase):
@@ -28,7 +28,6 @@ class TestResPartner(common.SavepointCase):
         cls.partner_4 = cls.env['res.partner'].create({'name': 'Julienjez'})
         cls.partner_5 = cls.env['res.partner'].create({'name': 'Julyenjezequel'})
         cls.partner_6 = cls.env['res.partner'].create({'name': 'Julien Jézequel'})
-
 
     def test_partner_indexed_name_is_lower_case(self):
         self.assertEqual(self.partner_1.indexed_name, 'big partner')
@@ -111,7 +110,6 @@ class TestResPartner(common.SavepointCase):
         self.assertIn(self.partner_4, partner_5.duplicate_ids)
         similarity = self.env['res.partner']._get_min_similarity('Julienjez')
         self.assertEqual(similarity, '0.5')
-
 
     def test_merge_partners_similarity_2(self):
         # Similarity of these 2 partners : 0.67

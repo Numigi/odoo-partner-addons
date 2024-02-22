@@ -56,6 +56,6 @@ class ResPartnerWithUniqueEmail(models.Model):
         return (
             self.env['res.partner']
             .sudo()  # Prevent access rules from interfering with the constraint.
-            .with_context(active_test=False)  # Find duplicate emails in archived partners as well.
+            .with_context(active_test=False)  # Find emails in archived partners as well
             .search(domain, limit=1)
         )

@@ -3,9 +3,10 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.api import Environment
-from odoo.exceptions import AccessError, ValidationError
+from odoo.exceptions import ValidationError
 from odoo.tests import common
-from odoo.tests.common import  users
+from odoo.tests.common import users
+
 
 class TestResPartnerChangeParent(common.SavepointCase):
     @classmethod
@@ -80,6 +81,7 @@ class TestResPartnerChangeParent(common.SavepointCase):
             contact_with_no_company, self.company_1
         )
         assert new_contact.parent_id, self.company_1
+
     @users('admin')
     def test_destination_parent_with_address(self):
         """Test that the address is changed when changing the parent company."""
