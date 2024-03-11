@@ -20,4 +20,4 @@ msgstr ""
 #. module: partner_category_type_enhanced
 #: model_terms:ir.ui.view,arch_db:partner_category_type_enhanced.view_partner_form_with_custom_category_fields
 msgid "Role"
-msgstr "Fonction"
+msgstr "Poste occupé"
