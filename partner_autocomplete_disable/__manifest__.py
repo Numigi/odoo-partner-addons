@@ -12,5 +12,8 @@
     "depends": [
         "partner_autocomplete",
     ],
+    "data": [
+        "data/views_data.xml",
+    ],
     "installable": True,
 }
