@@ -1,6 +1,6 @@
 Partner Autocomplete Disable
 ============================
-Disable the autocompletion in partners
+Disable the autocompletion in partners and companies.
 
 Contributors
 ------------

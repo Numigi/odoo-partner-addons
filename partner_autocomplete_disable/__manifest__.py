@@ -3,7 +3,7 @@
 
 {
     "name": "Partner Autocomplete Disable",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "LGPL-3",
@@ -11,6 +11,9 @@
     "summary": "Disable the Partner autocomplete feature",
     "depends": [
         "partner_autocomplete",
+    ],
+    "data": [
+        "data/views_data.xml",
     ],
     "installable": True,
 }
