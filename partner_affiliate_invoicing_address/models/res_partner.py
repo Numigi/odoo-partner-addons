@@ -15,7 +15,8 @@ class Partner(models.Model):
         "Invoice address to use",
         store=True,
         readonly=False,
-        domain="['|', '&', ('type', '=', 'invoice') ,('parent_id', '=', parent_id), ('id', '=', parent_id)]",
+        domain="['|', '&', ('type', '=', 'invoice') ,('parent_id', '=', parent_id),"
+        " ('id', '=', parent_id)]",
     )
 
     @api.onchange("use_parent_invoice_address")
@@ -25,7 +26,7 @@ class Partner(models.Model):
         else:
             self.invoice_address_to_use_id = False
 
-    def _update_for_specific_invoice_address(self, res={}):
+    def _update_for_specific_invoice_address(self, res):
         if res.get(INVOICE, False):
             res[INVOICE] = self.commercial_partner_id.invoice_address_to_use_id.id
 

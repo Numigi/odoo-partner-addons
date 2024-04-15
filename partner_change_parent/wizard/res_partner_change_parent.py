@@ -129,10 +129,12 @@ class ResPartnerParentChange(models.TransientModel):
         address_fields = self.env['res.partner']._address_fields()
         default_values.update(((f, False) for f in address_fields))
 
-        new_contact = self.contact_id.with_context(mail_notrack=True).copy(default=default_values)
+        new_contact = self.contact_id.with_context(mail_notrack=True
+                                                   ).copy(default=default_values)
 
         # Rename the new contact to remove `(copy)`.
-        new_contact.with_context(mail_notrack=True).write({'name': self.contact_id.name})
+        new_contact.with_context(mail_notrack=True).write(
+            {'name': self.contact_id.name})
 
         # Propagate the old email to the new contact.
         new_contact.with_context(mail_notrack=True).write({'email': email})

@@ -86,7 +86,10 @@ class ResPartnerDateWithAnniversaryEmails(models.Model):
             raise UserError(_(
                 'The diffusion may not be checked for this partner date ({date_type}), '
                 'because there is no mail template defined on this date type.'
-            ).format(date_type=dates_with_diffusion_and_no_template[0].date_type_id.display_name))
+            ).format(
+                date_type=(
+                    dates_with_diffusion_and_no_template[0].date_type_id.display_name))
+            )
 
     @api.model
     def send_anniversary_emails(self):
@@ -128,8 +131,9 @@ class ResPartnerDateWithAnniversaryEmails(models.Model):
         This method is used to find dates for which the anniversary is today.
 
         The time zone of the user is used to select dates.
-        Otherwise, if the function is called at 20h00 in Canada, and the system timezone is UTC,
-        the system will select key dates that appear to have their anniversary the next day.
+        Otherwise, if the function is called at 20h00 in Canada,
+        and the system timezone is UTC, the system will select key dates that appear
+        to have their anniversary the next day.
 
         :return: the res.partner.date records
         """

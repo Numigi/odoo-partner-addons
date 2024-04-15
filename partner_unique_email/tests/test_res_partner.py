@@ -28,4 +28,3 @@ class TestResPartner(common.SavepointCase):
         partner = self.env['res.partner'].create({'name': 'Other Partner'})
         with self.assertRaises(UserError):
             partner.email = self.email
-
