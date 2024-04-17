@@ -14,7 +14,7 @@ class ResPartner(models.Model):
         string="Supplier State",
         readonly=True,
         default="new",
-        track_visibility="onchange",
+        tracking=True,
     )
 
     supplier = fields.Boolean(
