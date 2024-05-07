@@ -96,7 +96,6 @@ class TestResPartnerDate(common.SavepointCase):
             ]
         )
 
-    # FIXME: TU does'nt pass anymore
     def test_send_anniversary_email(self):
         self.partner_date_1.write(
             {
