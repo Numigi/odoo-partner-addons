@@ -19,9 +19,15 @@ class PartnerDuplicateCase(common.SavepointCase):
         super(PartnerDuplicateCase, cls).setUpClass()
 
         # Test using the demo user to prevent bugs related with access rights.
-        cls.env = Environment(
-            cls.env.cr, cls.env.ref("base.user_demo").id, {}
-        ).with_context(test_queue_job_no_delay=True)
+        cls.env = Environment(cls.env.cr, cls.env.ref("base.user_demo").id, {})
+
+        # Set queue job to no delay for testing
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                test_queue_job_no_delay=True,
+            )
+        )
 
         cls.state_on = cls.env.ref("base.state_ca_on")
         cls.state_qc = cls.env.ref("base.state_ca_qc")
