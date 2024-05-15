@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytest
+import secrets
 from ddt import ddt, data, unpack
 from itertools import permutations
 from odoo.api import Environment
@@ -324,7 +325,7 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
         # })
         account_2 = env["account.account"].create(
             {
-                "code": random.randint(100, 999),
+                "code": secrets.randbelow(900) + 100,
                 "name": "Expenses Account",
                 "user_type_id": env.ref("account.data_account_type_expenses").id,
             }
@@ -338,7 +339,7 @@ class TestResPartnerDuplicate(PartnerDuplicateCase):
             {
                 "name": "Journal",
                 "type": "purchase",
-                "code": str(random.randint(100, 999)),
+                "code": str(secrets.randbelow(900) + 100),
             }
         )
 
