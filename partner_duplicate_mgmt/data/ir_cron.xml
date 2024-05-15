@@ -9,6 +9,7 @@
             <field name="code">model.create_duplicates()</field>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
+            <field name="run_as_queue_job" eval="True"/>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
         </record>
