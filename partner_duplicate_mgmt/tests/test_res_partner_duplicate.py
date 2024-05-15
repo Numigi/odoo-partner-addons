@@ -10,7 +10,6 @@ from odoo.api import Environment
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import common
 from odoo import SUPERUSER_ID
-import random
 
 
 class PartnerDuplicateCase(common.SavepointCase):
