@@ -41,4 +41,30 @@
         </field>
     </record>
 
+    <record id="view_partner_kanban_with_custom_category_fields" model="ir.ui.view">
+        <field name="name">Partner Form With Custom Category Fields</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <field name="function" position="after">
+                <field name="job_position_id"/>
+            </field>
+            <xpath expr="//div[@class='oe_kanban_details d-flex flex-column']//ul/li[1]" position="replace">
+                <li t-if="record.parent_id.raw_value and !record.job_position_id.raw_value">
+                    <field name="parent_id"/>
+                </li>
+            </xpath>
+            <xpath expr="//div[@class='oe_kanban_details d-flex flex-column']//ul/li[2]" position="replace">
+                <li t-if="!record.parent_id.raw_value and record.job_position_id.raw_value">
+                    <field name="job_position_id"/>
+                </li>
+            </xpath>
+            <xpath expr="//div[@class='oe_kanban_details d-flex flex-column']//ul/li[3]" position="replace">
+                <li t-if="record.parent_id.raw_value and record.job_position_id.raw_value">
+                    <field name="job_position_id"/> at <field name="parent_id"/>
+                </li>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
