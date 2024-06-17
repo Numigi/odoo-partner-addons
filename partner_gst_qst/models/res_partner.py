@@ -8,5 +8,5 @@ class ResPartner(models.Model):
 
     _inherit = 'res.partner'
 
-    gst = fields.Char(string="GST")
     qst = fields.Char(string="QST")
+    country_code = fields.Char(related="country_id.code", store=True)
