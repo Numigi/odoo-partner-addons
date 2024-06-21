@@ -61,3 +61,9 @@ msgid ""
 msgstr ""
 "Code de pays ISO en deux caractères. \n"
 "Vous pouvez utiliser ce champ pour une recherche rapide."
+
+#. module: l10n_ca
+#: model:ir.model.fields,field_description:l10n_ca.field_res_partner__l10n_ca_pst
+#: model:ir.model.fields,field_description:l10n_ca.field_res_users__l10n_ca_pst
+msgid "PST"
+msgstr "TPS"
