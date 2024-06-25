@@ -10,11 +10,6 @@
   includes:
   - base_search_fuzzy
 
-- url: https://github.com/numigi/odoo-web-addons
-  branch: "14.0"
-  includes:
-  - web_list_column_width
-
 - url: https://github.com/OCA/e-commerce
   branch: "14.0"
   includes:
