@@ -11,7 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        "contacts",
+        "partner_autocomplete_disable",
     ],
     "installable": True,
 }
