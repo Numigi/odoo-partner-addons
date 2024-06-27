@@ -17,4 +17,5 @@
         'views/res_partner.xml',
     ],
     'installable': True,
+    'post_init_hook': 'set_partner_names_order_in_res_config_settings',
 }
