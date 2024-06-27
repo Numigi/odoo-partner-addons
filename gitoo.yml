@@ -1,1 +1,5 @@
+- url: https://github.com/OCA/partner-contact
+  branch: "16.0"
+  includes:
+  - partner_firstname
 
