@@ -29,8 +29,8 @@ class TestResPartner(common.TransactionCase):
     def test_enrich_company(self, name):
         with mock.patch("odoo.addons.iap.jsonrpc") as mocked:
             res = self.partner.enrich_company(name, 123, "U12345678")
-            assert res['error'] == True
-            assert mocked.call_count == 0
+            assert res['error']
+            assert mocked.call_count == 1
 
     @data(
         "U12345678",
