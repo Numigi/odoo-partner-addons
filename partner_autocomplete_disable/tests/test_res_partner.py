@@ -2,11 +2,11 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from ddt import ddt, data
-from unittest.mock import patch
+from unittest import mock
 from odoo.tests import common
 
 
-
+@ddt
 class TestResPartner(common.TransactionCase):
     def setUp(self):
         super().setUp()
@@ -25,16 +25,12 @@ class TestResPartner(common.TransactionCase):
             assert self.partner.autocomplete(query) == []
             assert mocked.call_count == 0
 
-    @patch('odoo.addons.iap.jsonrpc')
-    def test_enrich_company(self, mock_jsonrpc):
-        # Setup the mock to return an empty dictionary
-        mock_jsonrpc.return_value = {}
-
-        names = ["konvergo", "odoo", "something", "google.com", ""]
-        for name in names:
-            with self.subTest(name=name):
-                result = self.env['res.partner'].enrich_company(name, 123, "U12345678")
-                self.assertEqual(result, {})
+    @data("konvergo", "odoo", "something", "google.com", "")
+    def test_enrich_company(self, name):
+        with mock.patch("odoo.addons.iap.jsonrpc") as mocked:
+            res = self.partner.enrich_company(name, 123, "U12345678")
+            assert res['error'] == True
+            assert mocked.call_count == 0
 
     @data(
         "U12345678",
