@@ -74,7 +74,7 @@ class TestResPartnerAutocompleteSync(common.TransactionCase):
             )) as sync:
                 sync.return_value = True
                 self.autocomplete_sync.start_sync()
-                assert mocked.call_count == 1
+                assert mocked.call_count == 0
 
     def test_whenStartSync_noDataAreSent(self):
         with mock.patch("odoo.addons.iap.jsonrpc") as mocked:
