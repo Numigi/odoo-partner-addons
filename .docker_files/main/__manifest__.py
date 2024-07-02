@@ -13,6 +13,7 @@
     "depends": [
         "contacts",
         "partner_autocomplete_disable",
+        "partner_firstname_before_lastname",
     ],
     "installable": True,
 }
