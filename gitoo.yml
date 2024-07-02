@@ -1,5 +1,22 @@
 - url: https://github.com/OCA/partner-contact
-  branch: "16.0"
+  branch: "14.0"
   includes:
   - partner_firstname
+  - partner_multi_relation
+  - partner_affiliate
 
+- url: https://github.com/OCA/server-tools
+  branch: "14.0"
+  includes:
+  - base_search_fuzzy
+
+- url: https://github.com/OCA/e-commerce
+  branch: "14.0"
+  includes:
+  - website_sale_invoice_address
+
+- url: https://github.com/OCA/queue
+  branch: "14.0"
+  includes:
+  - queue_job
+  - queue_job_cron
