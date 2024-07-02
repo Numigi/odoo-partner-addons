@@ -4,7 +4,7 @@
     <record id="view_partner_simple_form_firstname_before_lastname" model="ir.ui.view">
         <field name="name">Partner Simple Form With Firstname Before Lastname</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="partner_firstname.view_partner_simple_form_firstname"/>
+        <field name="inherit_id" ref="partner_firstname.view_partner_simple_form"/>
         <field name="arch" type="xml">
             <field name="firstname" position="replace"/>
             <field name="lastname" position="before">
@@ -21,7 +21,7 @@
     <record id="view_partner_form_firstname_before_lastname" model="ir.ui.view">
         <field name="name">Partner Form With Firstname Before Lastname</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="partner_firstname.view_partner_form_firstname"/>
+        <field name="inherit_id" ref="partner_firstname.view_partner_form"/>
         <field name="arch" type="xml">
             <field name="firstname" position="replace"/>
             <field name="lastname" position="before">
