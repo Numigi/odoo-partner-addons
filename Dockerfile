@@ -13,6 +13,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 
 USER odoo
 
+COPY contacts_config_menu_moved_right /mnt/extra-addons/contacts_config_menu_moved_right
 COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
 COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_before_lastname
 
