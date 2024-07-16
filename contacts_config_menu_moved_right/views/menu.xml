@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="contacts.res_partner_menu_config" model="ir.ui.menu">
-        <field name="sequence" eval="10000" />
+        <field name="sequence" eval="100" />
     </record>
 
 </odoo>
