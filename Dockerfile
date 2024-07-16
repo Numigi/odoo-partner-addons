@@ -15,6 +15,7 @@ USER odoo
 
 COPY contacts_config_menu_moved_right /mnt/extra-addons/contacts_config_menu_moved_right
 COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
+COPY partner_edit_group /mnt/extra-addons/partner_edit_group
 COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_before_lastname
 
 COPY .docker_files/main /mnt/extra-addons/main
