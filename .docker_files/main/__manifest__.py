@@ -12,6 +12,7 @@
     "summary": "Install all addons required for testing.",
     "depends": [
         "contacts",
+        "contacts_config_menu_moved_right",
         "partner_autocomplete_disable",
         "partner_edit_group",
         "partner_firstname_before_lastname",
