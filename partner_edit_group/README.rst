@@ -37,7 +37,6 @@ The module moves the group `Contact Creation` to the section `Other`.
 
 .. image:: static/description/contact_creation_group_moved.png
 
-This makes the checkbox visible without debug mode.
 
 Default Groups
 --------------
