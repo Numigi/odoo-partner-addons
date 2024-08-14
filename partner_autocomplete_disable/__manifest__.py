@@ -14,6 +14,7 @@
     ],
     "data": [
         "data/views_data.xml",
+        "views/res_config_settings_views.xml",
     ],
     "installable": True,
 }
