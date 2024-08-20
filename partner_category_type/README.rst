@@ -50,6 +50,10 @@ Contributors
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 * Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)
 
+Release
+-------
+Since the version 1.1.0 of this module, we display the native field `Job Position` that has been hudden.
+
 More information
 ----------------
 * Meet us at https://bit.ly/numigi-com
