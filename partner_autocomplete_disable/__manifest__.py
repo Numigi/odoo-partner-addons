@@ -3,7 +3,7 @@
 
 {
     "name": "Partner Autocomplete Disable",
-    "version": "1.1.0",
+    "version": "16.0.2.1.0",
     "author": "Numigi",
     "maintainer": "Numigi",
     "license": "LGPL-3",
@@ -14,6 +14,7 @@
     ],
     "data": [
         "data/views_data.xml",
+        "views/res_config_settings_views.xml",
     ],
     "installable": True,
 }

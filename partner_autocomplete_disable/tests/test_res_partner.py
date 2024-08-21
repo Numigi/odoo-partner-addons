@@ -1,4 +1,4 @@
-# © 2022 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © 2024 - Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from ddt import ddt, data
@@ -13,13 +13,6 @@ class TestResPartner(common.TransactionCase):
         self.partner = self.env.ref("base.res_partner_1")
 
     @data("konvergo", "odoo", "something", "google.com", "")
-    def test_rpc_remote_api(self, query):
-        with mock.patch("odoo.addons.iap.jsonrpc") as mocked:
-            res = self.partner._rpc_remote_api("search", {"query": query})
-            assert mocked.call_count == 0
-            assert res == ({}, False)
-
-    @data("konvergo", "odoo", "something", "google.com", "")
     def test_autocomplete(self, query):
         with mock.patch("odoo.addons.iap.jsonrpc") as mocked:
             assert self.partner.autocomplete(query) == []
@@ -29,7 +22,7 @@ class TestResPartner(common.TransactionCase):
     def test_enrich_company(self, name):
         with mock.patch("odoo.addons.iap.jsonrpc") as mocked:
             res = self.partner.enrich_company(name, 123, "U12345678")
-            assert res['error']
+            assert res == {}
             assert mocked.call_count == 0
 
     @data(
@@ -62,9 +55,9 @@ class TestResPartnerAutocompleteSync(common.TransactionCase):
         """
         module_memory_address = (
             "odoo.addons.partner_autocomplete_disable"
-            ".models.res_partner.ResPartnerAutocompleteDisable"
+            ".models.iap_autocomplete_api.IapAutocompleteEnrichAPI"
         )
-        with mock.patch(".".join([module_memory_address, "_rpc_remote_api"])) as mocked:
+        with mock.patch(".".join([module_memory_address, "_contact_iap"])) as mocked:
             autocomplete_module_memory_address = (
                 "odoo.addons.partner_autocomplete.models.res_partner.ResPartner"
             )
@@ -74,7 +67,7 @@ class TestResPartnerAutocompleteSync(common.TransactionCase):
             )) as sync:
                 sync.return_value = True
                 self.autocomplete_sync.start_sync()
-                assert mocked.call_count == 0
+                assert mocked.call_count == 1
 
     def test_whenStartSync_noDataAreSent(self):
         with mock.patch("odoo.addons.iap.jsonrpc") as mocked:
