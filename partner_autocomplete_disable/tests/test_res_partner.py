@@ -25,14 +25,7 @@ class TestResPartner(common.TransactionCase):
             assert res == {}
             assert mocked.call_count == 0
 
-    @data(
-        "U12345678",
-        "1234567890",
-        "12345678901",
-        "12345678X",
-        "XX123456789",
-        ""
-    )
+    @data("U12345678", "1234567890", "12345678901", "12345678X", "XX123456789", "")
     def test_read_by_vat(self, vat):
         with mock.patch("odoo.addons.iap.jsonrpc") as mocked:
             assert self.partner.read_by_vat(vat) == []
@@ -40,19 +33,16 @@ class TestResPartner(common.TransactionCase):
 
 
 class TestResPartnerAutocompleteSync(common.TransactionCase):
-
     def setUp(self):
         super().setUp()
         self.partner = self.env.ref("base.res_partner_1")
         self.partner.vat = "XX123456789"
-        self.autocomplete_sync = self.env["res.partner.autocomplete.sync"].create({
-            "partner_id": self.partner.id,
-            "synched": False
-        })
+        self.autocomplete_sync = self.env["res.partner.autocomplete.sync"].create(
+            {"partner_id": self.partner.id, "synched": False}
+        )
 
     def test_whenStartSync_thenPatchedMethodIsCalled(self):
-        """ make sure the targeted method is called during the process
-        """
+        """make sure the targeted method is called during the process"""
         module_memory_address = (
             "odoo.addons.partner_autocomplete_disable"
             ".models.iap_autocomplete_api.IapAutocompleteEnrichAPI"
@@ -62,9 +52,9 @@ class TestResPartnerAutocompleteSync(common.TransactionCase):
                 "odoo.addons.partner_autocomplete.models.res_partner.ResPartner"
             )
             mocked.return_value = {}, False
-            with mock.patch(".".join(
-                    [autocomplete_module_memory_address, "_is_vat_syncable"]
-            )) as sync:
+            with mock.patch(
+                ".".join([autocomplete_module_memory_address, "_is_vat_syncable"])
+            ) as sync:
                 sync.return_value = True
                 self.autocomplete_sync.start_sync()
                 assert mocked.call_count == 1

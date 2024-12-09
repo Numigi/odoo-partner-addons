@@ -2,6 +2,7 @@
 # © 2024 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+
 def set_partner_names_order_in_res_config_settings(cr, registry):
     """Set the value partner_names_order in res_config_settings.
 
