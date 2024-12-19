@@ -7,20 +7,20 @@ from odoo.addons.phone_validation.tools import phone_validation
 
 class ResPartner(models.Model):
 
-    _name = 'res.partner'
-    _inherit = ['res.partner']
+    _name = "res.partner"
+    _inherit = ["res.partner"]
 
-    @api.onchange('phone', 'country_id', 'company_id')
+    @api.onchange("phone", "country_id", "company_id")
     def _onchange_phone_validation(self):
         if self.phone:
-            self.phone = self._phone_format(self.phone, force_format='INTERNATIONAL')
+            self.phone = self._phone_format(self.phone, force_format="INTERNATIONAL")
 
-    @api.onchange('mobile', 'country_id', 'company_id')
+    @api.onchange("mobile", "country_id", "company_id")
     def _onchange_mobile_validation(self):
         if self.mobile:
-            self.mobile = self._phone_format(self.mobile, force_format='INTERNATIONAL')
+            self.mobile = self._phone_format(self.mobile, force_format="INTERNATIONAL")
 
-    def _phone_format(self, number, country=None, company=None, force_format='E164'):
+    def _phone_format(self, number, country=None, company=None, force_format="E164"):
         country = country or self.country_id or self.env.company.country_id
         if not country or not number:
             return number
@@ -33,14 +33,14 @@ class ResPartner(models.Model):
         )
 
     def _phone_get_number_fields(self):
-        return ['mobile', 'phone']
+        return ["mobile", "phone"]
 
     def _apply_phone_format_to_saved_vals(self, vals):
         formatted_phones = {}
         for field in self._phone_get_number_fields():
             if vals.get(field):
                 formatted_phones[field] = self._phone_format(
-                    vals[field], force_format='INTERNATIONAL'
+                    vals[field], force_format="INTERNATIONAL"
                 )
 
         phones_to_update = {k: v for k, v in formatted_phones.items() if vals[k] != v}
