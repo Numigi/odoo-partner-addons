@@ -20,7 +20,6 @@ PHONE_CASES = list(product(PHONE_NUMBERS, PHONE_FIELDS))
 
 @ddt
 class TestPhoneFormatOnSave(common.TransactionCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
