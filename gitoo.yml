@@ -14,7 +14,6 @@
   branch: "12.0"
   includes:
   - base_search_fuzzy
-  - base_view_inheritance_extension    
 
 - url: https://github.com/OCA/social
   branch: "12.0"
