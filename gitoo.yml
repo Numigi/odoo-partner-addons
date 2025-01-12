@@ -3,6 +3,11 @@
   includes:
   - partner_firstname
 
+- url: https://github.com/oca/server-tools
+  branch: "16.0"
+  includes:
+    - base_view_inheritance_extension
+
 - url: https://github.com/OCA/queue
   branch: "16.0"
   includes:
