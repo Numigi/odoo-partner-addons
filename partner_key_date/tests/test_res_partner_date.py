@@ -75,6 +75,14 @@ class TestResPartnerDate(TransactionCase):
             }
         )
 
+    def _find_sent_email(self):
+        return self.env["mail.mail"].search(
+            [
+                ("email_to", "=", self.partner.email),
+                ("subject", "=", self.template.subject),
+            ]
+        )
+
     def test_compute_age(self):
         self.assertAlmostEqual(self.partner_date_1.age, 2, 2)
         self.assertAlmostEqual(self.partner_date_2.age, 1.5, 2)
@@ -86,14 +94,6 @@ class TestResPartnerDate(TransactionCase):
         self.assertAlmostEqual(self.partner_date_1.age, 3, 2)
         self.assertAlmostEqual(self.partner_date_2.age, 2.5, 2)
         self.assertAlmostEqual(self.partner_date_3.age, 1.3, 2)
-
-    def _find_sent_email(self):
-        return self.env["mail.mail"].search(
-            [
-                ("email_to", "=", self.partner.email),
-                ("subject", "=", self.template.subject),
-            ]
-        )
 
     def test_if_no_email_on_partner_then_no_mail_sent(self):
         self.partner.email = None

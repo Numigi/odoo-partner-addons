@@ -102,24 +102,16 @@ class ResPartnerDate(models.Model):
         today = fields.Date.context_today(self)
         month_and_day = fields.Date.from_string(today).strftime("%m-%d")
 
-        self.env.cr.execute(
-            """
-            SELECT d.id
-            FROM res_partner_date d
-            WHERE d.month_and_day = %s
-            AND d.diffusion = true
-            """,
-            (month_and_day,),
+        records = self.env["res.partner.date"].search(
+            [("month_and_day", "=", month_and_day), ("diffusion", "=", True)]
         )
-
-        key_date_ids = [r[0] for r in self.env.cr.fetchall()]
-        return self.browse(key_date_ids)
+        return records
 
     @api.depends("date")
     def _compute_month_and_day(self):
         for record in self:
             key_date = fields.Date.from_string(record.date)
-            record.month_and_day = key_date.strftime("%m-%d")
+            record.month_and_day = key_date.strftime("%m-%d") if key_date else False
 
     @api.constrains("diffusion", "date_type_id")
     def _check_mail_template_is_defined_on_date_type_if_diffusion_is_checked(self):

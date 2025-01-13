@@ -24,6 +24,7 @@
                     <field name="partner_id"/>
                     <field name="date_type_id"/>
                     <field name="date"/>
+                    <field name="month_and_day"/>
                     <field name="note"/>
                     <field name="age" readonly="1"/>
                     <field name="diffusion"/>
