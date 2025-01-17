@@ -4,11 +4,14 @@
     <record id="res_partner_view_form" model="ir.ui.view">
         <field name="name">res.partner.form</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="sms.res_partner_view_form"/>
+        <field name="inherit_id" ref="sms.res_partner_view_form" />
         <field name="arch" type="xml">
+
             <field name="phone" position="before">
-                 <field name="phone_envelope_hidden" invisible="1"/>
+                <field name="phone_envelope_hidden" invisible="1" />
             </field>
+
+            <!-- Use field twice (doubles with no widget="phone") and display only one -->    
             <xpath expr="//field[@name='phone']" position="attributes">
                 <attribute name="attrs">
                     {'invisible': ['|', ('phone', '=', False), ('phone_envelope_hidden', '=', True)]}
@@ -19,12 +22,14 @@
                     {'invisible': ['|', ('mobile', '=', False), ('phone_envelope_hidden', '=', True)]}
                 </attribute>
             </xpath>
+                    
             <field name="phone" position="after">
-                <field name="phone" attrs="  {'invisible': [('phone_envelope_hidden', '=', False)]}"/>
+                <field name="phone" attrs="{'invisible': [('phone_envelope_hidden', '=', False)]}" />
             </field>
             <field name="mobile" position="after">
-                <field name="mobile" attrs="  {'invisible': [('phone_envelope_hidden', '=', False)]}"/>
+                <field name="mobile" attrs="{'invisible': [('phone_envelope_hidden', '=', False)]}" />
             </field>
+
         </field>
     </record>
 

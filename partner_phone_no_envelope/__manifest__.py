@@ -9,6 +9,7 @@
     "website": "https://www.numigi.com",
     "license": "LGPL-3",
     "category": "Partner Management",
+    "summary": "Hides the envelope icon for phone numbers in partner form views",
     "depends": [
         "base_view_inheritance_extension",
         "sms",
