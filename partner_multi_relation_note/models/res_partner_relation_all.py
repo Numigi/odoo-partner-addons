@@ -7,10 +7,10 @@ from odoo import fields, models
 
 class ResPartnerRelationAllWithNote(models.AbstractModel):
 
-    _inherit = 'res.partner.relation.all'
+    _inherit = "res.partner.relation.all"
 
-    note = fields.Text('Note')
+    note = fields.Text("Note")
 
     def _get_additional_relation_columns(self):
         additional_columns = super()._get_additional_relation_columns()
-        return ', '.join((additional_columns, 'note'))
+        return ", ".join((additional_columns, "note"))

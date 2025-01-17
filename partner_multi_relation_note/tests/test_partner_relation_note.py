@@ -10,41 +10,41 @@ class TestPartnerRelationNote(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.child = cls.env['res.partner'].create({'name': 'Contact 1'})
+        cls.child = cls.env["res.partner"].create({"name": "Contact 1"})
 
-        cls.father = cls.env['res.partner'].create(
+        cls.father = cls.env["res.partner"].create(
             {
-                'name': 'Father of Contact 1',
+                "name": "Father of Contact 1",
             }
         )
 
         cls.father_type = (
-            cls.env['res.partner.relation.type']
+            cls.env["res.partner.relation.type"]
             .sudo()
             .create(
                 {
-                    'name': 'is the father of',
-                    'name_inverse': 'is the children of',
+                    "name": "is the father of",
+                    "name_inverse": "is the children of",
                 }
             )
         )
 
-        cls.note = 'This is a note'
+        cls.note = "This is a note"
 
-        cls.father_relation = cls.env['res.partner.relation.all'].create(
+        cls.father_relation = cls.env["res.partner.relation.all"].create(
             {
-                'this_partner_id': cls.father.id,
-                'other_partner_id': cls.child.id,
-                'type_id': cls.father_type.id,
-                'note': cls.note,
+                "this_partner_id": cls.father.id,
+                "other_partner_id": cls.child.id,
+                "type_id": cls.father_type.id,
+                "note": cls.note,
             }
         )
 
-        cls.child_relation = cls.env['res.partner.relation.all'].search(
+        cls.child_relation = cls.env["res.partner.relation.all"].search(
             [
-                ('this_partner_id', '=', cls.child.id),
-                ('other_partner_id', '=', cls.father.id),
-                ('type_id', '=', cls.father_type.id),
+                ("this_partner_id", "=", cls.child.id),
+                ("other_partner_id", "=", cls.father.id),
+                ("type_id", "=", cls.father_type.id),
             ]
         )
 
@@ -53,7 +53,7 @@ class TestPartnerRelationNote(common.SavepointCase):
         self.assertEqual(self.child_relation.note, self.note)
 
     def test_when_update_note_on_relation_then_update_inverse_relation(self):
-        new_note = 'This is another note'
+        new_note = "This is another note"
         self.father_relation.note = new_note
         self.father_relation.refresh()
         self.assertEqual(self.father_relation.note, new_note)

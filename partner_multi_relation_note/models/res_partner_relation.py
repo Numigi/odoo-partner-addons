@@ -7,6 +7,6 @@ from odoo import fields, models
 
 class ResPartnerRelationWithNote(models.Model):
 
-    _inherit = 'res.partner.relation'
+    _inherit = "res.partner.relation"
 
-    note = fields.Text('Note')
+    note = fields.Text("Note")
