@@ -6,7 +6,6 @@ from odoo.tests import common
 
 
 class TestPartnerRelationNote(common.SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
