@@ -4,8 +4,8 @@
 
         <record id="anniversary_email_template" model="mail.template">
             <field name="name">Send Partner Anniversary Email</field>
-            <field name="model_id" ref="model_res_partner_date"/>
-            <field name="auto_delete" eval="False"/>
+            <field name="model_id" ref="model_res_partner_date" />
+            <field name="auto_delete" eval="False" />
             <field name="subject">Best Wishes</field>
             <field name="body_html" type="html">
             <div>

@@ -5,9 +5,11 @@ This module adds key dates to partners.
 A key date is an important event in the timeline of a contact.
 
 Key dates require a type, and these types are configurable. 
-To configure key date types, go to Contacts / Configuration / Key Date Types.
+To configure key date types, go to `Contacts / Configuration / Key Date Types`.
 
-.. image:: static/description/key_date_types.png
+.. image:: static/description/key_date_types_tree_view.png
+
+.. image:: static/description/key_date_types_form_view.png
 
 Key dates can be accessed from Contacts / Dates.
 

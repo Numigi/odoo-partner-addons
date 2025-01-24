@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Savoir-faire Linux
-# Copyright 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2022-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import pytz
@@ -89,8 +88,8 @@ class TestResPartnerDate(TransactionCase):
         self.assertAlmostEqual(self.partner_date_3.age, 0.3, 2)
 
     @freeze_time(_1_YEAR_LATER)
-    def test_compute_age_for_all_dates(self):
-        self.env["res.partner.date"].compute_age_for_all_dates()
+    def test_update_age_for_all_dates(self):
+        self.env["res.partner.date"].update_age_for_all_dates()
         self.assertAlmostEqual(self.partner_date_1.age, 3, 2)
         self.assertAlmostEqual(self.partner_date_2.age, 2.5, 2)
         self.assertAlmostEqual(self.partner_date_3.age, 1.3, 2)

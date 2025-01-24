@@ -6,7 +6,7 @@
         <field name="model">res.partner.date.type</field>
         <field name="arch" type="xml">
             <tree string="Date Types">
-                <field name="name"/>
+                <field name="name" />
             </tree>
         </field>
     </record>
@@ -17,8 +17,8 @@
         <field name="arch" type="xml">
             <form string="Contact Key Date Type">
                 <group>
-                    <field name="name"/>
-                    <field name="mail_template_id"/>
+                    <field name="name" />
+                    <field name="mail_template_id" />
                 </group>
             </form>
         </field>
@@ -37,6 +37,6 @@
         id="menu_partner_date_type"
         name="Key Date Types"
         parent="contacts.res_partner_menu_config"
-        sequence="10"/>
+        sequence="10" />
 
 </odoo>

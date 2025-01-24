@@ -1,14 +1,12 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Savoir-faire Linux
-# Copyright 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# Copyright 2022-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+from datetime import date
 import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-
-from datetime import date
 
 _logger = logging.getLogger(__name__)
 
@@ -27,7 +25,9 @@ class ResPartnerDate(models.Model):
     )
     date = fields.Date("Date", required=True, index=True)
     note = fields.Char("Note")
-    age = fields.Float("Age", digits=(16, 1), index=True)
+    age = fields.Float(
+        "Age", digits=(16, 1), compute="_compute_age", index=True, store=True
+    )
 
     month_and_day = fields.Char(
         "Month and Day", compute="_compute_month_and_day", index=True, store=True
@@ -38,18 +38,60 @@ class ResPartnerDate(models.Model):
         "every anniversary of the this date.",
     )
 
-    @api.model
-    def create(self, vals):
-        res = super().create(vals)
-        res._compute_age()
-        return res
+    @api.depends("date")
+    def _compute_age(self):
+        """Compute the age of a single date."""
+        for partner_date in self:
+            key_date = fields.Date.from_string(partner_date.date)
+            today = date.today()
+            partner_date.age = (
+                round((today - key_date).days / 365.25, 1) if key_date else 0.0
+            )
 
-    def write(self, vals):
-        super().write(vals)
-        if "date" in vals:
-            for record in self:
-                record._compute_age()
-        return True
+    @api.depends("date")
+    def _compute_month_and_day(self):
+        for partner_date in self:
+            key_date = fields.Date.from_string(partner_date.date)
+            partner_date.month_and_day = (
+                key_date.strftime("%m-%d") if key_date else False
+            )
+
+    @api.constrains("diffusion", "date_type_id")
+    def _check_mail_template_is_defined_on_date_type_if_diffusion_is_checked(self):
+        dates_with_diffusion_and_no_template = self.filtered(
+            lambda d: d.diffusion and not d.date_type_id.mail_template_id
+        )
+        if dates_with_diffusion_and_no_template:
+            raise UserError(
+                _(
+                    "The diffusion may not be checked for this partner date ({date_type}), "
+                    "because there is no mail template defined on this date type."
+                ).format(
+                    date_type=(
+                        dates_with_diffusion_and_no_template[
+                            0
+                        ].date_type_id.display_name
+                    )
+                )
+            )
+
+    @api.model
+    def update_age_for_all_dates(self):
+        """Compute the age of all partner dates.
+
+        The age of a date is in years.
+
+        We use the the system time zone, whatever it is.
+        The difference between time zones is not significant to make a difference
+        in the year of a date.
+        """
+        self.env.cr.execute(
+            """
+            UPDATE res_partner_date
+            SET age = round((%s - date) / 365.25, 1)
+            """,
+            (date.today(),),
+        )
 
     @api.model
     def send_anniversary_emails(self):
@@ -102,55 +144,7 @@ class ResPartnerDate(models.Model):
         today = fields.Date.context_today(self)
         month_and_day = fields.Date.from_string(today).strftime("%m-%d")
 
-        records = self.env["res.partner.date"].search(
+        partner_dates = self.env["res.partner.date"].search(
             [("month_and_day", "=", month_and_day), ("diffusion", "=", True)]
         )
-        return records
-
-    @api.depends("date")
-    def _compute_month_and_day(self):
-        for record in self:
-            key_date = fields.Date.from_string(record.date)
-            record.month_and_day = key_date.strftime("%m-%d") if key_date else False
-
-    @api.constrains("diffusion", "date_type_id")
-    def _check_mail_template_is_defined_on_date_type_if_diffusion_is_checked(self):
-        dates_with_diffusion_and_no_template = self.filtered(
-            lambda d: d.diffusion and not d.date_type_id.mail_template_id
-        )
-        if dates_with_diffusion_and_no_template:
-            raise UserError(
-                _(
-                    "The diffusion may not be checked for this partner date ({date_type}), "
-                    "because there is no mail template defined on this date type."
-                ).format(
-                    date_type=(
-                        dates_with_diffusion_and_no_template[
-                            0
-                        ].date_type_id.display_name
-                    )
-                )
-            )
-
-    def compute_age_for_all_dates(self):
-        """Compute the age of all partner dates.
-
-        The age of a date is in years.
-
-        We use the the system time zone, whatever it is.
-        The difference between time zones is not significant to make a difference
-        in the year of a date.
-        """
-        self.env.cr.execute(
-            """
-            UPDATE res_partner_date
-            SET age = round((%s - date) / 365.25, 1)
-            """,
-            (date.today(),),
-        )
-
-    def _compute_age(self):
-        """Compute the age of a single date."""
-        key_date = fields.Date.from_string(self.date)
-        today = date.today()
-        self.age = round((today - key_date).days / 365.25, 1)
+        return partner_dates
