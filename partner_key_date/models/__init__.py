@@ -1,0 +1,7 @@
+# Copyright 2017 Savoir-faire Linux
+# Copyright 2022-today Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
+from . import res_partner
+from . import res_partner_date
+from . import res_partner_date_type
