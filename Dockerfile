@@ -18,6 +18,7 @@ COPY partner_autocomplete_disable /mnt/extra-addons/partner_autocomplete_disable
 COPY partner_edit_group /mnt/extra-addons/partner_edit_group
 COPY partner_firstname_before_lastname /mnt/extra-addons/partner_firstname_before_lastname
 COPY partner_key_date /mnt/extra-addons/partner_key_date
+COPY partner_multi_relation_note /mnt/extra-addons/partner_multi_relation_note
 
 COPY .docker_files/main /mnt/extra-addons/main
 COPY .docker_files/odoo.conf /etc/odoo
