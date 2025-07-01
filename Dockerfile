@@ -48,6 +48,7 @@ COPY partner_no_vat_website_sale /mnt/extra-addons/partner_no_vat_website_sale
 COPY partner_phone_no_envelope /mnt/extra-addons/partner_phone_no_envelope
 COPY partner_phone_validation /mnt/extra-addons/partner_phone_validation
 COPY partner_portal_access_group /mnt/extra-addons/partner_portal_access_group
+COPY partner_read_access_actions /mnt/extra-addons/partner_read_access_actions
 COPY partner_reference /mnt/extra-addons/partner_reference
 COPY partner_unique_email /mnt/extra-addons/partner_unique_email
 COPY partner_user_auto_assign /mnt/extra-addons/partner_user_auto_assign

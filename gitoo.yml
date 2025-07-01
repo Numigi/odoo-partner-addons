@@ -19,3 +19,9 @@
   branch: "14.0"
   includes:
   - website_sale_invoice_address
+
+- url: https://github.com/Numigi/odoo-base-addons
+  branch: "14.0"
+  includes:
+    - base_extended_security
+    - test_http_request

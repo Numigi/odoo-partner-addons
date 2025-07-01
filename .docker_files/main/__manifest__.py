@@ -45,6 +45,7 @@
         "partner_phone_no_envelope",
         "partner_phone_validation",
         "partner_portal_access_group",
+        "partner_read_access_actions",
         "partner_reference",
         "partner_unique_email",
         "partner_user_auto_assign",
