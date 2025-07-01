@@ -14,6 +14,11 @@ class ResPartner(models.Model):
         res = super().get_read_access_actions()
         additional_actions = [
             "action_view_sale_order",
+            "action_view_opportunity",
+            "schedule_meeting",
+            "action_view_partner_invoices",
+            "action_view_relations",
+            "action_view_certifications"
         ]
         res.extend(additional_actions)
         return res
