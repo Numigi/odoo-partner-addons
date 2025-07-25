@@ -9,10 +9,8 @@ When setting the postal code on a partner, the forward sorting area is automatic
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+* The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
 * Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)
 * Istvan Szalai (istvan.szalai@savoirfairelinux.com)
 
-More information
-----------------
-* Meet us at https://bit.ly/numigi-com

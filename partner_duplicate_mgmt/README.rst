@@ -107,10 +107,8 @@ This module is financed and answered to customer needs.
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+* The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
 * Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)
 
-More information
-----------------
-* Meet us at https://bit.ly/numigi-com
 

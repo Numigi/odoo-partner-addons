@@ -23,6 +23,3 @@ And filter in the quick search :
 
 .. image:: static/description/contact_filter_on_manager.png
 
-More information
-----------------
-* Meet us at https://bit.ly/numigi-com
