@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2017 Savoir-faire Linux
-# © 2022 Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+# © Numigi (tm) and all its contributors (https://numigi.com/r/home)
 from odoo import _, api, fields, models
 
 

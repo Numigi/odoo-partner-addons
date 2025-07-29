@@ -14,9 +14,7 @@ Also, it can not be installed if there are already existing duplicates in the da
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+* The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
 * Yasmine El Mrini (yasmine.elmrini@savoirfairelinux.com)
 
-More information
-----------------
-* Meet us at https://bit.ly/numigi-com

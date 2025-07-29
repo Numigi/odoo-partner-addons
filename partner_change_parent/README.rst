@@ -87,10 +87,8 @@ Before changing the parent, you must go to the form view of the portal user and 
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
+
+* The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
 * Agathe Mollé (agathe.molle@savoirfairelinux.com)
 * Guillaume Lot
 
-More information
-----------------
-* Meet us at https://bit.ly/numigi-com

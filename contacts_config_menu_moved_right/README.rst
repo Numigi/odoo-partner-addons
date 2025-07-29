@@ -8,8 +8,5 @@ Because the sequence number defined in the module `contacts` is low, the menu it
 
 Contributors
 ------------
-* Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 
-More information
-----------------
-* Meet us at https://bit.ly/numigi-com
+The `Numigi <https://numigi.com/r/home>`_ team is the contributor to this project. We help Quebec companies implement Odoo and Konvergo ERP.
