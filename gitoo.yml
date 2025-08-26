@@ -9,6 +9,7 @@
   branch: "14.0"
   includes:
   - base_search_fuzzy
+  - base_view_inheritance_extension
 
 - url: https://github.com/numigi/odoo-web-addons
   branch: "14.0"
