@@ -153,15 +153,9 @@ class ResPartnerDateWithAnniversaryEmails(models.Model):
         today = fields.Date.context_today(self)
         month_and_day = today.strftime("%m-%d")
 
-        self.env.cr.execute(
-            """
-            SELECT d.id
-            FROM res_partner_date d
-            WHERE d.month_and_day = %s
-            AND d.diffusion = true
-            """,
-            (month_and_day,),
+        return self.search(
+            [
+                ("month_and_day", "=", month_and_day),
+                ("diffusion", "=", True),
+            ]
         )
-
-        key_date_ids = [r[0] for r in self.env.cr.fetchall()]
-        return self.browse(key_date_ids)
