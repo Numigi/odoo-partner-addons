@@ -5,13 +5,13 @@
         <field name="name">res.partner.date.tree</field>
         <field name="model">res.partner.date</field>
         <field name="arch" type="xml">
-            <tree string="Key Dates">
+            <list string="Key Dates">
                 <field name="partner_id"/>
                 <field name="date_type_id"/>
                 <field name="date"/>
                 <field name="age"/>
                 <field name="diffusion"/>
-            </tree>
+            </list>
         </field>
     </record>
 

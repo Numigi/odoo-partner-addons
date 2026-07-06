@@ -18,8 +18,7 @@ _4_MONTHS_AGO = _NOW.now() - relativedelta(months=4)
 _1_YEAR_LATER = _NOW.now() + relativedelta(years=1)
 
 
-class TestResPartnerDate(common.SavepointCase):
-
+class TestResPartnerDate(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

@@ -1,27 +1,23 @@
 - url: https://github.com/OCA/partner-contact
-  branch: "14.0"
+  branch: "18.0"
   includes:
   - partner_firstname
   - partner_multi_relation
   - partner_affiliate
 
 - url: https://github.com/OCA/server-tools
-  branch: "14.0"
+  branch: "18.0"
   includes:
   - base_search_fuzzy
 
-- url: https://github.com/numigi/odoo-web-addons
-  branch: "14.0"
-  includes:
-  - web_list_column_width
+#- url: https://github.com/numigi/odoo-web-addons
+#  branch: "14.0"
+#  includes:
+#  - web_list_column_width
 
-- url: https://github.com/OCA/e-commerce
-  branch: "14.0"
-  includes:
-  - website_sale_invoice_address
 
 - url: https://github.com/Numigi/odoo-base-addons
-  branch: "14.0"
+  branch: "18.0"
   includes:
     - base_extended_security
     - test_http_request

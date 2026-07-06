@@ -8,6 +8,6 @@ from odoo import fields, models
 
 class ResPartner(models.Model):
 
-    _inherit = 'res.partner'
+    _inherit = "res.partner"
 
-    key_date_ids = fields.One2many('res.partner.date', 'partner_id', string='Dates')
+    key_date_ids = fields.One2many("res.partner.date", "partner_id", string="Dates")

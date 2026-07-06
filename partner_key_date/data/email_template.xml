@@ -7,13 +7,13 @@
             <field name="model_id" ref="model_res_partner_date"/>
             <field name="auto_delete" eval="False"/>
             <field name="subject">Best Wishes</field>
-            <field name="body_html"><![CDATA[
-<p>Hello ${object.partner_id.name},</p>
-<p>Occasion : ${object.date_type_id.name}</p>
-<p>
-    Anniversary message...
-</p>
-            ]]></field>
+            <field name="body_html" type="html">
+                <p>Hello <t t-out="object.partner_id.name or ''">Partner</t>,</p>
+                <p>Occasion : <t t-out="object.date_type_id.name or ''">Occasion</t></p>
+                <p>
+                    Anniversary message...
+                </p>
+            </field>
         </record>
 
     </data>
