@@ -8,20 +8,22 @@ from odoo import fields, models
 
 class ResTerritory(models.Model):
 
-    _name = 'res.territory'
-    _description = 'Territory'
+    _name = "res.territory"
+    _description = "Territory"
 
-    name = fields.Char('Name', required=True)
+    name = fields.Char("Name", required=True)
 
     fsa_ids = fields.Many2many(
-        'forward.sortation.area',
-        'res_territory_fsa_rel', 'territory_id', 'fsa_id',
-        string='FSA')
+        "forward.sortation.area",
+        "res_territory_fsa_rel",
+        "territory_id",
+        "fsa_id",
+        string="FSA",
+    )
 
     partner_ids = fields.Many2many(
-        string='Partners',
-        comodel_name='res.partner',
-        relation='rel_territory_partner')
+        string="Partners", comodel_name="res.partner", relation="rel_territory_partner"
+    )
 
-    color = fields.Integer('Color Index')
-    active = fields.Boolean('Active', default=True)
+    color = fields.Integer("Color Index")
+    active = fields.Boolean("Active", default=True)

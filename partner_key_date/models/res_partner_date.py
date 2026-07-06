@@ -15,16 +15,18 @@ _logger = logging.getLogger(__name__)
 
 class ResPartnerDate(models.Model):
 
-    _name = 'res.partner.date'
-    _description = 'Contact Key Date'
+    _name = "res.partner.date"
+    _description = "Contact Key Date"
 
     date_type_id = fields.Many2one(
-        'res.partner.date.type', string='Date Type', required=True, index=True)
+        "res.partner.date.type", string="Date Type", required=True, index=True
+    )
     partner_id = fields.Many2one(
-        'res.partner', string='Partner', required=True, ondelete='cascade')
-    date = fields.Date('Date', required=True, index=True)
-    note = fields.Char('Note')
-    age = fields.Float('Age', digits=(16, 1), index=True)
+        "res.partner", string="Partner", required=True, ondelete="cascade"
+    )
+    date = fields.Date("Date", required=True, index=True)
+    note = fields.Char("Note")
+    age = fields.Float("Age", digits=(16, 1), index=True)
 
     def compute_age_for_all_dates(self):
         """Compute the age of all partner dates.
@@ -35,10 +37,13 @@ class ResPartnerDate(models.Model):
         The difference between time zones is not significant to make a difference
         in the year of a date.
         """
-        self.env.cr.execute("""
+        self.env.cr.execute(
+            """
             UPDATE res_partner_date
             SET age = round((%s - date) / 365.25, 1)
-            """, (date.today(),))
+            """,
+            (date.today(),),
+        )
 
     def _compute_age(self):
         """Compute the age of a single date."""
@@ -54,7 +59,7 @@ class ResPartnerDate(models.Model):
 
     def write(self, vals):
         super().write(vals)
-        if 'date' in vals:
+        if "date" in vals:
             for record in self:
                 record._compute_age()
         return True
@@ -63,31 +68,39 @@ class ResPartnerDate(models.Model):
 class ResPartnerDateWithAnniversaryEmails(models.Model):
     """Allow sending emails at the anniversary of a key date."""
 
-    _inherit = 'res.partner.date'
+    _inherit = "res.partner.date"
 
     month_and_day = fields.Char(
-        'Month and Day', compute='_compute_month_and_day', index=True, store=True)
+        "Month and Day", compute="_compute_month_and_day", index=True, store=True
+    )
     diffusion = fields.Boolean(
-        'Diffusion',
-        help='If the box is checked, an email will be sent to the contact at '
-             'every anniversary of the this date.')
+        "Diffusion",
+        help="If the box is checked, an email will be sent to the contact at "
+        "every anniversary of the this date.",
+    )
 
-    @api.depends('date')
+    @api.depends("date")
     def _compute_month_and_day(self):
         for record in self:
-            record.month_and_day = record.date.strftime('%m-%d')
+            record.month_and_day = record.date.strftime("%m-%d")
 
-    @api.constrains('diffusion', 'date_type_id')
+    @api.constrains("diffusion", "date_type_id")
     def _check_mail_template_is_defined_on_date_type_if_diffusion_is_checked(self):
         dates_with_diffusion_and_no_template = self.filtered(
-            lambda d: d.diffusion and not d.date_type_id.mail_template_id)
+            lambda d: d.diffusion and not d.date_type_id.mail_template_id
+        )
         if dates_with_diffusion_and_no_template:
-            raise UserError(_(
-                'The diffusion may not be checked for this partner date (%(date_type)s), '
-                'because there is no mail template defined on this date type.',
-                date_type=(
-                    dates_with_diffusion_and_no_template[0].date_type_id.display_name),
-            ))
+            raise UserError(
+                _(
+                    "The diffusion may not be checked for this partner date (%(date_type)s), "
+                    "because there is no mail template defined on this date type.",
+                    date_type=(
+                        dates_with_diffusion_and_no_template[
+                            0
+                        ].date_type_id.display_name
+                    ),
+                )
+            )
 
     @api.model
     def send_anniversary_emails(self):
@@ -95,29 +108,31 @@ class ResPartnerDateWithAnniversaryEmails(models.Model):
         for key_date in self._find_anniversary_dates():
             if not key_date.partner_id.email:
                 _logger.error(
-                    'The email for the anniversary of {date_type} could not be sent '
-                    'to {partner} because this partner has no email.'
-                    .format(
+                    "The email for the anniversary of {date_type} could not be sent "
+                    "to {partner} because this partner has no email.".format(
                         date_type=key_date.date_type_id.display_name,
                         partner=key_date.partner_id.display_name,
-                    ))
+                    )
+                )
                 continue
 
             mail_template = key_date.date_type_id.mail_template_id
             if not mail_template:
                 _logger.error(
-                    'The email for the anniversary of {date_type} could not be sent '
-                    'to {partner} because no mail template is defined on the date type.'
-                    .format(
+                    "The email for the anniversary of {date_type} could not be sent "
+                    "to {partner} because no mail template is defined on the date type.".format(
                         date_type=key_date.date_type_id.display_name,
                         partner=key_date.partner_id.display_name,
-                    ))
+                    )
+                )
                 continue
 
-            mail_template.write({
-                'email_from': self.env.user.email,
-                'email_to': key_date.partner_id.email,
-            })
+            mail_template.write(
+                {
+                    "email_from": self.env.user.email,
+                    "email_to": key_date.partner_id.email,
+                }
+            )
             mail_template.send_mail(key_date.id)
 
         return True
@@ -136,14 +151,17 @@ class ResPartnerDateWithAnniversaryEmails(models.Model):
         :return: the res.partner.date records
         """
         today = fields.Date.context_today(self)
-        month_and_day = today.strftime('%m-%d')
+        month_and_day = today.strftime("%m-%d")
 
-        self.env.cr.execute("""
+        self.env.cr.execute(
+            """
             SELECT d.id
             FROM res_partner_date d
             WHERE d.month_and_day = %s
             AND d.diffusion = true
-            """, (month_and_day, ))
+            """,
+            (month_and_day,),
+        )
 
         key_date_ids = [r[0] for r in self.env.cr.fetchall()]
         return self.browse(key_date_ids)
