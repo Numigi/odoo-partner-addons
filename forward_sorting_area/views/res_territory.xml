@@ -5,11 +5,11 @@
         <field name="name">res.territory.tree</field>
         <field name="model">res.territory</field>
         <field name="arch" type="xml">
-            <tree string="Territories" editable="top">
-                <field name="name" width="300px"/>
+            <list string="Territories" editable="top">
+                <field name="name"/>
                 <field name="fsa_ids" widget="many2many_tags" options="{'no_create': True}"/>
                 <field name="active"/>
-            </tree>
+            </list>
       </field>
     </record>
 
@@ -17,7 +17,7 @@
         <field name="name">Territories</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.territory</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
     </record>
 
     <menuitem

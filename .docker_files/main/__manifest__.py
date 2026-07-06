@@ -11,7 +11,7 @@
     "category": "Other",
     "summary": "Install all addons required for testing.",
     "depends": [
-        # "forward_sorting_area",
+        "forward_sorting_area",
         "partner_key_date",
     ],
     "installable": True,
