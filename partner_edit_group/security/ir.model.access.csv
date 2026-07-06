@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_ir_property,Contact Edition: ir.property,base.model_ir_property,group_partner_edit,1,1,1,0
-access_res_partner_bank,Contact Edition: res.partner,base.model_res_partner_bank,group_partner_edit,1,1,1,0
-access_res_partner,Contact Edition: res.partner,base.model_res_partner,group_partner_edit,1,1,0,0
