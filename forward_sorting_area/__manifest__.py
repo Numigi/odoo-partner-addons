@@ -5,7 +5,7 @@
 
 {
     "name": "Forward Sorting Areas",
-    "version": "1.1.0",
+    "version": "18.0.1.1.0",
     "author": "Savoir-faire Linux",
     "maintainer": "Numigi",
     "website": "https://numigi.com/r/home",
@@ -15,7 +15,6 @@
     "depends": [
         "base_setup",
         "contacts",
-        "web_list_column_width",
     ],
     "data": [
         "security/ir.model.access.csv",

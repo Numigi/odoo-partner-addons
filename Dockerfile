@@ -13,7 +13,7 @@ RUN gitoo install-all --conf_file /gitoo.yml --destination "${THIRD_PARTY_ADDONS
 
 USER odoo
 
-#COPY forward_sorting_area /mnt/extra-addons/forward_sorting_area
+COPY forward_sorting_area /mnt/extra-addons/forward_sorting_area
 COPY partner_key_date /mnt/extra-addons/partner_key_date
 
 COPY .docker_files/main /mnt/extra-addons/main
