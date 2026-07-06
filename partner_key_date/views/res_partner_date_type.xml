@@ -5,9 +5,9 @@
         <field name="name">res.partner.date.type.tree</field>
         <field name="model">res.partner.date.type</field>
         <field name="arch" type="xml">
-            <tree string="Date Types">
+            <list string="Date Types">
                 <field name="name"/>
-            </tree>
+            </list>
         </field>
     </record>
 
