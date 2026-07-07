@@ -61,7 +61,7 @@
         action="action_partner_date"
         id="menu_partner_date"
         name="Dates"
-        parent="contacts.menu_contacts"
+        parent="contacts.res_partner_menu_config"
         sequence="4"/>
 
 </odoo>
